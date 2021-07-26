@@ -1,0 +1,26 @@
+
+CREATE OR REPLACE FUNCTION d_page_id(
+
+    page_id BIGINT
+
+)
+
+RETURNS BIGINT
+
+LANGUAGE PLPGSQL
+VOLATILE
+CALLED ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+BEGIN
+
+    DELETE FROM t_page_ids
+    WHERE tpi_id = page_id;
+
+    RETURN page_id;
+
+END;
+
+$$;

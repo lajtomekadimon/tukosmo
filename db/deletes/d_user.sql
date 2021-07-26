@@ -1,0 +1,26 @@
+
+CREATE OR REPLACE FUNCTION d_user(
+
+    user_id BIGINT
+
+)
+
+RETURNS BIGINT
+
+LANGUAGE PLPGSQL
+VOLATILE
+CALLED ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+BEGIN
+
+    DELETE FROM t_users
+    WHERE tu_id = user_id;
+
+    RETURN user_id;
+
+END;
+
+$$;

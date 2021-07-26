@@ -1,0 +1,26 @@
+
+CREATE OR REPLACE FUNCTION d_post_id(
+
+    post_id BIGINT
+
+)
+
+RETURNS BIGINT
+
+LANGUAGE PLPGSQL
+VOLATILE
+CALLED ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+BEGIN
+
+    DELETE FROM t_post_ids
+    WHERE tpi_id = post_id;
+
+    RETURN post_id;
+
+END;
+
+$$;
