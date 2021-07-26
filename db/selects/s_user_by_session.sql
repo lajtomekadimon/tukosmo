@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION s_user_by_session(
+
+    session_id UUID
+
+)
+
+RETURNS BIGINT
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT ts_user
+FROM t_sessions
+WHERE ts_id = session_id
+LIMIT 1
+
+$$;
