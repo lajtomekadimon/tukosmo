@@ -8,6 +8,7 @@ CREATE TABLE t_users (
     /* Insert: CRYPT('__the_password__', GEN_SALT('bf'))
      * Check: tu_password = CRYPT('__the_password__', tu_password)
      */
+    tu_name TEXT NOT NULL UNIQUE,
 
     tu_date TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
