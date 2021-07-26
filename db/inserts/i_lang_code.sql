@@ -20,7 +20,7 @@ DECLARE
 
 BEGIN
 
-    INSERT INTO t_languages (
+    INSERT INTO t_lang_codes (
         --tlc_id,
         tlc_code
         --tlc_date
