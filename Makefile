@@ -23,6 +23,7 @@ rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
+	pkg install lang/v8  # for Svelte rendering
 
 node:
 	pkg install www/node www/npm
@@ -96,18 +97,6 @@ psql:
 
 
 ##############################################################################
-#                                WEB SERVER                                  #
-##############################################################################
-
-install: clean
-	cargo build
-
-run:
-	cargo run
-
-
-
-##############################################################################
 #                                  FRONTEND                                  #
 ##############################################################################
 
@@ -116,6 +105,18 @@ frontend:
 
 app:
 	npm run dev
+
+
+
+##############################################################################
+#                                WEB SERVER                                  #
+##############################################################################
+
+install: clean frontend
+	cargo build
+
+run:
+	cargo run
 
 
 
