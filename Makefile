@@ -24,7 +24,10 @@ rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
 
-dep: postgresql rust
+node:
+	pkg install www/node www/npm
+
+dep: postgresql rust node
 
 
 
@@ -96,12 +99,31 @@ psql:
 #                                WEB SERVER                                  #
 ##############################################################################
 
-clean:
-	rm -f Cargo.lock
-	rm -Rf target
-
 install: clean
 	cargo build
 
 run:
 	cargo run
+
+
+
+##############################################################################
+#                                  FRONTEND                                  #
+##############################################################################
+
+frontend:
+	npm install
+
+app:
+	npm run dev
+
+
+
+##############################################################################
+#                                   EXTRA                                    #
+##############################################################################
+
+clean:
+	rm -f Cargo.lock
+	rm -Rf target
+	rm -Rf node_modules
