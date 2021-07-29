@@ -2,7 +2,4 @@
 Cargo.lock
 *.swp
 
-/node_modules/
-/public/build/
-
 .DS_Store

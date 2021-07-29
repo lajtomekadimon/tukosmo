@@ -102,6 +102,12 @@ psql:
 
 frontend:
 	npm install
+	rm -f static/global.css
+	cp ui/public/global.css static/global.css
+	rm -f static/bundle.css
+	cp ui/public/build/bundle.css static/bundle.css
+	rm -f static/bundle.js
+	cp ui/public/build/bundle.js static/bundle.js
 
 app:
 	npm run dev

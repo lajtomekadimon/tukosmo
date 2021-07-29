@@ -1,5 +1,6 @@
 use actix_web::{web, http, App, HttpServer};
 use actix_cors::Cors;
+use actix_files as fs;
 
 mod auth;
 
@@ -30,6 +31,9 @@ async fn main() -> std::io::Result<()> {
 
             // Website (this must be improved)
             .service(handler_website)  // "/"
+
+            // Static files
+            .service(fs::Files::new("/static", "static").show_files_listing())
 
             // API
             .service(web::scope("/api")
