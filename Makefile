@@ -23,12 +23,8 @@ rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
-	pkg install lang/v8  # for Svelte rendering
 
-node:
-	pkg install www/node www/npm
-
-dep: postgresql rust node
+dep: postgresql rust
 
 
 
@@ -97,24 +93,6 @@ psql:
 
 
 ##############################################################################
-#                                  FRONTEND                                  #
-##############################################################################
-
-frontend:
-	npm install
-	rm -f static/global.css
-	cp ui/public/global.css static/global.css
-	rm -f static/bundle.css
-	cp ui/public/build/bundle.css static/bundle.css
-	rm -f static/bundle.js
-	cp ui/public/build/bundle.js static/bundle.js
-
-app:
-	npm run dev
-
-
-
-##############################################################################
 #                                WEB SERVER                                  #
 ##############################################################################
 
@@ -133,4 +111,3 @@ run:
 clean:
 	rm -f Cargo.lock
 	rm -Rf target
-	rm -Rf node_modules
