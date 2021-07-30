@@ -1,5 +1,5 @@
 # Tukosmo (this is a work in progress!)
-Modern CMS made with PostgreSQL, Rust and Svelte.
+Modern CMS made with PostgreSQL and Rust.
 
 ## Instalation
 
