@@ -1,6 +1,7 @@
-use actix_web::{web, http, App, HttpServer};
-use actix_cors::Cors;
-use actix_files as fs;
+use actix_web::{web, App, HttpServer};
+//use actix_web::http;
+//use actix_cors::Cors;
+use actix_files::Files;
 
 mod auth;
 
@@ -21,16 +22,18 @@ use crate::handlers::api_json_user_update::handler_api_json_user_update;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // Here I could do some prerendering, like CSS compression
+
     HttpServer::new(|| {
         App::new()
-            .wrap(Cors::default()
+            /*.wrap(Cors::default()
                 // TODO: This has to work with "*" instead of localhost!!!
-                .allowed_origin("http://localhost:5000")  // for Svelte app development
+                .allowed_origin("http://localhost:5000")  // OLD
 
                 .allowed_methods(vec!["GET", "POST"])
                 .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
                 .allowed_header(http::header::CONTENT_TYPE)
-            )
+            )*/
 
             // Website
             .service(handler_website)  // "/"
@@ -39,7 +42,7 @@ async fn main() -> std::io::Result<()> {
             .service(handler_admin)  // "/admin"
 
             // Static files
-            .service(fs::Files::new("/static", "static").show_files_listing())
+            .service(Files::new("/static", "static").show_files_listing())
 
             // API
             .service(web::scope("/api")
