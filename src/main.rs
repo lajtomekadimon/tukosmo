@@ -6,8 +6,11 @@ mod auth;
 
 mod database;
 
+mod templates;
+
 mod handlers;
 use crate::handlers::website::handler_website;
+use crate::handlers::admin::handler_admin;
 use crate::handlers::api_json_query::handler_api_json_query;
 use crate::handlers::api_json_update::handler_api_json_update;
 use crate::handlers::api_json_user_login::handler_api_json_user_login;
@@ -29,8 +32,11 @@ async fn main() -> std::io::Result<()> {
                 .allowed_header(http::header::CONTENT_TYPE)
             )
 
-            // Website (this must be improved)
+            // Website
             .service(handler_website)  // "/"
+
+            // Admin
+            .service(handler_admin)  // "/admin"
 
             // Static files
             .service(fs::Files::new("/static", "static").show_files_listing())
