@@ -2,14 +2,14 @@ use postgres::{Client, NoTls, Error};
 use serde_json::Value;
 use uuid::Uuid;
 
-use crate::database::auth_string::auth_string;
+use crate::config::global::db_auth_string;
 
 
 pub fn aj_update(
     json_input: Value,
     session_id: Uuid
 ) -> Result<Value, Error> {
-    let mut client = Client::connect(auth_string(), NoTls)?;
+    let mut client = Client::connect(db_auth_string(), NoTls)?;
 
     let row = client.query_one(
         // TODO: Check if session has expired!!!

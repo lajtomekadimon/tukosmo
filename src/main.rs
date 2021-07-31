@@ -3,6 +3,8 @@ use actix_web::{web, App, HttpServer};
 //use actix_cors::Cors;
 use actix_files::Files;
 
+mod config;
+
 mod auth;
 
 mod database;
@@ -19,10 +21,20 @@ use crate::handlers::api_json_user_logout::handler_api_json_user_logout;
 use crate::handlers::api_json_user_signin::handler_api_json_user_signin;
 use crate::handlers::api_json_user_update::handler_api_json_user_update;
 
+mod minifiers;
+use crate::minifiers::css::minify_css;
+
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     // Here I could do some prerendering, like CSS compression
+    println!("Minifying CSS code...");
+    minify_css();
+
+    println!("Done!");
+    println!("Server ready. Visit at: http://localhost:8080");
+
+    // --------- //
 
     HttpServer::new(|| {
         App::new()

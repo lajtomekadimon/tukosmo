@@ -48,13 +48,8 @@ markup::define! {
                 // Styles
                 link[
                     rel = "stylesheet",
-                    href = "",
+                    href = "/static/bundle.admin.css",
                 ];
-
-                style {
-                    "body { background: #fafbfc; }"
-                    "#main { padding: 2rem; }"
-                }
             }
             body {
                 //@Content { param1 param2 }

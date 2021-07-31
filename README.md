@@ -1,5 +1,8 @@
 # Tukosmo (this is a work in progress!)
-Modern CMS made with PostgreSQL and Rust.
+Website generator made with Rust and PostgreSQL.
+
+This is my first Rust project. I'm still learning the language,
+so don't expect high quality code (yet).
 
 ## Instalation
 
@@ -12,6 +15,7 @@ Install dependencies (only FreeBSD for now):
 
 ```sh
 make -s dep
+# The shell must be restarted after installing Rust
 ```
 
 Create (or reset) database:
