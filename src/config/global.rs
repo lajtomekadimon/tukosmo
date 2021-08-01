@@ -5,6 +5,8 @@ struct Config {
     theme: String,
     theme_dir: String,
 }
+
+// TODO: Even better is using a custom config file on root dir.
 */
 
 pub fn db_auth_string() -> &'static str {

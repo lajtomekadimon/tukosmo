@@ -13,6 +13,7 @@ mod templates;
 
 mod handlers;
 use crate::handlers::website::handler_website;
+use crate::handlers::home::handler_home;
 use crate::handlers::admin::handler_admin;
 use crate::handlers::api_json_query::handler_api_json_query;
 use crate::handlers::api_json_update::handler_api_json_update;
@@ -47,27 +48,49 @@ async fn main() -> std::io::Result<()> {
                 .allowed_header(http::header::CONTENT_TYPE)
             )*/
 
-            // Website
-            .service(handler_website)  // "/"
-
-            // Admin
-            .service(handler_admin)  // "/admin"
-
-            // Static files
-            .service(Files::new("/static", "static").show_files_listing())
+            // Website: /
+            // TODO: Redirect to /en, /es, etc. using HTTP header's language
+            .service(handler_website)
 
             // API
             .service(web::scope("/api")
                 .service(web::scope("/json")
-                    .service(handler_api_json_query)  // "/query"
-                    .service(handler_api_json_update)  // "/update"
+                    // Query: /api/json/query
+                    .service(handler_api_json_query)
+
+                    // Update: /api/json/update
+                    .service(handler_api_json_update)
+
+                    // User
                     .service(web::scope("/user")
-                        .service(handler_api_json_user_login)  // "/login"
-                        .service(handler_api_json_user_logout)  // "/logout"
-                        .service(handler_api_json_user_signin)  // "/signin"
-                        .service(handler_api_json_user_update),  // "/update"
+                        // Login: /api/json/user/login
+                        .service(handler_api_json_user_login)
+                        // Logout: /api/json/user/logout
+                        .service(handler_api_json_user_logout)
+                        // Signin: /api/json/user/singin
+                        .service(handler_api_json_user_signin)
+                        // Update: /api/json/user/update
+                        .service(handler_api_json_user_update),
                     ),
                 ),
+            )
+            
+            // Static files: /static/.../...
+            .service(Files::new("/static", "static").show_files_listing())
+
+            // HTML pages
+            .service(web::scope("/{lang}")
+                // Home: /{lang}
+                .service(handler_home)
+
+                // Blog: /{lang}/blog
+
+                // Blog post: /{lang}/blog/{title}
+
+                // Page: /{lang}/page/{title}
+
+                // Admin: /{lang}/admin
+                .service(handler_admin)
             )
     })
     .bind("127.0.0.1:8080")?

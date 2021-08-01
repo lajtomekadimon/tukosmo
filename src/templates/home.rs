@@ -2,10 +2,10 @@ use markup;
 
 
 markup::define! {
-    Home<'a>(title: &'a str) {
+    Home<'a>(title: &'a str, lang_code: &'a str) {
         @markup::doctype()
         html[
-            lang = "en"
+            lang = lang_code
         ] {
             head {
                 meta[charset = "utf-8"];
