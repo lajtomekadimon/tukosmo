@@ -6,16 +6,22 @@ so don't expect high quality code (yet).
 
 ## TODO
 
-[x] Zero unsafe code.
-[x] No ORM! Pure SQL code run by PostgreSQL driver.
-[x] Blazingly fast HTML rendering with markup.rs.
-[x] Automatic CSS minifying system.
-[ ] Automatic JavaScript minifying system.
-[ ] Common HTML to all themes. A new theme is a single CSS file!
-[ ] Blog system.
-[ ] Pages system.
-[ ] Contact form.
-[ ] Admin panel.
+Technical aspects:
+
+- [x] Zero unsafe code.
+- [x] No ORM! Pure SQL code called by native PostgreSQL driver.
+- [x] Blazingly fast HTML rendering with [markup.rs](https://github.com/utkarshkukreti/markup.rs).
+- [x] Automatic CSS minifying to one single file.
+- [ ] Automatic JavaScript minifying to one single file.
+- [x] Common HTML to all themes; a Tukosmo theme is just CSS code!
+- [x] i18n implemented in routes (good for SEO).
+
+Website features:
+
+- [ ] Homepage.
+- [ ] Blog.
+- [ ] Pages.
+- [ ] Admin panel.
 
 ## Instalation
 
