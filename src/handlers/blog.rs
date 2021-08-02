@@ -4,8 +4,8 @@ use crate::templates::website::blog::Blog;
 
 
 // TODO
-#[get("/")]
-async fn handler_home(
+#[get("/blog")]
+async fn handler_blog(
     req: HttpRequest,
 ) -> impl Responder {
     let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();

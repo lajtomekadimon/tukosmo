@@ -14,6 +14,9 @@ mod templates;
 mod handlers;
 use crate::handlers::website::handler_website;
 use crate::handlers::home::handler_home;
+use crate::handlers::blog::handler_blog;
+use crate::handlers::blog_post::handler_blog_post;
+use crate::handlers::page::handler_page;
 use crate::handlers::admin::handler_admin;
 use crate::handlers::api_json_query::handler_api_json_query;
 use crate::handlers::api_json_update::handler_api_json_update;
@@ -84,10 +87,13 @@ async fn main() -> std::io::Result<()> {
                 .service(handler_home)
 
                 // Blog: /{lang}/blog
+                .service(handler_blog)
 
                 // Blog post: /{lang}/blog/{title}
+                .service(handler_blog_post)
 
                 // Page: /{lang}/page/{title}
+                .service(handler_page)
 
                 // Admin: /{lang}/admin
                 .service(handler_admin)

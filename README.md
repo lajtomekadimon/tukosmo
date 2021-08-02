@@ -6,7 +6,7 @@ so don't expect high quality code (yet).
 
 ## TODO
 
-Technical aspects:
+Technical features:
 
 - [x] Zero unsafe code.
 - [x] No ORM! Pure SQL code called by native PostgreSQL driver.

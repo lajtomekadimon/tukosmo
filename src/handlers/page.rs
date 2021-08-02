@@ -1,17 +1,17 @@
 use actix_web::{get, HttpRequest, HttpResponse, Responder};
 
-use crate::templates::website::blog::Blog;
+use crate::templates::website::page::Page;
 
 
 // TODO
-#[get("/")]
-async fn handler_home(
+#[get("/page")]
+async fn handler_page(
     req: HttpRequest,
 ) -> impl Responder {
     let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();
 
-    let html = Blog {
-        title: "Tukosmo blog",
+    let html = Page {
+        title: "Tukosmo page",
         lang_code: &lang_value,
     };
 

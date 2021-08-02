@@ -2,7 +2,11 @@ use markup;
 
 
 markup::define! {
-    Home<'a>(title: &'a str, lang_code: &'a str) {
+    Layout<'a, BodyContent: markup::Render>(
+        title: &'a str,
+        lang_code: &'a str,
+        content: BodyContent,
+    ) {
         @markup::doctype()
         html[
             lang = lang_code
@@ -52,8 +56,7 @@ markup::define! {
                 ];
             }
             body {
-                //@Content { param1 param2 }
-                ""
+                @content
 
                 script[
                     src = "",

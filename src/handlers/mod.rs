@@ -6,4 +6,7 @@ pub mod api_json_user_signin;
 pub mod api_json_user_update;
 pub mod website;
 pub mod home;
+pub mod blog;
+pub mod blog_post;
+pub mod page;
 pub mod admin;
