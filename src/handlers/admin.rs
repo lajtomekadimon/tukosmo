@@ -1,6 +1,6 @@
 use actix_web::{get, HttpResponse, Responder};
 
-use crate::templates::admin::Home;
+use crate::templates::admin_layout::Home;
 
 
 // TODO

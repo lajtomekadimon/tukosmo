@@ -1,5 +1,9 @@
 use markup;
 
+use crate::templates::widgets::header::Header;
+use crate::templates::widgets::navigation::Navigation;
+use crate::templates::widgets::footer::Footer;
+
 
 markup::define! {
     Layout<'a, BodyContent: markup::Render>(
@@ -30,38 +34,78 @@ markup::define! {
                 ];
 
                 // These are many
-                link[
+                /*link[
                     rel = "apple-touch-icon",
                     sizes = "",
                     href = "",
-                ];
+                ];*/
 
                 // These are many
                 link[
                     rel = "icon",
-                    type = "",
-                    sizes = "",
-                    href = "",
+                    type = "image/png",
+                    sizes = "16x16",
+                    href = "/static/favicon/favicon-16x16.png",
                 ];
 
-                link[
+                /*link[
                     rel = "manifest",
                     href = "",
-                ];
+                ];*/
 
                 // Styles
+                /*link[
+                    rel = "stylesheet",
+                    href = "https://fonts.googleapis.com/css?family=Poppins",
+                ];*/
+
                 link[
                     rel = "stylesheet",
                     href = "/static/bundle.css",
                 ];
             }
             body {
-                @content
+                @Interface {
+                    content: content
+                }
 
+                /*
                 script[
                     src = "",
                 ] {}
+                */
             }
+        }
+    }
+
+    Interface<BodyContent: markup::Render>(
+        content: BodyContent,
+    ) {
+        div[
+            id = "page",
+            class = "site",
+        ] {
+            @Header {}
+
+            @Navigation {}
+
+            div {
+                div {
+                    // List of blog posts
+                    //section {}
+                    //section {}
+                    //section {}
+
+                    // Blog post / page
+                    //article {}
+                    
+                    @content
+                }
+
+                aside {}
+            }
+
+            @Footer {}
         }
     }
 }
