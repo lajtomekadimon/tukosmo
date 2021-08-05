@@ -89,20 +89,26 @@ markup::define! {
 
             @Navigation {}
 
+            // site-content
             div {
+                // container {}
                 div {
-                    // List of blog posts
-                    //section {}
-                    //section {}
-                    //section {}
+                    // site-main
+                    main {
+                        // List of blog posts
+                        //section {}
+                        //section {}
+                        //section {}
 
-                    // Blog post / page
-                    //article {}
-                    
-                    @content
+                        // Blog post / page
+                        //article {}
+                        
+                        @content
+                    }
+
+                    // site-sidebar
+                    aside {}
                 }
-
-                aside {}
             }
 
             @Footer {}

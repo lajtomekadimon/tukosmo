@@ -29,8 +29,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .container {
-    width: 100%;
-    max-width: 1300px;
+    width: auto;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -44,7 +43,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site-title {
-    font-size: 3rem;
     /* TODO: Specific font! */
     font-family: "Liberation Sans", sans-serif;
     line-height: 1.3;
@@ -100,10 +98,9 @@ h1, h2, h3, h4, h5, h6 {
 .site-navigation-li a:visited {
     display: block;
     position: relative;
-    padding: 0 1.0625rem;
     color: #020202;
     /*font-size: 0.9375rem;*/
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
@@ -113,3 +110,134 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: underline;
 }
 
+/*-----------*/
+
+.site-footer {
+    display: block;
+    position: relative;
+    padding: 2.8125rem 0;
+    background: #020202;
+}
+
+.site-credits {
+    width: 100%;
+    text-align: center;
+    color: #999;
+    font-size: 0.875rem;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+@media (min-width: 1380px) {
+    .container {
+        max-width: 1300px;
+    }
+
+    .site-title {
+        font-size: 3rem;
+    }
+
+    .site-description {
+        font-size: 1.125rem;
+    }
+
+    .site-navigation-li a,
+    .site-navigation-li a:visited {
+        padding: 0 1.0625rem;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1379px) {
+    .container {
+        max-width: 1140px;
+    }
+
+    .site-title {
+        font-size: 3rem;
+    }
+
+    .site-description {
+        font-size: 1.125rem;
+    }
+
+    .site-navigation-li a,
+    .site-navigation-li a:visited {
+        padding: 0 1.0625rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .container {
+        max-width: 960px;
+    }
+
+    .site-title {
+        font-size: 2.75rem;
+    }
+
+    .site-description {
+        font-size: 1.125rem;
+    }
+
+    .site-navigation-li a,
+    .site-navigation-li a:visited {
+        padding: 0 1.0625rem;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .container {
+        max-width: 720px;
+    }
+
+    .site-title {
+        font-size: 2.75rem;
+    }
+
+    .site-description {
+        font-size: 1.125rem;
+    }
+
+    .site-navigation-li a,
+    .site-navigation-li a:visited {
+        padding: 0 1.0625rem;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .container {
+        max-width: 540px;
+    }
+
+    .site-title {
+        font-size: 2.25rem;
+    }
+
+    .site-description {
+        font-size: 1rem;
+    }
+
+    .site-navigation-li a,
+    .site-navigation-li a:visited {
+        padding: 0 1.0625rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .site-title {
+        font-size: 2.25rem;
+    }
+
+    .site-description {
+        font-size: 1rem;
+    }
+
+    .site-navigation-li a,
+    .site-navigation-li a:visited {
+        padding: 0 1.0625rem;
+    }
+}

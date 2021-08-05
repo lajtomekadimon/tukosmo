@@ -52,7 +52,6 @@ async fn main() -> std::io::Result<()> {
             )*/
 
             // Website: /
-            // TODO: Redirect to /en, /es, etc. using HTTP header's language
             .service(handler_website)
 
             // API
