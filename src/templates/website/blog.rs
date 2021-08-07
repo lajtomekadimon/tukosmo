@@ -1,6 +1,7 @@
 use markup;
 
 use crate::templates::layout::Layout;
+use crate::templates::widgets::post_list::PostList;
 
 
 markup::define! {
@@ -16,7 +17,7 @@ markup::define! {
     }
 
     Content() {
-        div { "Test 1" }
+        @PostList {}
     }
 }
 

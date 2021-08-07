@@ -16,7 +16,7 @@ markup::define! {
     }
 
     Content() {
-        div { "Test 2" }
+        article {}
     }
 }
 

@@ -2,6 +2,7 @@ use markup;
 
 use crate::templates::widgets::header::Header;
 use crate::templates::widgets::navigation::Navigation;
+use crate::templates::widgets::sidebar::Sidebar;
 use crate::templates::widgets::footer::Footer;
 
 
@@ -85,29 +86,31 @@ markup::define! {
             id = "page",
             class = "site",
         ] {
-            @Header {}
+            div[
+                class = "site-top",
+            ] {
+                @Header {}
 
-            @Navigation {}
+                @Navigation {}
+            }
 
-            // site-content
-            div {
-                // container {}
-                div {
-                    // site-main
-                    main {
-                        // List of blog posts
-                        //section {}
-                        //section {}
-                        //section {}
+            div[
+                class = "site-content",
+            ] {
+                div [
+                    class = "container",
+                ] {
+                    div[
+                        class = "site-content-inside",
+                    ] {
+                        main[
+                            class = "site-main",
+                        ] {
+                            @content
+                        }
 
-                        // Blog post / page
-                        //article {}
-                        
-                        @content
+                        @Sidebar {}
                     }
-
-                    // site-sidebar
-                    aside {}
                 }
             }
 

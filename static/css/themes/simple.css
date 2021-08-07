@@ -13,6 +13,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: "Noto Sans", sans-serif;
     clear: both;
     color: #020202;
 }
@@ -21,17 +22,21 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
 }
 
+.container {
+    width: auto;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.site-top {
+    width: 100%;
+}
+
 .site-header {
     position: relative;
     margin: 0;
     padding: 1.25rem 0 1.875rem 0;
     background-color: #fff;
-}
-
-.container {
-    width: auto;
-    margin: 0 auto;
-    padding: 0 15px;
 }
 
 .site-branding {
@@ -43,8 +48,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site-title {
-    /* TODO: Specific font! */
-    font-family: "Liberation Sans", sans-serif;
+    /* TODO: Better font? */
+    font-family: "Noto Sans", sans-serif;
     line-height: 1.3;
     margin: 0;
     padding: 0;
@@ -81,7 +86,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .site-navigation-ul {
     margin: 0;
-    padding: 1.6rem 0 1.25rem 0;
+    padding: 1.6rem 0 1.2rem 0;
     list-style: none;
     text-align: center;
     border-top: 2px solid #020202;
@@ -99,8 +104,7 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     position: relative;
     color: #020202;
-    /*font-size: 0.9375rem;*/
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
@@ -110,7 +114,32 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: underline;
 }
 
-/*-----------*/
+.site-content {
+    width: 100%;
+    margin: 30px 0;
+}
+
+.site-content-inside {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+.site-main {
+    position: relative;
+    box-sizing: border-box;
+    flex: 0 0 68.75%;
+    max-width: 68.75%;
+    padding: 0 15px;
+}
+
+.site-sidebar {
+    position: relative;
+    box-sizing: border-box;
+    flex: 0 0 31.25%;
+    max-width: 31.25%;
+    padding: 0 15px;
+}
 
 .site-footer {
     display: block;
@@ -124,6 +153,148 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     color: #999;
     font-size: 0.875rem;
+}
+
+/*----------*/
+
+.widget {
+    display: block;
+    position: relative;
+    padding: 1.875rem;
+    margin: 1.875rem 0 0 0;
+    font-size: 0.875rem;
+    word-wrap: break-word;
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 1, 0.05);
+}
+
+.widget:nth-of-type(1) {
+    margin: 0;
+}
+
+/*----------*/
+
+.post-list {
+    width: 100%;
+}
+
+.post-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 1.875rem 0 0 0;
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 1, 0.05);
+}
+
+.post-wrapper:nth-of-type(1) {
+    margin: 0;
+}
+
+.post-wrapper-image {
+    display: block;
+    position: relative;
+    width: 330px;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.post-wrapper-image figure {
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: #ccc;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    position: absolute;
+    transition: all 0.5s ease;
+}
+
+.post-wrapper-image figure:hover {
+    transform: scale(1.1) rotate(1deg);
+}
+
+.post-wrapper-data {
+    align-self: center;
+    width: calc(100% - 330px);
+    padding: 2.8125rem;
+}
+
+.post-wrapper-data-meta {
+    width: 100%;
+    margin: 0 0 10px 0;
+    font-size: 0.875rem;
+}
+
+.post-wrapper-data-meta a,
+.post-wrapper-data-meta a:visited,
+.post-wrapper-data-meta a time {
+    color: #3d3d3d;
+    text-decoration: none;
+}
+
+.post-wrapper-data-meta a:hover {
+    color: #020202;
+    text-decoration: underline;
+}
+
+.post-wrapper-data h2 {
+    margin: 0 0 15px 0;
+    padding: 0;
+    clear: none;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.post-wrapper-data h2 a,
+.post-wrapper-data h2 a:visited {
+    color: #020202;
+    text-decoration: none;
+}
+
+.post-wrapper-data h2 a:hover {
+    color: #020202;
+    text-decoration: underline;
+}
+
+.post-wrapper-data p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    word-wrap: break-word;
+}
+
+.post-wrapper-data-more {
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+.post-wrapper-data-more a,
+.post-wrapper-data-more a:visited {
+    display: inline-block;
+    padding: 0.3125rem 0.9375rem;
+    background-color: #020202;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .25s ease-out;
+}
+
+.post-wrapper-data-more a:hover {
+    background-color: #333;
 }
 
 
