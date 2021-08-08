@@ -1,11 +1,19 @@
 use markup;
 
+use crate::templates::widgets::admin_sidebar::AdminSidebar;
+use crate::templates::widgets::admin_navbar::AdminNavbar;
+use crate::templates::widgets::admin_breadcrumb::AdminBreadcrumb;
+
 
 markup::define! {
-    Home<'a>(title: &'a str) {
+    AdminLayout<'a, BodyContent: markup::Render>(
+        title: &'a str,
+        lang_code: &'a str,
+        content: BodyContent,
+    ) {
         @markup::doctype()
         html[
-            lang = "en"
+            lang = lang_code
         ] {
             head {
                 meta[charset = "utf-8"];
@@ -26,38 +34,64 @@ markup::define! {
                 ];
 
                 // These are many
-                link[
+                /*link[
                     rel = "apple-touch-icon",
                     sizes = "",
                     href = "",
-                ];
+                ];*/
 
                 // These are many
                 link[
                     rel = "icon",
-                    type = "",
-                    sizes = "",
-                    href = "",
+                    type = "image/png",
+                    sizes = "16x16",
+                    href = "/static/favicon/favicon-16x16.png",
                 ];
 
-                link[
+                /*link[
                     rel = "manifest",
                     href = "",
+                ];*/
+
+                link[
+                    rel = "stylesheet",
+                    href = "https://cdn.jsdelivr.net/npm/eos-icons@latest/dist/css/eos-icons.css",
                 ];
 
-                // Styles
                 link[
                     rel = "stylesheet",
                     href = "/static/bundle.admin.css",
                 ];
             }
             body {
-                //@Content { param1 param2 }
-                ""
+                @Interface {
+                    content: content
+                }
 
+                /*
                 script[
                     src = "",
                 ] {}
+                */
+            }
+        }
+    }
+
+    Interface<BodyContent: markup::Render>(
+        content: BodyContent,
+    ) {
+        @AdminNavbar {}
+
+        div[class = "container"] {
+            div[class = "columns"] {
+                div[class = "column is-3"] {
+                    @AdminSidebar {}
+                }
+                div[class = "column is-9"] {
+                    @AdminBreadcrumb {}
+
+                    @content
+                }
             }
         }
     }
