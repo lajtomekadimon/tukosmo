@@ -5,7 +5,7 @@ use crate::database::aj_query::aj_query;
 
 
 #[post("/query")]
-async fn handler_api_json_query(
+async fn query(
 
     json_input: web::Json<Value>
 

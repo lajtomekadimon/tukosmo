@@ -1,6 +1,7 @@
 use markup;
 
 use crate::templates::admin_layout::AdminLayout;
+use crate::templates::widgets::admin_panel::AdminPanel;
 
 
 markup::define! {
@@ -11,7 +12,9 @@ markup::define! {
         @AdminLayout {
             title: title,
             lang_code: lang_code,
-            content: Content {},
+            content: AdminPanel {
+                content: Content {}
+            },
         }
     }
 

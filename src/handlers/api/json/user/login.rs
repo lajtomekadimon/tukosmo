@@ -18,7 +18,7 @@ struct FormData {
 }
 
 #[post("/login")]
-async fn handler_api_json_user_login(
+async fn login(
 
     req: HttpRequest,
     form: web::Form<FormData>

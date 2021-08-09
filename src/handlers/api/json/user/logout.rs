@@ -4,7 +4,7 @@ use serde_json::json;
 
 // TODO
 #[post("/logout")]
-async fn handler_api_json_user_logout() -> impl Responder {
+async fn logout() -> impl Responder {
 
     web::Json(
         json!("Here I should delete the session! :D")

@@ -4,7 +4,7 @@ use crate::templates::website::blog_post::BlogPost;
 
 
 // TODO
-#[get("/blog/{post}")]
+#[get("/blog/{title}")]
 async fn handler_blog_post(
     req: HttpRequest,
 ) -> impl Responder {

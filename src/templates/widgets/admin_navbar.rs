@@ -26,18 +26,21 @@ markup::define! {
                         a[
                             class = "navbar-item",
                             href = "/",
+                            target = "_blank",
                         ] {
                             "Visit website"
                         }
                         a[
                             class = "navbar-item",
-                            href = "/",
+                            href = "/",  // link to official Tukosmo's docs
+                            target = "_blank",
                         ] {
                             "Documentation"
                         }
                         a[
                             class = "navbar-item",
-                            href = "/",
+                            href = "/",  // link to official Tukosmo's help
+                            target = "_blank",
                         ] {
                             "Help"
                         }

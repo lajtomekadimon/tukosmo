@@ -7,7 +7,7 @@ use crate::database::aj_update::aj_update;
 
 
 #[post("/update")]
-async fn handler_api_json_update(
+async fn update(
 
     req: HttpRequest,
 

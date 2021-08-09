@@ -4,6 +4,13 @@ use markup;
 markup::define! {
     AdminSidebar() {
         aside[class = "menu is-hidden-mobile"] {
+            /* Dashboard
+             * * * * * * */
+            ul[class = "menu-list"] {
+                li {
+                    a[class = "is-active"] { "Dashboard" }
+                }
+            }
 
             /* General
              * * * * * */
@@ -12,9 +19,6 @@ markup::define! {
             }
             ul[class = "menu-list"] {
 
-                li {
-                    a[class = "is-active"] { "Dashboard" }
-                }
                 li {
                     a { "Statistics" }
                 }

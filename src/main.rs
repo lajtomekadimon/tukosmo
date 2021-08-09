@@ -17,13 +17,8 @@ use crate::handlers::home::handler_home;
 use crate::handlers::blog::handler_blog;
 use crate::handlers::blog_post::handler_blog_post;
 use crate::handlers::page::handler_page;
-use crate::handlers::admin::handler_admin;
-use crate::handlers::api_json_query::handler_api_json_query;
-use crate::handlers::api_json_update::handler_api_json_update;
-use crate::handlers::api_json_user_login::handler_api_json_user_login;
-use crate::handlers::api_json_user_logout::handler_api_json_user_logout;
-use crate::handlers::api_json_user_signin::handler_api_json_user_signin;
-use crate::handlers::api_json_user_update::handler_api_json_user_update;
+use crate::handlers::admin;
+use crate::handlers::api;
 
 mod minifiers;
 use crate::minifiers::css::minify_css;
@@ -58,21 +53,21 @@ async fn main() -> std::io::Result<()> {
             .service(web::scope("/api")
                 .service(web::scope("/json")
                     // Query: /api/json/query
-                    .service(handler_api_json_query)
+                    .service(api::json::query::query)
 
                     // Update: /api/json/update
-                    .service(handler_api_json_update)
+                    .service(api::json::update::update)
 
                     // User
                     .service(web::scope("/user")
                         // Login: /api/json/user/login
-                        .service(handler_api_json_user_login)
+                        .service(api::json::user::login::login)
                         // Logout: /api/json/user/logout
-                        .service(handler_api_json_user_logout)
+                        .service(api::json::user::logout::logout)
                         // Signin: /api/json/user/singin
-                        .service(handler_api_json_user_signin)
+                        .service(api::json::user::signin::signin)
                         // Update: /api/json/user/update
-                        .service(handler_api_json_user_update),
+                        .service(api::json::user::update::update),
                     ),
                 ),
             )
@@ -94,8 +89,44 @@ async fn main() -> std::io::Result<()> {
                 // Page: /{lang}/page/{title}
                 .service(handler_page)
 
-                // Admin: /{lang}/admin
-                .service(handler_admin)
+                // Admin Panel
+                .service(web::scope("/admin")
+                    // Dashboard: /{lang}/admin/
+                    .service(admin::dashboard::dashboard)
+
+                    /*// General
+                    .service(web::scope("/general")
+                        // Statistics: /{lang}/admin/general/statistics
+                        .service(__)
+
+                        // Server: /{lang}/admin/general/server
+                        .service(__)
+                    )
+
+                    // Data
+                    .service(web::scope("/data")
+                        // Users: /{lang}/admin/data/users
+                        .service(__)
+
+                        // Posts: /{lang}/admin/data/posts
+                        .service(__)
+
+                        // Pages: /{lang}/admin/data/pages
+                        .service(__)
+
+                        // Files: /{lang}/admin/data/files
+                        .service(__)
+                    )
+
+                    // Settings
+                    .service(web::scope("/settings")
+                        // Website: /{lang}/admin/settings/website
+                        .service(__)
+
+                        // Tukosmo: /{lang}/admin/settings/tukosmo
+                        .service(__)
+                    )*/
+                )
             )
     })
     .bind("127.0.0.1:8080")?

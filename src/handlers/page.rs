@@ -4,7 +4,7 @@ use crate::templates::website::page::Page;
 
 
 // TODO
-#[get("/page")]
+#[get("/page/{title}")]
 async fn handler_page(
     req: HttpRequest,
 ) -> impl Responder {
