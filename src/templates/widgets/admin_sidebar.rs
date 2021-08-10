@@ -2,13 +2,20 @@ use markup;
 
 
 markup::define! {
-    AdminSidebar() {
+    AdminSidebar<'a>(
+        current_page: &'a str,
+    ) {
         aside[class = "menu is-hidden-mobile"] {
             /* Dashboard
              * * * * * * */
             ul[class = "menu-list"] {
                 li {
-                    a[class = "is-active"] { "Dashboard" }
+                    a[
+                        href = "/en/admin/",  // TODO
+                        class = if current_page == &"dashboard" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Dashboard" }
                 }
             }
 
@@ -20,10 +27,20 @@ markup::define! {
             ul[class = "menu-list"] {
 
                 li {
-                    a { "Statistics" }
+                    a[
+                        href = "/en/admin/statistics",  // TODO
+                        class = if current_page == &"statistics" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Statistics" }
                 }
                 li {
-                    a { "Server" }
+                    a[
+                        href = "/en/admin/server",  // TODO
+                        class = if current_page == &"server" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Server" }
                 }
             }
 
@@ -34,10 +51,28 @@ markup::define! {
             }
             ul[class = "menu-list"] {
                 li {
-                    a { "Users" }
+                    a[
+                        href = "/en/admin/users",  // TODO
+                        class = if current_page == &"users" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Users" }
                 }
                 li {
-                    a { "Posts" }
+                    a[
+                        href = "/en/admin/languages",  // TODO
+                        class = if current_page == &"languages" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Languages" }
+                }
+                li {
+                    a[
+                        href = "/en/admin/posts",  // TODO
+                        class = if current_page == &"posts" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Posts" }
                     ul {
                         li {
                             a { "Drafts" }
@@ -57,10 +92,20 @@ markup::define! {
                     }
                 }
                 li {
-                    a { "Pages" }
+                    a[
+                        href = "/en/admin/pages",  // TODO
+                        class = if current_page == &"pages" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Pages" }
                 }
                 li {
-                    a { "Files" }
+                    a[
+                        href = "/en/admin/files",  // TODO
+                        class = if current_page == &"files" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Files" }
                 }
             }
 
@@ -71,10 +116,20 @@ markup::define! {
             }
             ul[class = "menu-list"] {
                 li {
-                    a { "Website" }
+                    a[
+                        href = "/en/admin/website",  // TODO
+                        class = if current_page == &"website" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Website" }
                 }
                 li {
-                    a { "Tukosmo" }
+                    a[
+                        href = "/en/admin/tukosmo",  // TODO
+                        class = if current_page == &"tukosmo" {
+                            "is-active"
+                        } else { "" },
+                    ] { "Tukosmo" }
                 }
             }
 

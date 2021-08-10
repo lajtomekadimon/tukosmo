@@ -8,7 +8,7 @@ markup::define! {
                 div[class = "navbar-brand"] {
                     a[
                         class = "navbar-item brand-text",
-                        href = "/",
+                        href = "/",  // link to Admin Panel dashboard
                     ] {
                         "Tukosmo Admin Panel"
                     }
@@ -18,6 +18,7 @@ markup::define! {
                         span {}
                     }
                 }
+
                 div[
                     id = "navMenu",
                     class = "navbar-menu",
@@ -43,6 +44,32 @@ markup::define! {
                             target = "_blank",
                         ] {
                             "Help"
+                        }
+                    }
+
+                    div[class = "navbar-end"] {
+                        div[class = "navbar-item has-dropdown is-hoverable"] {
+                            a[class = "navbar-link"] {
+                                "Lajto (test@test.com)"
+                            }
+
+                            div[class = "navbar-dropdown is-right"] {
+                                a[class = "navbar-item"] {
+                                    "Profile"
+                                }
+                                a[class = "navbar-item"] {
+                                    "Sessions"
+                                }
+                                a[class = "navbar-item"] {
+                                    "Settings"
+                                }
+
+                                hr[class = "navbar-divider"];
+
+                                a[class = "navbar-item"] {
+                                    "Logout"
+                                }
+                            }
                         }
                     }
                 }

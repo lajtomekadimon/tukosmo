@@ -13,7 +13,8 @@ markup::define! {
             title: title,
             lang_code: lang_code,
             content: AdminPanel {
-                content: Content {}
+                content: Content {},
+                current_page: "dashboard",
             },
         }
     }

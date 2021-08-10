@@ -94,38 +94,41 @@ async fn main() -> std::io::Result<()> {
                     // Dashboard: /{lang}/admin/
                     .service(admin::dashboard::dashboard)
 
-                    /*// General
-                    .service(web::scope("/general")
-                        // Statistics: /{lang}/admin/general/statistics
-                        .service(__)
+                    // Login: /{lang}/admin/login
+                    .service(admin::login::login)
 
-                        // Server: /{lang}/admin/general/server
-                        .service(__)
-                    )
+                    //-- General --//
 
-                    // Data
-                    .service(web::scope("/data")
-                        // Users: /{lang}/admin/data/users
-                        .service(__)
+                    // Statistics: /{lang}/admin/statistics
+                    .service(admin::statistics::statistics)
 
-                        // Posts: /{lang}/admin/data/posts
-                        .service(__)
+                    // Server: /{lang}/admin/server
+                    .service(admin::server::server)
 
-                        // Pages: /{lang}/admin/data/pages
-                        .service(__)
+                    //-- Data --//
 
-                        // Files: /{lang}/admin/data/files
-                        .service(__)
-                    )
+                    // Users: /{lang}/admin/users
+                    .service(admin::users::users)
 
-                    // Settings
-                    .service(web::scope("/settings")
-                        // Website: /{lang}/admin/settings/website
-                        .service(__)
+                    // Languages: /{lang}/admin/languages
+                    .service(admin::languages::languages)
 
-                        // Tukosmo: /{lang}/admin/settings/tukosmo
-                        .service(__)
-                    )*/
+                    // Posts: /{lang}/admin/posts
+                    .service(admin::posts::posts)
+
+                    // Pages: /{lang}/admin/pages
+                    .service(admin::pages::pages)
+
+                    // Files: /{lang}/admin/files
+                    .service(admin::files::files)
+
+                    //-- Settings --//
+
+                    // Website: /{lang}/admin/website
+                    .service(admin::website::website)
+
+                    // Tukosmo: /{lang}/admin/tukosmo
+                    .service(admin::tukosmo::tukosmo)
                 )
             )
     })
