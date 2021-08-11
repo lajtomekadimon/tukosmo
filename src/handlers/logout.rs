@@ -9,6 +9,8 @@ async fn logout(
     // Delete auth cookie
     id.forget();
 
+    // TODO: Delete session from database!
+
     // Redirect to login page
     HttpResponse::Found()
         .header("Location", "/en/admin/login")

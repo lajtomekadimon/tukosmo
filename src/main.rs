@@ -10,6 +10,7 @@ mod config;
 mod auth;
 
 mod database;
+use crate::database::d_all_sessions::d_all_sessions;
 
 mod templates;
 
@@ -35,6 +36,11 @@ async fn main() -> std::io::Result<()> {
     minify_css();
 
     println!("Done!");
+    
+    // Delete all previous sessions
+    if let Err(e) = d_all_sessions() {
+        panic!("Database couldn't delete all sessions. Error: {}", e);
+    }
 
     // AUTH COOKIE
     // -----------
