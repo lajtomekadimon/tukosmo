@@ -2,6 +2,8 @@ use actix_web::{web, App, HttpServer};
 //use actix_web::http;
 //use actix_cors::Cors;
 use actix_files::Files;
+use actix_identity::{CookieIdentityPolicy, IdentityService};
+use rand::Rng;
 
 mod config;
 
@@ -12,7 +14,9 @@ mod database;
 mod templates;
 
 mod handlers;
-use crate::handlers::website::handler_website;
+use crate::handlers::root::root;
+use crate::handlers::login::login;
+use crate::handlers::logout::logout;
 use crate::handlers::home::handler_home;
 use crate::handlers::blog::handler_blog;
 use crate::handlers::blog_post::handler_blog_post;
@@ -31,23 +35,40 @@ async fn main() -> std::io::Result<()> {
     minify_css();
 
     println!("Done!");
+
+    // AUTH COOKIE
+    // -----------
+    // Generate a random 32 byte key. Note that it is important to use a
+    // unique private key for every project. Anyone with access to the
+    // key can generate authentication cookies for any user!
+    let private_key = rand::thread_rng().gen::<[u8; 32]>();
+
     println!("Server ready. Visit at: http://localhost:8080");
 
     // --------- //
 
-    HttpServer::new(|| {
+    HttpServer::new(move || {
         App::new()
             /*.wrap(Cors::default()
-                // TODO: This has to work with "*" instead of localhost!!!
-                .allowed_origin("http://localhost:5000")  // OLD
+                // TODO: This has to work with "*" instead of localhost!
+                .allowed_origin("http://localhost:8080")
 
                 .allowed_methods(vec!["GET", "POST"])
                 .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
                 .allowed_header(http::header::CONTENT_TYPE)
             )*/
+            .wrap(
+                IdentityService::new(
+                    CookieIdentityPolicy::new(&private_key)
+                        .name("auth")
+                        .secure(true)
+                        .http_only(true)
+                        .max_age(604800)  // 1 week
+                )
+            )
 
             // Website: /
-            .service(handler_website)
+            .service(root)
 
             // API
             .service(web::scope("/api")
@@ -74,6 +95,12 @@ async fn main() -> std::io::Result<()> {
             
             // Static files: /static/.../...
             .service(Files::new("/static", "static").show_files_listing())
+
+            // Login
+            .service(login)
+
+            // Logout
+            .service(logout)
 
             // HTML pages
             .service(web::scope("/{lang}")

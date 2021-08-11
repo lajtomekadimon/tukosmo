@@ -8,7 +8,7 @@ markup::define! {
                 div[class = "navbar-brand"] {
                     a[
                         class = "navbar-item brand-text",
-                        href = "/",  // link to Admin Panel dashboard
+                        href = "/en/admin/",  // TODO
                     ] {
                         "Tukosmo Admin Panel"
                     }
@@ -26,7 +26,7 @@ markup::define! {
                     div[class = "navbar-start"] {
                         a[
                             class = "navbar-item",
-                            href = "/",
+                            href = "/en/",  // TODO
                             target = "_blank",
                         ] {
                             "Visit website"
@@ -66,7 +66,10 @@ markup::define! {
 
                                 hr[class = "navbar-divider"];
 
-                                a[class = "navbar-item"] {
+                                a[
+                                    href = "/logout",
+                                    class = "navbar-item",
+                                ] {
                                     "Logout"
                                 }
                             }

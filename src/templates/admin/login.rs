@@ -30,10 +30,10 @@ markup::define! {
                         }
                         div[class = "box"] {
                             figure[class = "avatar"] {
-                                img[src = "http://placehold.it/128x128"];
+                                img[src = "http://placehold.it/128x128"];  // TODO: Tukosmo logo
                             }
                             form[
-                                action = "/api/json/user/login",
+                                action = "/login",
                                 method = "post",
                             ] {
                                 div[class = "field"] {
@@ -42,7 +42,7 @@ markup::define! {
                                             class = "input is-large",
                                             name = "email",
                                             type = "email",
-                                            placeholder = "Your Email",
+                                            placeholder = "Your email",
                                             autofocus = "",
                                         ];
                                     }
@@ -53,7 +53,7 @@ markup::define! {
                                             class = "input is-large",
                                             name = "password",
                                             type = "password",
-                                            placeholder = "Your Password",
+                                            placeholder = "Your password",
                                         ];
                                     }
                                 }
@@ -76,17 +76,17 @@ markup::define! {
 
                         p[class = "has-text-grey"] {
                             a[href = "/"] {
-                                "Sign Up"
+                                "Sign up"
                             }
                             " · "
 
                             a[href = "/"] {
-                                "Forgot Password"
+                                "Forgot password"
                             }
                             " · "
                             
                             a[href = "/"] {
-                                "Need Help?"
+                                "Need help?"
                             }
                         }
                     }

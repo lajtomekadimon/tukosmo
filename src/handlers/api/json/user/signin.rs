@@ -1,8 +1,12 @@
-use actix_web::{post, HttpResponse, Responder};
+use actix_web::{post, web, Responder};
+use serde_json::json;
 
 
 // TODO
 #[post("/signin")]
 async fn signin() -> impl Responder {
-    HttpResponse::Ok().body("Sign in!")
+
+    web::Json(
+        json!("Here I should do the sign in! :D")
+    )
 }

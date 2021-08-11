@@ -1,35 +1,71 @@
 use actix_web::{get, HttpRequest, HttpResponse, Responder};
+use actix_identity::Identity;
+use uuid::Uuid;
 
-//use crate::auth::current_session::current_session;
+use crate::database::s_user_by_session::s_user_by_session;
 use crate::templates::admin::statistics::Statistics;
 
 
 #[get("/statistics")]
 async fn statistics(
     req: HttpRequest,
+    id: Identity,
 ) -> impl Responder {
     let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();
 
-    let resp;
+    // Cookie has a session
+    if let Some(session_uuid) = id.identity() {
 
-    // '_' from _session_id is temporal
-    //if let Some(_session_id) = current_session(req.clone()) {
+        if let Ok(session_id) = Uuid::parse_str(
+            &session_uuid
+        ) {
 
-        let html = Statistics {
-            title: "Statistics - Tukosmo Admin Panel",
-            lang_code: &lang_value,
-        };
+            // Session is active
+            if let Ok(_user_id) = s_user_by_session(session_id) {
 
-        resp = HttpResponse::Ok().body(html.to_string());
+                let html = Statistics {
+                    title: "Statistics - Tukosmo Admin Panel",
+                    lang_code: &lang_value,
+                };
 
-    // ERROR: Auth error
-    /*} else {
+                HttpResponse::Ok().body(html.to_string())
 
-        // TODO: Use correct language
-        resp = HttpResponse::Found().header("Location", "/en/admin/login").finish()
+            // Session has expired
+            // TODO: "Your session has expired."
+            } else {
 
-    }*/
+                // Delete cookie
+                id.forget();
 
-    resp
+                // Redirect to login
+                HttpResponse::Found()
+                    .header("Location", "/en/admin/login")
+                    .finish()
+
+            }
+
+        // TODO: "Session ID is not a valid UUID."
+        } else {
+
+            // Delete cookie
+            id.forget();
+
+            // Redirect to login
+            HttpResponse::Found()
+                .header("Location", "/en/admin/login")
+                .finish()
+
+        }
+
+    // No session
+    // TODO: "You need to login first."
+    } else {
+
+        // Redirect to login
+        HttpResponse::Found()
+            .header("Location", "/en/admin/login")
+            .finish()
+
+    }
 }
 
