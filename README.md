@@ -1,7 +1,14 @@
-# Tukosmo (this is a work in progress!)
-Website generator made with Rust and PostgreSQL.
+<div align="center">
 
-This is my first Rust project. I'm still learning the language,
+![Tukosmo](./static/faviconadmin/favicon-96x96.png)
+
+**Tukosmo** (WIP!): Website generator made with Rust and PostgreSQL.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/lajtomekadimon/tukosmo/blob/main/LICENSE)
+
+</div>
+
+IMPORTANT NOTE: This is my first Rust project. I'm still learning the language,
 so don't expect high quality code (yet).
 
 ## TODO
@@ -22,6 +29,17 @@ Website features:
 - [ ] Blog.
 - [ ] Pages.
 - [ ] Admin panel.
+    - [x] Cookie-based auth.
+    - [ ] Dashboard.
+    - [ ] Statistics.
+    - [ ] Server.
+    - [ ] Users.
+    - [ ] Languages.
+    - [ ] Posts.
+    - [ ] Pages.
+    - [ ] Files.
+    - [ ] Website.
+    - [ ] Tukosmo.
 
 ## Instalation
 
