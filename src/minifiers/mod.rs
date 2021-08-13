@@ -1,1 +1,1 @@
-pub mod css;
+pub mod minify_css;

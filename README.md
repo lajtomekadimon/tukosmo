@@ -8,20 +8,21 @@
 
 </div>
 
-IMPORTANT NOTE: This is my first Rust project. I'm still learning the language,
-so don't expect high quality code (yet).
+NOTE: This is my first Rust project. I'm still learning the language, so
+don't expect high quality code (yet).
 
 ## TODO
 
 Technical features:
 
-- [x] Zero unsafe code.
 - [x] No ORM! Pure SQL code called by native PostgreSQL driver.
 - [x] Blazingly fast HTML rendering with [markup.rs](https://github.com/utkarshkukreti/markup.rs).
 - [x] Automatic CSS minifying to one single file.
 - [ ] Automatic JavaScript minifying to one single file.
-- [x] Common HTML to all themes; a Tukosmo theme is just CSS code!
-- [x] i18n implemented in routes (good for SEO).
+- [x] Themes are just CSS code; all themes share the same HTML.
+- [ ] Internationalization.
+- [x] Website's language set by URL (good for SEO).
+- [x] Cookie-based auth.
 
 Website features:
 
@@ -29,7 +30,6 @@ Website features:
 - [ ] Blog.
 - [ ] Pages.
 - [ ] Admin panel.
-    - [x] Cookie-based auth.
     - [ ] Dashboard.
     - [ ] Statistics.
     - [ ] Server.

@@ -2,6 +2,7 @@ use actix_web::{get, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use uuid::Uuid;
 
+use crate::i18n::t::t;
 use crate::database::s_user_by_session::s_user_by_session;
 use crate::templates::admin::dashboard::Dashboard;
 
@@ -11,7 +12,7 @@ async fn dashboard(
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
-    let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();
+    let lang_code: String = req.match_info().get("lang").unwrap().parse().unwrap();
 
     // Cookie has a session
     if let Some(session_uuid) = id.identity() {
@@ -24,8 +25,8 @@ async fn dashboard(
             if let Ok(_user_id) = s_user_by_session(session_id) {
 
                 let html = Dashboard {
-                    title: "Dashboard - Tukosmo Admin Panel",
-                    lang_code: &lang_value,
+                    title: &t("Tukosmo Admin Panel", &lang_code),
+                    lang_code: &lang_code,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

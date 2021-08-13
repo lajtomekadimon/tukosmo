@@ -12,6 +12,8 @@ mod auth;
 mod database;
 use crate::database::d_all_sessions::d_all_sessions;
 
+mod i18n;
+
 mod templates;
 
 mod handlers;
@@ -26,7 +28,7 @@ use crate::handlers::admin;
 use crate::handlers::api;
 
 mod minifiers;
-use crate::minifiers::css::minify_css;
+use crate::minifiers::minify_css::minify_css;
 
 
 #[actix_web::main]
