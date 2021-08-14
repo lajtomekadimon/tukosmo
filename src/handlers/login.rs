@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use serde::Deserialize;
 use bcrypt::verify;
@@ -9,19 +9,16 @@ use crate::database::new_user_session::new_user_session;
 
 
 #[derive(Deserialize)]
-struct FormData {
+pub struct FormData {
     email: String,
     password: String,
 }
 
-#[post("/login")]
-async fn login(
+pub async fn login(
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
 ) -> impl Responder {
-    //let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();
-
     let email_value = (form.email).clone();
     let password_value = (form.password).clone();
 

@@ -1,9 +1,8 @@
-use actix_web::{get, HttpResponse, Responder};
+use actix_web::{HttpResponse, Responder};
 use actix_identity::Identity;
 
 
-#[get("/logout")]
-async fn logout(
+pub async fn logout(
     id: Identity,
 ) -> impl Responder {
     // Delete auth cookie
@@ -13,6 +12,6 @@ async fn logout(
 
     // Redirect to login page
     HttpResponse::Found()
-        .header("Location", "/en/admin/login")
+        .header("Location", "/en/admin/login")  // TODO: Correct {lang}
         .finish()
 }

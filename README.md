@@ -20,7 +20,7 @@ Technical features:
 - [x] Automatic CSS minifying to one single file.
 - [ ] Automatic JavaScript minifying to one single file.
 - [x] Themes are just CSS code; all themes share the same HTML.
-- [ ] Internationalization (i18n).
+- [x] Internationalization (i18n).
 - [x] Website's language set by URL (good for SEO).
 - [x] Cookie-based auth.
 

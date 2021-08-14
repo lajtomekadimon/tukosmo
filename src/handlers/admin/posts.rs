@@ -1,17 +1,19 @@
-use actix_web::{get, HttpRequest, HttpResponse, Responder};
+use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use uuid::Uuid;
 
+use crate::i18n::t::t;
 use crate::database::s_user_by_session::s_user_by_session;
 use crate::templates::admin::posts::Posts;
 
 
-#[get("/posts")]
-async fn posts(
+pub async fn posts(
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
-    let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();
+    let lang_code: String = req.match_info().get("lang").unwrap().parse().unwrap();
+
+    let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);
 
     // Cookie has a session
     if let Some(session_uuid) = id.identity() {
@@ -24,8 +26,12 @@ async fn posts(
             if let Ok(_user_id) = s_user_by_session(session_id) {
 
                 let html = Posts {
-                    title: "Posts - Tukosmo Admin Panel",
-                    lang_code: &lang_value,
+                    title: &format!(
+                        "{a} - {b}",
+                        a = &t("Posts", &lang_code),
+                        b = &t("Tukosmo Admin Panel", &lang_code)
+                    ),
+                    lang_code: &lang_code,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
@@ -39,7 +45,7 @@ async fn posts(
 
                 // Redirect to login
                 HttpResponse::Found()
-                    .header("Location", "/en/admin/login")
+                    .header("Location", login_route)
                     .finish()
 
             }
@@ -52,7 +58,7 @@ async fn posts(
 
             // Redirect to login
             HttpResponse::Found()
-                .header("Location", "/en/admin/login")
+                .header("Location", login_route)
                 .finish()
 
         }
@@ -63,7 +69,7 @@ async fn posts(
 
         // Redirect to login
         HttpResponse::Found()
-            .header("Location", "/en/admin/login")
+            .header("Location", login_route)
             .finish()
 
     }

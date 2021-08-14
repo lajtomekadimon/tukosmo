@@ -1,11 +1,10 @@
-use actix_web::{post, web, Responder};
+use actix_web::{web, Responder};
 use serde_json::{Value, json};
 
 use crate::database::aj_query::aj_query;
 
 
-#[post("/query")]
-async fn query(
+pub async fn query(
 
     json_input: web::Json<Value>
 

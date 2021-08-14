@@ -1,4 +1,4 @@
-use actix_web::{get, HttpRequest, HttpResponse, Responder};
+use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use uuid::Uuid;
 
@@ -7,12 +7,13 @@ use crate::database::s_user_by_session::s_user_by_session;
 use crate::templates::admin::dashboard::Dashboard;
 
 
-#[get("/")]
-async fn dashboard(
+pub async fn dashboard(
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
     let lang_code: String = req.match_info().get("lang").unwrap().parse().unwrap();
+
+    let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);
 
     // Cookie has a session
     if let Some(session_uuid) = id.identity() {
@@ -40,7 +41,7 @@ async fn dashboard(
 
                 // Redirect to login
                 HttpResponse::Found()
-                    .header("Location", "/en/admin/login")
+                    .header("Location", login_route)
                     .finish()
 
             }
@@ -53,7 +54,7 @@ async fn dashboard(
 
             // Redirect to login
             HttpResponse::Found()
-                .header("Location", "/en/admin/login")
+                .header("Location", login_route)
                 .finish()
 
         }
@@ -64,7 +65,7 @@ async fn dashboard(
 
         // Redirect to login
         HttpResponse::Found()
-            .header("Location", "/en/admin/login")
+            .header("Location", login_route)
             .finish()
 
     }

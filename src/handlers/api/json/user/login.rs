@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpRequest, Responder};
+use actix_web::{web, HttpRequest, Responder};
 use serde::Deserialize;
 use serde_json::{Value, json};
 use bcrypt::verify;
@@ -12,13 +12,12 @@ use crate::auth::create_token::create_token;
 
 
 #[derive(Deserialize)]
-struct FormData {
+pub struct FormData {
     email: String,
     password: String,
 }
 
-#[post("/login")]
-async fn login(
+pub async fn login(
 
     req: HttpRequest,
     form: web::Form<FormData>

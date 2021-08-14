@@ -16,6 +16,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Help [noun]" => "Help",
         "I hope you are having a great day!" => "I hope you are having a great day!",
         "Languages" => "Languages",
+        "Login [noun]" => "Login",
         "Login [verb]" => "Login",
         "Logout [verb]" => "Logout",
         "Pages" => "Pages",

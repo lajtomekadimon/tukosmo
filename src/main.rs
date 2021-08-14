@@ -75,95 +75,198 @@ async fn main() -> std::io::Result<()> {
                 )
             )
 
-            // Website: /
-            .service(root)
+            // Website root URL: /
+            .service(web::resource("/")
+                .route(web::get().to(root))
+            )
 
             // API
             .service(web::scope("/api")
                 .service(web::scope("/json")
-                    // Query: /api/json/query
-                    .service(api::json::query::query)
+                    // Query
+                    .service(web::resource("/query")
+                        .route(web::post()
+                            .to(api::json::query::query)
+                        )
+                    )
 
-                    // Update: /api/json/update
-                    .service(api::json::update::update)
+                    // Update
+                    .service(web::resource("/update")
+                        .route(web::post()
+                            .to(api::json::update::update)
+                        )
+                    )
 
                     // User
                     .service(web::scope("/user")
-                        // Login: /api/json/user/login
-                        .service(api::json::user::login::login)
-                        // Logout: /api/json/user/logout
-                        .service(api::json::user::logout::logout)
-                        // Signin: /api/json/user/singin
-                        .service(api::json::user::signin::signin)
-                        // Update: /api/json/user/update
-                        .service(api::json::user::update::update),
+                        // Login
+                        .service(web::resource("/login")
+                            .route(web::post()
+                                .to(api::json::user::login::login)
+                            )
+                        )
+
+                        // Logout
+                        .service(web::resource("/logout")
+                            .route(web::post()
+                                .to(api::json::user::logout::logout)
+                            )
+                        )
+
+                        // Sign in
+                        .service(web::resource("/signin")
+                            .route(web::post()
+                                .to(api::json::user::signin::signin)
+                            )
+                        )
+
+                        // Update
+                        .service(web::resource("/update")
+                            .route(web::post()
+                                .to(api::json::user::update::update)
+                            )
+                        )
                     ),
                 ),
             )
             
             // Static files: /static/.../...
-            .service(Files::new("/static", "static").show_files_listing())
+            .service(Files::new(
+                // Website route
+                "/static",
+                // System dir
+                "static",
+            ).show_files_listing())
 
             // Login
-            .service(login)
+            .service(web::resource("/login")
+                .route(web::post().to(login))
+            )
 
             // Logout
-            .service(logout)
+            .service(web::resource("/logout")
+                .route(web::get().to(logout))
+            )
+
+            // Homepage (/{lang})
+            .service(web::resource("/{lang}")
+                .route(web::get().to(handler_home))
+            )
 
             // HTML pages
             .service(web::scope("/{lang}")
-                // Home: /{lang}
-                .service(handler_home)
+                // Homepage (/{lang}/)
+                .service(web::resource("/")
+                    .route(web::get()
+                        .to(handler_home)
+                    )
+                )
 
-                // Blog: /{lang}/blog
-                .service(handler_blog)
+                // Blog
+                .service(web::resource("/blog")
+                    .route(web::get()
+                        .to(handler_blog)
+                    )
+                )
 
-                // Blog post: /{lang}/blog/{title}
-                .service(handler_blog_post)
+                // Blog post
+                .service(web::resource("/blog/{title}")
+                    .route(web::get()
+                        .to(handler_blog_post)
+                    )
+                )
 
-                // Page: /{lang}/page/{title}
-                .service(handler_page)
+                // Page
+                .service(web::resource("/page/{title}")
+                    .route(web::get()
+                        .to(handler_page)
+                    )
+                )
 
                 // Admin Panel
                 .service(web::scope("/admin")
-                    // Dashboard: /{lang}/admin/
-                    .service(admin::dashboard::dashboard)
+                    // Dashboard
+                    .service(web::resource("/")
+                        .route(web::get()
+                            .to(admin::dashboard::dashboard)
+                        )
+                    )
 
-                    // Login: /{lang}/admin/login
-                    .service(admin::login::login)
+                    // Login:
+                    .service(web::resource("/login")
+                        .route(web::get()
+                            .to(admin::login::login)
+                        )
+                    )
 
                     //-- General --//
 
-                    // Statistics: /{lang}/admin/statistics
-                    .service(admin::statistics::statistics)
+                    // Statistics
+                    .service(web::resource("/statistics")
+                        .route(web::get()
+                            .to(admin::statistics::statistics)
+                        )
+                    )
 
-                    // Server: /{lang}/admin/server
-                    .service(admin::server::server)
+                    // Server
+                    .service(web::resource("/server")
+                        .route(web::get()
+                            .to(admin::server::server)
+                        )
+                    )
 
                     //-- Data --//
 
-                    // Users: /{lang}/admin/users
-                    .service(admin::users::users)
+                    // Users
+                    .service(web::resource("/users")
+                        .route(web::get()
+                            .to(admin::users::users)
+                        )
+                    )
 
-                    // Languages: /{lang}/admin/languages
-                    .service(admin::languages::languages)
+                    // Languages
+                    .service(web::resource("/languages")
+                        .route(web::get()
+                            .to(admin::languages::languages)
+                        )
+                    )
 
-                    // Posts: /{lang}/admin/posts
-                    .service(admin::posts::posts)
+                    // Posts
+                    .service(web::resource("/posts")
+                        .route(web::get()
+                            .to(admin::posts::posts)
+                        )
+                    )
 
-                    // Pages: /{lang}/admin/pages
-                    .service(admin::pages::pages)
+                    // Pages
+                    .service(web::resource("/pages")
+                        .route(web::get()
+                            .to(admin::pages::pages)
+                        )
+                    )
 
-                    // Files: /{lang}/admin/files
-                    .service(admin::files::files)
+                    // Files
+                    .service(web::resource("/files")
+                        .route(web::get()
+                            .to(admin::files::files)
+                        )
+                    )
 
                     //-- Settings --//
 
-                    // Website: /{lang}/admin/website
-                    .service(admin::website::website)
+                    // Website
+                    .service(web::resource("/website")
+                        .route(web::get()
+                            .to(admin::website::website)
+                        )
+                    )
 
-                    // Tukosmo: /{lang}/admin/tukosmo
-                    .service(admin::tukosmo::tukosmo)
+                    // Tukosmo
+                    .service(web::resource("/tukosmo")
+                        .route(web::get()
+                            .to(admin::tukosmo::tukosmo)
+                        )
+                    )
                 )
             )
     })

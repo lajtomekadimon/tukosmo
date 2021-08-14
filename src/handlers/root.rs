@@ -1,10 +1,10 @@
-use actix_web::{get, HttpResponse, Responder};
+use actix_web::{HttpResponse, Responder};
 
 
-// TODO
-#[get("/")]
-async fn root() -> impl Responder {
-    // TODO: Redirect to /en, /es, etc. using HTTP header's language
-    HttpResponse::Found().header("Location", "/en/").finish()
+pub async fn root() -> impl Responder {
+    HttpResponse::Found().header(
+        "Location",
+        "/{lang}/".replace("{lang}", "en")  // TODO: change "en" to HTTP's header language
+    ).finish()
 }
 

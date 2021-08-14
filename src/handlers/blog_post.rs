@@ -1,18 +1,20 @@
-use actix_web::{get, HttpRequest, HttpResponse, Responder};
+use actix_web::{HttpRequest, HttpResponse, Responder};
 
 use crate::templates::website::blog_post::BlogPost;
 
 
-// TODO
-#[get("/blog/{title}")]
-async fn handler_blog_post(
+pub async fn handler_blog_post(
     req: HttpRequest,
 ) -> impl Responder {
-    let lang_value: String = req.match_info().get("lang").unwrap().parse().unwrap();
+    let lang_code: String = req.match_info().get("lang").unwrap().parse().unwrap();
 
     let html = BlogPost {
-        title: "Tukosmo blog post",
-        lang_code: &lang_value,
+        title: &format!(
+            "{a} - {b}",
+            a = "[post title]",
+            b = "MyExample"
+        ),
+        lang_code: &lang_code,
     };
 
     HttpResponse::Ok().body(html.to_string())

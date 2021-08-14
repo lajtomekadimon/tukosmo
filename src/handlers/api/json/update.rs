@@ -1,4 +1,4 @@
-use actix_web::{post, web, HttpRequest, Responder};
+use actix_web::{web, HttpRequest, Responder};
 use serde_json::{Value, json};
 
 use crate::auth::current_session::current_session;
@@ -6,8 +6,7 @@ use crate::auth::current_session_json::current_session_json;
 use crate::database::aj_update::aj_update;
 
 
-#[post("/update")]
-async fn update(
+pub async fn update(
 
     req: HttpRequest,
 
