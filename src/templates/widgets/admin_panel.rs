@@ -8,14 +8,18 @@ markup::define! {
     AdminPanel<'a, BodyContent: markup::Render>(
         content: BodyContent,
         current_page: &'a str,
+        lang_code: &'a str,
     ) {
-        @AdminNavbar {}
+        @AdminNavbar {
+            lang_code: lang_code,
+        }
 
         div[class = "container"] {
             div[class = "columns"] {
                 div[class = "column is-3"] {
                     @AdminSidebar {
                         current_page: current_page,
+                        lang_code: lang_code,
                     }
                 }
                 div[class = "column is-9"] {

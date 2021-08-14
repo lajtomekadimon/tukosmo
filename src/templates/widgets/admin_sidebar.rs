@@ -1,9 +1,12 @@
 use markup;
 
+use crate::i18n::t::t;
+
 
 markup::define! {
     AdminSidebar<'a>(
         current_page: &'a str,
+        lang_code: &'a str,
     ) {
         aside[class = "menu is-hidden-mobile"] {
             /* Dashboard
@@ -15,14 +18,16 @@ markup::define! {
                         class = if current_page == &"dashboard" {
                             "is-active"
                         } else { "" },
-                    ] { "Dashboard" }
+                    ] {
+                        {&t("Dashboard", lang_code)}
+                    }
                 }
             }
 
             /* General
              * * * * * */
             p[class = "menu-label"] {
-                "General"
+                {&t("General", lang_code)}
             }
             ul[class = "menu-list"] {
 
@@ -32,7 +37,9 @@ markup::define! {
                         class = if current_page == &"statistics" {
                             "is-active"
                         } else { "" },
-                    ] { "Statistics" }
+                    ] {
+                        {&t("Statistics", lang_code)}
+                    }
                 }
                 li {
                     a[
@@ -40,14 +47,16 @@ markup::define! {
                         class = if current_page == &"server" {
                             "is-active"
                         } else { "" },
-                    ] { "Server" }
+                    ] {
+                        {&t("Server", lang_code)}
+                    }
                 }
             }
 
             /* Data
              * * * * */
             p[class = "menu-label"] {
-                "Data"
+                {&t("Data", lang_code)}
             }
             ul[class = "menu-list"] {
                 li {
@@ -56,7 +65,9 @@ markup::define! {
                         class = if current_page == &"users" {
                             "is-active"
                         } else { "" },
-                    ] { "Users" }
+                    ] {
+                        {&t("Users", lang_code)}
+                    }
                 }
                 li {
                     a[
@@ -64,7 +75,9 @@ markup::define! {
                         class = if current_page == &"languages" {
                             "is-active"
                         } else { "" },
-                    ] { "Languages" }
+                    ] {
+                        {&t("Languages", lang_code)}
+                    }
                 }
                 li {
                     a[
@@ -72,22 +85,44 @@ markup::define! {
                         class = if current_page == &"posts" {
                             "is-active"
                         } else { "" },
-                    ] { "Posts" }
+                    ] {
+                        {&t("Posts", lang_code)}
+                    }
                     ul {
                         li {
-                            a { "Drafts" }
+                            a[
+                                href = "/en/admin/posts",
+                            ] {
+                                {&t("Drafts", lang_code)}
+                            }
                         }
                         li {
-                            a { "Scheduled" }
+                            a[
+                                href = "/en/admin/posts",
+                            ] {
+                                {&t("Scheduled [posts]", lang_code)}
+                            }
                         }
                         li {
-                            a { "Published" }
+                            a[
+                                href = "/en/admin/posts",
+                            ] {
+                                {&t("Published [posts]", lang_code)}
+                            }
                         }
                         li {
-                            a { "Untranslated" }
+                            a[
+                                href = "/en/admin/posts",
+                            ] {
+                                {&t("Untranslated [posts]", lang_code)}
+                            }
                         }
                         li {
-                            a { "Trash" }
+                            a[
+                                href = "/en/admin/posts",
+                            ] {
+                                {&t("Trash", lang_code)}
+                            }
                         }
                     }
                 }
@@ -97,7 +132,9 @@ markup::define! {
                         class = if current_page == &"pages" {
                             "is-active"
                         } else { "" },
-                    ] { "Pages" }
+                    ] {
+                        {&t("Pages", lang_code)}
+                    }
                 }
                 li {
                     a[
@@ -105,14 +142,16 @@ markup::define! {
                         class = if current_page == &"files" {
                             "is-active"
                         } else { "" },
-                    ] { "Files" }
+                    ] {
+                        {&t("Files", lang_code)}
+                    }
                 }
             }
 
             /* Settings
              * * * * * * */
             p[class = "menu-label"] {
-                "Settings"
+                {&t("Settings", lang_code)}
             }
             ul[class = "menu-list"] {
                 li {
@@ -121,7 +160,9 @@ markup::define! {
                         class = if current_page == &"website" {
                             "is-active"
                         } else { "" },
-                    ] { "Website" }
+                    ] {
+                        {&t("Website", lang_code)}
+                    }
                 }
                 li {
                     a[
@@ -129,7 +170,9 @@ markup::define! {
                         class = if current_page == &"tukosmo" {
                             "is-active"
                         } else { "" },
-                    ] { "Tukosmo" }
+                    ] {
+                        {&t("Tukosmo", lang_code)}
+                    }
                 }
             }
 

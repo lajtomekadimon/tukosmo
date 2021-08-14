@@ -1,5 +1,6 @@
 use markup;
 
+use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 
@@ -13,26 +14,35 @@ markup::define! {
             title: title,
             lang_code: lang_code,
             content: AdminPanel {
-                content: Content {},
+                content: Content {
+                    lang_code: lang_code,
+                },
                 current_page: "dashboard",
+                lang_code: lang_code,
             },
         }
     }
 
-    Content() {
+    Content<'a>(
+        lang_code: &'a str,
+    ) {
         section[class = "hero is-info welcome is-small"] {
             div[class = "hero-body"] {
                 div[class = "container"] {
                     h1[class = "title"] {
-                        "Hello, Lajto."
+                        {&t("Hello, {name}.", lang_code).replace(
+                            "{name}",
+                            "Lajto",  // TODO: username
+                        )}
                     }
                     h2[class = "subtitle"] {
-                        "I hope you are having a great day!"
+                        {&t("I hope you are having a great day!", lang_code)}
                     }
                 }
             }
         }
 
+        /*
         section[class = "info-tiles"] {
             div[class = "tile is-ancestor has-text-centered"] {
                 div[class = "tile is-parent"] {
@@ -61,6 +71,7 @@ markup::define! {
                 }
             }
         }
+        */
 
         /*
         div[class = "columns"] {

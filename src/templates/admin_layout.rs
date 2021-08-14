@@ -78,12 +78,6 @@ markup::define! {
                 link[
                     rel = "icon",
                     type = "image/png",
-                    sizes = "192x192",
-                    href = "/static/faviconadmin/favicon-192x192.png",
-                ];
-                link[
-                    rel = "icon",
-                    type = "image/png",
                     sizes = "32x32",
                     href = "/static/faviconadmin/favicon-32x32.png",
                 ];

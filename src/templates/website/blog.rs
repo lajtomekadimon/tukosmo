@@ -12,12 +12,18 @@ markup::define! {
         @Layout {
             title: title,
             lang_code: lang_code,
-            content: Content {},
+            content: Content {
+                lang_code: lang_code,
+            },
         }
     }
 
-    Content() {
-        @PostList {}
+    Content<'a>(
+        lang_code: &'a str,
+    ) {
+        @PostList {
+            lang_code: lang_code,
+        }
     }
 }
 

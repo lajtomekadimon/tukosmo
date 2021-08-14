@@ -1,18 +1,30 @@
 use markup;
 
+use crate::i18n::t::t;
+
 
 markup::define! {
-    PostList() {
+    PostList<'a>(
+        lang_code: &'a str,
+    ) {
         div[
             class = "post-list",
         ] {
-            @PostWrapper {}
-            @PostWrapper {}
-            @PostWrapper {}
+            @PostWrapper {
+                lang_code: lang_code,
+            }
+            @PostWrapper {
+                lang_code: lang_code,
+            }
+            @PostWrapper {
+                lang_code: lang_code,
+            }
         }
     }
 
-    PostWrapper() {
+    PostWrapper<'a>(
+        lang_code: &'a str,
+    ) {
         section[
             class = "post-wrapper"
         ] {
@@ -72,7 +84,7 @@ markup::define! {
                     a[
                         href = "/",
                     ] {
-                        "Read more"
+                        {&t("Read more", lang_code)}
                     }
                 }
             }

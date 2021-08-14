@@ -1,8 +1,12 @@
 use markup;
 
+use crate::i18n::t::t;
+
 
 markup::define! {
-    AdminNavbar() {
+    AdminNavbar<'a>(
+        lang_code: &'a str,
+    ) {
         nav[class = "navbar is-white"] {
             div[class = "container"] {
                 div[class = "navbar-brand"] {
@@ -10,7 +14,7 @@ markup::define! {
                         class = "navbar-item brand-text",
                         href = "/en/admin/",  // TODO
                     ] {
-                        "Tukosmo Admin Panel"
+                        {&t("Tukosmo Admin Panel", lang_code)}
                     }
                     div[class = "navbar-burger burger"] {
                         span {}
@@ -29,21 +33,21 @@ markup::define! {
                             href = "/en/",  // TODO
                             target = "_blank",
                         ] {
-                            "Visit website"
+                            {&t("Visit website", lang_code)}
                         }
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's docs
                             target = "_blank",
                         ] {
-                            "Documentation"
+                            {&t("Documentation", lang_code)}
                         }
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's help
                             target = "_blank",
                         ] {
-                            "Help"
+                            {&t("Help [noun]", lang_code)}
                         }
                     }
 
@@ -55,13 +59,13 @@ markup::define! {
 
                             div[class = "navbar-dropdown is-right"] {
                                 a[class = "navbar-item"] {
-                                    "Profile"
+                                    {&t("Account", lang_code)}
                                 }
                                 a[class = "navbar-item"] {
-                                    "Sessions"
+                                    {&t("Sessions", lang_code)}
                                 }
                                 a[class = "navbar-item"] {
-                                    "Settings"
+                                    {&t("Settings", lang_code)}
                                 }
 
                                 hr[class = "navbar-divider"];
@@ -70,7 +74,7 @@ markup::define! {
                                     href = "/logout",
                                     class = "navbar-item",
                                 ] {
-                                    "Logout"
+                                    {&t("Logout [verb]", lang_code)}
                                 }
                             }
                         }

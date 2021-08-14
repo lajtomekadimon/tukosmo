@@ -15,6 +15,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {},
                 current_page: "pages",
+                lang_code: lang_code,
             },
         }
     }
