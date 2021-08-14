@@ -55,6 +55,11 @@ markup::define! {
                                         ];
                                     }
                                 }
+                                input[
+                                    name = "lang",
+                                    type = "hidden",
+                                    value = &lang_code,
+                                ];
                                 button[
                                     class = "button is-block is-info is-large is-fullwidth",
                                 ] {

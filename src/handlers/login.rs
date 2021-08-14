@@ -12,6 +12,7 @@ use crate::database::new_user_session::new_user_session;
 pub struct FormData {
     email: String,
     password: String,
+    lang: String,
 }
 
 pub async fn login(
@@ -21,6 +22,9 @@ pub async fn login(
 ) -> impl Responder {
     let email_value = (form.email).clone();
     let password_value = (form.password).clone();
+    let lang_code = (form.lang).clone();
+
+    let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);
 
     let redirect_dir;
 
@@ -51,44 +55,44 @@ pub async fn login(
 
                             id.remember(session_id_up.to_owned());
 
-                            redirect_dir = "/en/admin/";  // TODO: true origin
+                            redirect_dir = "/{lang}/admin/".replace("{lang}", &lang_code);
 
                         } else {
 
-                            redirect_dir = "/en/admin/login";
+                            redirect_dir = login_route;
 
                         }
 
                     } else {
 
-                        redirect_dir = "/en/admin/login";
+                        redirect_dir = login_route;
 
                     }
 
                 } else {
 
-                    redirect_dir = "/en/admin/login";
+                    redirect_dir = login_route;
 
                 }
 
             // ERROR: Password is not correct
             } else {
 
-                redirect_dir = "/en/admin/login";
+                redirect_dir = login_route;
 
             }
 
         // ERROR: Bcrypt error (password is not correct?)
         } else {
 
-            redirect_dir = "/en/admin/login";
+            redirect_dir = login_route;
 
         }
 
     // ERROR: Database error
     } else {
 
-        redirect_dir = "/en/admin/login";
+        redirect_dir = login_route;
 
     }
 

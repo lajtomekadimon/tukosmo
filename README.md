@@ -15,6 +15,7 @@ don't expect high quality code (yet).
 
 Technical features:
 
+- [x] Blazingly fast web server using [Actix Web](https://github.com/actix/actix-web).
 - [x] No ORM! Pure SQL code called by native PostgreSQL driver.
 - [x] Blazingly fast HTML rendering with [markup.rs](https://github.com/utkarshkukreti/markup.rs).
 - [x] Automatic CSS minifying to one single file.

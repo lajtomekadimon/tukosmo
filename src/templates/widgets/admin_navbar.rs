@@ -12,7 +12,7 @@ markup::define! {
                 div[class = "navbar-brand"] {
                     a[
                         class = "navbar-item brand-text",
-                        href = "/en/admin/",  // TODO
+                        href = "/{lang}/admin/".replace("{lang}", &lang_code),
                     ] {
                         {&t("Tukosmo Admin Panel", lang_code)}
                     }
@@ -30,7 +30,7 @@ markup::define! {
                     div[class = "navbar-start"] {
                         a[
                             class = "navbar-item",
-                            href = "/en/",  // TODO
+                            href = "/{lang}/".replace("{lang}", &lang_code),
                             target = "_blank",
                         ] {
                             {&t("Visit website", lang_code)}
@@ -71,7 +71,7 @@ markup::define! {
                                 hr[class = "navbar-divider"];
 
                                 a[
-                                    href = "/logout",
+                                    href = "/logout?lang={lang}".replace("{lang}", &lang_code),
                                     class = "navbar-item",
                                 ] {
                                     {&t("Logout [verb]", lang_code)}

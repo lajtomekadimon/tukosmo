@@ -183,9 +183,16 @@ async fn main() -> std::io::Result<()> {
                     )
                 )
 
+                // Admin Panel dashboard (/{lang}/admin)
+                .service(web::resource("/admin")
+                    .route(web::get()
+                        .to(admin::dashboard::dashboard)
+                    )
+                )
+
                 // Admin Panel
                 .service(web::scope("/admin")
-                    // Dashboard
+                    // Dashboard (/{lang}/admin/)
                     .service(web::resource("/")
                         .route(web::get()
                             .to(admin::dashboard::dashboard)

@@ -14,7 +14,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/en/admin/",  // TODO
+                        href = "/{lang}/admin/".replace("{lang}", &lang_code),
                         class = if current_page == &"dashboard" {
                             "is-active"
                         } else { "" },
@@ -33,7 +33,7 @@ markup::define! {
 
                 li {
                     a[
-                        href = "/en/admin/statistics",  // TODO
+                        href = "/{lang}/admin/statistics".replace("{lang}", &lang_code),
                         class = if current_page == &"statistics" {
                             "is-active"
                         } else { "" },
@@ -43,7 +43,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/en/admin/server",  // TODO
+                        href = "/{lang}/admin/server".replace("{lang}", &lang_code),
                         class = if current_page == &"server" {
                             "is-active"
                         } else { "" },
@@ -61,7 +61,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/en/admin/users",  // TODO
+                        href = "/{lang}/admin/users".replace("{lang}", &lang_code),
                         class = if current_page == &"users" {
                             "is-active"
                         } else { "" },
@@ -71,7 +71,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/en/admin/languages",  // TODO
+                        href = "/{lang}/admin/languages".replace("{lang}", &lang_code),
                         class = if current_page == &"languages" {
                             "is-active"
                         } else { "" },
@@ -81,7 +81,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/en/admin/posts",  // TODO
+                        href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                         class = if current_page == &"posts" {
                             "is-active"
                         } else { "" },
@@ -91,35 +91,35 @@ markup::define! {
                     ul {
                         li {
                             a[
-                                href = "/en/admin/posts",
+                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                             ] {
                                 {&t("Drafts", lang_code)}
                             }
                         }
                         li {
                             a[
-                                href = "/en/admin/posts",
+                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                             ] {
                                 {&t("Scheduled [posts]", lang_code)}
                             }
                         }
                         li {
                             a[
-                                href = "/en/admin/posts",
+                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                             ] {
                                 {&t("Published [posts]", lang_code)}
                             }
                         }
                         li {
                             a[
-                                href = "/en/admin/posts",
+                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                             ] {
                                 {&t("Untranslated [posts]", lang_code)}
                             }
                         }
                         li {
                             a[
-                                href = "/en/admin/posts",
+                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                             ] {
                                 {&t("Trash", lang_code)}
                             }
@@ -128,7 +128,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/en/admin/pages",  // TODO
+                        href = "/{lang}/admin/pages".replace("{lang}", &lang_code),
                         class = if current_page == &"pages" {
                             "is-active"
                         } else { "" },
@@ -138,7 +138,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/en/admin/files",  // TODO
+                        href = "/{lang}/admin/files".replace("{lang}", &lang_code),
                         class = if current_page == &"files" {
                             "is-active"
                         } else { "" },
@@ -156,7 +156,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/en/admin/website",  // TODO
+                        href = "/{lang}/admin/website".replace("{lang}", &lang_code),
                         class = if current_page == &"website" {
                             "is-active"
                         } else { "" },
@@ -166,7 +166,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/en/admin/tukosmo",  // TODO
+                        href = "/{lang}/admin/tukosmo".replace("{lang}", &lang_code),
                         class = if current_page == &"tukosmo" {
                             "is-active"
                         } else { "" },
