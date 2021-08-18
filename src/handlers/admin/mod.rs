@@ -1,3 +1,4 @@
+pub mod admin_handler;
 pub mod dashboard;
 pub mod login;
 pub mod statistics;

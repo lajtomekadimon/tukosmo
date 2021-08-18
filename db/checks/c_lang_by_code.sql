@@ -1,0 +1,24 @@
+
+CREATE OR REPLACE FUNCTION c_lang_by_code(
+
+    lang_code TEXT
+
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT EXISTS(
+    SELECT 1
+    FROM t_lang_codes
+    WHERE tlc_code = lang_code
+    LIMIT 1
+)
+
+$$;

@@ -62,7 +62,8 @@ structuredb:
 	@echo "Creating structure..."
 	su -m postgres -c "cat $(STRUDB) | psql -q -d $(PG_DB)"
 
-DFUNDB=db/selects/*.sql \
+DFUNDB=db/checks/*.sql \
+       db/selects/*.sql \
        db/inserts/*.sql \
        db/deletes/*.sql \
        db/updates/*.sql \

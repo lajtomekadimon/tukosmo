@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION s_lang_id_by_code(
+
+    lang_code TEXT
+
+)
+
+RETURNS BIGINT
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT tlc_id
+FROM t_lang_codes
+WHERE tlc_code = lang_code
+LIMIT 1
+
+$$;
