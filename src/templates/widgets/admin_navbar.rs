@@ -11,10 +11,10 @@ markup::define! {
             div[class = "container"] {
                 div[class = "navbar-brand"] {
                     a[
-                        class = "navbar-item brand-text",
+                        class = "navbar-item brand-text tap-logo",
                         href = "/{lang}/admin/".replace("{lang}", &lang_code),
                     ] {
-                        {&t("Tukosmo Admin Panel", lang_code)}
+                        //{&t("Tukosmo Admin Panel", lang_code)}
                     }
                     div[class = "navbar-burger burger"] {
                         span {}
