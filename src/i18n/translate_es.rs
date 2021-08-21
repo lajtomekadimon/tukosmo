@@ -16,7 +16,6 @@ pub fn translate_es(text_value: &str) -> &str {
         "Edit language: '{lang}'" => "Editar idioma: '{lang}'",
         "Example: en" => "Ejemplo: en",
         "Files" => "Archivos",
-        "Flag" => "Bandera",
         "Forgotten password?" => "¿Contraseña olvidada?",
         "General" => "General",
         "Hello, {name}." => "Hola, {name}.",

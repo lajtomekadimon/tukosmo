@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::database::s_languages::s_languages;
 
 
 markup::define! {
@@ -50,41 +51,32 @@ markup::define! {
                             {&t("Code", lang_code)}
                         }
                         th {
-                            {&t("Flag", lang_code)}
-                        }
-                        th {
                             {&t("Last update", lang_code)}
                         }
                     }
                 }
                 tbody {
-                    tr {
-                        td {
-                            a[
-                                href = "/{lang}/admin/edit_language?id=".replace("{lang}", lang_code),
-                            ] {
-                                "English"
+                    @for lang in s_languages(lang_code.to_string()) {
+                        tr {
+                            td {
+                                a[
+                                    href = "/{lang}/admin/edit_language?id={id}"
+                                        .replace("{lang}", lang_code)
+                                        .replace(
+                                            "{id}",
+                                            &lang.id.to_string()
+                                        ),
+                                ] {
+                                    @lang.name
+                                }
+                            }
+                            td {
+                                @lang.code
+                            }
+                            td {
+                                @lang.date
                             }
                         }
-                        td { "en" }
-                        td {
-                            img[src = "https://lajto.com/wp-content/uploads/2021/02/me.png"];
-                        }
-                        td { "2021-08-21 10:37" }
-                    }
-                    tr {
-                        td {
-                            a[
-                                href = "/{lang}/admin/edit_language?id=".replace("{lang}", lang_code),
-                            ] {
-                                "Spanish"
-                            }
-                        }
-                        td { "es" }
-                        td {
-                            img[src = "https://lajto.com/wp-content/uploads/2021/02/me.png"];
-                        }
-                        td { "2021-08-21 10:37" }
                     }
                 }
             }
