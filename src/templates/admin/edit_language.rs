@@ -6,7 +6,7 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 
 
 markup::define! {
-    NewLanguage<'a>(
+    EditLanguage<'a>(
         title: &'a str,
         lang_code: &'a str,
     ) {
@@ -28,7 +28,10 @@ markup::define! {
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Add language", lang_code)}
+                {&t(
+                    "Edit language: '{lang}'",
+                    lang_code
+                ).replace("{lang}", "en")}  // TODO
             }
 
             form[
@@ -44,6 +47,7 @@ markup::define! {
                             class = "input",
                             type = "text",
                             name = "lang_code",
+                            value = "en",  // TODO
                             placeholder = &t("Example: en", lang_code),
                         ];
                     }
@@ -65,6 +69,7 @@ markup::define! {
                                     class = "input",
                                     type = "text",
                                     name = "",
+                                    value = "English",  // TODO
                                 ];
                             }
                         }
@@ -80,6 +85,7 @@ markup::define! {
                                     class = "input",
                                     type = "text",
                                     name = "",
+                                    value = "Inglés",
                                 ];
                             }
                         }

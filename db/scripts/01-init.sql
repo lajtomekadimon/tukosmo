@@ -36,13 +36,13 @@ BEGIN
 
     PERFORM i_language(
         lang_code_es,
-        'español',
+        'Español',
         lang_code_es
     );
 
     PERFORM i_language(
         lang_code_en,
-        'inglés',
+        'Inglés',
         lang_code_es
     );
 
