@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::database::s_languages::s_languages;
 
 
 markup::define! {
@@ -54,33 +55,20 @@ markup::define! {
                         {&t("Language name", lang_code)}
                     }
                     p[class = "control"] {
-                        div[class = "field has-addons is-marginless"] {
-                            div[class = "control"] {
-                                span[class = "button is-static"] {
-                                    "English"
+                        @for lang in s_languages(lang_code.to_string()) {
+                            div[class = "field has-addons is-marginless"] {
+                                div[class = "control"] {
+                                    span[class = "button is-static"] {
+                                        @lang.name
+                                    }
                                 }
-                            }
-                            div[class = "control is-expanded"] {
-                                input[
-                                    class = "input",
-                                    type = "text",
-                                    name = "",
-                                ];
-                            }
-                        }
-
-                        div[class = "field has-addons is-marginless"] {
-                            div[class = "control"] {
-                                span[class = "button is-static"] {
-                                    "Spanish"
+                                div[class = "control is-expanded"] {
+                                    input[
+                                        class = "input",
+                                        type = "text",
+                                        name = "name".to_owned() + &lang.id.to_string(),
+                                    ];
                                 }
-                            }
-                            div[class = "control is-expanded"] {
-                                input[
-                                    class = "input",
-                                    type = "text",
-                                    name = "",
-                                ];
                             }
                         }
                     }
