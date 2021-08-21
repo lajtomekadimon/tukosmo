@@ -237,6 +237,11 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::languages::languages)
                         )
                     )
+                    .service(web::resource("/new_language")
+                        .route(web::get()
+                            .to(admin::new_language::new_language)
+                        )
+                    )
 
                     // Posts
                     .service(web::resource("/posts")

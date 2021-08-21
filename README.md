@@ -23,6 +23,7 @@ Technical features:
 - [x] Themes are just CSS code; all themes share the same HTML.
 - [x] Internationalization (i18n).
 - [x] Website's language set by URL (good for SEO).
+- [x] Custom languages.
 - [x] Cookie-based auth.
 
 Website features:

@@ -10,3 +10,4 @@ pub mod files;
 pub mod website;
 pub mod tukosmo;
 
+pub mod new_language;
