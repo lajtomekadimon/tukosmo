@@ -69,6 +69,10 @@ markup::define! {
                                 ] {
                                     @lang.name
                                 }
+
+                                @if !lang.has_all_names {
+                                    " (!)"
+                                }
                             }
                             td {
                                 @lang.code

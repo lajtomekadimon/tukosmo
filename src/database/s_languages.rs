@@ -8,6 +8,7 @@ pub struct LanguageDB {
     pub code: String,
     pub name: String,
     pub date: String,
+    pub has_all_names: bool,
 }
 
 pub fn s_languages(
@@ -25,6 +26,7 @@ pub fn s_languages(
                 let lang_code: String = row.get("tlc_code");
                 let lang_name: String = row.get("tl_name");
                 let date_value: String = row.get("tl_date");
+                let has_all_names: bool = row.get("tl_has_all_names");
 
                 vec.push(
                     LanguageDB {
@@ -32,6 +34,7 @@ pub fn s_languages(
                         code: lang_code,
                         name: lang_name,
                         date: date_value,
+                        has_all_names: has_all_names,
                     }
                 );                
             }
