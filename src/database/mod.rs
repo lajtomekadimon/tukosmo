@@ -1,5 +1,7 @@
 pub mod aj_query;
 pub mod aj_update;
+pub mod aw_new_language;
+
 pub mod new_user_session;
 pub mod s_lang_code_by_id;
 pub mod s_languages;

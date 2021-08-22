@@ -12,4 +12,5 @@ pub mod website;
 pub mod tukosmo;
 
 pub mod new_language;
+pub mod new_language_post;
 pub mod edit_language;

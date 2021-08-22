@@ -34,7 +34,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "",
+                action = "/{lang}/admin/new_language_post".replace("{lang}", lang_code),
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
@@ -64,9 +64,14 @@ markup::define! {
                                 }
                                 div[class = "control is-expanded"] {
                                     input[
+                                        type = "hidden",
+                                        name = "lang_id",
+                                        value = &lang.id.to_string(),
+                                    ];
+                                    input[
                                         class = "input",
                                         type = "text",
-                                        name = "name".to_owned() + &lang.id.to_string(),
+                                        name = "lang_name",
                                     ];
                                 }
                             }

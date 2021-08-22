@@ -67,6 +67,7 @@ DFUNDB=db/checks/*.sql \
        db/inserts/*.sql \
        db/deletes/*.sql \
        db/updates/*.sql \
+       db/api/web/*.sql \
        db/api/json/*.sql
 
 dfunctionsdb:
