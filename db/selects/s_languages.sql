@@ -22,5 +22,6 @@ FROM t_lang_codes
 LEFT JOIN t_languages
 ON tlc_id = tl_lang_code
 WHERE tl_lang = language_of_user
+ORDER BY tl_name
 
 $$;

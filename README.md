@@ -19,7 +19,9 @@ Technical features:
 - [x] No ORM! Pure SQL code called by native PostgreSQL driver.
 - [x] Blazingly fast HTML rendering with [markup.rs](https://github.com/utkarshkukreti/markup.rs).
 - [x] Automatic CSS minifying to one single file.
+- [x] Everything works without JavaScript, which is optional.
 - [ ] Automatic JavaScript minifying to one single file.
+- [ ] Zero external resources. (CSS, JavaScript, images, etc.)
 - [x] Themes are just CSS code; all themes share the same HTML.
 - [x] Internationalization (i18n).
 - [x] Website's language set by URL (good for SEO).
