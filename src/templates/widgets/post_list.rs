@@ -1,6 +1,7 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::database::s_posts::s_posts;
 
 
 markup::define! {
@@ -10,81 +11,78 @@ markup::define! {
         div[
             class = "post-list",
         ] {
-            @PostWrapper {
-                lang_code: lang_code,
-            }
-            @PostWrapper {
-                lang_code: lang_code,
-            }
-            @PostWrapper {
-                lang_code: lang_code,
-            }
-        }
-    }
-
-    PostWrapper<'a>(
-        lang_code: &'a str,
-    ) {
-        section[
-            class = "post-wrapper"
-        ] {
-            div[
-                class = "post-wrapper-image"
-            ] {
-                a[
-                    href = "/",
-                ] {
-                    figure[
-                        style = "background-image: url(https://www.azamara.com/sites/default/files/heros/reykjavik-iceland-1800x1000.jpg);",
-                    ] {}
-                }
-            }
-
-            div[
-                class = "post-wrapper-data",
-            ] {
-                div[
-                    class = "post-wrapper-data-meta",
+            @for post in s_posts(lang_code.to_string()) {
+                section[
+                    class = "post-wrapper"
                 ] {
                     div[
-                        class = "post-wrapper-data-meta-date",
+                        class = "post-wrapper-image"
                     ] {
                         a[
-                            href = "/",
+                            href = "/{lang}/blog/{permalink}"
+                                .replace("{lang}", lang_code)
+                                .replace("{permalink}", &post.permalink.to_string()),
                         ] {
-                            time[
-                                datetime = "2021-08-11T20:37:29+00:00",
-                            ] {
-                                "August 1, 2021"
-                            }
+                            figure[
+                                style = "background-image: url(https://www.azamara.com/sites/default/files/heros/reykjavik-iceland-1800x1000.jpg);",
+                            ] {}
                         }
                     }
-                }
 
-                h2 {
-                    a[
-                        href = "/",
+                    div[
+                        class = "post-wrapper-data",
                     ] {
-                        "The Reykjavík test post"
-                    }
-                }
+                        div[
+                            class = "post-wrapper-data-meta",
+                        ] {
+                            div[
+                                class = "post-wrapper-data-meta-date",
+                            ] {
+                                a[
+                                    href = "/{lang}/blog/{permalink}"
+                                        .replace("{lang}", lang_code)
+                                        .replace("{permalink}", &post.permalink.to_string()),
+                                ] {
+                                    time[
+                                        datetime = "2021-08-11T20:37:29+00:00",
+                                    ] {
+                                        // TODO: "August 1, 2021"
+                                        @post.date
+                                    }
+                                }
+                            }
+                        }
 
-                p {
-                    "Bla bla bla bla bla bla bla bla bla "
-                    "Bla bla bla bla bla bla bla bla bla "
-                    "Bla bla bla bla bla bla bla bla bla "
-                    "Bla bla bla bla bla bla bla bla bla "
-                    "Bla bla bla bla bla bla bla bla bla "
-                    "Bla bla bla bla bla bla bla bla bla."
-                }
+                        h2 {
+                            a[
+                                href = "/{lang}/blog/{permalink}"
+                                    .replace("{lang}", lang_code)
+                                    .replace("{permalink}", &post.permalink.to_string()),
+                            ] {
+                                @post.title
+                            }
+                        }
 
-                div[
-                    class = "post-wrapper-data-more",
-                ] {
-                    a[
-                        href = "/",
-                    ] {
-                        {&t("Read more", lang_code)}
+                        p {
+                            "Bla bla bla bla bla bla bla bla bla "
+                            "Bla bla bla bla bla bla bla bla bla "
+                            "Bla bla bla bla bla bla bla bla bla "
+                            "Bla bla bla bla bla bla bla bla bla "
+                            "Bla bla bla bla bla bla bla bla bla "
+                            "Bla bla bla bla bla bla bla bla bla."
+                        }
+
+                        div[
+                            class = "post-wrapper-data-more",
+                        ] {
+                            a[
+                                href = "/{lang}/blog/{permalink}"
+                                    .replace("{lang}", lang_code)
+                                    .replace("{permalink}", &post.permalink.to_string()),
+                            ] {
+                                {&t("Read more", lang_code)}
+                            }
+                        }
                     }
                 }
             }
