@@ -4,8 +4,8 @@ CREATE OR REPLACE FUNCTION s_languages(
 )
 
 RETURNS TABLE(
-    tlc_id INT8,
-    tlc_code TEXT,
+    tl_id INT8,
+    tl_code TEXT,
     tl_name TEXT,
     tl_date TEXT,
     tl_has_all_names BOOL
@@ -19,15 +19,15 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT
-    tlc_id,
-    tlc_code,
-    tl_name,
-    tl_date::TEXT,
-    c_language_has_all_names(tlc_id) AS tl_has_all_names
-FROM t_lang_codes
-LEFT JOIN t_languages
-ON tlc_id = tl_lang_code
-WHERE tl_lang = language_of_user
-ORDER BY tl_name
+    tl_id AS tl_id,
+    tl_code AS tl_code,
+    tln_name AS tl_name,
+    tln_date::TEXT AS tl_date,
+    c_language_has_all_names(tl_id) AS tl_has_all_names
+FROM t_languages
+LEFT JOIN t_language_names
+ON tl_id = tln_lang
+WHERE tln_name_lang = language_of_user
+ORDER BY tln_name
 
 $$;

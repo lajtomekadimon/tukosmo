@@ -13,9 +13,9 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT tl_name
-FROM t_languages
-WHERE tl_lang = language_of_name
-    AND tl_lang_code = language_id
+SELECT tln_name
+FROM t_language_names
+WHERE tln_name_lang = language_of_name
+    AND tln_lang = language_id
 
 $$;

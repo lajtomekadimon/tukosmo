@@ -3,7 +3,7 @@ CREATE TABLE t_posts (
 
     tp_id        BIGSERIAL   PRIMARY KEY,
     tp_post      BIGINT      NOT NULL REFERENCES t_post_ids,
-    tp_lang      BIGINT      NOT NULL REFERENCES t_lang_codes,
+    tp_lang      BIGINT      NOT NULL REFERENCES t_languages,
     tp_title     TEXT        NOT NULL,
     tp_body      TEXT        NOT NULL,
     tp_permalink TEXT        NOT NULL UNIQUE,  /* TODO: Check max length */

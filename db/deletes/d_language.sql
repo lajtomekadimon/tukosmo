@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE FUNCTION d_language(
 
-    language_id BIGINT
+    lang_id BIGINT
 
 )
 
@@ -17,9 +17,9 @@ AS $$
 BEGIN
 
     DELETE FROM t_languages
-    WHERE tl_id = language_id;
+    WHERE tl_id = lang_id;
 
-    RETURN language_id;
+    RETURN lang_id;
 
 END;
 

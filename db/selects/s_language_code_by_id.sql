@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION s_lang_code_by_id(
+CREATE OR REPLACE FUNCTION s_language_code_by_id(
 
     lang_id BIGINT
 
@@ -14,9 +14,9 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT tlc_code
-FROM t_lang_codes
-WHERE tlc_id = lang_id
+SELECT tl_code
+FROM t_languages
+WHERE tl_id = lang_id
 LIMIT 1
 
 $$;

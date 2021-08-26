@@ -18,12 +18,12 @@ pub fn s_languages(
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_languages(s_lang_id_by_code($1))",
+            "SELECT * FROM s_languages(s_language_id_by_code($1))",
             &[&lang_code,]
         ) {
             for row in rows {
-                let lang_id: i64 = row.get("tlc_id");
-                let lang_code: String = row.get("tlc_code");
+                let lang_id: i64 = row.get("tl_id");
+                let lang_code: String = row.get("tl_code");
                 let lang_name: String = row.get("tl_name");
                 let date_value: String = row.get("tl_date");
                 let has_all_names: bool = row.get("tl_has_all_names");
@@ -39,6 +39,7 @@ pub fn s_languages(
                 );                
             }
         }
+        // TODO: Control the error!
     }
 
     vec

@@ -16,8 +16,8 @@ AS $$
 
 SELECT EXISTS(
     SELECT 1
-    FROM t_lang_codes
-    WHERE tlc_code = lang_code
+    FROM t_languages
+    WHERE tl_code = lang_code
     LIMIT 1
 )
 

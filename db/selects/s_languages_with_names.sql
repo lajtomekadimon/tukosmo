@@ -18,22 +18,22 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT
-    tlc_id AS tl_id,
-    a.tl_name AS tl_name,
+    tl_id AS tl_id,
+    a.tln_name AS tl_name,
     CASE
         WHEN s_name_of_language(
             language_id,
-            tlc_id
+            tl_id
         ) IS NULL THEN ''
         ELSE s_name_of_language(
             language_id,
-            tlc_id
+            tl_id
         )
     END AS tl_trans_name
-FROM t_lang_codes
-LEFT JOIN t_languages a
-ON tlc_id = a.tl_lang_code
-WHERE a.tl_lang = language_of_user
-ORDER BY tl_name
+FROM t_languages
+LEFT JOIN t_language_names a
+ON tl_id = a.tln_lang
+WHERE a.tln_name_lang = language_of_user
+ORDER BY a.tln_name
 
 $$;

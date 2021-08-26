@@ -20,26 +20,27 @@ AS $$
 
 DECLARE
 
-    lang_code_id BIGINT;
+    language_id BIGINT;
     lang_name TEXT;
     lang_id BIGINT;
 
 BEGIN
 
-    lang_code_id := i_lang_code(code_value);
+    language_id := i_language(code_value);
 
     FOR i IN 1..ARRAY_LENGTH(lang_names, 1) LOOP
         lang_id := lang_ids[i];
         lang_name := lang_names[i];
 
-        PERFORM i_language(
-            lang_code_id,
+        PERFORM i_language_name(
+            language_id,
             lang_name,
             lang_id
         );
+        /* IDEA: Insert all of them at once using a SELECT */
     END LOOP;
 
-    RETURN lang_code_id;
+    RETURN language_id;
 
 END;
 

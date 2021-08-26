@@ -1,12 +1,9 @@
 
 CREATE TABLE t_languages (
 
-    tl_id        BIGSERIAL   PRIMARY KEY,
-    tl_lang_code BIGINT      NOT NULL REFERENCES t_lang_codes,
-    tl_name      TEXT        NOT NULL,
-    tl_lang      BIGINT      NOT NULL REFERENCES t_lang_codes,
-    tl_date      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-
-    UNIQUE(tl_lang_code, tl_lang)
+    tl_id   BIGSERIAL   PRIMARY KEY,
+    tl_code TEXT        NOT NULL UNIQUE CHECK (CHAR_LENGTH(tl_code) BETWEEN 2 AND 5),
+                                       /* TODO: Check is azAZ_- */
+    tl_date TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
 );

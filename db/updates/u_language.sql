@@ -1,9 +1,9 @@
 
 CREATE OR REPLACE FUNCTION u_language(
 
-    language_id BIGINT,
+    lang_id BIGINT,
 
-    name_value TEXT
+    code_value TEXT
 
 )
 
@@ -19,10 +19,10 @@ AS $$
 BEGIN
 
     UPDATE t_languages
-    SET tl_name = name_value
-    WHERE tl_id = language_id;
+    SET tl_code = code_value
+    WHERE tl_id = lang_id;
 
-    RETURN language_id;
+    RETURN lang_id;
 
 END;
 

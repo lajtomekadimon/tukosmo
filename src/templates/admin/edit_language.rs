@@ -43,13 +43,19 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "",
+                action = "/{lang}/admin/edit_language_post"
+                    .replace("{lang}", &lang_code),
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
                         {&t("Code", lang_code)}
                     }
                     div[class = "control"] {
+                        input[
+                            type = "hidden",
+                            name = "language_id",
+                            value = &lang_id.to_string(),
+                        ];
                         input[
                             class = "input",
                             type = "text",
@@ -65,7 +71,10 @@ markup::define! {
                         {&t("Language name", lang_code)}
                     }
                     p[class = "control"] {
-                        @for lang in s_languages_with_names(lang_code.to_string(), *lang_id.clone()) {
+                        @for lang in s_languages_with_names(
+                            lang_code.to_string(),
+                            *lang_id.clone()
+                        ) {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
@@ -74,9 +83,14 @@ markup::define! {
                                 }
                                 div[class = "control is-expanded"] {
                                     input[
+                                        type = "hidden",
+                                        name = "lang_id",
+                                        value = &lang.id.to_string(),
+                                    ];
+                                    input[
                                         class = "input",
                                         type = "text",
-                                        name = "name".to_owned() + &lang.id.to_string(),
+                                        name = "lang_name",
                                         value = lang.trans_name,
                                     ];
                                 }
@@ -93,7 +107,8 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/languages".replace("{lang}", lang_code),
+                            href = "/{lang}/admin/languages"
+                                .replace("{lang}", lang_code),
                             class = "button is-link is-light",
                         ] {
                             {&t("Cancel", lang_code)}

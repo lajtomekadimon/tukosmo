@@ -56,6 +56,7 @@ markup::define! {
                     }
                 }
                 tbody {
+                    // TODO: Show languages without a name in the current language
                     @for lang in s_languages(lang_code.to_string()) {
                         tr {
                             td {

@@ -17,7 +17,7 @@ pub fn s_languages_with_names(
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_languages_with_names(s_lang_id_by_code($1), $2)",
+            "SELECT * FROM s_languages_with_names(s_language_id_by_code($1), $2)",
             &[&language_code, &language_id]
         ) {
             for row in rows {

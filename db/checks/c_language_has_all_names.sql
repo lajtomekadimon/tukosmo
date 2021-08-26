@@ -16,11 +16,11 @@ AS $$
 
 SELECT NOT EXISTS(
     SELECT 1
-    FROM t_lang_codes
-    LEFT JOIN t_languages
-    ON tlc_id = tl_lang
-        AND tl_lang_code = language_id
-    WHERE tl_lang IS NULL
+    FROM t_languages
+    LEFT JOIN t_language_names
+    ON tl_id = tln_name_lang
+        AND tln_lang = language_id
+    WHERE tln_lang IS NULL
     LIMIT 1
 )
 

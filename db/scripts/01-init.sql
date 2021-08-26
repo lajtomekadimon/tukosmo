@@ -7,8 +7,8 @@ $$
 
 DECLARE
 
-    lang_code_en BIGINT;
-    lang_code_es BIGINT;
+    lang_en BIGINT;
+    lang_es BIGINT;
 
 BEGIN
 
@@ -18,32 +18,32 @@ BEGIN
         'Tukosmo'
     );
 
-    lang_code_en := i_lang_code('en');
+    lang_en := i_language('en');
 
-    PERFORM i_language(
-        lang_code_en,
+    PERFORM i_language_name(
+        lang_en,
         'English',
-        lang_code_en
+        lang_en
     );
 
-    lang_code_es := i_lang_code('es');
+    lang_es := i_language('es');
 
-    PERFORM i_language(
-        lang_code_es,
+    PERFORM i_language_name(
+        lang_es,
         'Spanish',
-        lang_code_en
+        lang_en
     );
 
-    PERFORM i_language(
-        lang_code_es,
+    PERFORM i_language_name(
+        lang_es,
         'Español',
-        lang_code_es
+        lang_es
     );
 
-    PERFORM i_language(
-        lang_code_en,
+    PERFORM i_language_name(
+        lang_en,
         'Inglés',
-        lang_code_es
+        lang_es
     );
 
 END;
