@@ -27,6 +27,8 @@ use crate::handlers::page::handler_page;
 use crate::handlers::admin;
 use crate::handlers::api;
 
+mod markdown;
+
 mod minifiers;
 use crate::minifiers::minify_css::minify_css;
 
@@ -170,14 +172,14 @@ async fn main() -> std::io::Result<()> {
                 )
 
                 // Blog post
-                .service(web::resource("/blog/{title}")
+                .service(web::resource("/blog/{permalink}")
                     .route(web::get()
                         .to(handler_blog_post)
                     )
                 )
 
                 // Page
-                .service(web::resource("/page/{title}")
+                .service(web::resource("/page/{permalink}")
                     .route(web::get()
                         .to(handler_page)
                     )

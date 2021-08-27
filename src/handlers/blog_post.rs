@@ -2,23 +2,39 @@ use actix_web::{HttpRequest, HttpResponse, Responder};
 
 use crate::templates::website::blog_post::BlogPost;
 use crate::i18n::current_language::current_language;
+use crate::database::s_post_by_lang_permalink::s_post_by_lang_permalink;
 
 
 pub async fn handler_blog_post(
     req: HttpRequest,
 ) -> impl Responder {
+    let permalink_value: String = req.match_info()
+        .get("permalink").unwrap().parse().unwrap();
+
     if let Some(lang_code) = current_language(req) {
 
-        let html = BlogPost {
-            title: &format!(
-                "{a} - {b}",
-                a = "[post title]",
-                b = "MyExample"
-            ),
-            lang_code: &lang_code,
-        };
+        if let Some(post) = s_post_by_lang_permalink(
+            lang_code.clone(),
+            permalink_value
+        ) {
 
-        HttpResponse::Ok().body(html.to_string())
+            let html = BlogPost {
+                title: &format!(
+                    "{a} - {b}",
+                    a = post.title,
+                    b = "MyExample"
+                ),
+                lang_code: &lang_code,
+                post: &post,
+            };
+
+            HttpResponse::Ok().body(html.to_string())
+            
+        } else {
+
+            HttpResponse::Ok().body("Error 404")  // TODO
+
+        }
 
     } else {
 

@@ -13,6 +13,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Data" => "Datos",
         "Documentation" => "Documentación",
         "Drafts" => "Borradores",
+        "Edit" => "Editar",
         "Edit language: '{lang}'" => "Editar idioma: '{lang}'",
         "Example: en" => "Ejemplo: en",
         "Files" => "Archivos",
