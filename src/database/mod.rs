@@ -12,4 +12,4 @@ pub mod s_user_by_session;
 pub mod c_lang_by_code;
 pub mod d_all_sessions;
 pub mod s_post_by_lang_permalink;
-pub mod s_posts;
+pub mod s_posts_by_lang;

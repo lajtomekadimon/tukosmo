@@ -1,7 +1,12 @@
 use markup;
 
 use crate::i18n::t::t;
-use crate::database::s_posts::s_posts;
+use crate::database::s_posts_by_lang::s_posts_by_lang;
+
+/* TODO:
+ * - Show something when no articles
+ * - Pagination
+ */
 
 
 markup::define! {
@@ -11,7 +16,7 @@ markup::define! {
         div[
             class = "post-list",
         ] {
-            @for post in s_posts(lang_code.to_string()) {
+            @for post in s_posts_by_lang(lang_code.to_string()) {
                 section[
                     class = "post-wrapper"
                 ] {
