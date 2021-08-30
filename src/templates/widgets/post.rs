@@ -46,21 +46,47 @@ markup::define! {
                         span[
                             class = "post-meta-author",
                         ] {
-                            "Lajto Mekadimon"
+                            a[
+                                href = "/{lang}/blog"
+                                    .replace("{lang}", lang_code)
+                                ,
+                            ] {
+                                @post.author_name
+                            }
+
+                            @if post.author != post.original_author {
+                                " ("
+                                {
+                                    &t("translated by {name}", lang_code)
+                                        .replace("{name}", &post.original_author_name)
+                                }
+                                ")"
+                            }
                         }
                         
                         span[
                             class = "post-meta-date",
                         ] {
-                            //"August 27, 2021"
-                            @post.date
+                            a[
+                                href = "/{lang}/blog"
+                                    .replace("{lang}", lang_code)
+                                ,
+                            ] {
+                                //"August 27, 2021"
+                                @post.date
+                            }
                         }
                         
                         span[
                             class = "post-meta-edit",
                         ] {
-                            //"August 27, 2021"
-                            {&t("Edit", lang_code)}
+                            a[
+                                href = "/{lang}/blog"
+                                    .replace("{lang}", lang_code)
+                                ,
+                            ] {
+                                {&t("Edit", lang_code)}
+                            }
                         }
                     }
                 }

@@ -59,6 +59,9 @@ markup::define! {
                         th {
                             {&t("Author", lang_code)}
                         }
+                        th {
+                            {&t("Original author", lang_code)}
+                        }
                     }
                 }
                 tbody {
@@ -107,6 +110,18 @@ markup::define! {
                                     ] {
                                         @post.author_name
                                     }
+                                }
+                            }
+                            td {
+                                a[
+                                    href = "/{lang}/admin/edit_user?id={id}"
+                                        .replace("{lang}", lang_code)
+                                        .replace(
+                                            "{id}",
+                                            &post.original_author.to_string()
+                                        ),
+                                ] {
+                                    @post.original_author_name
                                 }
                             }
                         }

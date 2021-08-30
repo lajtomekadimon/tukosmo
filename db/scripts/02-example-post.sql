@@ -18,7 +18,9 @@ DECLARE
 
 BEGIN
 
-    post_id := i_post_id();
+    post_id := i_post_id(
+        1  -- user ID
+    );
 
     post_title := 'Example post';
     post_description :=

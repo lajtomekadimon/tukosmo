@@ -13,6 +13,8 @@ RETURNS TABLE(
     tp_permalink TEXT,
     tp_author BIGINT,
     tp_author_name TEXT,
+    tp_original_author BIGINT,
+    tp_original_author_name TEXT,
     tp_date TEXT,
     tp_date_trans TEXT,
     tp_has_all_trans BOOL,
@@ -73,10 +75,14 @@ SELECT
     END AS tp_author,
 
     CASE
-        WHEN tu_name IS NULL
+        WHEN a.tu_name IS NULL
         THEN ''
-        ELSE tu_name
+        ELSE a.tu_name
     END AS tp_author_name,
+
+    tpi_author AS tp_original_author,
+
+    b.tu_name AS tp_original_author_name,
 
     tpi_date::TEXT AS tp_date,
 
@@ -108,11 +114,13 @@ ON tpi_id = tp_post
         THEN TRUE
         ELSE tp_lang = language_of_user
     END
-    AND (NOT tp_deleted)
-    AND (NOT tp_draft)
+    AND NOT tp_deleted
 
-LEFT JOIN t_users
-ON tp_author = tu_id
+LEFT JOIN t_users a
+ON tp_author = a.tu_id
+
+INNER JOIN t_users b
+ON tpi_author = b.tu_id
 
 ORDER BY tpi_date DESC
 

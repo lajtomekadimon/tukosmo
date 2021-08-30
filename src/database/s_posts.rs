@@ -12,6 +12,8 @@ pub struct PostDB {
     pub permalink: String,
     pub author: i64,
     pub author_name: String,
+    pub original_author: i64,
+    pub original_author_name: String,
     pub date: String,
     pub date_trans: String,
     pub has_all_trans: bool,
@@ -38,6 +40,8 @@ pub fn s_posts(
                 let post_permalink: String = row.get("tp_permalink");
                 let post_author: i64 = row.get("tp_author");
                 let post_author_name: String = row.get("tp_author_name");
+                let post_original_author: i64 = row.get("tp_original_author");
+                let post_original_author_name: String = row.get("tp_original_author_name");
                 let post_date: String = row.get("tp_date");
                 let post_date_trans: String = row.get("tp_date_trans");
                 let post_has_all_trans: bool = row.get("tp_has_all_trans");
@@ -54,6 +58,8 @@ pub fn s_posts(
                         permalink: post_permalink,
                         author: post_author,
                         author_name: post_author_name,
+                        original_author: post_original_author,
+                        original_author_name: post_original_author_name,
                         date: post_date,
                         date_trans: post_date_trans,
                         has_all_trans: post_has_all_trans,

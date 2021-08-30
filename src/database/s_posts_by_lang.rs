@@ -10,6 +10,9 @@ pub struct PostDB {
     pub body: String,
     pub permalink: String,
     pub author: i64,
+    pub author_name: String,
+    pub original_author: i64,
+    pub original_author_name: String,
     pub date: String,
     pub date_trans: String,
 }
@@ -31,6 +34,9 @@ pub fn s_posts_by_lang(
                 let post_body: String = row.get("tp_body");
                 let post_permalink: String = row.get("tp_permalink");
                 let post_author: i64 = row.get("tp_author");
+                let post_author_name: String = row.get("tp_author_name");
+                let post_original_author: i64 = row.get("tp_original_author");
+                let post_original_author_name: String = row.get("tp_original_author_name");
                 let post_date: String = row.get("tp_date");
                 let post_date_trans: String = row.get("tp_date_trans");
 
@@ -42,6 +48,9 @@ pub fn s_posts_by_lang(
                         body: post_body,
                         permalink: post_permalink,
                         author: post_author,
+                        author_name: post_author_name,
+                        original_author: post_original_author,
+                        original_author_name: post_original_author_name,
                         date: post_date,
                         date_trans: post_date_trans,
                     }
