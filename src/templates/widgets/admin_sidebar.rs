@@ -100,13 +100,6 @@ markup::define! {
                             a[
                                 href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
                             ] {
-                                {&t("Scheduled [posts]", lang_code)}
-                            }
-                        }
-                        li {
-                            a[
-                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
-                            ] {
                                 {&t("Published [posts]", lang_code)}
                             }
                         }
