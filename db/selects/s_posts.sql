@@ -7,6 +7,7 @@ RETURNS TABLE(
     tp_id BIGINT,
     tp_lang BIGINT,
     tp_title TEXT,
+    tp_description TEXT,
     tp_body TEXT,
     tp_permalink TEXT,
     tp_author BIGINT,
@@ -35,6 +36,12 @@ SELECT
         THEN ''
         ELSE tp_title::TEXT
     END AS tp_title,
+
+    CASE
+        WHEN tp_description IS NULL
+        THEN ''
+        ELSE tp_description::TEXT
+    END AS tp_description,
 
     CASE
         WHEN tp_body IS NULL

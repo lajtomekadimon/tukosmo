@@ -12,6 +12,7 @@ DECLARE
 
     post_id BIGINT;
     post_title TEXT;
+    post_description TEXT;
     permalink_value TEXT;
     post_body TEXT;
 
@@ -20,6 +21,8 @@ BEGIN
     post_id := i_post_id();
 
     post_title := 'Example post';
+    post_description :=
+        'In this post, we will test MarkDown (CommonMark).';
     permalink_value := 'example-post';
     
 
@@ -170,6 +173,7 @@ With a reference later in the document defining the URL location:
         post_id,
         s_language_id_by_code('en'),
         post_title,
+        post_description,
         post_body,
         permalink_value,
         1,  -- user ID

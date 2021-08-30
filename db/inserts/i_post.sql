@@ -7,6 +7,8 @@ CREATE OR REPLACE FUNCTION i_post(
 
     title_value TEXT,
 
+    description_value TEXT,
+
     body_value TEXT,
 
     permalink_value TEXT,
@@ -37,6 +39,7 @@ BEGIN
         tp_post,
         tp_lang,
         tp_title,
+        tp_description,
         tp_body,
         tp_permalink,
         tp_author,
@@ -48,6 +51,7 @@ BEGIN
         post_id,
         lang_id,
         title_value,
+        description_value,
         body_value,
         permalink_value,
         author_id,

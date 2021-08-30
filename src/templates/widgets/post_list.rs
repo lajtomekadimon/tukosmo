@@ -64,12 +64,7 @@ markup::define! {
                         }
 
                         p {
-                            "Bla bla bla bla bla bla bla bla bla "
-                            "Bla bla bla bla bla bla bla bla bla "
-                            "Bla bla bla bla bla bla bla bla bla "
-                            "Bla bla bla bla bla bla bla bla bla "
-                            "Bla bla bla bla bla bla bla bla bla "
-                            "Bla bla bla bla bla bla bla bla bla."
+                            @post.description
                         }
 
                         div[

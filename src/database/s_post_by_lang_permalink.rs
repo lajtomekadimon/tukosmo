@@ -7,6 +7,7 @@ pub struct PostDB {
     pub id: i64,
     pub lang: i64,
     pub title: String,
+    pub description: String,
     pub body: String,
     pub permalink: String,
     pub author: i64,
@@ -29,6 +30,7 @@ pub fn s_post_by_lang_permalink(
                 let post_id: i64 = row.get("tp_id");
                 let post_lang: i64 = row.get("tp_lang");
                 let post_title: String = row.get("tp_title");
+                let post_description: String = row.get("tp_description");
                 let post_body: String = row.get("tp_body");
                 let post_permalink: String = row.get("tp_permalink");
                 let post_author: i64 = row.get("tp_author");
@@ -40,6 +42,7 @@ pub fn s_post_by_lang_permalink(
                         id: post_id,
                         lang: post_lang,
                         title: post_title,
+                        description: post_description,
                         body: post_body,
                         permalink: post_permalink,
                         author: post_author,

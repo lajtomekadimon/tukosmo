@@ -27,6 +27,7 @@ Technical features:
 - [x] Website's language set by URL (good for SEO).
 - [x] Custom languages.
 - [x] Cookie-based auth.
+- [x] CommonMark-based posts and pages.
 
 Website features:
 
