@@ -1,6 +1,7 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::database::s_languages::s_languages;
@@ -78,7 +79,7 @@ markup::define! {
                                 @lang.code
                             }
                             td {
-                                @lang.date
+                                {t_date(&lang.date, lang_code)}
                             }
                         }
                     }

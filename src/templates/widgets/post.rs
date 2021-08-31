@@ -1,6 +1,7 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::i18n::t_date::t_date;
 use crate::database::s_post_by_lang_permalink::PostDB;
 use crate::markdown::render_html::render_html;
 
@@ -72,8 +73,7 @@ markup::define! {
                                     .replace("{lang}", lang_code)
                                 ,
                             ] {
-                                //"August 27, 2021"
-                                @post.date
+                                {t_date(&post.date, lang_code)}
                             }
                         }
                         

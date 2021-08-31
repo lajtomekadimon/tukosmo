@@ -1,6 +1,7 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::database::s_posts::s_posts;
@@ -93,10 +94,10 @@ markup::define! {
                                 }
                             }
                             td {
-                                @post.date
+                                {t_date(&post.date, lang_code)}
                             }
                             td {
-                                @post.date_trans
+                                {t_date(&post.date_trans, lang_code)}
                             }
                             td {
                                 @if !post.untranslated {

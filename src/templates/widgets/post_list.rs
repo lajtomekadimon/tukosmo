@@ -1,6 +1,7 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::i18n::t_date::t_date;
 use crate::database::s_posts_by_lang::s_posts_by_lang;
 
 /* TODO:
@@ -51,8 +52,7 @@ markup::define! {
                                     time[
                                         datetime = "2021-08-11T20:37:29+00:00",
                                     ] {
-                                        // TODO: "August 1, 2021"
-                                        @post.date
+                                        {t_date(&post.date, lang_code)}
                                     }
                                 }
                             }
