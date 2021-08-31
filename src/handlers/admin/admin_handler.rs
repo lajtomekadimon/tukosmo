@@ -9,7 +9,7 @@ use crate::database::s_user_by_session::s_user_by_session;
 pub fn admin_handler(
     req: HttpRequest,
     id: Identity,
-) -> Result<(String, String), HttpResponse> {
+) -> Result<(String, i64), HttpResponse> {
     if let Some(lang_code) = current_language(req) {
 
         let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);

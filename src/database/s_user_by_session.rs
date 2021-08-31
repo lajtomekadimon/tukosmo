@@ -6,11 +6,11 @@ use crate::config::global::db_auth_string;
 
 pub fn s_user_by_session(
     session_id: Uuid
-) -> Result<String, Error> {
+) -> Result<i64, Error> {
     let mut client = Client::connect(db_auth_string(), NoTls)?;
 
     let row = client.query_one(
-        "SELECT s_user_by_session($1)::TEXT",
+        "SELECT s_user_by_session($1)",
         &[&session_id,]
     )?;
 

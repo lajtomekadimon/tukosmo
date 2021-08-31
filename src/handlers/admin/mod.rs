@@ -17,3 +17,4 @@ pub mod edit_language;
 pub mod edit_language_post;
 
 pub mod new_post;
+pub mod new_post_post;

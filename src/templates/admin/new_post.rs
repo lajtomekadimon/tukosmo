@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::database::s_languages::s_languages;
 
 
 markup::define! {
@@ -33,10 +34,32 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/new_post_post"
+                action = "/{lang}/admin/new_post"
                     .replace("{lang}", lang_code)
                 ,
             ] {
+                div[class = "field"] {
+                    label[class = "label"] {
+                        {&t("Language", lang_code)}
+                    }
+                    div[class = "control"] {
+                        div[class = "select"] {
+                            select[
+                                name = "lang",
+                            ] {
+                                @for lang in s_languages(lang_code.to_string()) {
+                                    option [
+                                        value = &lang.id.to_string(),
+                                        selected = &lang.code == lang_code,
+                                    ] {
+                                        @lang.name
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
                 div[class = "field"] {
                     label[class = "label"] {
                         {&t("Title", lang_code)}
@@ -82,10 +105,24 @@ markup::define! {
                     }
                     div[class = "control"] {
                         textarea[
-                            class = "textarea",
+                            class = "textarea is-family-monospace",
                             name = "body",
                             rows = "12",
                         ] {}
+                    }
+                }
+
+                div[class = "field"] {
+                    div[class = "control"] {
+                        label[class = "checkbox"] {
+                            input[
+                                type = "checkbox",
+                                name = "draft",
+                                value = "yes",
+                            ];
+                            " "
+                            {&t("Draft", lang_code)}
+                        }
                     }
                 }
 

@@ -96,7 +96,7 @@ pub async fn new_language_post(
                     .finish()
             } else {
                 let redirect_route = "/{lang}/admin/new_language".replace("{lang}", &lang_code);
-                // TODO: Show what failed!
+                // TODO: Show what failed in the template!
 
                 HttpResponse::Found()
                     .header("Location", redirect_route)

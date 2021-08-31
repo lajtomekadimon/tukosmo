@@ -43,7 +43,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/edit_language_post"
+                action = "/{lang}/admin/edit_language"
                     .replace("{lang}", &lang_code),
             ] {
                 div[class = "field"] {

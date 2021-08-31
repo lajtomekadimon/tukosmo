@@ -106,7 +106,7 @@ pub async fn edit_language_post(
                 let redirect_route = "/{lang}/admin/edit_language?id={id}"
                     .replace("{lang}", &lang_code)
                     .replace("{id}", &language_id.to_string());
-                // TODO: Show what failed!
+                // TODO: Show what failed in the template!
 
                 HttpResponse::Found()
                     .header("Location", redirect_route)
