@@ -17,6 +17,7 @@ FROM t_post_ids
 
 INNER JOIN t_posts
 ON tpi_id = tp_post
+    AND tp_post = post_id
 
 ORDER BY CASE
     WHEN s_language_id_by_code('en') IS NULL

@@ -14,3 +14,4 @@ pub mod new_language;
 pub mod edit_language;
 
 pub mod new_post;
+pub mod edit_post;

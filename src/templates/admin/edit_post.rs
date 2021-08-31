@@ -4,12 +4,14 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::database::s_languages::s_languages;
+use crate::database::s_post_by_id_lang::PostDB;
 
 
 markup::define! {
-    NewPost<'a>(
+    EditPost<'a>(
         title: &'a str,
         lang_code: &'a str,
+        post: &'a PostDB,
     ) {
         @AdminLayout {
             title: title,
@@ -17,8 +19,9 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     lang_code: lang_code,
+                    post: post,
                 },
-                current_page: "new_post",
+                current_page: "edit_post",
                 lang_code: lang_code,
             },
         }
@@ -26,15 +29,19 @@ markup::define! {
 
     Content<'a>(
         lang_code: &'a str,
+        post: &'a PostDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("New post", lang_code)}
+                {&t(
+                    "Edit post: '{title}'",
+                    lang_code
+                ).replace("{title}", &post.title)}
             }
 
             form[
                 method = "post",
-                action = "/{lang}/admin/new_post"
+                action = "/{lang}/admin/edit_post"
                     .replace("{lang}", lang_code)
                 ,
             ] {
@@ -69,6 +76,7 @@ markup::define! {
                             class = "input",
                             type = "text",
                             name = "title",
+                            value = &post.title,
                         ];
                     }
                 }
@@ -82,6 +90,7 @@ markup::define! {
                             class = "input",
                             type = "text",
                             name = "permalink",
+                            value = &post.permalink,
                         ];
                     }
                 }
@@ -95,7 +104,9 @@ markup::define! {
                             class = "textarea has-fixed-size",
                             name = "description",
                             rows = "3",
-                        ] {}
+                        ] {
+                            @post.description
+                        }
                     }
                 }
 
@@ -108,7 +119,9 @@ markup::define! {
                             class = "textarea is-family-monospace",
                             name = "body",
                             rows = "12",
-                        ] {}
+                        ] {
+                            @post.body
+                        }
                     }
                 }
 
@@ -119,9 +132,25 @@ markup::define! {
                                 type = "checkbox",
                                 name = "draft",
                                 value = "yes",
+                                checked = post.draft,
                             ];
                             " "
                             {&t("Draft", lang_code)}
+                        }
+                    }
+                }
+
+                div[class = "field"] {
+                    div[class = "control"] {
+                        label[class = "checkbox"] {
+                            input[
+                                type = "checkbox",
+                                name = "deleted",
+                                value = "yes",
+                                checked = post.deleted,
+                            ];
+                            " "
+                            {&t("Deleted [post]", lang_code)}
                         }
                     }
                 }

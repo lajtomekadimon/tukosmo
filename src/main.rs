@@ -270,6 +270,16 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::new_post_post::new_post_post)
                         )
                     )
+                    .service(web::resource("/edit_post")
+                        .route(web::get()
+                            .to(admin::edit_post::edit_post)
+                        )
+                        /*
+                        .route(web::post()
+                            .to(admin::edit_post_post::edit_post_post)
+                        )
+                        */
+                    )
 
                     // Pages
                     .service(web::resource("/pages")
