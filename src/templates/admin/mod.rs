@@ -12,3 +12,5 @@ pub mod tukosmo;
 
 pub mod new_language;
 pub mod edit_language;
+
+pub mod new_post;

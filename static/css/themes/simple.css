@@ -20,13 +20,13 @@ h1, h2, h3, h4, h5, h6 {
 
 code {
     background-color: #eee;
-    padding: 5px;
+    padding: 3px 5px;
     border-radius: 5px;
 }
 
 pre {
     background-color: #eee;
-    padding: 10px;
+    padding: 12px 16px;
     border-radius: 10px;
     line-height: 1.4;
 }
