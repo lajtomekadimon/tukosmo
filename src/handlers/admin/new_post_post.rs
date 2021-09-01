@@ -8,7 +8,6 @@ use crate::database::aw_new_post::aw_new_post;
 
 #[derive(Deserialize)]
 pub struct FormData {
-    lang: i64,
     title: String,
     description: String,
     body: String,
@@ -25,7 +24,6 @@ pub async fn new_post_post(
     match admin_handler(req, id) {
 
         Ok((lang_code, user_id)) => {
-            let lang_id = (form.lang).clone();
             let title_value = (form.title).clone();
             let description_value = (form.description).clone();
             let body_value = (form.body).clone();
@@ -37,7 +35,7 @@ pub async fn new_post_post(
 
             if let Ok(_post_trans_id) = aw_new_post(
                 0,  // new
-                lang_id,
+                lang_code.clone(),
                 title_value,
                 description_value,
                 body_value,
