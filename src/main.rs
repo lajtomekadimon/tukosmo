@@ -274,11 +274,9 @@ async fn main() -> std::io::Result<()> {
                         .route(web::get()
                             .to(admin::edit_post::edit_post)
                         )
-                        /*
                         .route(web::post()
                             .to(admin::edit_post_post::edit_post_post)
                         )
-                        */
                     )
 
                     // Pages

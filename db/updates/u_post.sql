@@ -3,6 +3,8 @@ CREATE OR REPLACE FUNCTION u_post(
 
     post_id BIGINT,
 
+    lang_id BIGINT,
+
     title_value TEXT,
 
     description_value TEXT,
@@ -10,8 +12,6 @@ CREATE OR REPLACE FUNCTION u_post(
     body_value TEXT,
 
     permalink_value TEXT,
-
-    author_id BIGINT,
 
     is_draft BOOL,
 
@@ -28,6 +28,10 @@ PARALLEL UNSAFE
 
 AS $$
 
+DECLARE
+
+    post_trans_id BIGINT;
+
 BEGIN
 
     UPDATE t_posts
@@ -37,9 +41,12 @@ BEGIN
         tp_permalink = permalink_value,
         tp_draft = is_draft,
         tp_deleted = is_deleted
-    WHERE tp_id = post_id;
+    WHERE tp_post = post_id
+        AND tp_lang = lang_id
+    RETURNING tp_id INTO post_trans_id;
 
-    RETURN post_id;
+
+    RETURN post_trans_id;
 
 END;
 

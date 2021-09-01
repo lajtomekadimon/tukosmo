@@ -44,6 +44,12 @@ markup::define! {
                     .replace("{lang}", lang_code)
                 ,
             ] {
+                input[
+                    type = "hidden",
+                    name = "id",
+                    value = &post.id,
+                ];
+
                 div[class = "field"] {
                     label[class = "label"] {
                         {&t("Title", lang_code)}
