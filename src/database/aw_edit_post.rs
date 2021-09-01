@@ -16,7 +16,7 @@ pub fn aw_edit_post(
     let mut client = Client::connect(db_auth_string(), NoTls)?;
 
     let row = client.query_one(
-        "SELECT aw_edit_post($1, s_language_id_by_code($2), $3, $4, $5, $6, $7, $8)",
+        "SELECT aw_edit_post($1, $2, $3, $4, $5, $6, $7, $8)",
         &[
             &post_id,
             &lang_code,

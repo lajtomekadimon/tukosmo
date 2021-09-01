@@ -3,7 +3,7 @@ CREATE OR REPLACE FUNCTION aw_new_post(
 
     post_id BIGINT,
 
-    lang_id BIGINT,
+    lang_code TEXT,
 
     title_value TEXT,
 
@@ -32,7 +32,11 @@ DECLARE
 
     post_trans_id BIGINT;
 
+    lang_id BIGINT;
+
 BEGIN
+
+    lang_id := s_language_id_by_code(lang_code);
 
     IF post_id = 0 THEN
         post_id := i_post_id(author_id);
