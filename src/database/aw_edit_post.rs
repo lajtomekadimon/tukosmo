@@ -12,11 +12,12 @@ pub fn aw_edit_post(
     permalink_value: String,
     is_draft: bool,
     is_deleted: bool,
+    translator_id: i64,
 ) -> Result<i64, Error> {
     let mut client = Client::connect(db_auth_string(), NoTls)?;
 
     let row = client.query_one(
-        "SELECT aw_edit_post($1, $2, $3, $4, $5, $6, $7, $8)",
+        "SELECT aw_edit_post($1, $2, $3, $4, $5, $6, $7, $8, $9)",
         &[
             &post_id,
             &lang_code,
@@ -26,6 +27,7 @@ pub fn aw_edit_post(
             &permalink_value,
             &is_draft,
             &is_deleted,
+            &translator_id,
         ]
     )?;
 

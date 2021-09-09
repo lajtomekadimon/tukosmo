@@ -15,7 +15,9 @@ CREATE OR REPLACE FUNCTION aw_edit_post(
 
     is_draft BOOL,
 
-    is_deleted BOOL
+    is_deleted BOOL,
+
+    translator_id BIGINT
 
 )
 
@@ -38,16 +40,38 @@ BEGIN
 
     lang_id := s_language_id_by_code(lang_code);
 
-    post_trans_id := u_post(
+    -- Update existing post
+    IF c_post_has_trans(
         post_id,
-        lang_id,
-        title_value,
-        description_value,
-        body_value,
-        permalink_value,
-        is_draft,
-        is_deleted
-    );
+        lang_id
+    ) THEN
+
+        post_trans_id := u_post(
+            post_id,
+            lang_id,
+            title_value,
+            description_value,
+            body_value,
+            permalink_value,
+            is_draft,
+            is_deleted
+        );
+
+    -- Create new translation of the post
+    ELSE
+
+        post_trans_id := i_post(
+            post_id,
+            lang_id,
+            title_value,
+            description_value,
+            body_value,
+            permalink_value,
+            translator_id,
+            is_draft
+        );
+
+    END IF;
 
     RETURN post_trans_id;
 

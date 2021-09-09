@@ -25,7 +25,7 @@ pub async fn edit_post_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, _user_id)) => {
+        Ok((lang_code, user_id)) => {
             let post_id = (form.id).clone();
             let title_value = (form.title).clone();
             let description_value = (form.description).clone();
@@ -49,6 +49,7 @@ pub async fn edit_post_post(
                 permalink_value,
                 is_draft,
                 is_deleted,
+                user_id,
             ) {
                 let redirect_route = "/{lang}/admin/posts".replace("{lang}", &lang_code);
 

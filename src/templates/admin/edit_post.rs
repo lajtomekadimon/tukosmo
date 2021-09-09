@@ -35,7 +35,7 @@ markup::define! {
                 {&t(
                     "Edit post: '{title}'",
                     lang_code
-                ).replace("{title}", &post.title)}
+                ).replace("{title}", &post.id.to_string())}
             }
 
             form[
@@ -123,6 +123,7 @@ markup::define! {
                     }
                 }
 
+                // TODO: Hide this field when creating a translation
                 div[class = "field"] {
                     div[class = "control"] {
                         label[class = "checkbox"] {

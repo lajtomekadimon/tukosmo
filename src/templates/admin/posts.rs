@@ -55,13 +55,7 @@ markup::define! {
                             {&t("Published", lang_code)}
                         }
                         th {
-                            {&t("Last update", lang_code)}
-                        }
-                        th {
                             {&t("Author", lang_code)}
-                        }
-                        th {
-                            {&t("Original author", lang_code)}
                         }
                     }
                 }
@@ -95,22 +89,11 @@ markup::define! {
                             }
                             td {
                                 {t_date(&post.date, lang_code)}
-                            }
-                            td {
-                                {t_date(&post.date_trans, lang_code)}
-                            }
-                            td {
-                                @if !post.untranslated {
-                                    a[
-                                        href = "/{lang}/admin/edit_user?id={id}"
-                                            .replace("{lang}", lang_code)
-                                            .replace(
-                                                "{id}",
-                                                &post.author.to_string()
-                                            ),
-                                    ] {
-                                        @post.author_name
-                                    }
+
+                                @if (post.original_author_name != post.author_name) && !post.untranslated {
+                                    " ("
+                                    {t_date(&post.date_trans, lang_code)}
+                                    ")"
                                 }
                             }
                             td {
@@ -123,6 +106,21 @@ markup::define! {
                                         ),
                                 ] {
                                     @post.original_author_name
+                                }
+
+                                @if (post.original_author_name != post.author_name) && !post.untranslated {
+                                    " (translated by "
+                                    a[
+                                        href = "/{lang}/admin/edit_user?id={id}"
+                                            .replace("{lang}", lang_code)
+                                            .replace(
+                                                "{id}",
+                                                &post.author.to_string()
+                                            ),
+                                    ] {
+                                        @post.author_name
+                                    }
+                                    ")"
                                 }
                             }
                         }
