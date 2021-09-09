@@ -4,6 +4,7 @@ use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::s_posts::s_posts;
 
 
@@ -32,9 +33,16 @@ markup::define! {
             h1[class = "title"] {
                 {&t("Posts", lang_code)}
 
+                div[class = "is-pulled-right"] {
+                    @AdminLangDropdown {
+                        lang_code: lang_code,
+                        route: "/admin/posts",
+                    }
+                }
+
                 a[
                     href = "/{lang}/admin/new_post".replace("{lang}", lang_code),
-                    class = "button is-link is-pulled-right has-text-weight-normal",
+                    class = "button is-link is-pulled-right has-text-weight-normal mr-4",
                 ] {
                     {&t("New post", lang_code)}
                 }

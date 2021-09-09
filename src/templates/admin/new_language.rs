@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::s_languages::s_languages;
 
 
@@ -30,6 +31,13 @@ markup::define! {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
                 {&t("Add language", lang_code)}
+
+                div[class = "is-pulled-right"] {
+                    @AdminLangDropdown {
+                        lang_code: lang_code,
+                        route: "/admin/new_language",
+                    }
+                }
             }
 
             form[

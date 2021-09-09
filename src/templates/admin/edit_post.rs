@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::s_post_by_id_lang::PostDB;
 
 
@@ -36,6 +37,14 @@ markup::define! {
                     "Edit post: '{title}'",
                     lang_code
                 ).replace("{title}", &post.id.to_string())}
+
+                div[class = "is-pulled-right"] {
+                    @AdminLangDropdown {
+                        lang_code: lang_code,
+                        route: &"/admin/edit_post?id={id}"
+                            .replace("{id}", &post.id.to_string()),
+                    }
+                }
             }
 
             form[
