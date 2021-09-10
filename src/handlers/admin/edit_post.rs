@@ -59,10 +59,10 @@ pub async fn edit_post(
                         description: "".to_string(),
                         body: "".to_string(),
                         permalink: "".to_string(),
-                        author: user_id,
+                        author: 0,
                         author_name: "".to_string(),
-                        original_author: user_id, // CUIDAO
-                        original_author_name: "".to_string(),
+                        translator: user_id,
+                        translator_name: "".to_string(),
                         date: "".to_string(),
                         date_trans: "".to_string(),
                         draft: false,

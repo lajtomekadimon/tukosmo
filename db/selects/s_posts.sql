@@ -13,8 +13,8 @@ RETURNS TABLE(
     tp_permalink TEXT,
     tp_author BIGINT,
     tp_author_name TEXT,
-    tp_original_author BIGINT,
-    tp_original_author_name TEXT,
+    tp_translator BIGINT,
+    tp_translator_name TEXT,
     tp_date TEXT,
     tp_date_trans TEXT,
     tp_has_all_trans BOOL,
@@ -68,21 +68,21 @@ SELECT
         ELSE tp_permalink::TEXT
     END AS tp_permalink,
 
+    tpi_author AS tp_author,
+
+    b.tu_name AS tp_author_name,
+
     CASE
-        WHEN tp_author IS NULL
+        WHEN tp_translator IS NULL
         THEN 0
-        ELSE tp_author
-    END AS tp_author,
+        ELSE tp_translator
+    END AS tp_translator,
 
     CASE
         WHEN a.tu_name IS NULL
         THEN ''
         ELSE a.tu_name
-    END AS tp_author_name,
-
-    tpi_author AS tp_original_author,
-
-    b.tu_name AS tp_original_author_name,
+    END AS tp_translator_name,
 
     tpi_date::TEXT AS tp_date,
 
@@ -117,7 +117,7 @@ ON tpi_id = tp_post
     AND NOT tp_deleted
 
 LEFT JOIN t_users a
-ON tp_author = a.tu_id
+ON tp_translator = a.tu_id
 
 INNER JOIN t_users b
 ON tpi_author = b.tu_id

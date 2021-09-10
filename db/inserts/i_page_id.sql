@@ -1,5 +1,7 @@
 
-CREATE OR REPLACE FUNCTION i_page_id()
+CREATE OR REPLACE FUNCTION i_page_id(
+    author_id BIGINT
+)
 
 RETURNS BIGINT
 
@@ -16,10 +18,16 @@ DECLARE
 
 BEGIN
 
-    INSERT INTO t_page_ids
-    DEFAULT VALUES
-        --tpi_id
+    INSERT INTO t_page_ids (
+        --tpi_id,
+        tpi_author
         --tpi_date
+    )
+    VALUES (
+        -- BIGSERIAL (autoincrement)
+        author_id
+        --NOW()
+    )
     RETURNING tpi_id INTO page_id;
 
     RETURN page_id;

@@ -60,15 +60,6 @@ markup::define! {
 
                                 @post.author_name
                             }
-
-                            @if post.author != post.original_author {
-                                " ("
-                                {
-                                    &t("translated by {name}", lang_code)
-                                        .replace("{name}", &post.original_author_name)
-                                }
-                                ")"
-                            }
                         }
                         
                         span[

@@ -11,7 +11,7 @@ CREATE OR REPLACE FUNCTION i_page(
 
     permalink_value TEXT,
 
-    author_id BIGINT,
+    translator_id BIGINT,
 
     is_draft BOOL
 
@@ -39,7 +39,7 @@ BEGIN
         tp_title,
         tp_body,
         tp_permalink,
-        tp_author,
+        tp_translator,
         --tp_date,
         tp_draft,
         tp_deleted
@@ -50,7 +50,7 @@ BEGIN
         title_value,
         body_value,
         permalink_value,
-        author_id,
+        translator_id,
         --NOW(),
         is_draft,
         FALSE

@@ -12,8 +12,8 @@ RETURNS TABLE(
     tp_permalink TEXT,
     tp_author BIGINT,
     tp_author_name TEXT,
-    tp_original_author BIGINT,
-    tp_original_author_name TEXT,
+    tp_translator BIGINT,
+    tp_translator_name TEXT,
     tp_date TEXT,
     tp_date_trans TEXT
 )
@@ -31,10 +31,10 @@ SELECT
     tp_description AS tp_description,
     tp_body AS tp_body,
     tp_permalink AS tp_permalink,
-    tp_author AS tp_author,
-    a.tu_name AS tp_author_name,
-    tpi_author AS tp_original_author,
-    b.tu_name AS tp_original_author_name,
+    tpi_author AS tp_author,
+    b.tu_name AS tp_author_name,
+    tp_translator AS tp_translator,
+    a.tu_name AS tp_translator_name,
     tpi_date AS tp_date,
     tp_date AS tp_date_trans
 FROM t_post_ids
@@ -47,7 +47,7 @@ ON tpi_id = tp_post
     AND (NOT tp_draft)
 
 INNER JOIN t_users a
-ON tp_author = a.tu_id
+ON tp_translator = a.tu_id
 
 INNER JOIN t_users b
 ON tpi_author = b.tu_id

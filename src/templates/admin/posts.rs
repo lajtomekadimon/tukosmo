@@ -98,7 +98,7 @@ markup::define! {
                             td {
                                 {t_date(&post.date, lang_code)}
 
-                                @if (post.original_author_name != post.author_name) && !post.untranslated {
+                                @if (post.author_name != post.translator_name) && !post.untranslated {
                                     " ("
                                     {t_date(&post.date_trans, lang_code)}
                                     ")"
@@ -110,23 +110,17 @@ markup::define! {
                                         .replace("{lang}", lang_code)
                                         .replace(
                                             "{id}",
-                                            &post.original_author.to_string()
+                                            &post.author.to_string()
                                         ),
                                 ] {
-                                    @post.original_author_name
+                                    @post.author_name
                                 }
 
-                                @if (post.original_author_name != post.author_name) && !post.untranslated {
-                                    " (translated by "
-                                    a[
-                                        href = "/{lang}/admin/edit_user?id={id}"
-                                            .replace("{lang}", lang_code)
-                                            .replace(
-                                                "{id}",
-                                                &post.author.to_string()
-                                            ),
-                                    ] {
-                                        @post.author_name
+                                @if (post.author_name != post.translator_name) && !post.untranslated {
+                                    " ("
+                                    {
+                                        &t("translated by {name}", lang_code)
+                                            .replace("{name}", &post.translator_name)
                                     }
                                     ")"
                                 }

@@ -8,7 +8,7 @@ CREATE TABLE t_posts (
     tp_description TEXT        NOT NULL,  /* TODO: Check max length */
     tp_body        TEXT        NOT NULL,
     tp_permalink   TEXT        NOT NULL,  /* TODO: Check max length */
-    tp_author      BIGINT      NOT NULL REFERENCES t_users,
+    tp_translator  BIGINT      NOT NULL REFERENCES t_users,
     tp_date        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     tp_draft       BOOL        NOT NULL,
     tp_deleted     BOOL        NOT NULL,
