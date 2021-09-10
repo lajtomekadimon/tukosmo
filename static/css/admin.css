@@ -178,3 +178,22 @@ nav.navbar {
     height: 52px;
     width: 52px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.dropdown-content {
+    border: 1px solid #dbdbdb;
+}
+
+.dropdown-content:hover {
+    border: 1px solid #b5b5b5;
+}

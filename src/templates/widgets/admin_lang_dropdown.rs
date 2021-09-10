@@ -23,10 +23,9 @@ markup::define! {
                         }
                     }
                     span[class = "icon is-small"] {
-                        i[
-                            class = "fas fa-angle-down",
-                            "aria-hidden" = "true",
-                        ] {}
+                        i[class = "eos-icons"] {
+                            "arrow_drop_down"
+                        }
                     }
                 }
             }

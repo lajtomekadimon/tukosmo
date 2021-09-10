@@ -49,6 +49,12 @@ markup::define! {
                                         .replace("{lang}", lang_code)
                                         .replace("{permalink}", &post.permalink.to_string()),
                                 ] {
+                                    i[class = "eos-icons"] {
+                                        "calendar_today"
+                                    }
+
+                                    " "
+
                                     time[
                                         datetime = "2021-08-11T20:37:29+00:00",
                                     ] {

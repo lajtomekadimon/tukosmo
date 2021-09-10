@@ -18,6 +18,10 @@ h1, h2, h3, h4, h5, h6 {
     color: #020202;
 }
 
+a:visited {
+    color: inherit;
+}
+
 code {
     background-color: #eee;
     padding: 3px 5px;
@@ -264,6 +268,17 @@ pre code {
     text-decoration: underline;
 }
 
+.post-wrapper-data-meta-date,
+.post-wrapper-data-meta-date .eos-icons {
+    font-size: 0.875rem;
+}
+
+.post-wrapper-data-meta-date a:hover,
+.post-wrapper-data-meta-date time:hover {
+    color: #666;
+    text-decoration: none;
+}
+
 .post-wrapper-data h2 {
     margin: 0 0 15px 0;
     padding: 0;
@@ -365,7 +380,7 @@ pre code {
 
 .post-title {
     margin: 0;
-    padding: 0;
+    padding: 0 0 4px 0;
     font-size: 2.375rem;
     font-weight: 700;
     line-height: 1.4;
@@ -374,14 +389,27 @@ pre code {
 
 .post-meta {
     color: #3d3d3d;
-    font-size: 0.875rem;
     text-align: center;
 }
 
+.post-meta,
+.post-meta .eos-icons {
+    font-size: 0.875rem;
+}
 .post-meta span {
     display: inline-block;
     margin-top: 0.625rem;
     margin: 0.625rem 0.5rem 0 0.5rem;
+}
+
+.post-meta a {
+    text-decoration: none;
+}
+
+.post-meta a:hover,
+.post-meta time:hover {
+    color: #666;
+    text-decoration: none;
 }
 
 .post-meta-author {
@@ -396,6 +424,37 @@ pre code {
     margin: 0;
     padding: 0;
     word-wrap: break-word;
+}
+
+.post-body a:hover {
+    color: #555;
+}
+
+.footnote-reference {
+    font-weight: bold;
+}
+
+.footnote-definition {
+    display: flex;
+    flex-direction: row;
+}
+
+.footnote-definition p {
+    display: inline-block;
+    margin: 0;
+    font-size: 90%;
+}
+
+.footnote-definition-label {
+    display: block;
+    top: 0;
+    padding: 0 6px 0 0;
+    font-size: 90%;
+    line-height: 1.8;
+}
+
+.footnote-definition-label:after {
+    content: ".";
 }
 
 

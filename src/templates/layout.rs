@@ -62,6 +62,12 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
+                    href = "https://cdn.jsdelivr.net/npm/eos-icons@latest/dist/css/eos-icons.css",
+                ];
+
+
+                link[
+                    rel = "stylesheet",
                     href = "/static/bundle.css",
                 ];
             }

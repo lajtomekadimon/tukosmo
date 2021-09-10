@@ -52,6 +52,12 @@ markup::define! {
                                     .replace("{lang}", lang_code)
                                 ,
                             ] {
+                                i[class = "eos-icons"] {
+                                    "person"
+                                }
+
+                                " "
+
                                 @post.author_name
                             }
 
@@ -73,6 +79,12 @@ markup::define! {
                                     .replace("{lang}", lang_code)
                                 ,
                             ] {
+                                i[class = "eos-icons"] {
+                                    "calendar_today"
+                                }
+
+                                " "
+
                                 {t_date(&post.date, lang_code)}
                             }
                         }
@@ -85,6 +97,12 @@ markup::define! {
                                     .replace("{lang}", lang_code)
                                 ,
                             ] {
+                                i[class = "eos-icons"] {
+                                    "mode_edit"
+                                }
+
+                                " "
+
                                 {&t("Edit", lang_code)}
                             }
                         }
