@@ -29,17 +29,17 @@ pub fn s_post_by_lang_permalink(
             &[&lang_code, &permalink_value]
         ) {
             for row in rows {
-                let post_id: i64 = row.get("tp_id");
-                let post_title: String = row.get("tp_title");
-                let post_description: String = row.get("tp_description");
-                let post_body: String = row.get("tp_body");
-                let post_permalink: String = row.get("tp_permalink");
-                let post_author: i64 = row.get("tp_author");
-                let post_author_name: String = row.get("tp_author_name");
-                let post_translator: i64 = row.get("tp_translator");
-                let post_translator_name: String = row.get("tp_translator_name");
-                let post_date: String = row.get("tp_date");
-                let post_date_trans: String = row.get("tp_date_trans");
+                let post_id: i64 = row.get("id");
+                let post_title: String = row.get("title");
+                let post_description: String = row.get("description");
+                let post_body: String = row.get("body");
+                let post_permalink: String = row.get("permalink");
+                let post_author: i64 = row.get("author");
+                let post_author_name: String = row.get("author_name");
+                let post_translator: i64 = row.get("translator");
+                let post_translator_name: String = row.get("translator_name");
+                let post_date: String = row.get("date");
+                let post_date_trans: String = row.get("date_trans");
 
                 post_struct = Some(
                     PostDB {

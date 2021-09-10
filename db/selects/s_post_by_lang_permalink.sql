@@ -5,17 +5,17 @@ CREATE OR REPLACE FUNCTION s_post_by_lang_permalink(
 )
 
 RETURNS TABLE(
-    tp_id BIGINT,
-    tp_title TEXT,
-    tp_description TEXT,
-    tp_body TEXT,
-    tp_permalink TEXT,
-    tp_author BIGINT,
-    tp_author_name TEXT,
-    tp_translator BIGINT,
-    tp_translator_name TEXT,
-    tp_date TEXT,
-    tp_date_trans TEXT
+    id BIGINT,
+    title TEXT,
+    description TEXT,
+    body TEXT,
+    permalink TEXT,
+    author BIGINT,
+    author_name TEXT,
+    translator BIGINT,
+    translator_name TEXT,
+    date TEXT,
+    date_trans TEXT
 )
 
 LANGUAGE SQL
@@ -26,17 +26,17 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT
-    tpi_id AS tp_id,
-    tpt_title AS tp_title,
-    tpt_description AS tp_description,
-    tpt_body AS tp_body,
-    tpt_permalink AS tp_permalink,
-    tpi_author AS tp_author,
-    b.tu_name AS tp_author_name,
-    tpt_translator AS tp_translator,
-    a.tu_name AS tp_translator_name,
-    tpi_date AS tp_date,
-    tpt_date AS tp_date_trans
+    tpi_id AS id,
+    tpt_title AS title,
+    tpt_description AS description,
+    tpt_body AS body,
+    tpt_permalink AS permalink,
+    tpi_author AS author,
+    b.tu_name AS author_name,
+    tpt_translator AS translator,
+    a.tu_name AS translator_name,
+    tpi_date AS date,
+    tpt_date AS date_trans
 FROM t_post_ids
 
 INNER JOIN t_post_translations

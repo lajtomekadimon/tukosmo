@@ -21,9 +21,9 @@ pub fn s_languages_with_names(
             &[&language_code, &language_id]
         ) {
             for row in rows {
-                let lang_id: i64 = row.get("tl_id");
-                let lang_name: String = row.get("tl_name");
-                let lang_trans_name: String = row.get("tl_trans_name");
+                let lang_id: i64 = row.get("id");
+                let lang_name: String = row.get("name");
+                let lang_trans_name: String = row.get("trans_name");
 
                 vec.push(
                     LanguageDB {

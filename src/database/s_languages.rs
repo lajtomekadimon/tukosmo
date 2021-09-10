@@ -22,11 +22,11 @@ pub fn s_languages(
             &[&lang_code,]
         ) {
             for row in rows {
-                let lang_id: i64 = row.get("tl_id");
-                let lang_code: String = row.get("tl_code");
-                let lang_name: String = row.get("tl_name");
-                let date_value: String = row.get("tl_date");
-                let has_all_names: bool = row.get("tl_has_all_names");
+                let lang_id: i64 = row.get("id");
+                let lang_code: String = row.get("code");
+                let lang_name: String = row.get("name");
+                let date_value: String = row.get("date");
+                let has_all_names: bool = row.get("has_all_names");
 
                 vec.push(
                     LanguageDB {

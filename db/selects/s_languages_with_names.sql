@@ -5,9 +5,9 @@ CREATE OR REPLACE FUNCTION s_languages_with_names(
 )
 
 RETURNS TABLE(
-    tl_id INT8,
-    tl_name TEXT,
-    tl_trans_name TEXT
+    id INT8,
+    name TEXT,
+    trans_name TEXT
 )
 
 LANGUAGE SQL
@@ -18,13 +18,13 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT
-    tl_id AS tl_id,
+    tl_id AS id,
 
     CASE
         WHEN a.tln_name IS NULL
         THEN '[untranslated: ' || s_language_code_by_id(tl_id) || ']'
         ELSE a.tln_name
-    END AS tl_name,
+    END AS name,
         
     CASE
         WHEN s_name_of_language(
@@ -36,7 +36,7 @@ SELECT
             language_id,
             tl_id
         )
-    END AS tl_trans_name
+    END AS trans_name
 FROM t_languages
 LEFT JOIN t_language_names a
 ON tl_id = a.tln_lang
