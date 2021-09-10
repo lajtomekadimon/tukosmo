@@ -27,27 +27,27 @@ AS $$
 
 SELECT
     tpi_id AS tp_id,
-    tp_title AS tp_title,
-    tp_description AS tp_description,
-    tp_body AS tp_body,
-    tp_permalink AS tp_permalink,
+    tpt_title AS tp_title,
+    tpt_description AS tp_description,
+    tpt_body AS tp_body,
+    tpt_permalink AS tp_permalink,
     tpi_author AS tp_author,
     b.tu_name AS tp_author_name,
-    tp_translator AS tp_translator,
+    tpt_translator AS tp_translator,
     a.tu_name AS tp_translator_name,
     tpi_date AS tp_date,
-    tp_date AS tp_date_trans
+    tpt_date AS tp_date_trans
 FROM t_post_ids
 
-INNER JOIN t_posts
-ON tpi_id = tp_post
-    AND tp_lang = language_of_user
-    AND tp_permalink = permalink_value
-    AND (NOT tp_deleted)
-    AND (NOT tp_draft)
+INNER JOIN t_post_translations
+ON tpi_id = tpt_post
+    AND tpt_lang = language_of_user
+    AND tpt_permalink = permalink_value
+    AND (NOT tpt_deleted)
+    AND (NOT tpt_draft)
 
 INNER JOIN t_users a
-ON tp_translator = a.tu_id
+ON tpt_translator = a.tu_id
 
 INNER JOIN t_users b
 ON tpi_author = b.tu_id

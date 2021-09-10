@@ -12,18 +12,18 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT tp_title
+SELECT tpt_title
 FROM t_post_ids
 
-INNER JOIN t_posts
-ON tpi_id = tp_post
-    AND tp_post = post_id
+INNER JOIN t_post_translations
+ON tpi_id = tpt_post
+    AND tpt_post = post_id
 
 ORDER BY CASE
     WHEN s_language_id_by_code('en') IS NULL
     THEN 2
     ELSE CASE
-        WHEN tp_lang = s_language_id_by_code('en')
+        WHEN tpt_lang = s_language_id_by_code('en')
         THEN 1
         ELSE 2
     END

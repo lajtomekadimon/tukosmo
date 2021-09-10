@@ -33,39 +33,39 @@ SELECT
     tpi_id AS tp_id,
 
     CASE
-        WHEN tp_id IS NULL
+        WHEN tpt_id IS NULL
         THEN 0
-        ELSE tp_id
+        ELSE tpt_id
     END AS tp_trans_id,
 
     CASE
-        WHEN tp_lang IS NULL
+        WHEN tpt_lang IS NULL
         THEN 0
-        ELSE tp_lang
+        ELSE tpt_lang
     END AS tp_lang,
 
     CASE
-        WHEN tp_title IS NULL
+        WHEN tpt_title IS NULL
         THEN s_untrans_post_title_by_id(tpi_id)
-        ELSE tp_title::TEXT
+        ELSE tpt_title::TEXT
     END AS tp_title,
 
     CASE
-        WHEN tp_description IS NULL
+        WHEN tpt_description IS NULL
         THEN ''
-        ELSE tp_description::TEXT
+        ELSE tpt_description::TEXT
     END AS tp_description,
 
     CASE
-        WHEN tp_body IS NULL
+        WHEN tpt_body IS NULL
         THEN ''
-        ELSE tp_body::TEXT
+        ELSE tpt_body::TEXT
     END AS tp_body,
 
     CASE
-        WHEN tp_permalink IS NULL
+        WHEN tpt_permalink IS NULL
         THEN ''
-        ELSE tp_permalink::TEXT
+        ELSE tpt_permalink::TEXT
     END AS tp_permalink,
 
     tpi_author AS tp_author,
@@ -73,9 +73,9 @@ SELECT
     b.tu_name AS tp_author_name,
 
     CASE
-        WHEN tp_translator IS NULL
+        WHEN tpt_translator IS NULL
         THEN 0
-        ELSE tp_translator
+        ELSE tpt_translator
     END AS tp_translator,
 
     CASE
@@ -87,37 +87,37 @@ SELECT
     tpi_date::TEXT AS tp_date,
 
     CASE
-        WHEN tp_date IS NULL
+        WHEN tpt_date IS NULL
         THEN ''
-        ELSE tp_date::TEXT
+        ELSE tpt_date::TEXT
     END AS tp_date_trans,
 
     c_post_has_all_trans(tpi_id) AS tp_has_all_trans,
 
     CASE
-        WHEN tp_draft IS NULL
+        WHEN tpt_draft IS NULL
         THEN TRUE
-        ELSE tp_draft
+        ELSE tpt_draft
     END AS tp_draft,
 
     CASE
-        WHEN tp_lang IS NULL
+        WHEN tpt_lang IS NULL
         THEN TRUE
         ELSE FALSE
     END AS tp_untranslated
 FROM t_post_ids
 
-LEFT JOIN t_posts
-ON tpi_id = tp_post
+LEFT JOIN t_post_translations
+ON tpi_id = tpt_post
     AND CASE
-        WHEN tp_lang IS NULL
+        WHEN tpt_lang IS NULL
         THEN TRUE
-        ELSE tp_lang = language_of_user
+        ELSE tpt_lang = language_of_user
     END
-    AND NOT tp_deleted
+    AND NOT tpt_deleted
 
 LEFT JOIN t_users a
-ON tp_translator = a.tu_id
+ON tpt_translator = a.tu_id
 
 INNER JOIN t_users b
 ON tpi_author = b.tu_id

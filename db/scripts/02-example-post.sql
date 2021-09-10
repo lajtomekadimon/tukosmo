@@ -171,7 +171,7 @@ With a reference later in the document defining the URL location:
 
 
 
-    PERFORM i_post(
+    PERFORM i_post_translation(
         post_id,
         s_language_id_by_code('en'),
         post_title,

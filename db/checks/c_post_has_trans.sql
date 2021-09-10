@@ -18,9 +18,9 @@ AS $$
 
 SELECT EXISTS(
     SELECT 1
-    FROM t_posts
-    WHERE tp_post = post_id
-        AND tp_lang = lang_id
+    FROM t_post_translations
+    WHERE tpt_post = post_id
+        AND tpt_lang = lang_id
     LIMIT 1
 )
 

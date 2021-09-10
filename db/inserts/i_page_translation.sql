@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION i_page(
+CREATE OR REPLACE FUNCTION i_page_translation(
 
     page_id BIGINT,
 
@@ -32,17 +32,17 @@ DECLARE
 
 BEGIN
 
-    INSERT INTO t_pages (
-        --tp_id,
-        tp_page,
-        tp_lang,
-        tp_title,
-        tp_body,
-        tp_permalink,
-        tp_translator,
-        --tp_date,
-        tp_draft,
-        tp_deleted
+    INSERT INTO t_page_translations (
+        --tpt_id,
+        tpt_page,
+        tpt_lang,
+        tpt_title,
+        tpt_body,
+        tpt_permalink,
+        tpt_translator,
+        --tpt_date,
+        tpt_draft,
+        tpt_deleted
     ) VALUES (
         -- BIGSERIAL (autoincrement)
         page_id,
@@ -54,7 +54,7 @@ BEGIN
         --NOW(),
         is_draft,
         FALSE
-    ) RETURNING tp_id INTO this_page_id;
+    ) RETURNING tpt_id INTO this_page_id;
 
     RETURN this_page_id;
 

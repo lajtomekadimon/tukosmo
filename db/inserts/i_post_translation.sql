@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION i_post(
+CREATE OR REPLACE FUNCTION i_post_translation(
 
     post_id BIGINT,
 
@@ -34,18 +34,18 @@ DECLARE
 
 BEGIN
 
-    INSERT INTO t_posts (
-        --tp_id,
-        tp_post,
-        tp_lang,
-        tp_title,
-        tp_description,
-        tp_body,
-        tp_permalink,
-        tp_translator,
-        --tp_date,
-        tp_draft,
-        tp_deleted
+    INSERT INTO t_post_translations (
+        --tpt_id,
+        tpt_post,
+        tpt_lang,
+        tpt_title,
+        tpt_description,
+        tpt_body,
+        tpt_permalink,
+        tpt_translator,
+        --tpt_date,
+        tpt_draft,
+        tpt_deleted
     ) VALUES (
         -- BIGSERIAL (autoincrement)
         post_id,
@@ -58,7 +58,7 @@ BEGIN
         --NOW(),
         is_draft,
         FALSE
-    ) RETURNING tp_id INTO this_post_id;
+    ) RETURNING tpt_id INTO this_post_id;
 
     RETURN this_post_id;
 

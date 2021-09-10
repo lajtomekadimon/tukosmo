@@ -54,9 +54,9 @@ STRUDB=db/tables/t_users.sql \
 	   db/tables/t_languages.sql \
 	   db/tables/t_language_names.sql \
 	   db/tables/t_page_ids.sql \
-	   db/tables/t_pages.sql \
+	   db/tables/t_page_translations.sql \
 	   db/tables/t_post_ids.sql \
-	   db/tables/t_posts.sql
+	   db/tables/t_post_translations.sql
 
 structuredb:
 	@echo "Creating structure..."
