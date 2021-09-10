@@ -18,8 +18,6 @@ mod templates;
 
 mod handlers;
 use crate::handlers::root::root;
-use crate::handlers::login::login;
-use crate::handlers::logout::logout;
 use crate::handlers::home::handler_home;
 use crate::handlers::blog::handler_blog;
 use crate::handlers::blog_post::handler_blog_post;
@@ -140,15 +138,6 @@ async fn main() -> std::io::Result<()> {
                 "static",
             ).show_files_listing())
 
-            // Login
-            .service(web::resource("/login")
-                .route(web::post().to(login))
-            )
-
-            // Logout
-            .service(web::resource("/logout")
-                .route(web::get().to(logout))
-            )
 
             // Homepage (/{lang})
             .service(web::resource("/{lang}")
@@ -201,10 +190,20 @@ async fn main() -> std::io::Result<()> {
                         )
                     )
 
-                    // Login:
+                    // Login
                     .service(web::resource("/login")
                         .route(web::get()
                             .to(admin::login::login)
+                        )
+                        .route(web::post()
+                            .to(admin::login_post::login_post)
+                        )
+                    )
+
+                    // Logout
+                    .service(web::resource("/logout")
+                        .route(web::get()
+                            .to(admin::logout::logout)
                         )
                     )
 

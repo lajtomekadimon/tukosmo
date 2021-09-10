@@ -82,7 +82,7 @@ markup::define! {
                                 hr[class = "navbar-divider"];
 
                                 a[
-                                    href = "/logout?lang={lang}".replace("{lang}", &lang_code),
+                                    href = "/{lang}/admin/logout".replace("{lang}", &lang_code),
                                     class = "navbar-item",
                                 ] {
                                     {&t("Logout [verb]", lang_code)}

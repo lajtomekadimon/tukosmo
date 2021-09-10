@@ -31,7 +31,7 @@ markup::define! {
                                 img[src = "/static/img/tukosmo-logo-128.png"];
                             }
                             form[
-                                action = "/login",
+                                action = "/{lang}/admin/login".replace("{lang}", &lang_code),
                                 method = "post",
                             ] {
                                 div[class = "field"] {
@@ -45,6 +45,7 @@ markup::define! {
                                         ];
                                     }
                                 }
+
                                 div[class = "field"] {
                                     div[class = "control"] {
                                         input[
@@ -55,11 +56,7 @@ markup::define! {
                                         ];
                                     }
                                 }
-                                input[
-                                    name = "lang",
-                                    type = "hidden",
-                                    value = &lang_code,
-                                ];
+
                                 button[
                                     class = "button is-block is-info is-large is-fullwidth",
                                 ] {

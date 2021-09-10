@@ -1,6 +1,5 @@
 pub mod admin_handler;
 pub mod dashboard;
-pub mod login;
 pub mod statistics;
 pub mod server;
 pub mod users;
@@ -20,3 +19,7 @@ pub mod new_post;
 pub mod new_post_post;
 pub mod edit_post;
 pub mod edit_post_post;
+
+pub mod login;
+pub mod login_post;
+pub mod logout;
