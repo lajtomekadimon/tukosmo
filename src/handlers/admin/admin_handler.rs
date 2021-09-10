@@ -3,13 +3,13 @@ use actix_identity::Identity;
 use uuid::Uuid;
 
 use crate::i18n::current_language::current_language;
-use crate::database::s_user_by_session::s_user_by_session;
+use crate::database::s_user_by_session_lang::{s_user_by_session_lang, UserDB};
 
 
 pub fn admin_handler(
     req: HttpRequest,
     id: Identity,
-) -> Result<(String, i64), HttpResponse> {
+) -> Result<(String, UserDB), HttpResponse> {
     if let Some(lang_code) = current_language(req) {
 
         let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);
@@ -22,9 +22,12 @@ pub fn admin_handler(
             ) {
 
                 // Session is active
-                if let Ok(user_id) = s_user_by_session(session_id) {
+                if let Some(user) = s_user_by_session_lang(
+                    session_id,
+                    lang_code.clone(),
+                ) {
 
-                    Ok((lang_code, user_id))
+                    Ok((lang_code, user))
 
                 // Session has expired
                 // TODO: "Your session has expired."

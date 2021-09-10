@@ -4,12 +4,14 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
+use crate::database::s_user_by_session_lang::UserDB;
 
 
 markup::define! {
     NewPost<'a>(
         title: &'a str,
         lang_code: &'a str,
+        user: &'a UserDB,
     ) {
         @AdminLayout {
             title: title,
@@ -20,6 +22,7 @@ markup::define! {
                 },
                 current_page: "new_post",
                 lang_code: lang_code,
+                user: user,
             },
         }
     }

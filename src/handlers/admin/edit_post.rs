@@ -22,7 +22,7 @@ pub async fn edit_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user_id)) => {
+        Ok((lang_code, user)) => {
 
             if let Some(post) = s_post_by_id_lang(
                 post_id,
@@ -39,6 +39,7 @@ pub async fn edit_post(
                     ),
                     lang_code: &lang_code,
                     post: &post,
+                    user: &user,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
@@ -61,13 +62,14 @@ pub async fn edit_post(
                         permalink: "".to_string(),
                         author: 0,
                         author_name: "".to_string(),
-                        translator: user_id,
+                        translator: user.id,
                         translator_name: "".to_string(),
                         date: "".to_string(),
                         date_trans: "".to_string(),
                         draft: false,
                         deleted: false,
                     },
+                    user: &user,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

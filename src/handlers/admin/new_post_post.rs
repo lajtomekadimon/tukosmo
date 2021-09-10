@@ -23,7 +23,7 @@ pub async fn new_post_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user_id)) => {
+        Ok((lang_code, user)) => {
             let title_value = (form.title).clone();
             let description_value = (form.description).clone();
             let body_value = (form.body).clone();
@@ -40,7 +40,7 @@ pub async fn new_post_post(
                 description_value,
                 body_value,
                 permalink_value,
-                user_id,
+                user.id,
                 is_draft,
             ) {
                 let redirect_route = "/{lang}/admin/posts".replace("{lang}", &lang_code);

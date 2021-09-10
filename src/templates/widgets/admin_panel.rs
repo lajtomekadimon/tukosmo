@@ -2,6 +2,7 @@ use markup;
 
 use crate::templates::widgets::admin_sidebar::AdminSidebar;
 use crate::templates::widgets::admin_navbar::AdminNavbar;
+use crate::database::s_user_by_session_lang::UserDB;
 
 
 markup::define! {
@@ -9,9 +10,11 @@ markup::define! {
         content: BodyContent,
         current_page: &'a str,
         lang_code: &'a str,
+        user: &'a UserDB,
     ) {
         @AdminNavbar {
             lang_code: lang_code,
+            user: user,
         }
 
         div[class = "container"] {

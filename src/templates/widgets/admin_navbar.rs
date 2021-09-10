@@ -1,11 +1,13 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::database::s_user_by_session_lang::UserDB;
 
 
 markup::define! {
     AdminNavbar<'a>(
         lang_code: &'a str,
+        user: &'a UserDB,
     ) {
         nav[class = "navbar is-white"] {
             div[class = "container"] {
@@ -54,18 +56,27 @@ markup::define! {
                     div[class = "navbar-end"] {
                         div[class = "navbar-item has-dropdown is-hoverable"] {
                             a[class = "navbar-link"] {
-                                "Lajto (test@test.com)"
+                                @user.name
+                                " ("
+                                @user.email
+                                ")"
                             }
 
                             div[class = "navbar-dropdown is-right"] {
-                                a[class = "navbar-item"] {
+                                a[
+                                    class = "navbar-item",
+                                    href = "/{lang}/admin/edit_user?id={id}"
+                                        .replace("{lang}", &lang_code)
+                                        .replace("{id}", &user.id.to_string()),
+                                ] {
                                     {&t("Account", lang_code)}
                                 }
-                                a[class = "navbar-item"] {
+
+                                a[
+                                    class = "navbar-item",
+                                    href = "/{lang}/admin".replace("{lang}", &lang_code),
+                                ] {
                                     {&t("Sessions", lang_code)}
-                                }
-                                a[class = "navbar-item"] {
-                                    {&t("Settings", lang_code)}
                                 }
 
                                 hr[class = "navbar-divider"];

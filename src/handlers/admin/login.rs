@@ -5,7 +5,7 @@ use uuid::Uuid;
 use crate::i18n::current_language::current_language;
 use crate::i18n::t::t;
 use crate::templates::admin::login::Login;
-use crate::database::s_user_by_session::s_user_by_session;
+use crate::database::s_user_by_session_lang::s_user_by_session_lang;
 
 
 pub async fn login(
@@ -21,7 +21,7 @@ pub async fn login(
                 a = &t("Login [noun]", &lang_code),
                 b = &t("Tukosmo Admin Panel", &lang_code)
             ),
-            lang_code: &lang_code,
+            lang_code: &lang_code.clone(),
         };
 
         // Cookie has a session
@@ -32,7 +32,10 @@ pub async fn login(
             ) {
 
                 // Session is active
-                if let Ok(_user_id) = s_user_by_session(session_id) {
+                if let Some(_user) = s_user_by_session_lang(
+                    session_id,
+                    lang_code.clone()
+                ) {
 
                     let dashboard_route = "/{lang}/admin/"
                         .replace("{lang}", &lang_code);

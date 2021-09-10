@@ -22,7 +22,7 @@ pub async fn edit_language(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, _user_id)) => {
+        Ok((lang_code, user)) => {
 
             if let Some(lang_id_code) = s_lang_code_by_id(lang_id) {
                 let html = EditLanguage {
@@ -37,6 +37,7 @@ pub async fn edit_language(
                     lang_code: &lang_code,
                     lang_id: &lang_id,
                     lang_id_code: &lang_id_code,
+                    user: &user,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

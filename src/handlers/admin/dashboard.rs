@@ -13,11 +13,12 @@ pub async fn dashboard(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, _user_id)) => {
+        Ok((lang_code, user)) => {
 
             let html = Dashboard {
                 title: &t("Tukosmo Admin Panel", &lang_code),
                 lang_code: &lang_code,
+                user: &user,
             };
 
             HttpResponse::Ok().body(html.to_string())

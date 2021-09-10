@@ -46,7 +46,7 @@ BEGIN
         lang_id
     ) THEN
 
-        post_trans_id := u_post(
+        post_trans_id := u_post_translation(
             post_id,
             lang_id,
             title_value,
@@ -60,7 +60,7 @@ BEGIN
     -- Create new translation of the post
     ELSE
 
-        post_trans_id := i_post(
+        post_trans_id := i_post_translation(
             post_id,
             lang_id,
             title_value,

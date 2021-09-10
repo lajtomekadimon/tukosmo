@@ -3,12 +3,14 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
+use crate::database::s_user_by_session_lang::UserDB;
 
 
 markup::define! {
     Dashboard<'a>(
         title: &'a str,
         lang_code: &'a str,
+        user: &'a UserDB,
     ) {
         @AdminLayout {
             title: title,
@@ -19,6 +21,7 @@ markup::define! {
                 },
                 current_page: "dashboard",
                 lang_code: lang_code,
+                user: user,
             },
         }
     }

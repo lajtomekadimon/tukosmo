@@ -42,7 +42,7 @@ BEGIN
         post_id := i_post_id(author_id);
     END IF;
 
-    post_trans_id := i_post(
+    post_trans_id := i_post_translation(
         post_id,
         lang_id,
         title_value,

@@ -6,12 +6,14 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::s_languages::s_languages;
+use crate::database::s_user_by_session_lang::UserDB;
 
 
 markup::define! {
     Languages<'a>(
         title: &'a str,
         lang_code: &'a str,
+        user: &'a UserDB,
     ) {
         @AdminLayout {
             title: title,
@@ -22,6 +24,7 @@ markup::define! {
                 },
                 current_page: "languages",
                 lang_code: lang_code,
+                user: user,
             },
         }
     }

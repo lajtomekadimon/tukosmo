@@ -84,7 +84,7 @@ pub async fn edit_language_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, _user_id)) => {
+        Ok((lang_code, _user)) => {
 
             let language_id = (form.language_id).clone();
             let lang_code_value = (form.lang_code).clone();
