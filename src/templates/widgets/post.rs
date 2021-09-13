@@ -84,8 +84,9 @@ markup::define! {
                             class = "post-meta-edit",
                         ] {
                             a[
-                                href = "/{lang}/blog"
+                                href = "/{lang}/admin/edit_post?id={id}"
                                     .replace("{lang}", lang_code)
+                                    .replace("{id}", &post.id.to_string())
                                 ,
                             ] {
                                 i[class = "eos-icons"] {
