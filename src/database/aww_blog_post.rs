@@ -1,23 +1,10 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
+use crate::database::data::PostDB;
 
 
-pub struct PostDB {
-    pub id: i64,
-    pub title: String,
-    pub description: String,
-    pub body: String,
-    pub permalink: String,
-    pub author: i64,
-    pub author_name: String,
-    pub translator: i64,
-    pub translator_name: String,
-    pub date: String,
-    pub date_trans: String,
-}
-
-pub fn s_post_by_lang_permalink(
+pub fn aww_blog_post(
     language_of_user: i64,
     permalink_value: String
 ) -> Option<PostDB> {
@@ -25,7 +12,7 @@ pub fn s_post_by_lang_permalink(
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_post_by_lang_permalink($1, $2)",
+            "SELECT * FROM aww_blog_post($1, $2)",
             &[&language_of_user, &permalink_value]
         ) {
             for row in rows {

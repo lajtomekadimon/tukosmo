@@ -2,8 +2,8 @@ use markup;
 
 use crate::templates::layout::Layout;
 use crate::templates::widgets::post::Post;
-use crate::database::s_post_by_lang_permalink::PostDB;
 use crate::database::data::CurrentLanguageDB;
+use crate::database::data::PostDB;
 
 
 markup::define! {

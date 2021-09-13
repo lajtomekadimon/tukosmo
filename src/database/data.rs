@@ -28,3 +28,18 @@ pub struct CurrentLanguageDB {
     pub code: String,
     pub name: String,
 }
+
+#[derive(Clone)]
+pub struct PostDB {
+    pub id: i64,
+    pub title: String,
+    pub description: String,
+    pub body: String,
+    pub permalink: String,
+    pub author: i64,
+    pub author_name: String,
+    pub translator: i64,
+    pub translator_name: String,
+    pub date: String,
+    pub date_trans: String,
+}

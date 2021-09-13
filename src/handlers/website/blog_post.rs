@@ -2,7 +2,7 @@ use actix_web::{HttpRequest, HttpResponse, Responder};
 
 use crate::templates::website::blog_post::BlogPost;
 use crate::i18n::current_language::current_language;
-use crate::database::s_post_by_lang_permalink::s_post_by_lang_permalink;
+use crate::database::aww_blog_post::aww_blog_post;
 
 
 pub async fn blog_post(
@@ -13,7 +13,7 @@ pub async fn blog_post(
 
     if let Some(lang) = current_language(req) {
 
-        if let Some(post) = s_post_by_lang_permalink(
+        if let Some(post) = aww_blog_post(
             lang.id.clone(),
             permalink_value
         ) {
@@ -32,7 +32,7 @@ pub async fn blog_post(
             
         } else {
 
-            HttpResponse::Ok().body("Error 404")  // TODO
+            HttpResponse::Ok().body("Error 404.")  // TODO
 
         }
 
