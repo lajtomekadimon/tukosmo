@@ -7,8 +7,6 @@ use rand::Rng;
 
 mod config;
 
-mod auth;
-
 mod database;
 use crate::database::d_all_sessions::d_all_sessions;
 
@@ -23,7 +21,6 @@ use crate::handlers::blog::handler_blog;
 use crate::handlers::blog_post::handler_blog_post;
 use crate::handlers::page::handler_page;
 use crate::handlers::admin;
-use crate::handlers::api;
 
 mod markdown;
 
@@ -80,56 +77,6 @@ async fn main() -> std::io::Result<()> {
                 .route(web::get().to(root))
             )
 
-            // API
-            .service(web::scope("/api")
-                .service(web::scope("/json")
-                    // Query
-                    .service(web::resource("/query")
-                        .route(web::post()
-                            .to(api::json::query::query)
-                        )
-                    )
-
-                    // Update
-                    .service(web::resource("/update")
-                        .route(web::post()
-                            .to(api::json::update::update)
-                        )
-                    )
-
-                    // User
-                    .service(web::scope("/user")
-                        // Login
-                        .service(web::resource("/login")
-                            .route(web::post()
-                                .to(api::json::user::login::login)
-                            )
-                        )
-
-                        // Logout
-                        .service(web::resource("/logout")
-                            .route(web::post()
-                                .to(api::json::user::logout::logout)
-                            )
-                        )
-
-                        // Sign in
-                        .service(web::resource("/signin")
-                            .route(web::post()
-                                .to(api::json::user::signin::signin)
-                            )
-                        )
-
-                        // Update
-                        .service(web::resource("/update")
-                            .route(web::post()
-                                .to(api::json::user::update::update)
-                            )
-                        )
-                    ),
-                ),
-            )
-            
             // Static files: /static/.../...
             .service(Files::new(
                 // Website route
