@@ -11,28 +11,24 @@ use crate::database::data::DataDB;
 markup::define! {
     EditPost<'a>(
         title: &'a str,
-        lang_code: &'a str,
         post: &'a PostDB,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {
-                    lang_code: lang_code,
                     post: post,
                     data: data,
                 },
                 current_page: "edit_post",
-                lang_code: lang_code,
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
         post: &'a PostDB,
         data: &'a DataDB,
     ) {
@@ -40,12 +36,11 @@ markup::define! {
             h1[class = "title"] {
                 {&t(
                     "Edit post: '{title}'",
-                    lang_code
+                    &data.lang.code
                 ).replace("{title}", &post.id.to_string())}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        lang_code: lang_code,
                         route: &"/admin/edit_post?id={id}"
                             .replace("{id}", &post.id.to_string()),
                         data: data,
@@ -56,7 +51,7 @@ markup::define! {
             form[
                 method = "post",
                 action = "/{lang}/admin/edit_post"
-                    .replace("{lang}", lang_code)
+                    .replace("{lang}", &data.lang.code)
                 ,
             ] {
                 input[
@@ -67,7 +62,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Title", lang_code)}
+                        {&t("Title", &data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -81,7 +76,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Permalink", lang_code)}
+                        {&t("Permalink", &data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -95,7 +90,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Description", lang_code)}
+                        {&t("Description", &data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -110,7 +105,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Post's body", lang_code)}
+                        {&t("Post's body", &data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -133,7 +128,7 @@ markup::define! {
                                 checked = post.draft,
                             ];
                             " "
-                            {&t("Draft", lang_code)}
+                            {&t("Draft", &data.lang.code)}
                         }
                     }
                 }
@@ -149,7 +144,7 @@ markup::define! {
                                 checked = post.deleted,
                             ];
                             " "
-                            {&t("Deleted [post]", lang_code)}
+                            {&t("Deleted [post]", &data.lang.code)}
                         }
                     }
                 }
@@ -157,17 +152,17 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", lang_code)}
+                            {&t("Submit", &data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
                             href = "/{lang}/admin/posts"
-                                .replace("{lang}", lang_code)
+                                .replace("{lang}", &data.lang.code)
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", lang_code)}
+                            {&t("Cancel", &data.lang.code)}
                         }
                     }
                 }

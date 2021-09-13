@@ -1,12 +1,13 @@
 use markup;
 
 use crate::i18n::t::t;
+use crate::database::data::DataDB;
 
 
 markup::define! {
     AdminSidebar<'a>(
         current_page: &'a str,
-        lang_code: &'a str,
+        data: &'a DataDB,
     ) {
         aside[class = "menu is-hidden-mobile"] {
             /* Dashboard
@@ -14,12 +15,13 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"dashboard" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Dashboard", lang_code)}
+                        {&t("Dashboard", &data.lang.code)}
                     }
                 }
             }
@@ -27,28 +29,30 @@ markup::define! {
             /* General
              * * * * * */
             p[class = "menu-label"] {
-                {&t("General", lang_code)}
+                {&t("General", &data.lang.code)}
             }
             ul[class = "menu-list"] {
 
                 li {
                     a[
-                        href = "/{lang}/admin/statistics".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/statistics"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"statistics" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Statistics", lang_code)}
+                        {&t("Statistics", &data.lang.code)}
                     }
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/server".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/server"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"server" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Server", lang_code)}
+                        {&t("Server", &data.lang.code)}
                     }
                 }
             }
@@ -56,87 +60,96 @@ markup::define! {
             /* Data
              * * * * */
             p[class = "menu-label"] {
-                {&t("Data", lang_code)}
+                {&t("Data", &data.lang.code)}
             }
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/users".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/users"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"users" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Users", lang_code)}
+                        {&t("Users", &data.lang.code)}
                     }
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/languages".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/languages"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"languages" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Languages", lang_code)}
+                        {&t("Languages", &data.lang.code)}
                     }
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/posts"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"posts" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Posts", lang_code)}
+                        {&t("Posts", &data.lang.code)}
                     }
                     ul {
                         li {
                             a[
-                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
+                                href = "/{lang}/admin/posts"
+                                    .replace("{lang}", &data.lang.code),
                             ] {
-                                {&t("Drafts", lang_code)}
+                                {&t("Drafts", &data.lang.code)}
                             }
                         }
                         li {
                             a[
-                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
+                                href = "/{lang}/admin/posts"
+                                    .replace("{lang}", &data.lang.code),
                             ] {
-                                {&t("Published [posts]", lang_code)}
+                                {&t("Published [posts]", &data.lang.code)}
                             }
                         }
                         li {
                             a[
-                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
+                                href = "/{lang}/admin/posts"
+                                    .replace("{lang}", &data.lang.code),
                             ] {
-                                {&t("Untranslated [posts]", lang_code)}
+                                {&t("Untranslated [posts]", &data.lang.code)}
                             }
                         }
                         li {
                             a[
-                                href = "/{lang}/admin/posts".replace("{lang}", &lang_code),
+                                href = "/{lang}/admin/posts"
+                                    .replace("{lang}", &data.lang.code),
                             ] {
-                                {&t("Trash", lang_code)}
+                                {&t("Trash", &data.lang.code)}
                             }
                         }
                     }
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/pages".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/pages"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"pages" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Pages", lang_code)}
+                        {&t("Pages", &data.lang.code)}
                     }
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/files".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/files"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"files" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Files", lang_code)}
+                        {&t("Files", &data.lang.code)}
                     }
                 }
             }
@@ -144,27 +157,29 @@ markup::define! {
             /* Settings
              * * * * * * */
             p[class = "menu-label"] {
-                {&t("Settings", lang_code)}
+                {&t("Settings", &data.lang.code)}
             }
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/website".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/website"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"website" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Website", lang_code)}
+                        {&t("Website", &data.lang.code)}
                     }
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/tukosmo".replace("{lang}", &lang_code),
+                        href = "/{lang}/admin/tukosmo"
+                            .replace("{lang}", &data.lang.code),
                         class = if current_page == &"tukosmo" {
                             "is-active"
                         } else { "" },
                     ] {
-                        {&t("Tukosmo", lang_code)}
+                        {&t("Tukosmo", &data.lang.code)}
                     }
                 }
             }

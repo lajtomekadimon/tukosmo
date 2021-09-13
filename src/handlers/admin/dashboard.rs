@@ -15,16 +15,16 @@ pub async fn dashboard(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
 
             let data = DataDB {
                 user: user,
-                languages: s_languages(lang_code.to_string()),
+                lang: lang.clone(),
+                languages: s_languages(lang.id),
             };
 
             let html = Dashboard {
-                title: &t("Tukosmo Admin Panel", &lang_code),
-                lang_code: &lang_code,
+                title: &t("Tukosmo Admin Panel", &lang.code),
                 data: &data,
             };
 

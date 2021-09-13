@@ -7,14 +7,14 @@ use crate::database::data::UserDB;
 
 pub fn s_user_by_session_lang(
     session_id: Uuid,
-    lang_code: String,
+    language_of_user: i64,
 ) -> Option<UserDB> {
     let mut post_struct: Option<UserDB> = None;
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_user_by_session_lang($1, s_language_id_by_code($2))",
-            &[&session_id, &lang_code]
+            "SELECT * FROM s_user_by_session_lang($1, $2)",
+            &[&session_id, &language_of_user]
         ) {
             for row in rows {
                 let user_id: i64 = row.get("id");

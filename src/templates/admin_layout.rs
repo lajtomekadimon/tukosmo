@@ -1,15 +1,17 @@
 use markup;
 
+use crate::database::data::CurrentLanguageDB;
+
 
 markup::define! {
     AdminLayout<'a, BodyContent: markup::Render>(
         title: &'a str,
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
         content: BodyContent,
     ) {
         @markup::doctype()
         html[
-            lang = lang_code
+            lang = &lang.code
         ] {
             head {
                 meta[charset = "utf-8"];

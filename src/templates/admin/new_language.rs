@@ -11,35 +11,30 @@ use crate::database::data::DataDB;
 markup::define! {
     NewLanguage<'a>(
         title: &'a str,
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {
-                    lang_code: lang_code,
                     data: data,
                 },
                 current_page: "new_language",
-                lang_code: lang_code,
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Add language", lang_code)}
+                {&t("Add language", &data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        lang_code: lang_code,
                         route: "/admin/new_language",
                         data: data,
                     }
@@ -48,28 +43,29 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/new_language".replace("{lang}", lang_code),
+                action = "/{lang}/admin/new_language"
+                    .replace("{lang}", &data.lang.code),
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Code", lang_code)}
+                        {&t("Code", &data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
                             class = "input",
                             type = "text",
                             name = "lang_code",
-                            placeholder = &t("Example: en", lang_code),
+                            placeholder = &t("Example: en", &data.lang.code),
                         ];
                     }
                 }
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Language name", lang_code)}
+                        {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for lang in s_languages(lang_code.to_string()) {
+                        @for lang in s_languages(data.lang.id) {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
@@ -96,15 +92,15 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", lang_code)}
+                            {&t("Submit", &data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/languages".replace("{lang}", lang_code),
+                            href = "/{lang}/admin/languages".replace("{lang}", &data.lang.code),
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", lang_code)}
+                            {&t("Cancel", &data.lang.code)}
                         }
                     }
                 }

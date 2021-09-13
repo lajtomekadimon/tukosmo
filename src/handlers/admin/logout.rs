@@ -13,10 +13,10 @@ pub async fn logout(
 
     match admin_handler(req, id.clone()) {
 
-        Ok((lang_code, _user)) => {
+        Ok((lang, _user)) => {
             
             let login_route = "/{lang}/admin/login"
-                .replace("{lang}", &lang_code);
+                .replace("{lang}", &lang.code);
 
             // Cookie has a session
             if let Some(session_uuid) = id.identity() {
@@ -43,7 +43,7 @@ pub async fn logout(
                             .header(
                                 "Location",
                                 "/{lang}/admin"
-                                    .replace("{lang}", &lang_code)
+                                    .replace("{lang}", &lang.code)
                                     // TODO: Couldn't logout
                             )
                             .finish()

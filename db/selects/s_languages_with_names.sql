@@ -22,7 +22,7 @@ SELECT
 
     CASE
         WHEN a.tln_name IS NULL
-        THEN '[untranslated: ' || s_language_code_by_id(tl_id) || ']'
+        THEN '[untranslated: ' || tl_code || ']'
         ELSE a.tln_name
     END AS name,
         

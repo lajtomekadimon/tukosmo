@@ -4,16 +4,17 @@ use uuid::Uuid;
 
 use crate::i18n::current_language::current_language;
 use crate::database::s_user_by_session_lang::s_user_by_session_lang;
-use crate::database::data::UserDB;
+use crate::database::data::{CurrentLanguageDB, UserDB};
 
 
 pub fn admin_handler(
     req: HttpRequest,
     id: Identity,
-) -> Result<(String, UserDB), HttpResponse> {
-    if let Some(lang_code) = current_language(req) {
+) -> Result<(CurrentLanguageDB, UserDB), HttpResponse> {
+    if let Some(lang) = current_language(req) {
 
-        let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);
+        let login_route = "/{lang}/admin/login"
+            .replace("{lang}", &lang.code);
 
         // Cookie has a session
         if let Some(session_uuid) = id.identity() {
@@ -25,10 +26,10 @@ pub fn admin_handler(
                 // Session is active
                 if let Some(user) = s_user_by_session_lang(
                     session_id,
-                    lang_code.clone(),
+                    lang.id.clone(),
                 ) {
 
-                    Ok((lang_code, user))
+                    Ok((lang, user))
 
                 // Session has expired
                 // TODO: "Your session has expired."

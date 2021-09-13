@@ -12,45 +12,41 @@ use crate::database::data::DataDB;
 markup::define! {
     Languages<'a>(
         title: &'a str,
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {
-                    lang_code: lang_code,
                     data: data,
                 },
                 current_page: "languages",
-                lang_code: lang_code,
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Languages", lang_code)}
+                {&t("Languages", &data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        lang_code: lang_code,
                         route: "/admin/languages",
                         data: data,
                     }
                 }
 
                 a[
-                    href = "/{lang}/admin/new_language".replace("{lang}", lang_code),
+                    href = "/{lang}/admin/new_language"
+                        .replace("{lang}", &data.lang.code),
                     class = "button is-link is-pulled-right has-text-weight-normal mr-4",
                 ] {
-                    {&t("Add language", lang_code)}
+                    {&t("Add language", &data.lang.code)}
                 }
             }
 
@@ -60,23 +56,23 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Language", lang_code)}
+                            {&t("Language", &data.lang.code)}
                         }
                         th {
-                            {&t("Code", lang_code)}
+                            {&t("Code", &data.lang.code)}
                         }
                         th {
-                            {&t("Last update", lang_code)}
+                            {&t("Last update", &data.lang.code)}
                         }
                     }
                 }
                 tbody {
-                    @for lang in s_languages(lang_code.to_string()) {
+                    @for lang in s_languages(data.lang.id) {
                         tr {
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_language?id={id}"
-                                        .replace("{lang}", lang_code)
+                                        .replace("{lang}", &data.lang.code)
                                         .replace(
                                             "{id}",
                                             &lang.id.to_string()
@@ -93,7 +89,7 @@ markup::define! {
                                 @lang.code
                             }
                             td {
-                                {t_date(&lang.date, lang_code)}
+                                {t_date(&lang.date, &data.lang.code)}
                             }
                         }
                     }

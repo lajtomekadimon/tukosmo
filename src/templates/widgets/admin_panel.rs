@@ -9,11 +9,9 @@ markup::define! {
     AdminPanel<'a, BodyContent: markup::Render>(
         content: BodyContent,
         current_page: &'a str,
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminNavbar {
-            lang_code: lang_code,
             data: data,
         }
 
@@ -22,7 +20,7 @@ markup::define! {
                 div[class = "column is-3"] {
                     @AdminSidebar {
                         current_page: current_page,
-                        lang_code: lang_code,
+                        data: data,
                     }
                 }
                 div[class = "column is-9"] {

@@ -1,16 +1,17 @@
 use markup;
 
 use crate::templates::layout::Layout;
+use crate::database::data::CurrentLanguageDB;
 
 
 markup::define! {
     Page<'a>(
         title: &'a str,
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
     ) {
         @Layout {
             title: title,
-            lang_code: lang_code,
+            lang: &lang,
             content: Content {},
         }
     }

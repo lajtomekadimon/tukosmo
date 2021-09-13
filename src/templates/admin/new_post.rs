@@ -10,35 +10,30 @@ use crate::database::data::DataDB;
 markup::define! {
     NewPost<'a>(
         title: &'a str,
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {
-                    lang_code: lang_code,
                     data: data,
                 },
                 current_page: "new_post",
-                lang_code: lang_code,
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("New post", lang_code)}
+                {&t("New post", &data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        lang_code: lang_code,
                         route: "/admin/new_post",
                         data: data,
                     }
@@ -48,12 +43,12 @@ markup::define! {
             form[
                 method = "post",
                 action = "/{lang}/admin/new_post"
-                    .replace("{lang}", lang_code)
+                    .replace("{lang}", &data.lang.code)
                 ,
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Title", lang_code)}
+                        {&t("Title", &data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -66,7 +61,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Permalink", lang_code)}
+                        {&t("Permalink", &data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -79,7 +74,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Description", lang_code)}
+                        {&t("Description", &data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -92,7 +87,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Post's body", lang_code)}
+                        {&t("Post's body", &data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -112,7 +107,7 @@ markup::define! {
                                 value = "yes",
                             ];
                             " "
-                            {&t("Draft", lang_code)}
+                            {&t("Draft", &data.lang.code)}
                         }
                     }
                 }
@@ -120,17 +115,17 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", lang_code)}
+                            {&t("Submit", &data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
                             href = "/{lang}/admin/posts"
-                                .replace("{lang}", lang_code)
+                                .replace("{lang}", &data.lang.code)
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", lang_code)}
+                            {&t("Cancel", &data.lang.code)}
                         }
                     }
                 }

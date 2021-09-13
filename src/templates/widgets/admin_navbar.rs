@@ -6,7 +6,6 @@ use crate::database::data::DataDB;
 
 markup::define! {
     AdminNavbar<'a>(
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         nav[class = "navbar is-white"] {
@@ -14,10 +13,10 @@ markup::define! {
                 div[class = "navbar-brand"] {
                     a[
                         class = "navbar-item brand-text tap-logo",
-                        href = "/{lang}/admin/".replace("{lang}", &lang_code),
-                    ] {
-                        //{&t("Tukosmo Admin Panel", lang_code)}
-                    }
+                        href = "/{lang}/admin/"
+                            .replace("{lang}", &data.lang.code),
+                        title = &t("Tukosmo Admin Panel", &data.lang.code),
+                    ] {}
                     div[class = "navbar-burger burger"] {
                         span {}
                         span {}
@@ -32,24 +31,25 @@ markup::define! {
                     div[class = "navbar-start"] {
                         a[
                             class = "navbar-item",
-                            href = "/{lang}/".replace("{lang}", &lang_code),
+                            href = "/{lang}/"
+                                .replace("{lang}", &data.lang.code),
                             target = "_blank",
                         ] {
-                            {&t("Visit website", lang_code)}
+                            {&t("Visit website", &data.lang.code)}
                         }
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's docs
                             target = "_blank",
                         ] {
-                            {&t("Documentation", lang_code)}
+                            {&t("Documentation", &data.lang.code)}
                         }
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's help
                             target = "_blank",
                         ] {
-                            {&t("Help [noun]", lang_code)}
+                            {&t("Help [noun]", &data.lang.code)}
                         }
                     }
 
@@ -66,30 +66,30 @@ markup::define! {
                                 a[
                                     class = "navbar-item",
                                     href = "/{lang}/admin/account"
-                                        .replace("{lang}", &lang_code)
+                                        .replace("{lang}", &data.lang.code)
                                     ,
                                 ] {
-                                    {&t("Account", lang_code)}
+                                    {&t("Account", &data.lang.code)}
                                 }
 
                                 a[
                                     class = "navbar-item",
                                     href = "/{lang}/admin/sessions"
-                                        .replace("{lang}", &lang_code)
+                                        .replace("{lang}", &data.lang.code)
                                     ,
                                 ] {
-                                    {&t("Sessions", lang_code)}
+                                    {&t("Sessions", &data.lang.code)}
                                 }
 
                                 hr[class = "navbar-divider"];
 
                                 a[
                                     href = "/{lang}/admin/logout"
-                                        .replace("{lang}", &lang_code)
+                                        .replace("{lang}", &data.lang.code)
                                     ,
                                     class = "navbar-item",
                                 ] {
-                                    {&t("Logout [verb]", lang_code)}
+                                    {&t("Logout [verb]", &data.lang.code)}
                                 }
                             }
                         }

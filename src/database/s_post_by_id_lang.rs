@@ -21,14 +21,14 @@ pub struct PostDB {
 
 pub fn s_post_by_id_lang(
     post_id: i64,
-    lang_code: String,
+    language_of_user: i64,
 ) -> Option<PostDB> {
     let mut post_struct: Option<PostDB> = None;
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_post_by_id_lang($1, s_language_id_by_code($2))",
-            &[&post_id, &lang_code]
+            "SELECT * FROM s_post_by_id_lang($1, $2)",
+            &[&post_id, &language_of_user]
         ) {
             for row in rows {
                 let post_id: i64 = row.get("id");

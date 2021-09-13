@@ -11,10 +11,10 @@ pub async fn handler_blog_post(
     let permalink_value: String = req.match_info()
         .get("permalink").unwrap().parse().unwrap();
 
-    if let Some(lang_code) = current_language(req) {
+    if let Some(lang) = current_language(req) {
 
         if let Some(post) = s_post_by_lang_permalink(
-            lang_code.clone(),
+            lang.id.clone(),
             permalink_value
         ) {
 
@@ -24,7 +24,7 @@ pub async fn handler_blog_post(
                     a = post.title,
                     b = "MyExample"
                 ),
-                lang_code: &lang_code,
+                lang: &lang,
                 post: &post,
             };
 

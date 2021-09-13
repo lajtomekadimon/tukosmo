@@ -5,7 +5,6 @@ use crate::database::data::DataDB;
 
 markup::define! {
     AdminLangDropdown<'a>(
-        lang_code: &'a str,
         route: &'a str,
         data: &'a DataDB,
     ) {
@@ -17,11 +16,7 @@ markup::define! {
                     "aria-controls" = "dropdown-menu",
                 ] {
                     span {
-                        @for lang in &data.languages {  // TODO: Add to DataDB the current language or something
-                            @if &lang.code == lang_code {
-                                @lang.name
-                            }
-                        }
+                        @data.lang.name
                     }
                     span[class = "icon is-small"] {
                         i[class = "eos-icons"] {
@@ -41,7 +36,7 @@ markup::define! {
                             href = "/{lang}{route}"
                                 .replace("{lang}", &lang.code)
                                 .replace("{route}", route),
-                            class = if &lang.code != lang_code {
+                            class = if &lang.code != &data.lang.code {
                                 "dropdown-item"
                             } else {
                                 "dropdown-item is-active"

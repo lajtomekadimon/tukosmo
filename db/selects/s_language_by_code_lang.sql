@@ -1,5 +1,6 @@
 
-CREATE OR REPLACE FUNCTION s_languages(
+CREATE OR REPLACE FUNCTION s_language_by_code_lang(
+    lang_code TEXT,
     language_of_user INT8
 )
 
@@ -40,6 +41,8 @@ FROM t_languages
 LEFT JOIN t_language_names
 ON tl_id = tln_lang
     AND tln_name_lang = language_of_user
-ORDER BY tln_name
+WHERE tl_code = lang_code
+LIMIT 1
 
 $$;
+

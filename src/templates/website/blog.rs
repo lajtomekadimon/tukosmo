@@ -2,27 +2,28 @@ use markup;
 
 use crate::templates::layout::Layout;
 use crate::templates::widgets::post_list::PostList;
+use crate::database::data::CurrentLanguageDB;
 
 
 markup::define! {
     Blog<'a>(
         title: &'a str,
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
     ) {
         @Layout {
             title: title,
-            lang_code: lang_code,
+            lang: &lang,
             content: Content {
-                lang_code: lang_code,
+                lang: lang,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB
     ) {
         @PostList {
-            lang_code: lang_code,
+            lang: lang,
         }
     }
 }

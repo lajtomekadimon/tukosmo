@@ -22,14 +22,14 @@ pub struct PostDB {
 }
 
 pub fn s_posts(
-    lang_code: String
+    language_of_user: i64
 ) -> Vec<PostDB> {
     let mut vec = Vec::new();
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_posts(s_language_id_by_code($1))",
-            &[&lang_code,]
+            "SELECT * FROM s_posts($1)",
+            &[&language_of_user,]
         ) {
             for row in rows {
                 let post_id: i64 = row.get("id");

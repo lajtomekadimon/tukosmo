@@ -13,15 +13,15 @@ pub async fn login(
     id: Identity,
 ) -> impl Responder {
 
-    if let Some(lang_code) = current_language(req) {
+    if let Some(lang) = current_language(req) {
 
         let html = Login {
             title: &format!(
                 "{a} - {b}",
-                a = &t("Login [noun]", &lang_code),
-                b = &t("Tukosmo Admin Panel", &lang_code)
+                a = &t("Login [noun]", &lang.code),
+                b = &t("Tukosmo Admin Panel", &lang.code)
             ),
-            lang_code: &lang_code.clone(),
+            lang: &lang,
         };
 
         // Cookie has a session
@@ -34,11 +34,11 @@ pub async fn login(
                 // Session is active
                 if let Some(_user) = s_user_by_session_lang(
                     session_id,
-                    lang_code.clone()
+                    lang.id.clone()
                 ) {
 
                     let dashboard_route = "/{lang}/admin/"
-                        .replace("{lang}", &lang_code);
+                        .replace("{lang}", &lang.code);
 
                     HttpResponse::Found()
                         .header("Location", dashboard_route)

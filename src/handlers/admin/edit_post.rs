@@ -24,27 +24,27 @@ pub async fn edit_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
 
             let data = DataDB {
-                user: user,
-                languages: s_languages(lang_code.to_string()),
+                user: user.clone(),
+                lang: lang.clone(),
+                languages: s_languages(lang.id),
             };
 
             if let Some(post) = s_post_by_id_lang(
                 post_id,
-                lang_code.clone(),
+                lang.id.clone(),
             ) {
                 let html = EditPost {
                     title: &format!(
                         "{a} - {b}",
                         a = &t(
                             "Edit post: '{title}'",
-                            &lang_code
+                            &lang.code
                         ).replace("{title}", &post.title),
-                        b = &t("Tukosmo Admin Panel", &lang_code)
+                        b = &t("Tukosmo Admin Panel", &lang.code)
                     ),
-                    lang_code: &lang_code,
                     post: &post,
                     data: &data,
                 };
@@ -56,11 +56,10 @@ pub async fn edit_post(
                         "{a} - {b}",
                         a = &t(
                             "Edit post: '{title}'",
-                            &lang_code
+                            &lang.code
                         ).replace("{title}", &post_id.to_string()),
-                        b = &t("Tukosmo Admin Panel", &lang_code)
+                        b = &t("Tukosmo Admin Panel", &lang.code)
                     ),
-                    lang_code: &lang_code,
                     post: &PostDB{
                         id: post_id,
                         title: "".to_string(),
@@ -69,7 +68,7 @@ pub async fn edit_post(
                         permalink: "".to_string(),
                         author: 0,
                         author_name: "".to_string(),
-                        translator: data.user.id,
+                        translator: user.id,
                         translator_name: "".to_string(),
                         date: "".to_string(),
                         date_trans: "".to_string(),

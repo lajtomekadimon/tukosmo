@@ -8,16 +8,14 @@ use crate::database::data::DataDB;
 markup::define! {
     Files<'a>(
         title: &'a str,
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {},
                 current_page: "files",
-                lang_code: lang_code,
                 data: data,
             },
         }

@@ -25,7 +25,7 @@ pub async fn edit_post_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
             let post_id = (form.id).clone();
             let title_value = (form.title).clone();
             let description_value = (form.description).clone();
@@ -42,7 +42,7 @@ pub async fn edit_post_post(
 
             if let Ok(_post_trans_id) = aw_edit_post(
                 post_id,
-                lang_code.clone(),
+                lang.code.clone(),
                 title_value,
                 description_value,
                 body_value,
@@ -51,14 +51,15 @@ pub async fn edit_post_post(
                 is_deleted,
                 user.id,
             ) {
-                let redirect_route = "/{lang}/admin/posts".replace("{lang}", &lang_code);
+                let redirect_route = "/{lang}/admin/posts"
+                    .replace("{lang}", &lang.code);
 
                 HttpResponse::Found()
                     .header("Location", redirect_route)
                     .finish()
             } else {
                 let redirect_route = "/{lang}/admin/edit_post?id={id}"
-                    .replace("{lang}", &lang_code)
+                    .replace("{lang}", &lang.code)
                     .replace("{id}", &post_id.to_string());
                 // TODO: Show what failed in the template!
 

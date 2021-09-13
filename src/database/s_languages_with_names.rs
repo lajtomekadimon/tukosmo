@@ -10,15 +10,15 @@ pub struct LanguageDB {
 }
 
 pub fn s_languages_with_names(
-    language_code: String,
+    language_of_user: i64,
     language_id: i64,
 ) -> Vec<LanguageDB> {
     let mut vec = Vec::new();
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_languages_with_names(s_language_id_by_code($1), $2)",
-            &[&language_code, &language_id]
+            "SELECT * FROM s_languages_with_names($1, $2)",
+            &[&language_of_user, &language_id]
         ) {
             for row in rows {
                 let lang_id: i64 = row.get("id");

@@ -15,20 +15,20 @@ pub async fn files(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
 
             let data = DataDB {
                 user: user,
-                languages: s_languages(lang_code.to_string()),
+                lang: lang.clone(),
+                languages: s_languages(lang.id),
             };
 
             let html = Files {
                 title: &format!(
                     "{a} - {b}",
-                    a = &t("Files", &lang_code),
-                    b = &t("Tukosmo Admin Panel", &lang_code)
+                    a = &t("Files", &lang.code),
+                    b = &t("Tukosmo Admin Panel", &lang.code)
                 ),
-                lang_code: &lang_code,
                 data: &data,
             };
 

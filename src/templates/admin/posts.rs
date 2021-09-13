@@ -12,45 +12,41 @@ use crate::database::data::DataDB;
 markup::define! {
     Posts<'a>(
         title: &'a str,
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {
-                    lang_code: lang_code,
                     data: data,
                 },
                 current_page: "posts",
-                lang_code: lang_code,
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
         data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Posts", lang_code)}
+                {&t("Posts", &data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        lang_code: lang_code,
                         route: "/admin/posts",
                         data: data,
                     }
                 }
 
                 a[
-                    href = "/{lang}/admin/new_post".replace("{lang}", lang_code),
+                    href = "/{lang}/admin/new_post"
+                        .replace("{lang}", &data.lang.code),
                     class = "button is-link is-pulled-right has-text-weight-normal mr-4",
                 ] {
-                    {&t("New post", lang_code)}
+                    {&t("New post", &data.lang.code)}
                 }
             }
 
@@ -60,26 +56,26 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Title", lang_code)}
+                            {&t("Title", &data.lang.code)}
                         }
                         th {
-                            {&t("Status", lang_code)}
+                            {&t("Status", &data.lang.code)}
                         }
                         th {
-                            {&t("Published", lang_code)}
+                            {&t("Published", &data.lang.code)}
                         }
                         th {
-                            {&t("Author", lang_code)}
+                            {&t("Author", &data.lang.code)}
                         }
                     }
                 }
                 tbody {
-                    @for post in s_posts(lang_code.to_string()) {
+                    @for post in s_posts(data.lang.id) {
                         tr {
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_post?id={id}"
-                                        .replace("{lang}", lang_code)
+                                        .replace("{lang}", &data.lang.code)
                                         .replace(
                                             "{id}",
                                             &post.id.to_string()
@@ -94,26 +90,26 @@ markup::define! {
                             }
                             td {
                                 @if post.untranslated {
-                                    {&t("Untranslated", lang_code)}
+                                    {&t("Untranslated", &data.lang.code)}
                                 } else if post.draft {
-                                    {&t("Draft", lang_code)}
+                                    {&t("Draft", &data.lang.code)}
                                 } else {
-                                    {&t("Published", lang_code)}
+                                    {&t("Published", &data.lang.code)}
                                 }
                             }
                             td {
-                                {t_date(&post.date, lang_code)}
+                                {t_date(&post.date, &data.lang.code)}
 
                                 @if (post.author_name != post.translator_name) && !post.untranslated {
                                     " ("
-                                    {t_date(&post.date_trans, lang_code)}
+                                    {t_date(&post.date_trans, &data.lang.code)}
                                     ")"
                                 }
                             }
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_user?id={id}"
-                                        .replace("{lang}", lang_code)
+                                        .replace("{lang}", &data.lang.code)
                                         .replace(
                                             "{id}",
                                             &post.author.to_string()
@@ -125,7 +121,7 @@ markup::define! {
                                 @if (post.author_name != post.translator_name) && !post.untranslated {
                                     " ("
                                     {
-                                        &t("translated by {name}", lang_code)
+                                        &t("translated by {name}", &data.lang.code)
                                             .replace("{name}", &post.translator_name)
                                     }
                                     ")"

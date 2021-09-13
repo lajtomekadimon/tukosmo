@@ -4,11 +4,12 @@ use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::database::s_post_by_lang_permalink::PostDB;
 use crate::markdown::render_html::render_html;
+use crate::database::data::CurrentLanguageDB;
 
 
 markup::define! {
     Post<'a>(
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
         post: &'a PostDB,
     ) {
         article[
@@ -49,7 +50,7 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog"
-                                    .replace("{lang}", lang_code)
+                                    .replace("{lang}", &lang.code)
                                 ,
                             ] {
                                 i[class = "eos-icons"] {
@@ -67,7 +68,7 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog"
-                                    .replace("{lang}", lang_code)
+                                    .replace("{lang}", &lang.code)
                                 ,
                             ] {
                                 i[class = "eos-icons"] {
@@ -76,7 +77,7 @@ markup::define! {
 
                                 " "
 
-                                {t_date(&post.date, lang_code)}
+                                {t_date(&post.date, &lang.code)}
                             }
                         }
                         
@@ -85,7 +86,7 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/admin/edit_post?id={id}"
-                                    .replace("{lang}", lang_code)
+                                    .replace("{lang}", &lang.code)
                                     .replace("{id}", &post.id.to_string())
                                 ,
                             ] {
@@ -95,7 +96,7 @@ markup::define! {
 
                                 " "
 
-                                {&t("Edit", lang_code)}
+                                {&t("Edit", &lang.code)}
                             }
                         }
                     }

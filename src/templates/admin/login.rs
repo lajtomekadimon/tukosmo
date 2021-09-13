@@ -2,24 +2,25 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
+use crate::database::data::CurrentLanguageDB;
 
 
 markup::define! {
     Login<'a>(
         title: &'a str,
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: lang,
             content: Content {
-                lang_code: lang_code
+                lang: lang,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
     ) {
 
         section[class = "hero is-success is-fullheight"] {
@@ -31,7 +32,8 @@ markup::define! {
                                 img[src = "/static/img/tukosmo-logo-128.png"];
                             }
                             form[
-                                action = "/{lang}/admin/login".replace("{lang}", &lang_code),
+                                action = "/{lang}/admin/login"
+                                    .replace("{lang}", &lang.code),
                                 method = "post",
                             ] {
                                 div[class = "field"] {
@@ -40,7 +42,7 @@ markup::define! {
                                             class = "input is-large",
                                             name = "email",
                                             type = "email",
-                                            placeholder = &t("Your email", lang_code),
+                                            placeholder = &t("Your email", &lang.code),
                                             autofocus = "",
                                         ];
                                     }
@@ -52,7 +54,7 @@ markup::define! {
                                             class = "input is-large",
                                             name = "password",
                                             type = "password",
-                                            placeholder = &t("Your password", lang_code),
+                                            placeholder = &t("Your password", &lang.code),
                                         ];
                                     }
                                 }
@@ -60,7 +62,7 @@ markup::define! {
                                 button[
                                     class = "button is-block is-info is-large is-fullwidth",
                                 ] {
-                                    {&t("Login [verb]", lang_code)}
+                                    {&t("Login [verb]", &lang.code)}
                                     " "
                                     i[class = "eos-icons"] { "login" }
                                 }
@@ -69,13 +71,13 @@ markup::define! {
 
                         p[class = "has-text-grey"] {
                             a[href = "/"] {
-                                {&t("Sign up [verb]", lang_code)}
+                                {&t("Sign up [verb]", &lang.code)}
                             }
 
                             " · "
 
                             a[href = "/"] {
-                                {&t("Forgotten password?", lang_code)}
+                                {&t("Forgotten password?", &lang.code)}
                             }
                         }
                     }

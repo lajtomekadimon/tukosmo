@@ -15,20 +15,20 @@ pub async fn posts(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
 
             let data = DataDB {
                 user: user,
-                languages: s_languages(lang_code.to_string()),
+                lang: lang.clone(),
+                languages: s_languages(lang.id),
             };
 
             let html = Posts {
                 title: &format!(
                     "{a} - {b}",
-                    a = &t("Posts", &lang_code),
-                    b = &t("Tukosmo Admin Panel", &lang_code)
+                    a = &t("Posts", &lang.code),
+                    b = &t("Tukosmo Admin Panel", &lang.code)
                 ),
-                lang_code: &lang_code,
                 data: &data,
             };
 

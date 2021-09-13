@@ -23,7 +23,7 @@ pub async fn new_post_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
             let title_value = (form.title).clone();
             let description_value = (form.description).clone();
             let body_value = (form.body).clone();
@@ -35,7 +35,7 @@ pub async fn new_post_post(
 
             if let Ok(_post_trans_id) = aw_new_post(
                 0,  // new
-                lang_code.clone(),
+                lang.code.clone(),
                 title_value,
                 description_value,
                 body_value,
@@ -43,13 +43,15 @@ pub async fn new_post_post(
                 user.id,
                 is_draft,
             ) {
-                let redirect_route = "/{lang}/admin/posts".replace("{lang}", &lang_code);
+                let redirect_route = "/{lang}/admin/posts"
+                    .replace("{lang}", &lang.code);
 
                 HttpResponse::Found()
                     .header("Location", redirect_route)
                     .finish()
             } else {
-                let redirect_route = "/{lang}/admin/new_post".replace("{lang}", &lang_code);
+                let redirect_route = "/{lang}/admin/new_post"
+                    .replace("{lang}", &lang.code);
                 // TODO: Show what failed in the template!
 
                 HttpResponse::Found()

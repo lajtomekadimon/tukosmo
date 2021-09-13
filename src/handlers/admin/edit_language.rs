@@ -24,11 +24,12 @@ pub async fn edit_language(
 
     match admin_handler(req, id) {
 
-        Ok((lang_code, user)) => {
+        Ok((lang, user)) => {
 
             let data = DataDB {
                 user: user,
-                languages: s_languages(lang_code.to_string()),
+                lang: lang.clone(),
+                languages: s_languages(lang.id),
             };
 
             if let Some(lang_id_code) = s_lang_code_by_id(lang_id) {
@@ -37,11 +38,10 @@ pub async fn edit_language(
                         "{a} - {b}",
                         a = &t(
                             "Edit language: '{lang}'",
-                            &lang_code
+                            &lang.code
                         ).replace("{lang}", &lang_id_code),
-                        b = &t("Tukosmo Admin Panel", &lang_code)
+                        b = &t("Tukosmo Admin Panel", &lang.code)
                     ),
-                    lang_code: &lang_code,
                     lang_id: &lang_id,
                     lang_id_code: &lang_id_code,
                     data: &data,

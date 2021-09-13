@@ -3,19 +3,20 @@ use markup;
 use crate::templates::layout::Layout;
 use crate::templates::widgets::post::Post;
 use crate::database::s_post_by_lang_permalink::PostDB;
+use crate::database::data::CurrentLanguageDB;
 
 
 markup::define! {
     BlogPost<'a>(
         title: &'a str,
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
         post: &'a PostDB,
     ) {
         @Layout {
             title: title,
-            lang_code: lang_code,
+            lang: &lang,
             content: Post {
-                lang_code: lang_code,
+                lang: &lang,
                 post: &post,
             }
         }

@@ -11,30 +11,26 @@ use crate::database::data::DataDB;
 markup::define! {
     EditLanguage<'a>(
         title: &'a str,
-        lang_code: &'a str,
         lang_id: &'a i64,
         lang_id_code: &'a str,
         data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang_code: lang_code,
+            lang: &data.lang,
             content: AdminPanel {
                 content: Content {
-                    lang_code: lang_code,
                     lang_id: lang_id,
                     lang_id_code: lang_id_code,
                     data: data,
                 },
                 current_page: "new_language",
-                lang_code: lang_code,
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_code: &'a str,
         lang_id: &'a i64,
         lang_id_code: &'a str,
         data: &'a DataDB,
@@ -43,12 +39,11 @@ markup::define! {
             h1[class = "title"] {
                 {&t(
                     "Edit language: '{lang}'",
-                    lang_code
+                    &data.lang.code
                 ).replace("{lang}", &lang_id_code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        lang_code: lang_code,
                         route: &"/admin/edit_language?id={id}"
                             .replace("{id}", &lang_id.to_string()),
                         data: data,
@@ -59,11 +54,11 @@ markup::define! {
             form[
                 method = "post",
                 action = "/{lang}/admin/edit_language"
-                    .replace("{lang}", &lang_code),
+                    .replace("{lang}", &data.lang.code),
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Code", lang_code)}
+                        {&t("Code", &data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -76,18 +71,18 @@ markup::define! {
                             type = "text",
                             name = "lang_code",
                             value = &lang_id_code,
-                            placeholder = &t("Example: en", lang_code),
+                            placeholder = &t("Example: en", &data.lang.code),
                         ];
                     }
                 }
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Language name", lang_code)}
+                        {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
                         @for lang in s_languages_with_names(
-                            lang_code.to_string(),
+                            data.lang.id,
                             *lang_id.clone()
                         ) {
                             div[class = "field has-addons is-marginless"] {
@@ -117,16 +112,16 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", lang_code)}
+                            {&t("Submit", &data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
                             href = "/{lang}/admin/languages"
-                                .replace("{lang}", lang_code),
+                                .replace("{lang}", &data.lang.code),
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", lang_code)}
+                            {&t("Cancel", &data.lang.code)}
                         }
                     }
                 }

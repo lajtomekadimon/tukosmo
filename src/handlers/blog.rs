@@ -8,15 +8,15 @@ use crate::i18n::current_language::current_language;
 pub async fn handler_blog(
     req: HttpRequest,
 ) -> impl Responder {
-    if let Some(lang_code) = current_language(req) {
+    if let Some(lang) = current_language(req) {
 
         let html = Blog {
             title: &format!(
                 "{a} - {b}",
-                a = &t("Blog", &lang_code),
+                a = &t("Blog", &lang.code),
                 b = "MyExample"
             ),
-            lang_code: &lang_code,
+            lang: &lang,
         };
 
         HttpResponse::Ok().body(html.to_string())

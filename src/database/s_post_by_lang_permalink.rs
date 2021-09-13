@@ -18,15 +18,15 @@ pub struct PostDB {
 }
 
 pub fn s_post_by_lang_permalink(
-    lang_code: String,
+    language_of_user: i64,
     permalink_value: String
 ) -> Option<PostDB> {
     let mut post_struct: Option<PostDB> = None;
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_post_by_lang_permalink(s_language_id_by_code($1), $2)",
-            &[&lang_code, &permalink_value]
+            "SELECT * FROM s_post_by_lang_permalink($1, $2)",
+            &[&language_of_user, &permalink_value]
         ) {
             for row in rows {
                 let post_id: i64 = row.get("id");

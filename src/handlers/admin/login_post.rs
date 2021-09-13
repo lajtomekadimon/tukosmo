@@ -20,12 +20,12 @@ pub async fn login_post(
     form: web::Form<FormData>,
     id: Identity,
 ) -> impl Responder {
-    if let Some(lang_code) = current_language(req.clone()) {
+    if let Some(lang) = current_language(req.clone()) {
 
         let email_value = (form.email).clone();
         let password_value = (form.password).clone();
 
-        let login_route = "/{lang}/admin/login".replace("{lang}", &lang_code);
+        let login_route = "/{lang}/admin/login".replace("{lang}", &lang.code);
 
         let redirect_dir;
 
@@ -56,7 +56,7 @@ pub async fn login_post(
 
                                 id.remember(session_id_up.to_owned());
 
-                                redirect_dir = "/{lang}/admin/".replace("{lang}", &lang_code);
+                                redirect_dir = "/{lang}/admin/".replace("{lang}", &lang.code);
 
                             } else {
 

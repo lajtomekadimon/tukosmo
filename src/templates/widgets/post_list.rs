@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::database::s_posts_by_lang::s_posts_by_lang;
+use crate::database::data::CurrentLanguageDB;
 
 /* TODO:
  * - Show something when no articles
@@ -12,12 +13,12 @@ use crate::database::s_posts_by_lang::s_posts_by_lang;
 
 markup::define! {
     PostList<'a>(
-        lang_code: &'a str,
+        lang: &'a CurrentLanguageDB,
     ) {
         div[
             class = "post-list",
         ] {
-            @for post in s_posts_by_lang(lang_code.to_string()) {
+            @for post in s_posts_by_lang(lang.id) {
                 section[
                     class = "post-wrapper"
                 ] {
@@ -26,7 +27,7 @@ markup::define! {
                     ] {
                         a[
                             href = "/{lang}/blog/{permalink}"
-                                .replace("{lang}", lang_code)
+                                .replace("{lang}", &lang.code)
                                 .replace("{permalink}", &post.permalink.to_string()),
                         ] {
                             figure[
@@ -46,7 +47,7 @@ markup::define! {
                             ] {
                                 a[
                                     href = "/{lang}/blog/{permalink}"
-                                        .replace("{lang}", lang_code)
+                                        .replace("{lang}", &lang.code)
                                         .replace("{permalink}", &post.permalink.to_string()),
                                 ] {
                                     i[class = "eos-icons"] {
@@ -58,7 +59,7 @@ markup::define! {
                                     time[
                                         datetime = "2021-08-11T20:37:29+00:00",
                                     ] {
-                                        {t_date(&post.date, lang_code)}
+                                        {t_date(&post.date, &lang.code)}
                                     }
                                 }
                             }
@@ -67,7 +68,7 @@ markup::define! {
                         h2 {
                             a[
                                 href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", lang_code)
+                                    .replace("{lang}", &lang.code)
                                     .replace("{permalink}", &post.permalink.to_string()),
                             ] {
                                 @post.title
@@ -83,10 +84,10 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", lang_code)
+                                    .replace("{lang}", &lang.code)
                                     .replace("{permalink}", &post.permalink.to_string()),
                             ] {
-                                {&t("Read more", lang_code)}
+                                {&t("Read more", &lang.code)}
                             }
                         }
                     }

@@ -7,7 +7,7 @@ use crate::i18n::current_language::current_language;
 pub async fn handler_page(
     req: HttpRequest,
 ) -> impl Responder {
-    if let Some(lang_code) = current_language(req) {
+    if let Some(lang) = current_language(req) {
 
         let html = Page {
             title: &format!(
@@ -15,7 +15,7 @@ pub async fn handler_page(
                 a = "[page title]",
                 b = "MyExample"
             ),
-            lang_code: &lang_code,
+            lang: &lang,
         };
 
         HttpResponse::Ok().body(html.to_string())
