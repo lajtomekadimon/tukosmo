@@ -24,6 +24,7 @@ markup::define! {
                     lang_code: lang_code,
                     lang_id: lang_id,
                     lang_id_code: lang_id_code,
+                    data: data,
                 },
                 current_page: "new_language",
                 lang_code: lang_code,
@@ -36,6 +37,7 @@ markup::define! {
         lang_code: &'a str,
         lang_id: &'a i64,
         lang_id_code: &'a str,
+        data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -49,6 +51,7 @@ markup::define! {
                         lang_code: lang_code,
                         route: &"/admin/edit_language?id={id}"
                             .replace("{id}", &lang_id.to_string()),
+                        data: data,
                     }
                 }
             }

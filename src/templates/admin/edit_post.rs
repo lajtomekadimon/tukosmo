@@ -22,6 +22,7 @@ markup::define! {
                 content: Content {
                     lang_code: lang_code,
                     post: post,
+                    data: data,
                 },
                 current_page: "edit_post",
                 lang_code: lang_code,
@@ -33,6 +34,7 @@ markup::define! {
     Content<'a>(
         lang_code: &'a str,
         post: &'a PostDB,
+        data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -46,6 +48,7 @@ markup::define! {
                         lang_code: lang_code,
                         route: &"/admin/edit_post?id={id}"
                             .replace("{id}", &post.id.to_string()),
+                        data: data,
                     }
                 }
             }

@@ -21,6 +21,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     lang_code: lang_code,
+                    data: data,
                 },
                 current_page: "posts",
                 lang_code: lang_code,
@@ -31,6 +32,7 @@ markup::define! {
 
     Content<'a>(
         lang_code: &'a str,
+        data: &'a DataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -40,6 +42,7 @@ markup::define! {
                     @AdminLangDropdown {
                         lang_code: lang_code,
                         route: "/admin/posts",
+                        data: data,
                     }
                 }
 

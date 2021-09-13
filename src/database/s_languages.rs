@@ -1,15 +1,8 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
+use crate::database::data::LanguageDB;
 
-
-pub struct LanguageDB {
-    pub id: i64,
-    pub code: String,
-    pub name: String,
-    pub date: String,
-    pub has_all_names: bool,
-}
 
 pub fn s_languages(
     lang_code: String

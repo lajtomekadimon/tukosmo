@@ -5,6 +5,7 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::new_language::NewLanguage;
 use crate::database::data::DataDB;
+use crate::database::s_languages::s_languages;
 
 
 pub async fn new_language(
@@ -18,6 +19,7 @@ pub async fn new_language(
 
             let data = DataDB {
                 user: user,
+                languages: s_languages(lang_code.to_string()),
             };
 
             let html = NewLanguage {

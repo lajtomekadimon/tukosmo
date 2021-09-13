@@ -5,6 +5,7 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::posts::Posts;
 use crate::database::data::DataDB;
+use crate::database::s_languages::s_languages;
 
 
 pub async fn posts(
@@ -18,6 +19,7 @@ pub async fn posts(
 
             let data = DataDB {
                 user: user,
+                languages: s_languages(lang_code.to_string()),
             };
 
             let html = Posts {

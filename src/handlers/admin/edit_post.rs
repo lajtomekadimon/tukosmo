@@ -7,6 +7,7 @@ use crate::i18n::t::t;
 use crate::templates::admin::edit_post::EditPost;
 use crate::database::s_post_by_id_lang::{s_post_by_id_lang, PostDB};
 use crate::database::data::DataDB;
+use crate::database::s_languages::s_languages;
 
 
 #[derive(Deserialize)]
@@ -27,6 +28,7 @@ pub async fn edit_post(
 
             let data = DataDB {
                 user: user,
+                languages: s_languages(lang_code.to_string()),
             };
 
             if let Some(post) = s_post_by_id_lang(

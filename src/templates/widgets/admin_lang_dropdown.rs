@@ -1,12 +1,13 @@
 use markup;
 
-use crate::database::s_languages::s_languages;
+use crate::database::data::DataDB;
 
 
 markup::define! {
     AdminLangDropdown<'a>(
         lang_code: &'a str,
         route: &'a str,
+        data: &'a DataDB,
     ) {
         div[class = "dropdown is-hoverable"] {
             div[class = "dropdown-trigger"] {
@@ -16,7 +17,7 @@ markup::define! {
                     "aria-controls" = "dropdown-menu",
                 ] {
                     span {
-                        @for lang in s_languages(lang_code.to_string()) {
+                        @for lang in &data.languages {  // TODO: Add to DataDB the current language or something
                             @if &lang.code == lang_code {
                                 @lang.name
                             }
@@ -35,7 +36,7 @@ markup::define! {
                 role = "menu",
             ] {
                 div[class = "dropdown-content"] {
-                    @for lang in s_languages(lang_code.to_string()) {
+                    @for lang in &data.languages {
                         a[
                             href = "/{lang}{route}"
                                 .replace("{lang}", &lang.code)
