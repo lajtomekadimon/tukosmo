@@ -6,7 +6,7 @@ pub mod aw_edit_language;
 pub mod aw_new_post;
 pub mod aw_edit_post;
 
-pub mod new_user_session;
+pub mod i_session_by_email;
 pub mod s_lang_code_by_id;
 pub mod s_languages;
 pub mod s_languages_with_names;

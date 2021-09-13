@@ -3,7 +3,7 @@ use serde_json::{Value, json};
 use uuid::Uuid;
 use jsonwebtoken::{encode, Header, Algorithm, EncodingKey};
 
-use crate::database::new_user_session::new_user_session;
+use crate::database::i_session_by_email::i_session_by_email;
 
 use crate::auth::token_secret::token_secret;
 
@@ -23,7 +23,10 @@ pub fn create_token(
     let json_output: Value;
 
     // Login!
-    if let Ok(session_id) = new_user_session(email_value.clone(), user_agent_value.clone()) {
+    if let Ok(session_id) = i_session_by_email(
+        email_value.clone(),
+        user_agent_value.clone()
+    ) {
         let encode_buffer_value = &mut Uuid::encode_buffer();
         let session_id_up = session_id
             .to_simple()

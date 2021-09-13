@@ -6,7 +6,7 @@ use uuid::Uuid;
 
 use crate::i18n::current_language::current_language;
 use crate::database::s_user_password_by_email::s_user_password_by_email;
-use crate::database::new_user_session::new_user_session;
+use crate::database::i_session_by_email::i_session_by_email;
 
 
 #[derive(Deserialize)]
@@ -43,7 +43,7 @@ pub async fn login_post(
 
                         if let Ok(user_agent_value) = the_user_agent.to_str() {
 
-                            if let Ok(session_id) = new_user_session(
+                            if let Ok(session_id) = i_session_by_email(
                                 email_value.clone(),
                                 user_agent_value.to_string()
                             ) {
