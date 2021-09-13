@@ -18,6 +18,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     lang_code: lang_code,
+                    user: user,
                 },
                 current_page: "dashboard",
                 lang_code: lang_code,
@@ -28,6 +29,7 @@ markup::define! {
 
     Content<'a>(
         lang_code: &'a str,
+        user: &'a UserDB,
     ) {
         section[class = "hero is-info welcome is-small"] {
             div[class = "hero-body"] {
@@ -35,7 +37,7 @@ markup::define! {
                     h1[class = "title"] {
                         {&t("Hello, {name}.", lang_code).replace(
                             "{name}",
-                            "Lajto",  // TODO: username
+                            &user.name,
                         )}
                     }
                     h2[class = "subtitle"] {
