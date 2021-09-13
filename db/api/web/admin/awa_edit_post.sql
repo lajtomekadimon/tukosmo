@@ -1,7 +1,7 @@
 
-CREATE OR REPLACE FUNCTION aww_blog_post(
-    language_of_user INT8,
-    permalink_value TEXT
+CREATE OR REPLACE FUNCTION awa_edit_post(
+    post_id BIGINT,
+    post_lang BIGINT
 )
 
 RETURNS TABLE(
@@ -27,9 +27,9 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT s_post_by_lang_permalink(
-    language_of_user,
-    permalink_value
+SELECT s_post_by_id_lang(
+    post_id,
+    post_lang
 )
 
 $$;

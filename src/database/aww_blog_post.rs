@@ -27,6 +27,8 @@ pub fn aww_blog_post(
                 let post_translator_name: String = row.get("translator_name");
                 let post_date: String = row.get("date");
                 let post_date_trans: String = row.get("date_trans");
+                let post_draft: bool = row.get("draft");
+                let post_deleted: bool = row.get("deleted");
 
                 post_struct = Some(
                     PostDB {
@@ -41,6 +43,8 @@ pub fn aww_blog_post(
                         translator_name: post_translator_name,
                         date: post_date,
                         date_trans: post_date_trans,
+                        draft: post_draft,
+                        deleted: post_deleted,
                     }
                 );
             }

@@ -42,4 +42,6 @@ pub struct PostDB {
     pub translator_name: String,
     pub date: String,
     pub date_trans: String,
+    pub draft: bool,
+    pub deleted: bool,
 }

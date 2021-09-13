@@ -1,25 +1,10 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
+use crate::database::data::PostDB;
 
 
-pub struct PostDB {
-    pub id: i64,
-    pub title: String,
-    pub description: String,
-    pub body: String,
-    pub permalink: String,
-    pub author: i64,
-    pub author_name: String,
-    pub translator: i64,
-    pub translator_name: String,
-    pub date: String,
-    pub date_trans: String,
-    pub draft: bool,
-    pub deleted: bool,
-}
-
-pub fn s_post_by_id_lang(
+pub fn awa_edit_post(
     post_id: i64,
     language_of_user: i64,
 ) -> Option<PostDB> {
@@ -27,7 +12,7 @@ pub fn s_post_by_id_lang(
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_post_by_id_lang($1, $2)",
+            "SELECT * FROM awa_edit_post($1, $2)",
             &[&post_id, &language_of_user]
         ) {
             for row in rows {

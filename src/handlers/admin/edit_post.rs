@@ -5,8 +5,8 @@ use serde::Deserialize;
 use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_post::EditPost;
-use crate::database::s_post_by_id_lang::{s_post_by_id_lang, PostDB};
-use crate::database::data::DataDB;
+use crate::database::awa_edit_post::awa_edit_post;
+use crate::database::data::{DataDB, PostDB};
 use crate::database::s_languages::s_languages;
 
 
@@ -32,7 +32,7 @@ pub async fn edit_post(
                 languages: s_languages(lang.id),
             };
 
-            if let Some(post) = s_post_by_id_lang(
+            if let Some(post) = awa_edit_post(
                 post_id,
                 lang.id.clone(),
             ) {
