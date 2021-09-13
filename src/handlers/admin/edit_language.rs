@@ -6,6 +6,7 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_language::EditLanguage;
 use crate::database::s_lang_code_by_id::s_lang_code_by_id;
+use crate::database::data::DataDB;
 
 
 #[derive(Deserialize)]
@@ -24,6 +25,10 @@ pub async fn edit_language(
 
         Ok((lang_code, user)) => {
 
+            let data = DataDB {
+                user: user,
+            };
+
             if let Some(lang_id_code) = s_lang_code_by_id(lang_id) {
                 let html = EditLanguage {
                     title: &format!(
@@ -37,7 +42,7 @@ pub async fn edit_language(
                     lang_code: &lang_code,
                     lang_id: &lang_id,
                     lang_id_code: &lang_id_code,
-                    user: &user,
+                    data: &data,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

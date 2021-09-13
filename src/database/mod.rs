@@ -19,3 +19,5 @@ pub mod s_post_by_id_lang;
 pub mod s_post_by_lang_permalink;
 pub mod s_posts;
 pub mod s_posts_by_lang;
+
+pub mod data;

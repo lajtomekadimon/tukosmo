@@ -5,7 +5,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::s_languages_with_names::s_languages_with_names;
-use crate::database::s_user_by_session_lang::UserDB;
+use crate::database::data::DataDB;
 
 
 markup::define! {
@@ -14,7 +14,7 @@ markup::define! {
         lang_code: &'a str,
         lang_id: &'a i64,
         lang_id_code: &'a str,
-        user: &'a UserDB,
+        data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
@@ -27,7 +27,7 @@ markup::define! {
                 },
                 current_page: "new_language",
                 lang_code: lang_code,
-                user: user,
+                data: data,
             },
         }
     }

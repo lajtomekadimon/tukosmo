@@ -1,13 +1,13 @@
 use markup;
 
 use crate::i18n::t::t;
-use crate::database::s_user_by_session_lang::UserDB;
+use crate::database::data::DataDB;
 
 
 markup::define! {
     AdminNavbar<'a>(
         lang_code: &'a str,
-        user: &'a UserDB,
+        data: &'a DataDB,
     ) {
         nav[class = "navbar is-white"] {
             div[class = "container"] {
@@ -56,9 +56,9 @@ markup::define! {
                     div[class = "navbar-end"] {
                         div[class = "navbar-item has-dropdown is-hoverable"] {
                             a[class = "navbar-link"] {
-                                @user.name
+                                @data.user.name
                                 " ("
-                                @user.email
+                                @data.user.email
                                 ")"
                             }
 
@@ -67,7 +67,6 @@ markup::define! {
                                     class = "navbar-item",
                                     href = "/{lang}/admin/account"
                                         .replace("{lang}", &lang_code)
-                                        .replace("{id}", &user.id.to_string())
                                     ,
                                 ] {
                                     {&t("Account", lang_code)}

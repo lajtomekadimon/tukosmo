@@ -4,6 +4,7 @@ use actix_identity::Identity;
 use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::statistics::Statistics;
+use crate::database::data::DataDB;
 
 
 pub async fn statistics(
@@ -15,6 +16,10 @@ pub async fn statistics(
 
         Ok((lang_code, user)) => {
 
+            let data = DataDB {
+                user: user,
+            };
+
             let html = Statistics {
                 title: &format!(
                     "{a} - {b}",
@@ -22,7 +27,7 @@ pub async fn statistics(
                     b = &t("Tukosmo Admin Panel", &lang_code)
                 ),
                 lang_code: &lang_code,
-                user: &user,
+                data: &data,
             };
 
             HttpResponse::Ok().body(html.to_string())

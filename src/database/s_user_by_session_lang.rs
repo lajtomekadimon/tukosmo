@@ -2,13 +2,8 @@ use postgres::{Client, NoTls};
 use uuid::Uuid;
 
 use crate::config::global::db_auth_string;
+use crate::database::data::UserDB;
 
-
-pub struct UserDB {
-    pub id: i64,
-    pub email: String,
-    pub name: String,
-}
 
 pub fn s_user_by_session_lang(
     session_id: Uuid,

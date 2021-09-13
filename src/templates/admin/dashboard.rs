@@ -3,14 +3,14 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::database::s_user_by_session_lang::UserDB;
+use crate::database::data::DataDB;
 
 
 markup::define! {
     Dashboard<'a>(
         title: &'a str,
         lang_code: &'a str,
-        user: &'a UserDB,
+        data: &'a DataDB,
     ) {
         @AdminLayout {
             title: title,
@@ -18,18 +18,18 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     lang_code: lang_code,
-                    user: user,
+                    data: data,
                 },
                 current_page: "dashboard",
                 lang_code: lang_code,
-                user: user,
+                data: data,
             },
         }
     }
 
     Content<'a>(
         lang_code: &'a str,
-        user: &'a UserDB,
+        data: &'a DataDB,
     ) {
         section[class = "hero is-info welcome is-small"] {
             div[class = "hero-body"] {
@@ -37,7 +37,7 @@ markup::define! {
                     h1[class = "title"] {
                         {&t("Hello, {name}.", lang_code).replace(
                             "{name}",
-                            &user.name,
+                            &data.user.name,
                         )}
                     }
                     h2[class = "subtitle"] {
