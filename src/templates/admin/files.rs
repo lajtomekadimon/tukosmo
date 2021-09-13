@@ -22,7 +22,7 @@ markup::define! {
     }
 
     Content() {
-        "Bla"
+        "Coming soon!"
     }
 }
 

@@ -17,7 +17,7 @@ markup::define! {
     }
 
     Content() {
-        div { "Test 3" }
+        div { "Coming soon!" }
     }
 }
 
