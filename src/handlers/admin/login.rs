@@ -5,7 +5,7 @@ use uuid::Uuid;
 use crate::i18n::current_language::current_language;
 use crate::i18n::t::t;
 use crate::templates::admin::login::Login;
-use crate::database::s_user_by_session_lang::s_user_by_session_lang;
+use crate::database::aw_login::aw_login;
 
 
 pub async fn login(
@@ -31,21 +31,31 @@ pub async fn login(
                 &session_uuid
             ) {
 
-                // Session is active
-                if let Some(_user) = s_user_by_session_lang(
-                    session_id,
-                    lang.id.clone()
-                ) {
+                // Session exists or existed
+                if let Ok(is_correct) = aw_login(session_id) {
 
-                    let dashboard_route = "/{lang}/admin/"
-                        .replace("{lang}", &lang.code);
+                    // Session is active
+                    if is_correct {
 
-                    HttpResponse::Found()
-                        .header("Location", dashboard_route)
-                        .finish()
+                        let dashboard_route = "/{lang}/admin/"
+                            .replace("{lang}", &lang.code);
 
-                // Session has expired
-                // TODO: "Your session has expired."
+                        HttpResponse::Found()
+                            .header("Location", dashboard_route)
+                            .finish()
+
+                    // Session has expired
+                    // TODO: "Your session has expired."
+                    } else {
+
+                        // Delete cookie
+                        id.forget();
+
+                        HttpResponse::Ok().body(html.to_string())
+
+                    }
+
+                // TODO: Database error
                 } else {
 
                     // Delete cookie
@@ -65,8 +75,7 @@ pub async fn login(
 
             }
 
-        // No session
-        // TODO: "You need to login first."
+        // Cookie has no session
         } else {
 
             HttpResponse::Ok().body(html.to_string())

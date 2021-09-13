@@ -1,0 +1,19 @@
+
+CREATE OR REPLACE FUNCTION aw_login(
+
+    session_id UUID
+
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT c_session_by_id(session_id)
+
+$$;
