@@ -45,7 +45,7 @@ pub fn admin_handler(
                 }
 
             // TODO: "Session ID is not a valid UUID."
-                } else {
+            } else {
 
                 // Delete cookie
                 id.forget();

@@ -14,6 +14,7 @@ pub mod s_user_password_by_email;
 pub mod s_user_by_session_lang;
 pub mod c_lang_by_code;
 pub mod d_all_sessions;
+pub mod d_session;
 pub mod s_post_by_id_lang;
 pub mod s_post_by_lang_permalink;
 pub mod s_posts;
