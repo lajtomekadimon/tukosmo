@@ -214,6 +214,13 @@ async fn main() -> std::io::Result<()> {
                         )
                     )
 
+                    // Sessions
+                    .service(web::resource("/sessions")
+                        .route(web::get()
+                            .to(admin::sessions::sessions)
+                        )
+                    )
+
                     //-- General --//
 
                     // Statistics

@@ -25,3 +25,4 @@ pub mod login_post;
 pub mod logout;
 
 pub mod account;
+pub mod sessions;
