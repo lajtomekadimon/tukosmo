@@ -207,6 +207,13 @@ async fn main() -> std::io::Result<()> {
                         )
                     )
 
+                    // Account
+                    .service(web::resource("/account")
+                        .route(web::get()
+                            .to(admin::account::account)
+                        )
+                    )
+
                     //-- General --//
 
                     // Statistics

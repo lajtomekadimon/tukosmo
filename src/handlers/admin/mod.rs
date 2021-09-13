@@ -23,3 +23,5 @@ pub mod edit_post_post;
 pub mod login;
 pub mod login_post;
 pub mod logout;
+
+pub mod account;

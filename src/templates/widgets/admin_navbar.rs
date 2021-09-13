@@ -65,16 +65,19 @@ markup::define! {
                             div[class = "navbar-dropdown is-right"] {
                                 a[
                                     class = "navbar-item",
-                                    href = "/{lang}/admin/edit_user?id={id}"
+                                    href = "/{lang}/admin/account"
                                         .replace("{lang}", &lang_code)
-                                        .replace("{id}", &user.id.to_string()),
+                                        .replace("{id}", &user.id.to_string())
+                                    ,
                                 ] {
                                     {&t("Account", lang_code)}
                                 }
 
                                 a[
                                     class = "navbar-item",
-                                    href = "/{lang}/admin".replace("{lang}", &lang_code),
+                                    href = "/{lang}/admin/sessions"
+                                        .replace("{lang}", &lang_code)
+                                    ,
                                 ] {
                                     {&t("Sessions", lang_code)}
                                 }
@@ -82,7 +85,9 @@ markup::define! {
                                 hr[class = "navbar-divider"];
 
                                 a[
-                                    href = "/{lang}/admin/logout".replace("{lang}", &lang_code),
+                                    href = "/{lang}/admin/logout"
+                                        .replace("{lang}", &lang_code)
+                                    ,
                                     class = "navbar-item",
                                 ] {
                                     {&t("Logout [verb]", lang_code)}
