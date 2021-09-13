@@ -1,10 +1,10 @@
 pub mod aj_query;
 pub mod aj_update;
 
-pub mod aw_new_language;
-pub mod aw_edit_language;
-pub mod aw_new_post;
-pub mod aw_edit_post;
+pub mod aw_new_language_post;
+pub mod aw_edit_language_post;
+pub mod aw_new_post_post;
+pub mod aw_edit_post_post;
 
 pub mod i_session_by_email;
 pub mod s_lang_code_by_id;

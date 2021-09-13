@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 
 use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::aw_new_post::aw_new_post;
+use crate::database::aw_new_post_post::aw_new_post_post;
 
 
 #[derive(Deserialize)]
@@ -33,7 +33,7 @@ pub async fn new_post_post(
                 None => false,
             };
 
-            if let Ok(_post_trans_id) = aw_new_post(
+            if let Ok(_post_trans_id) = aw_new_post_post(
                 0,  // new
                 lang.code.clone(),
                 title_value,

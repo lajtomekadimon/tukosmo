@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_new_post(
+CREATE OR REPLACE FUNCTION aw_new_post_post(
 
     post_id BIGINT,
 
