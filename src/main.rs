@@ -16,10 +16,7 @@ mod templates;
 
 mod handlers;
 use crate::handlers::root::root;
-use crate::handlers::home::handler_home;
-use crate::handlers::blog::handler_blog;
-use crate::handlers::blog_post::handler_blog_post;
-use crate::handlers::page::handler_page;
+use crate::handlers::website;
 use crate::handlers::admin;
 
 mod markdown;
@@ -88,7 +85,7 @@ async fn main() -> std::io::Result<()> {
 
             // Homepage (/{lang})
             .service(web::resource("/{lang}")
-                .route(web::get().to(handler_home))
+                .route(web::get().to(website::home::home))
             )
 
             // HTML pages
@@ -96,28 +93,38 @@ async fn main() -> std::io::Result<()> {
                 // Homepage (/{lang}/)
                 .service(web::resource("/")
                     .route(web::get()
-                        .to(handler_home)
+                        .to(website::home::home)
+                    )
+                )
+
+                // Blog (/blog)
+                .service(web::resource("/blog")
+                    .route(web::get()
+                        .to(website::blog::blog)
                     )
                 )
 
                 // Blog
-                .service(web::resource("/blog")
-                    .route(web::get()
-                        .to(handler_blog)
+                .service(web::scope("/blog")
+                    // Blog (/blog/)
+                    .service(web::resource("/")
+                        .route(web::get()
+                            .to(website::blog::blog)
+                        )
                     )
-                )
 
-                // Blog post
-                .service(web::resource("/blog/{permalink}")
-                    .route(web::get()
-                        .to(handler_blog_post)
+                    // Blog post
+                    .service(web::resource("/{permalink}")
+                        .route(web::get()
+                            .to(website::blog_post::blog_post)
+                        )
                     )
                 )
 
                 // Page
                 .service(web::resource("/page/{permalink}")
                     .route(web::get()
-                        .to(handler_page)
+                        .to(website::page::page)
                     )
                 )
 

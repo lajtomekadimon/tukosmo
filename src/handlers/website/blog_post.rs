@@ -5,7 +5,7 @@ use crate::i18n::current_language::current_language;
 use crate::database::s_post_by_lang_permalink::s_post_by_lang_permalink;
 
 
-pub async fn handler_blog_post(
+pub async fn blog_post(
     req: HttpRequest,
 ) -> impl Responder {
     let permalink_value: String = req.match_info()

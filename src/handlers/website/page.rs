@@ -1,19 +1,18 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 
-use crate::i18n::t::t;
-use crate::templates::website::blog::Blog;
+use crate::templates::website::page::Page;
 use crate::i18n::current_language::current_language;
 
 
-pub async fn handler_blog(
+pub async fn page(
     req: HttpRequest,
 ) -> impl Responder {
     if let Some(lang) = current_language(req) {
 
-        let html = Blog {
+        let html = Page {
             title: &format!(
                 "{a} - {b}",
-                a = &t("Blog", &lang.code),
+                a = "[page title]",
                 b = "MyExample"
             ),
             lang: &lang,
