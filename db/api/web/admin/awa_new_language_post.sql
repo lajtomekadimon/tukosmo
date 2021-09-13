@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_new_language_post(
+CREATE OR REPLACE FUNCTION awa_new_language_post(
 
     code_value TEXT,
 

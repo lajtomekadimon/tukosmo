@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_edit_post_post(
+CREATE OR REPLACE FUNCTION awa_edit_post_post(
 
     post_id BIGINT,
 

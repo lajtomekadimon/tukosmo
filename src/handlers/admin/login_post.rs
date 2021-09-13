@@ -4,7 +4,7 @@ use serde::Deserialize;
 use uuid::Uuid;
 
 use crate::i18n::current_language::current_language;
-use crate::database::aw_login_post::aw_login_post;
+use crate::database::awa_login_post::awa_login_post;
 
 
 #[derive(Deserialize)]
@@ -35,7 +35,7 @@ pub async fn login_post(
             }
         }
 
-        if let Ok(session_id) = aw_login_post(
+        if let Ok(session_id) = awa_login_post(
             email_value,
             password_value,  // TODO: This is not encrypted!!!
                              /* Currently, password check is done in the

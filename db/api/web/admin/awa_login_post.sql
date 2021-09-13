@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_login_post(
+CREATE OR REPLACE FUNCTION awa_login_post(
 
     user_email TEXT,
 

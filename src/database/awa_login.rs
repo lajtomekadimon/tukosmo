@@ -4,13 +4,13 @@ use uuid::Uuid;
 use crate::config::global::db_auth_string;
 
 
-pub fn aw_login(
+pub fn awa_login(
     session_id: Uuid,
 ) -> Result<bool, Error> {
     let mut client = Client::connect(db_auth_string(), NoTls)?;
 
     let row = client.query_one(
-        "SELECT aw_login($1)",
+        "SELECT awa_login($1)",
         &[&session_id,]
     )?;
 

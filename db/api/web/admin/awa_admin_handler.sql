@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_admin_handler(
+CREATE OR REPLACE FUNCTION awa_admin_handler(
 
     session_id UUID,
 

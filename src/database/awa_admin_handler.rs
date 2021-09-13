@@ -5,7 +5,7 @@ use crate::config::global::db_auth_string;
 use crate::database::data::UserDB;
 
 
-pub fn aw_admin_handler(
+pub fn awa_admin_handler(
     session_id: Uuid,
     language_of_user: i64,
 ) -> Option<UserDB> {
@@ -13,7 +13,7 @@ pub fn aw_admin_handler(
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM aw_admin_handler($1, $2)",
+            "SELECT * FROM awa_admin_handler($1, $2)",
             &[&session_id, &language_of_user]
         ) {
             for row in rows {

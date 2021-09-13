@@ -3,7 +3,7 @@ use postgres::{Client, NoTls, Error};
 use crate::config::global::db_auth_string;
 
 
-pub fn aw_new_post_post(
+pub fn awa_new_post_post(
     post_id: i64,
     lang_code: String,
     title_value: String,
@@ -16,7 +16,7 @@ pub fn aw_new_post_post(
     let mut client = Client::connect(db_auth_string(), NoTls)?;
 
     let row = client.query_one(
-        "SELECT aw_new_post_post($1, $2, $3, $4, $5, $6, $7, $8)",
+        "SELECT awa_new_post_post($1, $2, $3, $4, $5, $6, $7, $8)",
         &[
             &post_id,
             &lang_code,

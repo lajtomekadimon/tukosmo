@@ -1,10 +1,10 @@
-pub mod aw_admin_handler;
-pub mod aw_new_language_post;
-pub mod aw_edit_language_post;
-pub mod aw_new_post_post;
-pub mod aw_edit_post_post;
-pub mod aw_login;
-pub mod aw_login_post;
+pub mod awa_admin_handler;
+pub mod awa_new_language_post;
+pub mod awa_edit_language_post;
+pub mod awa_new_post_post;
+pub mod awa_edit_post_post;
+pub mod awa_login;
+pub mod awa_login_post;
 
 pub mod s_lang_code_by_id;
 pub mod s_languages;

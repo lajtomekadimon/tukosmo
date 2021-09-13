@@ -4,7 +4,7 @@ use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
 
 use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::aw_new_language_post::aw_new_language_post;
+use crate::database::awa_new_language_post::awa_new_language_post;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -84,7 +84,7 @@ pub async fn new_language_post(
             let lang_ids = (form.lang_ids).clone();
             let lang_names = (form.lang_names).clone();
 
-            if let Ok(_lang_code_id) = aw_new_language_post(
+            if let Ok(_lang_code_id) = awa_new_language_post(
                 lang_code_value,
                 lang_ids,
                 lang_names,

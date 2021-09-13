@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 
 use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::aw_edit_post_post::aw_edit_post_post;
+use crate::database::awa_edit_post_post::awa_edit_post_post;
 
 
 #[derive(Deserialize)]
@@ -40,7 +40,7 @@ pub async fn edit_post_post(
                 None => false,
             };
 
-            if let Ok(_post_trans_id) = aw_edit_post_post(
+            if let Ok(_post_trans_id) = awa_edit_post_post(
                 post_id,
                 lang.code.clone(),
                 title_value,

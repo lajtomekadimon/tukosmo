@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_login(
+CREATE OR REPLACE FUNCTION awa_login(
 
     session_id UUID
 

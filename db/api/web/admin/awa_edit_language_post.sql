@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION aw_edit_language_post(
+CREATE OR REPLACE FUNCTION awa_edit_language_post(
 
     language_id BIGINT,
 

@@ -5,7 +5,7 @@ use uuid::Uuid;
 use crate::i18n::current_language::current_language;
 use crate::i18n::t::t;
 use crate::templates::admin::login::Login;
-use crate::database::aw_login::aw_login;
+use crate::database::awa_login::awa_login;
 
 
 pub async fn login(
@@ -32,7 +32,7 @@ pub async fn login(
             ) {
 
                 // Session exists or existed
-                if let Ok(is_correct) = aw_login(session_id) {
+                if let Ok(is_correct) = awa_login(session_id) {
 
                     // Session is active
                     if is_correct {

@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use uuid::Uuid;
 
 use crate::i18n::current_language::current_language;
-use crate::database::aw_admin_handler::aw_admin_handler;
+use crate::database::awa_admin_handler::awa_admin_handler;
 use crate::database::data::{CurrentLanguageDB, UserDB};
 
 
@@ -24,7 +24,7 @@ pub fn admin_handler(
             ) {
 
                 // Session is active
-                if let Some(user) = aw_admin_handler(
+                if let Some(user) = awa_admin_handler(
                     session_id,
                     lang.id.clone(),
                 ) {
