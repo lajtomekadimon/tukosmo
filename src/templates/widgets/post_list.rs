@@ -2,8 +2,7 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
-use crate::database::s_posts_by_lang::s_posts_by_lang;
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::{CurrentLanguageDB, PostDB};
 
 /* TODO:
  * - Show something when no articles
@@ -14,11 +13,12 @@ use crate::database::data::CurrentLanguageDB;
 markup::define! {
     PostList<'a>(
         lang: &'a CurrentLanguageDB,
+        posts: &'a Vec<PostDB>,
     ) {
         div[
             class = "post-list",
         ] {
-            @for post in s_posts_by_lang(lang.id) {
+            @for post in posts.iter() {
                 section[
                     class = "post-wrapper"
                 ] {

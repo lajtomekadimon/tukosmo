@@ -14,7 +14,9 @@ RETURNS TABLE(
     translator BIGINT,
     translator_name TEXT,
     date TEXT,
-    date_trans TEXT
+    date_trans TEXT,
+    draft BOOL,
+    deleted BOOL
 )
 
 LANGUAGE SQL
@@ -35,7 +37,9 @@ SELECT
     tpt_translator AS translator,
     a.tu_name AS translator_name,
     tpi_date AS date,
-    tpt_date AS date_trans
+    tpt_date AS date_trans,
+    tpt_draft AS draft,
+    tpt_deleted AS deleted
 FROM t_post_ids
 
 INNER JOIN t_post_translations

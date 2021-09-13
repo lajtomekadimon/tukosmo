@@ -1,30 +1,17 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
+use crate::database::data::PostDB;
 
 
-pub struct PostDB {
-    pub id: i64,
-    pub title: String,
-    pub description: String,
-    pub body: String,
-    pub permalink: String,
-    pub author: i64,
-    pub author_name: String,
-    pub translator: i64,
-    pub translator_name: String,
-    pub date: String,
-    pub date_trans: String,
-}
-
-pub fn s_posts_by_lang(
+pub fn aww_blog(
     language_of_user: i64,
 ) -> Vec<PostDB> {
     let mut vec = Vec::new();
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_posts_by_lang($1)",
+            "SELECT * FROM aww_blog($1)",
             &[&language_of_user,]
         ) {
             for row in rows {
@@ -39,6 +26,8 @@ pub fn s_posts_by_lang(
                 let post_translator_name: String = row.get("translator_name");
                 let post_date: String = row.get("date");
                 let post_date_trans: String = row.get("date_trans");
+                let post_draft: bool = row.get("draft");
+                let post_deleted: bool = row.get("deleted");
 
                 vec.push(
                     PostDB {
@@ -53,6 +42,8 @@ pub fn s_posts_by_lang(
                         translator_name: post_translator_name,
                         date: post_date,
                         date_trans: post_date_trans,
+                        draft: post_draft,
+                        deleted: post_deleted,
                     }
                 );                
             }

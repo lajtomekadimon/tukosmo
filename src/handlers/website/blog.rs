@@ -3,6 +3,7 @@ use actix_web::{HttpRequest, HttpResponse, Responder};
 use crate::i18n::t::t;
 use crate::templates::website::blog::Blog;
 use crate::i18n::current_language::current_language;
+use crate::database::aww_blog::aww_blog;
 
 
 pub async fn blog(
@@ -17,6 +18,7 @@ pub async fn blog(
                 b = "MyExample"
             ),
             lang: &lang,
+            posts: &aww_blog(lang.id),
         };
 
         HttpResponse::Ok().body(html.to_string())
