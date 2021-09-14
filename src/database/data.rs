@@ -32,6 +32,8 @@ pub struct CurrentLanguageDB {
 #[derive(Clone)]
 pub struct PostDB {
     pub id: i64,
+    pub trans_id: i64,
+    pub lang: i64,
     pub title: String,
     pub description: String,
     pub body: String,

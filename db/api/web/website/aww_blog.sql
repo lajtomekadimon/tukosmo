@@ -5,6 +5,8 @@ CREATE OR REPLACE FUNCTION aww_blog(
 
 RETURNS TABLE(
     id BIGINT,
+    trans_id BIGINT,
+    lang BIGINT,
     title TEXT,
     description TEXT,
     body TEXT,

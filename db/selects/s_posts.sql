@@ -1,6 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_posts(
-    language_of_user INT8
+    language_of_user BIGINT
 )
 
 RETURNS TABLE(
@@ -17,9 +17,8 @@ RETURNS TABLE(
     translator_name TEXT,
     date TEXT,
     date_trans TEXT,
-    has_all_trans BOOL,
     draft BOOL,
-    untranslated BOOL
+    deleted BOOL
 )
 
 LANGUAGE SQL
@@ -92,8 +91,6 @@ SELECT
         ELSE tpt_date::TEXT
     END AS date_trans,
 
-    c_post_has_all_trans(tpi_id) AS has_all_trans,
-
     CASE
         WHEN tpt_draft IS NULL
         THEN TRUE
@@ -101,10 +98,10 @@ SELECT
     END AS draft,
 
     CASE
-        WHEN tpt_lang IS NULL
-        THEN TRUE
-        ELSE FALSE
-    END AS untranslated
+        WHEN tpt_deleted IS NULL
+        THEN FALSE
+        ELSE tpt_deleted
+    END AS deleted
 FROM t_post_ids
 
 LEFT JOIN t_post_translations

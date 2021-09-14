@@ -6,6 +6,7 @@ use crate::i18n::t::t;
 use crate::templates::admin::posts::Posts;
 use crate::database::data::DataDB;
 use crate::database::s_languages::s_languages;
+use crate::database::awa_posts::awa_posts;
 
 
 pub async fn posts(
@@ -30,6 +31,7 @@ pub async fn posts(
                     b = &t("Tukosmo Admin Panel", &lang.code)
                 ),
                 data: &data,
+                posts: &awa_posts(data.lang.id),
             };
 
             HttpResponse::Ok().body(html.to_string())

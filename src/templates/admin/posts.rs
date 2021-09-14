@@ -5,14 +5,14 @@ use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::s_posts::s_posts;
-use crate::database::data::DataDB;
+use crate::database::data::{DataDB, PostDB};
 
 
 markup::define! {
     Posts<'a>(
         title: &'a str,
         data: &'a DataDB,
+        posts: &'a Vec<PostDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -20,6 +20,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     data: data,
+                    posts: posts,
                 },
                 current_page: "posts",
                 data: data,
@@ -29,6 +30,7 @@ markup::define! {
 
     Content<'a>(
         data: &'a DataDB,
+        posts: &'a Vec<PostDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -70,7 +72,7 @@ markup::define! {
                     }
                 }
                 tbody {
-                    @for post in s_posts(data.lang.id) {
+                    @for post in posts.iter() {
                         tr {
                             td {
                                 a[
@@ -83,15 +85,9 @@ markup::define! {
                                 ] {
                                     @post.title
                                 }
-
-                                @if !post.has_all_trans {
-                                    " (!)"
-                                }
                             }
                             td {
-                                @if post.untranslated {
-                                    {&t("Untranslated", &data.lang.code)}
-                                } else if post.draft {
+                                @ if post.draft {
                                     {&t("Draft", &data.lang.code)}
                                 } else {
                                     {&t("Published", &data.lang.code)}
@@ -100,7 +96,7 @@ markup::define! {
                             td {
                                 {t_date(&post.date, &data.lang.code)}
 
-                                @if (post.author_name != post.translator_name) && !post.untranslated {
+                                @if (post.author_name != post.translator_name) && (post.translator != 0) {
                                     " ("
                                     {t_date(&post.date_trans, &data.lang.code)}
                                     ")"
@@ -118,7 +114,7 @@ markup::define! {
                                     @post.author_name
                                 }
 
-                                @if (post.author_name != post.translator_name) && !post.untranslated {
+                                @if (post.author_name != post.translator_name) && (post.translator != 0) {
                                     " ("
                                     {
                                         &t("translated by {name}", &data.lang.code)

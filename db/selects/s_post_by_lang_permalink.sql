@@ -6,6 +6,8 @@ CREATE OR REPLACE FUNCTION s_post_by_lang_permalink(
 
 RETURNS TABLE(
     id BIGINT,
+    trans_id BIGINT,
+    lang BIGINT,
     title TEXT,
     description TEXT,
     body TEXT,
@@ -29,6 +31,8 @@ AS $$
 
 SELECT
     tpi_id AS id,
+    tpt_id AS trans_id,
+    tpt_lang AS lang,
     tpt_title AS title,
     tpt_description AS description,
     tpt_body AS body,

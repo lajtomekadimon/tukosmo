@@ -16,6 +16,8 @@ pub fn aww_blog(
         ) {
             for row in rows {
                 let post_id: i64 = row.get("id");
+                let post_trans_id: i64 = row.get("trans_id");
+                let post_lang: i64 = row.get("lang");
                 let post_title: String = row.get("title");
                 let post_description: String = row.get("description");
                 let post_body: String = row.get("body");
@@ -32,6 +34,8 @@ pub fn aww_blog(
                 vec.push(
                     PostDB {
                         id: post_id,
+                        trans_id: post_trans_id,
+                        lang: post_lang,
                         title: post_title,
                         description: post_description,
                         body: post_body,

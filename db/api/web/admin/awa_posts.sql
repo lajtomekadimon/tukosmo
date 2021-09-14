@@ -1,7 +1,6 @@
 
-CREATE OR REPLACE FUNCTION awa_edit_post(
-    post_id BIGINT,
-    post_lang BIGINT
+CREATE OR REPLACE FUNCTION awa_posts(
+    language_of_user BIGINT
 )
 
 RETURNS TABLE(
@@ -29,9 +28,6 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT s_post_by_id_lang(
-    post_id,
-    post_lang
-)
+SELECT s_posts(language_of_user)
 
 $$;

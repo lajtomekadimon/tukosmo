@@ -1,39 +1,23 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
+use crate::database::data::PostDB;
 
 
-pub struct PostDB {
-    pub id: i64,
-    pub trans_id: i64,
-    pub title: String,
-    pub description: String,
-    pub body: String,
-    pub permalink: String,
-    pub author: i64,
-    pub author_name: String,
-    pub translator: i64,
-    pub translator_name: String,
-    pub date: String,
-    pub date_trans: String,
-    pub has_all_trans: bool,
-    pub draft: bool,
-    pub untranslated: bool,
-}
-
-pub fn s_posts(
+pub fn awa_posts(
     language_of_user: i64
 ) -> Vec<PostDB> {
     let mut vec = Vec::new();
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_posts($1)",
+            "SELECT * FROM awa_posts($1)",
             &[&language_of_user,]
         ) {
             for row in rows {
                 let post_id: i64 = row.get("id");
                 let post_trans_id: i64 = row.get("trans_id");
+                let post_lang: i64 = row.get("lang");
                 let post_title: String = row.get("title");
                 let post_description: String = row.get("description");
                 let post_body: String = row.get("body");
@@ -44,14 +28,14 @@ pub fn s_posts(
                 let post_translator_name: String = row.get("translator_name");
                 let post_date: String = row.get("date");
                 let post_date_trans: String = row.get("date_trans");
-                let post_has_all_trans: bool = row.get("has_all_trans");
                 let post_draft: bool = row.get("draft");
-                let post_untranslated: bool = row.get("untranslated");
+                let post_deleted: bool = row.get("deleted");
 
                 vec.push(
                     PostDB {
                         id: post_id,
                         trans_id: post_trans_id,
+                        lang: post_lang,
                         title: post_title,
                         description: post_description,
                         body: post_body,
@@ -62,9 +46,8 @@ pub fn s_posts(
                         translator_name: post_translator_name,
                         date: post_date,
                         date_trans: post_date_trans,
-                        has_all_trans: post_has_all_trans,
                         draft: post_draft,
-                        untranslated: post_untranslated,
+                        deleted: post_deleted,
                     }
                 );                
             }
