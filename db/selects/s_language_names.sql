@@ -21,33 +21,24 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT
-    CASE
-        WHEN s_name_of_language(
+    COALESCE(
+        s_name_of_language(
             language_id,
             tl_id
-        ) IS NULL
-        THEN ''
-        ELSE s_name_of_language(
-            language_id,
-            tl_id
-        )
-    END AS name,
+        ),
+        ''
+    ) AS name,
 
     tl_id AS lang_id,
 
     tl_code AS lang_code,
 
-    CASE
-        WHEN tln_name IS NULL
-        THEN '[untranslated: ' || tl_code || ']'
-        ELSE tln_name
-    END AS lang_name,
+    COALESCE(
+        tln_name,
+        '[untranslated: ' || tl_code || ']'
+    ) AS name,
 
-    CASE
-        WHEN tln_date IS NULL
-        THEN ''
-        ELSE tln_date::TEXT
-    END AS lang_date,
+    COALESCE(tln_date::TEXT, '') AS date,
 
     c_language_has_all_names(tl_id) AS lang_has_all_names
 FROM t_languages

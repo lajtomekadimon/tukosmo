@@ -31,77 +31,36 @@ AS $$
 SELECT
     tpi_id AS id,
 
-    CASE
-        WHEN tpt_id IS NULL
-        THEN 0
-        ELSE tpt_id
-    END AS trans_id,
+    COALESCE(tpt_id, 0) AS trans_id,
 
-    CASE
-        WHEN tpt_lang IS NULL
-        THEN 0
-        ELSE tpt_lang
-    END AS lang,
+    COALESCE(tpt_lang, 0) AS lang,
 
-    CASE
-        WHEN tpt_title IS NULL
-        THEN s_untrans_post_title_by_id(tpi_id)
-        ELSE tpt_title::TEXT
-    END AS title,
+    COALESCE(
+        tpt_title,
+        s_untrans_post_title_by_id(tpi_id)
+    ) AS title,
 
-    CASE
-        WHEN tpt_description IS NULL
-        THEN ''
-        ELSE tpt_description::TEXT
-    END AS description,
+    COALESCE(tpt_description, '') AS description,
 
-    CASE
-        WHEN tpt_body IS NULL
-        THEN ''
-        ELSE tpt_body::TEXT
-    END AS body,
+    COALESCE(tpt_body, '') AS body,
 
-    CASE
-        WHEN tpt_permalink IS NULL
-        THEN ''
-        ELSE tpt_permalink::TEXT
-    END AS permalink,
+    COALESCE(tpt_permalink, '') AS permalink,
 
     tpi_author AS author,
 
     b.tu_name AS author_name,
 
-    CASE
-        WHEN tpt_translator IS NULL
-        THEN 0
-        ELSE tpt_translator
-    END AS translator,
+    COALESCE(tpt_translator, 0) AS translator,
 
-    CASE
-        WHEN a.tu_name IS NULL
-        THEN ''
-        ELSE a.tu_name
-    END AS translator_name,
+    COALESCE(a.tu_name, '') AS translator_name,
 
     tpi_date::TEXT AS date,
 
-    CASE
-        WHEN tpt_date IS NULL
-        THEN ''
-        ELSE tpt_date::TEXT
-    END AS date_trans,
+    COALESCE(tpt_date::TEXT, '') AS date_trans,
 
-    CASE
-        WHEN tpt_draft IS NULL
-        THEN TRUE
-        ELSE tpt_draft
-    END AS draft,
+    COALESCE(tpt_draft, TRUE) AS draft,
 
-    CASE
-        WHEN tpt_deleted IS NULL
-        THEN FALSE
-        ELSE tpt_deleted
-    END AS deleted
+    COALESCE(tpt_deleted, FALSE) AS deleted
 FROM t_post_ids
 
 LEFT JOIN t_post_translations

@@ -24,17 +24,12 @@ SELECT
 
     tl_code AS code,
 
-    CASE
-        WHEN tln_name IS NULL
-        THEN '[untranslated: ' || tl_code || ']'
-        ELSE tln_name
-    END AS name,
+    COALESCE(
+        tln_name,
+        '[untranslated: ' || tl_code || ']'
+    ) AS name,
 
-    CASE
-        WHEN tln_date IS NULL
-        THEN ''
-        ELSE tln_date::TEXT
-    END AS date,
+    COALESCE(tln_date::TEXT, '') AS date,
 
     c_language_has_all_names(tl_id) AS has_all_names
 FROM t_languages
