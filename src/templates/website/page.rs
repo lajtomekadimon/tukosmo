@@ -1,13 +1,13 @@
 use markup;
 
 use crate::templates::layout::Layout;
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::LanguageDB;
 
 
 markup::define! {
     Page<'a>(
         title: &'a str,
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
     ) {
         @Layout {
             title: title,

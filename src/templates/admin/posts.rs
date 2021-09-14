@@ -87,8 +87,13 @@ markup::define! {
                                 }
                             }
                             td {
-                                @ if post.draft {
+                                @if post.draft {
                                     {&t("Draft", &data.lang.code)}
+                                    @if post.translator == 0 {
+                                        " ("
+                                        {&t("untranslated", &data.lang.code)}
+                                        ")"
+                                    }
                                 } else {
                                     {&t("Published", &data.lang.code)}
                                 }

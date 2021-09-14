@@ -3,13 +3,12 @@ use markup;
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
-use crate::database::data::CurrentLanguageDB;
-use crate::database::data::PostDB;
+use crate::database::data::{LanguageDB, PostDB};
 
 
 markup::define! {
     Post<'a>(
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
         post: &'a PostDB,
     ) {
         article[

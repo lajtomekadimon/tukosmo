@@ -1,12 +1,12 @@
 use actix_web::HttpRequest;
 
 use crate::database::s_current_language_by_code::s_current_language_by_code;
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::LanguageDB;
 
 
 pub fn current_language(
     req: HttpRequest,
-) -> Option<CurrentLanguageDB> {
+) -> Option<LanguageDB> {
     let lang_code: String = req.match_info()
         .get("lang").unwrap().parse().unwrap();
 

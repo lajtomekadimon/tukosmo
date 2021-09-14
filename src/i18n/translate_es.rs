@@ -58,6 +58,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Tukosmo Admin Panel" => "Panel de Administración de Tukosmo",
         "Untranslated" => "Sin traducir",
         "Untranslated [posts]" => "Sin traducir",
+        "untranslated" => "sin traducir",
         "Users" => "Usuarios",
         "Visit website" => "Visitar página web",
         "Website" => "Página web",

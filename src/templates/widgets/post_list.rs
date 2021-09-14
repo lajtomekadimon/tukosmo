@@ -2,7 +2,7 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
-use crate::database::data::{CurrentLanguageDB, PostDB};
+use crate::database::data::{LanguageDB, PostDB};
 
 /* TODO:
  * - Show something when no articles
@@ -12,7 +12,7 @@ use crate::database::data::{CurrentLanguageDB, PostDB};
 
 markup::define! {
     PostList<'a>(
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
         posts: &'a Vec<PostDB>,
     ) {
         div[

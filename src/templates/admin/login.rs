@@ -2,13 +2,13 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::LanguageDB;
 
 
 markup::define! {
     Login<'a>(
         title: &'a str,
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
     ) {
         @AdminLayout {
             title: title,
@@ -20,7 +20,7 @@ markup::define! {
     }
 
     Content<'a>(
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
     ) {
 
         section[class = "hero is-success is-fullheight"] {

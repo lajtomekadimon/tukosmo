@@ -2,14 +2,13 @@ use markup;
 
 use crate::templates::layout::Layout;
 use crate::templates::widgets::post::Post;
-use crate::database::data::CurrentLanguageDB;
-use crate::database::data::PostDB;
+use crate::database::data::{LanguageDB, PostDB};
 
 
 markup::define! {
     BlogPost<'a>(
         title: &'a str,
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
         post: &'a PostDB,
     ) {
         @Layout {

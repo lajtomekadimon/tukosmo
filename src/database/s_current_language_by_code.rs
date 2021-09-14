@@ -1,36 +1,29 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::LanguageDB;
+use crate::database::rows;
 
 
 pub fn s_current_language_by_code(
     lang_code: String
-) -> Option<CurrentLanguageDB> {
-    let mut lang_struct: Option<CurrentLanguageDB> = None;
+) -> Option<LanguageDB> {
+    let mut lang: Option<LanguageDB> = None;
 
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(rows) = client.query(
             "SELECT * FROM s_current_language_by_code($1)",
             &[&lang_code,]
         ) {
-            for row in rows {
-                let lang_id: i64 = row.get("id");
-                let lang_code: String = row.get("code");
-                let lang_name: String = row.get("name");
 
-                lang_struct = Some(
-                    CurrentLanguageDB {
-                        id: lang_id,
-                        code: lang_code,
-                        name: lang_name,
-                    }
-                );
-            }
+            let vec = rows::languages::languages(rows);
+
+            lang = vec.first().cloned();
+
         }
         // TODO: Control the error!
     }
 
-    lang_struct
+    lang
 }
 

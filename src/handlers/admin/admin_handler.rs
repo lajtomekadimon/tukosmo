@@ -4,13 +4,13 @@ use uuid::Uuid;
 
 use crate::i18n::current_language::current_language;
 use crate::database::awa_admin_handler::awa_admin_handler;
-use crate::database::data::{CurrentLanguageDB, UserDB};
+use crate::database::data::{LanguageDB, UserDB};
 
 
 pub fn admin_handler(
     req: HttpRequest,
     id: Identity,
-) -> Result<(CurrentLanguageDB, UserDB), HttpResponse> {
+) -> Result<(LanguageDB, UserDB), HttpResponse> {
     if let Some(lang) = current_language(req) {
 
         let login_route = "/{lang}/admin/login"

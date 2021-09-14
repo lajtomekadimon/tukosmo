@@ -4,7 +4,7 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::s_languages_with_names::s_languages_with_names;
+use crate::database::s_language_names::s_language_names;
 use crate::database::data::DataDB;
 
 
@@ -81,27 +81,27 @@ markup::define! {
                         {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for lang in s_languages_with_names(
+                        @for name in s_language_names(
                             data.lang.id,
                             *lang_id.clone()
                         ) {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
-                                        @lang.name
+                                        @name.lang.name
                                     }
                                 }
                                 div[class = "control is-expanded"] {
                                     input[
                                         type = "hidden",
                                         name = "lang_id",
-                                        value = &lang.id.to_string(),
+                                        value = &name.lang.id.to_string(),
                                     ];
                                     input[
                                         class = "input",
                                         type = "text",
                                         name = "lang_name",
-                                        value = lang.trans_name,
+                                        value = name.name,
                                     ];
                                 }
                             }

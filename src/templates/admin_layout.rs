@@ -1,12 +1,12 @@
 use markup;
 
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::LanguageDB;
 
 
 markup::define! {
     AdminLayout<'a, BodyContent: markup::Render>(
         title: &'a str,
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
         content: BodyContent,
     ) {
         @markup::doctype()

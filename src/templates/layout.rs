@@ -4,13 +4,13 @@ use crate::templates::widgets::header::Header;
 use crate::templates::widgets::navigation::Navigation;
 use crate::templates::widgets::sidebar::Sidebar;
 use crate::templates::widgets::footer::Footer;
-use crate::database::data::CurrentLanguageDB;
+use crate::database::data::LanguageDB;
 
 
 markup::define! {
     Layout<'a, BodyContent: markup::Render>(
         title: &'a str,
-        lang: &'a CurrentLanguageDB,
+        lang: &'a LanguageDB,
         content: BodyContent,
     ) {
         @markup::doctype()

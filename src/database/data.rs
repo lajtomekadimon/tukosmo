@@ -2,7 +2,7 @@
 #[derive(Clone)]
 pub struct DataDB {
     pub user: UserDB,
-    pub lang: CurrentLanguageDB,
+    pub lang: LanguageDB,
     pub languages: Vec<LanguageDB>,
 }
 
@@ -23,10 +23,9 @@ pub struct LanguageDB {
 }
 
 #[derive(Clone)]
-pub struct CurrentLanguageDB {
-    pub id: i64,
-    pub code: String,
+pub struct NameDB {
     pub name: String,
+    pub lang: LanguageDB,
 }
 
 #[derive(Clone)]
