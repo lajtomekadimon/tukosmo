@@ -4,7 +4,7 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::s_language_names::s_language_names;
+use crate::database::awa_edit_language::awa_edit_language;
 use crate::database::data::DataDB;
 
 
@@ -81,7 +81,7 @@ markup::define! {
                         {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for name in s_language_names(
+                        @for name in awa_edit_language(
                             data.lang.id,
                             *lang_id.clone()
                         ) {

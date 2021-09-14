@@ -5,7 +5,7 @@ use crate::database::data::NameDB;
 use crate::database::rows;
 
 
-pub fn s_language_names(
+pub fn awa_edit_language(
     language_of_user: i64,
     language_id: i64,
 ) -> Vec<NameDB> {
@@ -14,7 +14,7 @@ pub fn s_language_names(
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
 
         if let Ok(rows) = client.query(
-            "SELECT * FROM s_language_names($1, $2)",
+            "SELECT * FROM awa_edit_language($1, $2)",
             &[&language_of_user, &language_id]
         ) {
 
