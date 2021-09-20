@@ -16,8 +16,7 @@ PARALLEL UNSAFE
 
 AS $$
 
--- TODO: The only allowed NULL value is for data_db, the rest can't be NULL
-SELECT (
+WITH variables (userd, lang, languages) AS ( VALUES (
     -- userd
     (
         SELECT (id, email, name)::"UserDB"
@@ -42,6 +41,18 @@ SELECT (
             )
         )
     )::"LanguageDB"[]
-)::"DataDB"
+))
+
+SELECT CASE
+    WHEN userd IS NULL THEN NULL
+    WHEN lang IS NULL THEN NULL
+    WHEN CARDINALITY(languages) = 0 THEN NULL
+    ELSE (
+        userd,
+        lang,
+        languages
+    )::"DataDB"
+END
+FROM variables
 
 $$;
