@@ -1,19 +1,14 @@
+use postgres_types::{ToSql, FromSql};
 
-#[derive(Clone)]
-pub struct DataDB {
-    pub user: UserDB,
-    pub lang: LanguageDB,
-    pub languages: Vec<LanguageDB>,
-}
 
-#[derive(Clone)]
+#[derive(Clone, Debug, ToSql, FromSql)]
 pub struct UserDB {
     pub id: i64,
     pub email: String,
     pub name: String,
 }
  
-#[derive(Clone)]
+#[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LanguageDB {
     pub id: i64,
     pub code: String,
@@ -22,13 +17,13 @@ pub struct LanguageDB {
     pub has_all_names: bool,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, ToSql, FromSql)]
 pub struct NameDB {
     pub name: String,
     pub lang: LanguageDB,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PostDB {
     pub id: i64,
     pub trans_id: i64,
@@ -45,4 +40,11 @@ pub struct PostDB {
     pub date_trans: String,
     pub draft: bool,
     pub deleted: bool,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct DataDB {
+    pub userd: UserDB,
+    pub lang: LanguageDB,
+    pub languages: Vec<LanguageDB>,
 }

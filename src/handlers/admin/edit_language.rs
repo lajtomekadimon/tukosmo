@@ -6,8 +6,6 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_language::EditLanguage;
 use crate::database::s_lang_code_by_id::s_lang_code_by_id;
-use crate::database::data::DataDB;
-use crate::database::s_languages::s_languages;
 
 
 #[derive(Deserialize)]
@@ -24,13 +22,7 @@ pub async fn edit_language(
 
     match admin_handler(req, id) {
 
-        Ok((lang, user)) => {
-
-            let data = DataDB {
-                user: user,
-                lang: lang.clone(),
-                languages: s_languages(lang.id),
-            };
+        Ok(data) => {
 
             if let Some(lang_id_code) = s_lang_code_by_id(lang_id) {
                 let html = EditLanguage {
@@ -38,9 +30,9 @@ pub async fn edit_language(
                         "{a} - {b}",
                         a = &t(
                             "Edit language: '{lang}'",
-                            &lang.code
+                            &data.lang.code
                         ).replace("{lang}", &lang_id_code),
-                        b = &t("Tukosmo Admin Panel", &lang.code)
+                        b = &t("Tukosmo Admin Panel", &data.lang.code)
                     ),
                     lang_id: &lang_id,
                     lang_id_code: &lang_id_code,

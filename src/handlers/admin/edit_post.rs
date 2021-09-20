@@ -6,8 +6,7 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_post::EditPost;
 use crate::database::awa_edit_post::awa_edit_post;
-use crate::database::data::{DataDB, PostDB};
-use crate::database::s_languages::s_languages;
+use crate::database::data::PostDB;
 
 
 #[derive(Deserialize)]
@@ -24,26 +23,20 @@ pub async fn edit_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang, user)) => {
-
-            let data = DataDB {
-                user: user.clone(),
-                lang: lang.clone(),
-                languages: s_languages(lang.id),
-            };
+        Ok(data) => {
 
             if let Some(post) = awa_edit_post(
                 post_id,
-                lang.id.clone(),
+                data.lang.id.clone(),
             ) {
                 let html = EditPost {
                     title: &format!(
                         "{a} - {b}",
                         a = &t(
                             "Edit post: '{title}'",
-                            &lang.code
+                            &data.lang.code
                         ).replace("{title}", &post.title),
-                        b = &t("Tukosmo Admin Panel", &lang.code)
+                        b = &t("Tukosmo Admin Panel", &data.lang.code)
                     ),
                     post: &post,
                     data: &data,
@@ -56,9 +49,9 @@ pub async fn edit_post(
                         "{a} - {b}",
                         a = &t(
                             "Edit post: '{title}'",
-                            &lang.code
+                            &data.lang.code
                         ).replace("{title}", &post_id.to_string()),
-                        b = &t("Tukosmo Admin Panel", &lang.code)
+                        b = &t("Tukosmo Admin Panel", &data.lang.code)
                     ),
                     post: &PostDB{
                         id: post_id,
@@ -70,7 +63,7 @@ pub async fn edit_post(
                         permalink: "".to_string(),
                         author: 0,
                         author_name: "".to_string(),
-                        translator: user.id,
+                        translator: data.userd.id,
                         translator_name: "".to_string(),
                         date: "".to_string(),
                         date_trans: "".to_string(),

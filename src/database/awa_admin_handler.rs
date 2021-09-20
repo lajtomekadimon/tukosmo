@@ -2,30 +2,24 @@ use postgres::{Client, NoTls};
 use uuid::Uuid;
 
 use crate::config::global::db_auth_string;
-use crate::database::data::UserDB;
-use crate::database::rows;
+use crate::database::data::DataDB;
 
 
 pub fn awa_admin_handler(
     session_id: Uuid,
-    language_of_user: i64,
-) -> Option<UserDB> {
-    let mut user: Option<UserDB> = None;
-
+    lang_code: String,
+) -> Option<DataDB> {
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
-        if let Ok(rows) = client.query(
-            "SELECT * FROM awa_admin_handler($1, $2)",
-            &[&session_id, &language_of_user]
+        if let Ok(row) = client.query_one(
+            "SELECT awa_admin_handler($1, $2)",
+            &[&session_id, &lang_code]
         ) {
-
-            let vec = rows::users::users(rows);
-
-            user = vec.first().cloned();
-
+            let data_struct: DataDB = row.get(0);
+            Some(data_struct)
+        } else {
+            None
         }
-        // TODO: Control the error!
+    } else {
+        None
     }
-
-    user
 }
-

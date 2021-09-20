@@ -84,7 +84,7 @@ pub async fn edit_language_post(
 
     match admin_handler(req, id) {
 
-        Ok((lang, _user)) => {
+        Ok(data) => {
 
             let language_id = (form.language_id).clone();
             let lang_code_value = (form.lang_code).clone();
@@ -98,14 +98,14 @@ pub async fn edit_language_post(
                 lang_names,
             ) {
                 let redirect_route = "/{lang}/admin/languages"
-                    .replace("{lang}", &lang.code);
+                    .replace("{lang}", &data.lang.code);
 
                 HttpResponse::Found()
                     .header("Location", redirect_route)
                     .finish()
             } else {
                 let redirect_route = "/{lang}/admin/edit_language?id={id}"
-                    .replace("{lang}", &lang.code)
+                    .replace("{lang}", &data.lang.code)
                     .replace("{id}", &language_id.to_string());
                 // TODO: Show what failed in the template!
 

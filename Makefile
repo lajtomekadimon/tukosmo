@@ -38,10 +38,14 @@ createdb:
 	su -m postgres -c 'dropuser $(PG_USER) ||:'
 	@echo "Creating database..."
 	su -m postgres -c 'createdb $(PG_DB) -E UTF8'
-	su -m postgres -c "psql -q -d $(PG_DB) -c \"CREATE USER $(PG_USER) PASSWORD '$(PG_PASSWORD)';\""
-	su -m postgres -c "psql -q -d $(PG_DB) -c \"ALTER USER $(PG_USER) WITH SUPERUSER;\""
+	su -m postgres -c "psql -q -d $(PG_DB) \
+	-c \"CREATE USER $(PG_USER) PASSWORD '$(PG_PASSWORD)';\""
+	su -m postgres -c "psql -q -d $(PG_DB) \
+	-c \"ALTER USER $(PG_USER) WITH SUPERUSER;\""
 	@echo "Installing extensions..."
 	su -m postgres -c "cat db/extensions.sql | psql -q -d $(PG_DB)"
+	@echo "Creating types..."
+	su -m postgres -c "cat db/types.sql | psql -q -d $(PG_DB)"
 
 FUNDB=db/extra/*.sql
 

@@ -56,9 +56,9 @@ markup::define! {
                     div[class = "navbar-end"] {
                         div[class = "navbar-item has-dropdown is-hoverable"] {
                             a[class = "navbar-link"] {
-                                @data.user.name
+                                @data.userd.name
                                 " ("
-                                @data.user.email
+                                @data.userd.email
                                 ")"
                             }
 

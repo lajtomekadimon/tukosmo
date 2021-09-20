@@ -4,8 +4,6 @@ use actix_identity::Identity;
 use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::new_language::NewLanguage;
-use crate::database::data::DataDB;
-use crate::database::s_languages::s_languages;
 
 
 pub async fn new_language(
@@ -15,19 +13,13 @@ pub async fn new_language(
 
     match admin_handler(req, id) {
 
-        Ok((lang, user)) => {
-
-            let data = DataDB {
-                user: user,
-                lang: lang.clone(),
-                languages: s_languages(lang.id),
-            };
+        Ok(data) => {
 
             let html = NewLanguage {
                 title: &format!(
                     "{a} - {b}",
-                    a = &t("Add language", &lang.code),
-                    b = &t("Tukosmo Admin Panel", &lang.code)
+                    a = &t("Add language", &data.lang.code),
+                    b = &t("Tukosmo Admin Panel", &data.lang.code)
                 ),
                 data: &data,
             };

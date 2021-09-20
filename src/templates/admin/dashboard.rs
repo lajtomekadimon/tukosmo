@@ -33,7 +33,7 @@ markup::define! {
                     h1[class = "title"] {
                         {&t("Hello, {name}.", &data.lang.code).replace(
                             "{name}",
-                            &data.user.name,
+                            &data.userd.name,
                         )}
                     }
                     h2[class = "subtitle"] {
