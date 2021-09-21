@@ -99,7 +99,8 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/languages".replace("{lang}", &data.lang.code),
+                            href = "/{lang}/admin/languages"
+                                .replace("{lang}", &data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             {&t("Cancel", &data.lang.code)}

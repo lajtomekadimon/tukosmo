@@ -4,7 +4,10 @@
 
 **Tukosmo** (WIP!): Website generator made with Rust and PostgreSQL.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/lajtomekadimon/tukosmo/blob/main/LICENSE)
+[![License: MIT](
+https://img.shields.io/badge/License-MIT-blue.svg)](
+https://github.com/lajtomekadimon/tukosmo/blob/main/LICENSE)
+
 
 </div>
 
@@ -15,9 +18,12 @@ don't expect high quality code (yet).
 
 Technical features:
 
-- [x] Blazingly fast web server using [Actix Web](https://github.com/actix/actix-web).
-- [x] No ORM! Pure SQL code called by native [PostgreSQL driver](https://github.com/sfackler/rust-postgres).
-- [x] Blazingly fast HTML rendering with [markup.rs](https://github.com/utkarshkukreti/markup.rs).
+- [x] Blazingly fast web server using [Actix Web](
+https://github.com/actix/actix-web).
+- [x] No ORM! Pure SQL code called by native [PostgreSQL driver](
+https://github.com/sfackler/rust-postgres).
+- [x] Blazingly fast HTML rendering with [markup.rs](
+https://github.com/utkarshkukreti/markup.rs).
 - [x] Automatic CSS minifying to one single file.
 - [x] Everything works without JavaScript, which is optional.
 - [ ] Automatic JavaScript minifying to one single file.

@@ -32,41 +32,9 @@ markup::define! {
                             figure[class = "avatar"] {
                                 img[src = "/static/img/tukosmo-logo-128.png"];
                             }
-                            form[
-                                action = "/{lang}/admin/login"
-                                    .replace("{lang}", &data.lang.code),
-                                method = "post",
-                            ] {
-                                div[class = "field"] {
-                                    div[class = "control"] {
-                                        input[
-                                            class = "input is-large",
-                                            name = "email",
-                                            type = "email",
-                                            placeholder = &t("Your email", &data.lang.code),
-                                            autofocus = "",
-                                        ];
-                                    }
-                                }
 
-                                div[class = "field"] {
-                                    div[class = "control"] {
-                                        input[
-                                            class = "input is-large",
-                                            name = "password",
-                                            type = "password",
-                                            placeholder = &t("Your password", &data.lang.code),
-                                        ];
-                                    }
-                                }
-
-                                button[
-                                    class = "button is-block is-info is-large is-fullwidth",
-                                ] {
-                                    {&t("Login [verb]", &data.lang.code)}
-                                    " "
-                                    i[class = "eos-icons"] { "login" }
-                                }
+                            @Form {
+                                data: data,
                             }
                         }
 
@@ -93,6 +61,47 @@ markup::define! {
             }
         }
 
+    }
+
+    Form<'a>(
+        data: &'a AdminDataDB,
+    ) {
+        form[
+            action = "/{lang}/admin/login"
+                .replace("{lang}", &data.lang.code),
+            method = "post",
+        ] {
+            div[class = "field"] {
+                div[class = "control"] {
+                    input[
+                        class = "input is-large",
+                        name = "email",
+                        type = "email",
+                        placeholder = &t("Your email", &data.lang.code),
+                        autofocus = "",
+                    ];
+                }
+            }
+
+            div[class = "field"] {
+                div[class = "control"] {
+                    input[
+                        class = "input is-large",
+                        name = "password",
+                        type = "password",
+                        placeholder = &t("Your password", &data.lang.code),
+                    ];
+                }
+            }
+
+            button[
+                class = "button is-block is-info is-large is-fullwidth",
+            ] {
+                {&t("Login [verb]", &data.lang.code)}
+                " "
+                i[class = "eos-icons"] { "login" }
+            }
+        }
     }
 }
 

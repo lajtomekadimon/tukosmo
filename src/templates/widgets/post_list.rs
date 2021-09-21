@@ -28,10 +28,16 @@ markup::define! {
                         a[
                             href = "/{lang}/blog/{permalink}"
                                 .replace("{lang}", &data.lang.code)
-                                .replace("{permalink}", &post.permalink.to_string()),
+                                .replace(
+                                    "{permalink}",
+                                    &post.permalink.to_string()
+                                ),
                         ] {
                             figure[
-                                style = "background-image: url(https://www.azamara.com/sites/default/files/heros/reykjavik-iceland-1800x1000.jpg);",
+                                style = "background-image: url(https://www.\
+                                         azamara.com/sites/default/files/\
+                                         heros/reykjavik-iceland-\
+                                         1800x1000.jpg);",
                             ] {}
                         }
                     }
@@ -48,7 +54,10 @@ markup::define! {
                                 a[
                                     href = "/{lang}/blog/{permalink}"
                                         .replace("{lang}", &data.lang.code)
-                                        .replace("{permalink}", &post.permalink.to_string()),
+                                        .replace(
+                                            "{permalink}",
+                                            &post.permalink.to_string()
+                                        ),
                                 ] {
                                     i[class = "eos-icons"] {
                                         "calendar_today"
@@ -69,7 +78,10 @@ markup::define! {
                             a[
                                 href = "/{lang}/blog/{permalink}"
                                     .replace("{lang}", &data.lang.code)
-                                    .replace("{permalink}", &post.permalink.to_string()),
+                                    .replace(
+                                        "{permalink}",
+                                        &post.permalink.to_string()
+                                    ),
                             ] {
                                 @post.title
                             }
@@ -85,7 +97,10 @@ markup::define! {
                             a[
                                 href = "/{lang}/blog/{permalink}"
                                     .replace("{lang}", &data.lang.code)
-                                    .replace("{permalink}", &post.permalink.to_string()),
+                                    .replace(
+                                        "{permalink}",
+                                        &post.permalink.to_string()
+                                    ),
                             ] {
                                 {&t("Read more", &data.lang.code)}
                             }

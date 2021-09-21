@@ -19,7 +19,8 @@ markup::define! {
             ] {
                 figure {
                     img[
-                        src = "https://www.azamara.com/sites/default/files/heros/reykjavik-iceland-1800x1000.jpg",
+                        src = "https://www.azamara.com/sites/default/\
+                               files/heros/reykjavik-iceland-1800x1000.jpg",
                         alt = "reykjavik",
                     ];
                 }

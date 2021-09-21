@@ -46,7 +46,8 @@ markup::define! {
                 a[
                     href = "/{lang}/admin/new_language"
                         .replace("{lang}", &data.lang.code),
-                    class = "button is-link is-pulled-right has-text-weight-normal mr-4",
+                    class = "button is-link is-pulled-right \
+                             has-text-weight-normal mr-4",
                 ] {
                     {&t("Add language", &data.lang.code)}
                 }
@@ -73,7 +74,8 @@ markup::define! {
                         tr {
                             td {
                                 a[
-                                    href = "/{lang}/admin/edit_language?id={id}"
+                                    href = "/{lang}/admin/edit_language\
+                                            ?id={id}"
                                         .replace("{lang}", &data.lang.code)
                                         .replace(
                                             "{id}",

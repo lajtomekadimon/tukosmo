@@ -26,7 +26,8 @@ pub fn translate_es(text_value: &str) -> &str {
         "General" => "General",
         "Hello, {name}." => "Hola, {name}.",
         "Help [noun]" => "Ayuda",
-        "I hope you are having a great day!" => "¡Espero que tengas un buen día!",
+        "I hope you are having a great day!" =>
+            "¡Espero que tengas un buen día!",
         "Language" => "Idioma",
         "Language name" => "Nombre del idioma",
         "Languages" => "Idiomas",

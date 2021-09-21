@@ -103,7 +103,8 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
-                    href = "https://cdn.jsdelivr.net/npm/eos-icons@latest/dist/css/eos-icons.css",
+                    href = "https://cdn.jsdelivr.net/npm/\
+                            eos-icons@latest/dist/css/eos-icons.css",
                 ];
 
                 link[

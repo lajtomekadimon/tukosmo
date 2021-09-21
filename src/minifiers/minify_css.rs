@@ -27,7 +27,8 @@ pub fn minify_css() {
 
     // ADMIN
     //////////
-    let bulma_css = fs::read_to_string("static/css/bulma.min.css")  // TODO: Use bulma.css instead
+    // TODO: Use bulma.css instead
+    let bulma_css = fs::read_to_string("static/css/bulma.min.css")
         .expect("Something went wrong reading bulma.css!");
     let admin_css = fs::read_to_string("static/css/admin.css")
         .expect("Something went wrong reading CSS admin file!");

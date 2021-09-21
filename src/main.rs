@@ -56,7 +56,9 @@ async fn main() -> std::io::Result<()> {
                 .allowed_origin("http://localhost:8080")
 
                 .allowed_methods(vec!["GET", "POST"])
-                .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+                .allowed_headers(
+                    vec![http::header::AUTHORIZATION, http::header::ACCEPT]
+                )
                 .allowed_header(http::header::CONTENT_TYPE)
             )*/
             .wrap(

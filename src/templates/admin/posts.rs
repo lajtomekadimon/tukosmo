@@ -46,7 +46,8 @@ markup::define! {
                 a[
                     href = "/{lang}/admin/new_post"
                         .replace("{lang}", &data.lang.code),
-                    class = "button is-link is-pulled-right has-text-weight-normal mr-4",
+                    class = "button is-link is-pulled-right \
+                             has-text-weight-normal mr-4",
                 ] {
                     {&t("New post", &data.lang.code)}
                 }
@@ -101,7 +102,9 @@ markup::define! {
                             td {
                                 {t_date(&post.date, &data.lang.code)}
 
-                                @if (post.author_name != post.translator_name) && (post.translator != 0) {
+                                @if (post.author_name != post.translator_name)
+                                    && (post.translator != 0)
+                                {
                                     " ("
                                     {t_date(&post.date_trans, &data.lang.code)}
                                     ")"
@@ -119,12 +122,14 @@ markup::define! {
                                     @post.author_name
                                 }
 
-                                @if (post.author_name != post.translator_name) && (post.translator != 0) {
+                                @if (post.author_name != post.translator_name)
+                                    && (post.translator != 0)
+                                {
                                     " ("
-                                    {
-                                        &t("translated by {name}", &data.lang.code)
-                                            .replace("{name}", &post.translator_name)
-                                    }
+                                    {&t(
+                                        "translated by {name}",
+                                        &data.lang.code
+                                    ).replace("{name}", &post.translator_name)}
                                     ")"
                                 }
                             }
