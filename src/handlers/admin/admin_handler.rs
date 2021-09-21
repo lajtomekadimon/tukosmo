@@ -11,6 +11,12 @@ pub fn admin_handler(
     id: Identity,
 ) -> Result<DataDB, HttpResponse> {
 
+    let lang_code: String = req.match_info()
+        .get("lang").unwrap().parse().unwrap();
+
+    let login_route = "/{lang}/admin/login"
+        .replace("{lang}", &lang_code);
+
     // Cookie has a session
     if let Some(session_uuid) = id.identity() {
 
@@ -18,9 +24,6 @@ pub fn admin_handler(
         if let Ok(session_id) = Uuid::parse_str(
             &session_uuid
         ) {
-
-            let lang_code: String = req.match_info()
-                .get("lang").unwrap().parse().unwrap();
 
             // Session is active
             if let Some(data) = awa_admin_handler(
@@ -39,8 +42,12 @@ pub fn admin_handler(
                 // Delete cookie
                 id.forget();
 
-                // TODO: Redirect to login
-                Err(HttpResponse::Ok().body("Error 401: Unauthorized"))
+                // Redirect to login page
+                Err(
+                    HttpResponse::Found()
+                        .header("Location", login_route)
+                        .finish()
+                )
 
             }
 
@@ -50,8 +57,12 @@ pub fn admin_handler(
             // Delete cookie
             id.forget();
 
-            // TODO: Redirect to login
-            Err(HttpResponse::Ok().body("Error 401: Unauthorized"))
+            // Redirect to login page
+            Err(
+                HttpResponse::Found()
+                    .header("Location", login_route)
+                    .finish()
+            )
 
         }
 
@@ -59,8 +70,12 @@ pub fn admin_handler(
     // TODO: "You need to login first."
     } else {
 
-        // TODO: Redirect to login
-        Err(HttpResponse::Ok().body("Error 401: Unauthorized"))
+        // Redirect to login page
+        Err(
+            HttpResponse::Found()
+                .header("Location", login_route)
+                .finish()
+        )
 
     }
 

@@ -4,8 +4,7 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::awa_edit_language::awa_edit_language;
-use crate::database::types::DataDB;
+use crate::database::types::{DataDB, NameDB};
 
 
 markup::define! {
@@ -14,6 +13,7 @@ markup::define! {
         lang_id: &'a i64,
         lang_id_code: &'a str,
         data: &'a DataDB,
+        names: &'a Vec<NameDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -23,6 +23,7 @@ markup::define! {
                     lang_id: lang_id,
                     lang_id_code: lang_id_code,
                     data: data,
+                    names: names,
                 },
                 current_page: "new_language",
                 data: data,
@@ -34,6 +35,7 @@ markup::define! {
         lang_id: &'a i64,
         lang_id_code: &'a str,
         data: &'a DataDB,
+        names: &'a Vec<NameDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -81,10 +83,7 @@ markup::define! {
                         {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for name in awa_edit_language(
-                            data.lang.id,
-                            *lang_id.clone()
-                        ) {
+                        @for name in names.iter() {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
@@ -101,7 +100,7 @@ markup::define! {
                                         class = "input",
                                         type = "text",
                                         name = "lang_name",
-                                        value = name.name,
+                                        value = &name.name,
                                     ];
                                 }
                             }

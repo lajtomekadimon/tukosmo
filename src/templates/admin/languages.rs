@@ -5,14 +5,14 @@ use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::s_languages::s_languages;
-use crate::database::types::DataDB;
+use crate::database::types::{DataDB, LanguageDB};
 
 
 markup::define! {
     Languages<'a>(
         title: &'a str,
         data: &'a DataDB,
+        languages: &'a Vec<LanguageDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -20,6 +20,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     data: data,
+                    languages: languages,
                 },
                 current_page: "languages",
                 data: data,
@@ -29,6 +30,7 @@ markup::define! {
 
     Content<'a>(
         data: &'a DataDB,
+        languages: &'a Vec<LanguageDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -67,7 +69,7 @@ markup::define! {
                     }
                 }
                 tbody {
-                    @for lang in s_languages(data.lang.id) {
+                    @for lang in languages.iter() {
                         tr {
                             td {
                                 a[

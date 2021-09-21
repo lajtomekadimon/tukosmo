@@ -6,6 +6,7 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_language::EditLanguage;
 use crate::database::s_lang_code_by_id::s_lang_code_by_id;
+use crate::database::awa_edit_language::awa_edit_language;
 
 
 #[derive(Deserialize)]
@@ -34,9 +35,13 @@ pub async fn edit_language(
                         ).replace("{lang}", &lang_id_code),
                         b = &t("Tukosmo Admin Panel", &data.lang.code)
                     ),
-                    lang_id: &lang_id,
+                    lang_id: &lang_id.clone(),
                     lang_id_code: &lang_id_code,
                     data: &data,
+                    names: &awa_edit_language(
+                        data.lang.id,
+                        lang_id.clone()
+                    )
                 };
 
                 HttpResponse::Ok().body(html.to_string())

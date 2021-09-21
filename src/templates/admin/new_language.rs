@@ -4,14 +4,14 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::s_languages::s_languages;
-use crate::database::types::DataDB;
+use crate::database::types::{DataDB, LanguageDB};
 
 
 markup::define! {
     NewLanguage<'a>(
         title: &'a str,
         data: &'a DataDB,
+        languages: &'a Vec<LanguageDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -19,6 +19,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     data: data,
+                    languages: languages,
                 },
                 current_page: "new_language",
                 data: data,
@@ -28,6 +29,7 @@ markup::define! {
 
     Content<'a>(
         data: &'a DataDB,
+        languages: &'a Vec<LanguageDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -65,7 +67,7 @@ markup::define! {
                         {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for lang in s_languages(data.lang.id) {
+                        @for lang in languages.iter() {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
