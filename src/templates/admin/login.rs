@@ -2,6 +2,7 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
+use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::types::AdminDataDB;
 
 
@@ -78,6 +79,13 @@ markup::define! {
 
                             a[href = "/"] {
                                 {&t("Forgotten password?", &data.lang.code)}
+                            }
+                        }
+
+                        div[class = "mt-3"] {
+                            @AdminLangDropdown {
+                                route: "/admin/login",
+                                data: data,
                             }
                         }
                     }
