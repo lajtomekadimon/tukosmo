@@ -4,14 +4,7 @@ CREATE OR REPLACE FUNCTION awa_edit_language(
     language_id INT8
 )
 
-RETURNS TABLE(
-    name TEXT,
-    lang_id INT8,
-    lang_code TEXT,
-    lang_name TEXT,
-    lang_date TEXT,
-    lang_has_all_names BOOL
-)
+RETURNS "NameDB"[]
 
 LANGUAGE SQL
 VOLATILE
@@ -20,9 +13,30 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT s_language_names(
-    language_of_user,
-    language_id
+SELECT ARRAY(
+    SELECT (
+        -- name
+        name,
+
+        -- lang
+        (
+            -- id
+            lang_id,
+            -- code
+            lang_code,
+            -- name
+            lang_name,
+            -- date
+            lang_date,
+            -- has_all_names
+            lang_has_all_names
+        )::"LanguageDB"
+    )::"NameDB"
+
+    FROM s_language_names(
+        language_of_user,
+        language_id
+    )
 )
 
 $$;
