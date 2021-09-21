@@ -21,7 +21,7 @@ CREATE TYPE "NameDB" AS (
 CREATE TYPE "PostDB" AS (
     id BIGINT,
     trans_id BIGINT,
-    lang "LanguageDB",
+    lang BIGINT,
     title TEXT,
     description TEXT,
     body TEXT,

@@ -4,23 +4,7 @@ CREATE OR REPLACE FUNCTION awa_edit_post(
     post_lang BIGINT
 )
 
-RETURNS TABLE(
-    id BIGINT,
-    trans_id BIGINT,
-    lang BIGINT,
-    title TEXT,
-    description TEXT,
-    body TEXT,
-    permalink TEXT,
-    author BIGINT,
-    author_name TEXT,
-    translator BIGINT,
-    translator_name TEXT,
-    date TEXT,
-    date_trans TEXT,
-    draft BOOL,
-    deleted BOOL
-)
+RETURNS "PostDB"
 
 LANGUAGE SQL
 VOLATILE
@@ -29,7 +13,25 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT s_post_by_id_lang(
+SELECT (
+    id,
+    trans_id,
+    lang,
+    title,
+    description,
+    body,
+    permalink,
+    author,
+    author_name,
+    translator,
+    translator_name,
+    date,
+    date_trans,
+    draft,
+    deleted
+)::"PostDB"
+
+FROM s_post_by_id_lang(
     post_id,
     post_lang
 )

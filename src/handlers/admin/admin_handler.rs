@@ -32,6 +32,8 @@ pub fn admin_handler(
 
             // Session has expired
             // TODO: "Your session has expired."
+            // TODO: This happens even if the user is correct!
+            //       (when lang_code is not correct)
             } else {
 
                 // Delete cookie

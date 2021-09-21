@@ -14,8 +14,7 @@ pub fn awa_admin_handler(
             "SELECT awa_admin_handler($1, $2)",
             &[&session_id, &lang_code]
         ) {
-            let data_struct: DataDB = row.get(0);
-            Some(data_struct)
+            row.get(0)
         } else {
             None
         }
