@@ -5,7 +5,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::database::awa_edit_language::awa_edit_language;
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 markup::define! {

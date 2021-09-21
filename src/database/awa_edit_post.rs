@@ -1,7 +1,7 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
-use crate::database::data::PostDB;
+use crate::database::types::PostDB;
 
 
 pub fn awa_edit_post(

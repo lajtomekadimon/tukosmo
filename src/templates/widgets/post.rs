@@ -3,7 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
-use crate::database::data::{LanguageDB, PostDB};
+use crate::database::types::{LanguageDB, PostDB};
 
 
 markup::define! {

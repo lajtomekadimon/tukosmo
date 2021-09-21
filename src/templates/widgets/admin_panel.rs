@@ -2,7 +2,7 @@ use markup;
 
 use crate::templates::widgets::admin_sidebar::AdminSidebar;
 use crate::templates::widgets::admin_navbar::AdminNavbar;
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 markup::define! {

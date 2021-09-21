@@ -2,7 +2,7 @@ use postgres::{Client, NoTls};
 use uuid::Uuid;
 
 use crate::config::global::db_auth_string;
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 pub fn awa_admin_handler(

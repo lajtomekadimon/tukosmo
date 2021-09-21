@@ -1,7 +1,7 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
-use crate::database::data::NameDB;
+use crate::database::types::NameDB;
 
 
 pub fn awa_edit_language(

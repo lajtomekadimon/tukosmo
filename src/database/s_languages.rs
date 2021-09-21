@@ -1,7 +1,7 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
-use crate::database::data::LanguageDB;
+use crate::database::types::LanguageDB;
 use crate::database::rows;
 
 

@@ -2,7 +2,7 @@ use markup;
 
 use crate::templates::layout::Layout;
 use crate::templates::widgets::post::Post;
-use crate::database::data::{LanguageDB, PostDB};
+use crate::database::types::{LanguageDB, PostDB};
 
 
 markup::define! {

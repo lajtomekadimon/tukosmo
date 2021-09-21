@@ -1,6 +1,6 @@
 use markup;
 
-use crate::database::data::LanguageDB;
+use crate::database::types::LanguageDB;
 
 
 markup::define! {

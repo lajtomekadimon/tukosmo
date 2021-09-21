@@ -5,7 +5,7 @@ use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::data::{DataDB, PostDB};
+use crate::database::types::{DataDB, PostDB};
 
 
 markup::define! {

@@ -2,7 +2,7 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
-use crate::database::data::LanguageDB;
+use crate::database::types::LanguageDB;
 
 
 markup::define! {

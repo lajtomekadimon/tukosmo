@@ -1,6 +1,6 @@
 use postgres::row::Row;
 
-use crate::database::data::LanguageDB;
+use crate::database::types::LanguageDB;
 
 
 pub fn languages(

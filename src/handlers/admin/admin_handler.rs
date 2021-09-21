@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use uuid::Uuid;
 
 use crate::database::awa_admin_handler::awa_admin_handler;
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 pub fn admin_handler(

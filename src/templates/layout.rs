@@ -4,7 +4,7 @@ use crate::templates::widgets::header::Header;
 use crate::templates::widgets::navigation::Navigation;
 use crate::templates::widgets::sidebar::Sidebar;
 use crate::templates::widgets::footer::Footer;
-use crate::database::data::LanguageDB;
+use crate::database::types::LanguageDB;
 
 
 markup::define! {

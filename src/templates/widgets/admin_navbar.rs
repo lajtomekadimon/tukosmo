@@ -1,7 +1,7 @@
 use markup;
 
 use crate::i18n::t::t;
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 markup::define! {

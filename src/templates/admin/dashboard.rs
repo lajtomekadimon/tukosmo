@@ -3,7 +3,7 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 markup::define! {

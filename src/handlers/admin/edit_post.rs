@@ -6,7 +6,7 @@ use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_post::EditPost;
 use crate::database::awa_edit_post::awa_edit_post;
-use crate::database::data::PostDB;
+use crate::database::types::PostDB;
 
 
 #[derive(Deserialize)]

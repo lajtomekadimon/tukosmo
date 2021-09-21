@@ -2,7 +2,7 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
-use crate::database::data::{LanguageDB, PostDB};
+use crate::database::types::{LanguageDB, PostDB};
 
 /* TODO:
  * - Show something when no articles

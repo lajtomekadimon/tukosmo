@@ -1,7 +1,7 @@
 use markup;
 
 use crate::templates::layout::Layout;
-use crate::database::data::LanguageDB;
+use crate::database::types::LanguageDB;
 
 
 markup::define! {

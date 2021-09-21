@@ -1,6 +1,6 @@
 use markup;
 
-use crate::database::data::DataDB;
+use crate::database::types::DataDB;
 
 
 markup::define! {
