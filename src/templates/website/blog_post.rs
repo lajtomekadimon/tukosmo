@@ -1,23 +1,37 @@
 use markup;
 
-use crate::templates::layout::Layout;
+use crate::templates::website_layout::WebsiteLayout;
+use crate::templates::widgets::website::Website;
 use crate::templates::widgets::post::Post;
-use crate::database::types::{LanguageDB, PostDB};
+use crate::database::types::{WebsiteDataDB, PostDB};
 
 
 markup::define! {
     BlogPost<'a>(
         title: &'a str,
-        lang: &'a LanguageDB,
+        data: &'a WebsiteDataDB,
         post: &'a PostDB,
     ) {
-        @Layout {
+        @WebsiteLayout {
             title: title,
-            lang: &lang,
-            content: Post {
-                lang: &lang,
-                post: &post,
-            }
+            data: &data,
+            content: Website {
+                content: Content {
+                    data: data,
+                    post: post,
+                },
+                data: data,
+            },
+        }
+    }
+
+    Content<'a>(
+        data: &'a WebsiteDataDB,
+        post: &'a PostDB,
+    ) {
+        @Post {
+            data: data,
+            post: post,
         }
     }
 }

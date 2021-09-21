@@ -1,21 +1,17 @@
 use markup;
 
-use crate::templates::widgets::header::Header;
-use crate::templates::widgets::navigation::Navigation;
-use crate::templates::widgets::sidebar::Sidebar;
-use crate::templates::widgets::footer::Footer;
-use crate::database::types::LanguageDB;
+use crate::database::types::WebsiteDataDB;
 
 
 markup::define! {
-    Layout<'a, BodyContent: markup::Render>(
+    WebsiteLayout<'a, BodyContent: markup::Render>(
         title: &'a str,
-        lang: &'a LanguageDB,
+        data: &'a WebsiteDataDB,
         content: BodyContent,
     ) {
         @markup::doctype()
         html[
-            lang = &lang.code
+            lang = &data.lang.code
         ] {
             head {
                 meta[charset = "utf-8"];
@@ -73,9 +69,7 @@ markup::define! {
                 ];
             }
             body {
-                @Interface {
-                    content: content
-                }
+                @content
 
                 /*
                 script[
@@ -83,45 +77,6 @@ markup::define! {
                 ] {}
                 */
             }
-        }
-    }
-
-    Interface<BodyContent: markup::Render>(
-        content: BodyContent,
-    ) {
-        div[
-            id = "page",
-            class = "site",
-        ] {
-            div[
-                class = "site-top",
-            ] {
-                @Header {}
-
-                @Navigation {}
-            }
-
-            div[
-                class = "site-content",
-            ] {
-                div [
-                    class = "container",
-                ] {
-                    div[
-                        class = "site-content-inside",
-                    ] {
-                        main[
-                            class = "site-main",
-                        ] {
-                            @content
-                        }
-
-                        @Sidebar {}
-                    }
-                }
-            }
-
-            @Footer {}
         }
     }
 }

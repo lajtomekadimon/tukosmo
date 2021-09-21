@@ -3,13 +3,13 @@ use actix_identity::Identity;
 use uuid::Uuid;
 
 use crate::database::awa_admin_handler::awa_admin_handler;
-use crate::database::types::DataDB;
+use crate::database::types::AdminDataDB;
 
 
 pub fn admin_handler(
     req: HttpRequest,
     id: Identity,
-) -> Result<DataDB, HttpResponse> {
+) -> Result<AdminDataDB, HttpResponse> {
 
     let lang_code: String = req.match_info()
         .get("lang").unwrap().parse().unwrap();

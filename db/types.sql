@@ -36,7 +36,13 @@ CREATE TYPE "PostDB" AS (
     deleted BOOL
 );
 
-CREATE TYPE "DataDB" AS (
+CREATE TYPE "AdminDataDB" AS (
+    userd "UserDB",
+    lang "LanguageDB",
+    languages "LanguageDB"[]
+);
+
+CREATE TYPE "WebsiteDataDB" AS (
     userd "UserDB",
     lang "LanguageDB",
     languages "LanguageDB"[]

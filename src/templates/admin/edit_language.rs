@@ -4,7 +4,7 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::{DataDB, NameDB};
+use crate::database::types::{AdminDataDB, NameDB};
 
 
 markup::define! {
@@ -12,12 +12,12 @@ markup::define! {
         title: &'a str,
         lang_id: &'a i64,
         lang_id_code: &'a str,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
         names: &'a Vec<NameDB>,
     ) {
         @AdminLayout {
             title: title,
-            lang: &data.lang,
+            data: data,
             content: AdminPanel {
                 content: Content {
                     lang_id: lang_id,
@@ -34,7 +34,7 @@ markup::define! {
     Content<'a>(
         lang_id: &'a i64,
         lang_id_code: &'a str,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
         names: &'a Vec<NameDB>,
     ) {
         div[class = "box is-marginless"] {

@@ -1,18 +1,22 @@
 use markup;
 
-use crate::templates::layout::Layout;
-use crate::database::types::LanguageDB;
+use crate::templates::website_layout::WebsiteLayout;
+use crate::templates::widgets::website::Website;
+use crate::database::types::WebsiteDataDB;
 
 
 markup::define! {
     Page<'a>(
         title: &'a str,
-        lang: &'a LanguageDB,
+        data: &'a WebsiteDataDB,
     ) {
-        @Layout {
+        @WebsiteLayout {
             title: title,
-            lang: &lang,
-            content: Content {},
+            data: &data,
+            content: Website {
+                content: Content {},
+                data: data,
+            },
         }
     }
 

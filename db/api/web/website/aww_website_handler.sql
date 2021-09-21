@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION awa_admin_handler(
+CREATE OR REPLACE FUNCTION aww_website_handler(
 
     session_id UUID,
 
@@ -7,24 +7,28 @@ CREATE OR REPLACE FUNCTION awa_admin_handler(
 
 )
 
-RETURNS "AdminDataDB"
+RETURNS "WebsiteDataDB"
 
 LANGUAGE SQL
 VOLATILE
-RETURNS NULL ON NULL INPUT
+CALLED ON NULL INPUT
 PARALLEL UNSAFE
 
 AS $$
 
 WITH variables (userd, lang, languages) AS ( VALUES (
     -- userd
-    (
-        SELECT (id, email, name)::"UserDB"
-        FROM s_user_by_session_lang(
-            session_id,
-            s_language_id_by_code(lang_code)
-        )
-    )::"UserDB",
+    CASE
+        WHEN session_id IS NULL
+        THEN NULL::"UserDB"
+        ELSE (
+            SELECT (id, email, name)::"UserDB"
+            FROM s_user_by_session_lang(
+                session_id,
+                s_language_id_by_code(lang_code)
+            )
+        )::"UserDB"
+    END,
 
     -- lang
     (
@@ -44,14 +48,13 @@ WITH variables (userd, lang, languages) AS ( VALUES (
 ))
 
 SELECT CASE
-    WHEN userd IS NULL THEN NULL
     WHEN lang IS NULL THEN NULL
     WHEN CARDINALITY(languages) = 0 THEN NULL
     ELSE (
         userd,
         lang,
         languages
-    )::"AdminDataDB"
+    )::"WebsiteDataDB"
 END
 FROM variables
 

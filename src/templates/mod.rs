@@ -1,5 +1,5 @@
 pub mod admin_layout;
-pub mod layout;
+pub mod website_layout;
 
 pub mod admin;
 pub mod website;

@@ -3,12 +3,12 @@ use markup;
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
-use crate::database::types::{LanguageDB, PostDB};
+use crate::database::types::{WebsiteDataDB, PostDB};
 
 
 markup::define! {
     Post<'a>(
-        lang: &'a LanguageDB,
+        data: &'a WebsiteDataDB,
         post: &'a PostDB,
     ) {
         article[
@@ -49,7 +49,7 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog"
-                                    .replace("{lang}", &lang.code)
+                                    .replace("{lang}", &data.lang.code)
                                 ,
                             ] {
                                 i[class = "eos-icons"] {
@@ -67,7 +67,7 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog"
-                                    .replace("{lang}", &lang.code)
+                                    .replace("{lang}", &data.lang.code)
                                 ,
                             ] {
                                 i[class = "eos-icons"] {
@@ -76,26 +76,28 @@ markup::define! {
 
                                 " "
 
-                                {t_date(&post.date, &lang.code)}
+                                {t_date(&post.date, &data.lang.code)}
                             }
                         }
                         
-                        span[
-                            class = "post-meta-edit",
-                        ] {
-                            a[
-                                href = "/{lang}/admin/edit_post?id={id}"
-                                    .replace("{lang}", &lang.code)
-                                    .replace("{id}", &post.id.to_string())
-                                ,
+                        @if let Some(_user) = &data.userd {
+                            span[
+                                class = "post-meta-edit",
                             ] {
-                                i[class = "eos-icons"] {
-                                    "mode_edit"
+                                a[
+                                    href = "/{lang}/admin/edit_post?id={id}"
+                                        .replace("{lang}", &data.lang.code)
+                                        .replace("{id}", &post.id.to_string())
+                                    ,
+                                ] {
+                                    i[class = "eos-icons"] {
+                                        "mode_edit"
+                                    }
+
+                                    " "
+
+                                    {&t("Edit", &data.lang.code)}
                                 }
-
-                                " "
-
-                                {&t("Edit", &lang.code)}
                             }
                         }
                     }

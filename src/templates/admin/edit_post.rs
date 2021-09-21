@@ -4,18 +4,18 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::{DataDB, PostDB};
+use crate::database::types::{AdminDataDB, PostDB};
 
 
 markup::define! {
     EditPost<'a>(
         title: &'a str,
         post: &'a PostDB,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang: &data.lang,
+            data: data,
             content: AdminPanel {
                 content: Content {
                     post: post,
@@ -29,7 +29,7 @@ markup::define! {
 
     Content<'a>(
         post: &'a PostDB,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {

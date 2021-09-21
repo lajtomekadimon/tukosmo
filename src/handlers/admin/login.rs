@@ -1,11 +1,10 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
-use uuid::Uuid;
 
-use crate::i18n::current_language::current_language;
 use crate::i18n::t::t;
 use crate::templates::admin::login::Login;
-use crate::database::awa_login::awa_login;
+use crate::handlers::website::website_handler::website_handler;
+use crate::database::types::{AdminDataDB, UserDB};
 
 
 pub async fn login(
@@ -13,78 +12,48 @@ pub async fn login(
     id: Identity,
 ) -> impl Responder {
 
-    if let Some(lang) = current_language(req) {
+    match website_handler(req, id.clone()) {
 
-        let html = Login {
-            title: &format!(
-                "{a} - {b}",
-                a = &t("Login [noun]", &lang.code),
-                b = &t("Tukosmo Admin Panel", &lang.code)
-            ),
-            lang: &lang,
-        };
+        Ok(data) => {
 
-        // Cookie has a session
-        if let Some(session_uuid) = id.identity() {
+            if let Some(_user) = data.userd {
 
-            if let Ok(session_id) = Uuid::parse_str(
-                &session_uuid
-            ) {
+                let dashboard_route = "/{lang}/admin/"
+                    .replace("{lang}", &data.lang.code);
 
-                // Session exists or existed
-                if let Ok(is_correct) = awa_login(session_id) {
+                HttpResponse::Found()
+                    .header("Location", dashboard_route)
+                    .finish()
 
-                    // Session is active
-                    if is_correct {
-
-                        let dashboard_route = "/{lang}/admin/"
-                            .replace("{lang}", &lang.code);
-
-                        HttpResponse::Found()
-                            .header("Location", dashboard_route)
-                            .finish()
-
-                    // Session has expired
-                    // TODO: "Your session has expired."
-                    } else {
-
-                        // Delete cookie
-                        id.forget();
-
-                        HttpResponse::Ok().body(html.to_string())
-
-                    }
-
-                // TODO: Database error
-                } else {
-
-                    // Delete cookie
-                    id.forget();
-
-                    HttpResponse::Ok().body(html.to_string())
-
-                }
-
-            // TODO: "Session ID is not a valid UUID."
-                } else {
+            } else {
 
                 // Delete cookie
                 id.forget();
+
+                let html = Login {
+                    title: &format!(
+                        "{a} - {b}",
+                        a = &t("Login [noun]", &data.lang.code),
+                        b = &t("Tukosmo Admin Panel", &data.lang.code)
+                    ),
+                    data: &AdminDataDB {
+                        userd: UserDB {
+                            id: 0,
+                            email: "".to_string(),
+                            name: "".to_string(),
+                        },
+                        lang: data.lang,
+                        languages: data.languages,
+                    },
+                };
 
                 HttpResponse::Ok().body(html.to_string())
 
             }
 
-        // Cookie has no session
-        } else {
-
-            HttpResponse::Ok().body(html.to_string())
-
         }
 
-    } else {
-
-        HttpResponse::Ok().body("Error 404")  // TODO
+        Err(r) => r
 
     }
 

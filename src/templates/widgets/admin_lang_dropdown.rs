@@ -1,12 +1,12 @@
 use markup;
 
-use crate::database::types::DataDB;
+use crate::database::types::AdminDataDB;
 
 
 markup::define! {
     AdminLangDropdown<'a>(
         route: &'a str,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         div[class = "dropdown is-hoverable"] {
             div[class = "dropdown-trigger"] {

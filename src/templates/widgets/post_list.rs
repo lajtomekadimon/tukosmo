@@ -2,7 +2,7 @@ use markup;
 
 use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
-use crate::database::types::{LanguageDB, PostDB};
+use crate::database::types::{WebsiteDataDB, PostDB};
 
 /* TODO:
  * - Show something when no articles
@@ -12,7 +12,7 @@ use crate::database::types::{LanguageDB, PostDB};
 
 markup::define! {
     PostList<'a>(
-        lang: &'a LanguageDB,
+        data: &'a WebsiteDataDB,
         posts: &'a Vec<PostDB>,
     ) {
         div[
@@ -27,7 +27,7 @@ markup::define! {
                     ] {
                         a[
                             href = "/{lang}/blog/{permalink}"
-                                .replace("{lang}", &lang.code)
+                                .replace("{lang}", &data.lang.code)
                                 .replace("{permalink}", &post.permalink.to_string()),
                         ] {
                             figure[
@@ -47,7 +47,7 @@ markup::define! {
                             ] {
                                 a[
                                     href = "/{lang}/blog/{permalink}"
-                                        .replace("{lang}", &lang.code)
+                                        .replace("{lang}", &data.lang.code)
                                         .replace("{permalink}", &post.permalink.to_string()),
                                 ] {
                                     i[class = "eos-icons"] {
@@ -59,7 +59,7 @@ markup::define! {
                                     time[
                                         datetime = "2021-08-11T20:37:29+00:00",
                                     ] {
-                                        {t_date(&post.date, &lang.code)}
+                                        {t_date(&post.date, &data.lang.code)}
                                     }
                                 }
                             }
@@ -68,7 +68,7 @@ markup::define! {
                         h2 {
                             a[
                                 href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &lang.code)
+                                    .replace("{lang}", &data.lang.code)
                                     .replace("{permalink}", &post.permalink.to_string()),
                             ] {
                                 @post.title
@@ -84,10 +84,10 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &lang.code)
+                                    .replace("{lang}", &data.lang.code)
                                     .replace("{permalink}", &post.permalink.to_string()),
                             ] {
-                                {&t("Read more", &lang.code)}
+                                {&t("Read more", &data.lang.code)}
                             }
                         }
                     }

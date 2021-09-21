@@ -43,8 +43,15 @@ pub struct PostDB {
 }
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct DataDB {
+pub struct AdminDataDB {
     pub userd: UserDB,
+    pub lang: LanguageDB,
+    pub languages: Vec<LanguageDB>,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct WebsiteDataDB {
+    pub userd: Option<UserDB>,
     pub lang: LanguageDB,
     pub languages: Vec<LanguageDB>,
 }

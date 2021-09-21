@@ -1,27 +1,32 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_identity::Identity;
 
 use crate::templates::website::blog::Blog;
-use crate::i18n::current_language::current_language;
+use crate::handlers::website::website_handler::website_handler;
 use crate::database::aww_blog::aww_blog;
 
 
 pub async fn home(
     req: HttpRequest,
+    id: Identity,
 ) -> impl Responder {
-    if let Some(lang) = current_language(req) {
 
-        let html = Blog {
-            title: "MyExample - MySubtitle",
-            lang: &lang,
-            posts: &aww_blog(lang.id),
-        };
+    match website_handler(req, id) {
 
-        HttpResponse::Ok().body(html.to_string())
+        Ok(data) => {
 
-    } else {
+            let html = Blog {
+                title: "MyExample - MySubtitle",
+                data: &data,
+                posts: &aww_blog(data.lang.id),
+            };
 
-        HttpResponse::Ok().body("Error 404")  // TODO
+            HttpResponse::Ok().body(html.to_string())
+
+        }
+
+        Err(r) => {r}
 
     }
-}
 
+}

@@ -3,17 +3,17 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::database::types::DataDB;
+use crate::database::types::AdminDataDB;
 
 
 markup::define! {
     Dashboard<'a>(
         title: &'a str,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang: &data.lang,
+            data: data,
             content: AdminPanel {
                 content: Content {
                     data: data,
@@ -25,7 +25,7 @@ markup::define! {
     }
 
     Content<'a>(
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         section[class = "hero is-info welcome is-small"] {
             div[class = "hero-body"] {

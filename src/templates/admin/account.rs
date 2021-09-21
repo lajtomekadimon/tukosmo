@@ -2,17 +2,17 @@ use markup;
 
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::database::types::DataDB;
+use crate::database::types::AdminDataDB;
 
 
 markup::define! {
     Account<'a>(
         title: &'a str,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         @AdminLayout {
             title: title,
-            lang: &data.lang,
+            data: data,
             content: AdminPanel {
                 content: Content {},
                 current_page: "account",

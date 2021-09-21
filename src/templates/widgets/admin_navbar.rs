@@ -1,12 +1,12 @@
 use markup;
 
 use crate::i18n::t::t;
-use crate::database::types::DataDB;
+use crate::database::types::AdminDataDB;
 
 
 markup::define! {
     AdminNavbar<'a>(
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         nav[class = "navbar is-white"] {
             div[class = "container"] {

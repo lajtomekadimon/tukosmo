@@ -2,14 +2,14 @@ use markup;
 
 use crate::templates::widgets::admin_sidebar::AdminSidebar;
 use crate::templates::widgets::admin_navbar::AdminNavbar;
-use crate::database::types::DataDB;
+use crate::database::types::AdminDataDB;
 
 
 markup::define! {
     AdminPanel<'a, BodyContent: markup::Render>(
         content: BodyContent,
         current_page: &'a str,
-        data: &'a DataDB,
+        data: &'a AdminDataDB,
     ) {
         @AdminNavbar {
             data: data,
