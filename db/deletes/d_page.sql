@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION d_page_id(
+CREATE OR REPLACE FUNCTION d_page(
 
     page_id BIGINT
 
@@ -16,8 +16,8 @@ AS $$
 
 BEGIN
 
-    DELETE FROM t_page_ids
-    WHERE tpi_id = page_id;
+    DELETE FROM t_pages
+    WHERE tp_id = page_id;
 
     RETURN page_id;
 

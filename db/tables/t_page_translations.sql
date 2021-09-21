@@ -2,10 +2,10 @@
 CREATE TABLE t_page_translations (
 
     tpt_id         BIGSERIAL   PRIMARY KEY,
-    tpt_page       BIGINT      NOT NULL REFERENCES t_page_ids,
+    tpt_page       BIGINT      NOT NULL REFERENCES t_pages,
     tpt_lang       BIGINT      NOT NULL REFERENCES t_languages,
-    tpt_title      TEXT        NOT NULL,
-    tpt_body       TEXT        NOT NULL,
+    tpt_title      TEXT        NOT NULL,  /* TODO: Check max length */
+    tpt_body       TEXT        NOT NULL,  /* TODO: Check max length */
     tpt_permalink  TEXT        NOT NULL,  /* TODO: Check max length */
     tpt_translator BIGINT      NOT NULL REFERENCES t_users,
     tpt_date       TIMESTAMPTZ NOT NULL DEFAULT NOW(),

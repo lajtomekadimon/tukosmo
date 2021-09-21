@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION i_post_id(
+CREATE OR REPLACE FUNCTION i_page(
     author_id BIGINT
 )
 
@@ -14,23 +14,23 @@ AS $$
 
 DECLARE
 
-    post_id BIGINT;
+    page_id BIGINT;
 
 BEGIN
 
-    INSERT INTO t_post_ids (
-        --tpi_id,
-        tpi_author
-        --tpi_date
+    INSERT INTO t_pages (
+        --tp_id,
+        tp_author
+        --tp_date
     )
     VALUES (
         -- BIGSERIAL (autoincrement)
         author_id
         --NOW()
     )
-    RETURNING tpi_id INTO post_id;
+    RETURNING tp_id INTO page_id;
 
-    RETURN post_id;
+    RETURN page_id;
 
 END;
 

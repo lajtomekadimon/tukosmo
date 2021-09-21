@@ -13,10 +13,10 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT tpt_title
-FROM t_post_ids
+FROM t_posts
 
 INNER JOIN t_post_translations
-ON tpi_id = tpt_post
+ON tp_id = tpt_post
     AND tpt_post = post_id
 
 ORDER BY CASE

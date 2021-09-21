@@ -29,7 +29,7 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT
-    tpi_id AS id,
+    tp_id AS id,
 
     COALESCE(tpt_id, 0) AS trans_id,
 
@@ -37,7 +37,7 @@ SELECT
 
     COALESCE(
         tpt_title,
-        s_untrans_post_title_by_id(tpi_id)
+        s_untrans_post_title_by_id(tp_id)
     ) AS title,
 
     COALESCE(tpt_description, '') AS description,
@@ -46,7 +46,7 @@ SELECT
 
     COALESCE(tpt_permalink, '') AS permalink,
 
-    tpi_author AS author,
+    tp_author AS author,
 
     b.tu_name AS author_name,
 
@@ -54,17 +54,17 @@ SELECT
 
     COALESCE(a.tu_name, '') AS translator_name,
 
-    tpi_date::TEXT AS date,
+    tp_date::TEXT AS date,
 
     COALESCE(tpt_date::TEXT, '') AS date_trans,
 
     COALESCE(tpt_draft, TRUE) AS draft,
 
     COALESCE(tpt_deleted, FALSE) AS deleted
-FROM t_post_ids
+FROM t_posts
 
 LEFT JOIN t_post_translations
-ON tpi_id = tpt_post
+ON tp_id = tpt_post
     AND CASE
         WHEN tpt_lang IS NULL
         THEN TRUE
@@ -76,8 +76,8 @@ LEFT JOIN t_users a
 ON tpt_translator = a.tu_id
 
 INNER JOIN t_users b
-ON tpi_author = b.tu_id
+ON tp_author = b.tu_id
 
-ORDER BY tpi_date DESC
+ORDER BY tp_date DESC
 
 $$;

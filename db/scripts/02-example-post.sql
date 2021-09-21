@@ -18,7 +18,7 @@ DECLARE
 
 BEGIN
 
-    post_id := i_post_id(
+    post_id := i_post(
         1  -- user ID
     );
 

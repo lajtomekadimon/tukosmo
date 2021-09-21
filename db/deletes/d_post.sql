@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION d_post_id(
+CREATE OR REPLACE FUNCTION d_post(
 
     post_id BIGINT
 
@@ -16,8 +16,8 @@ AS $$
 
 BEGIN
 
-    DELETE FROM t_post_ids
-    WHERE tpi_id = post_id;
+    DELETE FROM t_posts
+    WHERE tp_id = post_id;
 
     RETURN post_id;
 
