@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use uuid::Uuid;
 
-use crate::i18n::current_language::current_language;
+use crate::handlers::website::website_handler::website_handler;
 use crate::database::awa_login_post::awa_login_post;
 
 
@@ -19,62 +19,68 @@ pub async fn login_post(
     id: Identity,
 ) -> impl Responder {
 
-    if let Some(lang) = current_language(req.clone()) {
+    match website_handler(req.clone(), id.clone()) {
 
-        let login_route = "/{lang}/admin/login".replace("{lang}", &lang.code);
+        Ok(data) => {
 
-        let redirect_dir;
+            let email_value = (form.email).clone();
+            let password_value = (form.password).clone();
 
-        let email_value = (form.email).clone();
-        let password_value = (form.password).clone();
+            let user_agent_value = match req.headers().get("User-Agent") {
+                Some(the_user_agent) => {
+                    match the_user_agent.to_str() {
+                        Ok(ua_value) => ua_value.to_string(),
+                        _ => "unknown".to_string(),
+                    }
+                },
+                None => "unknown".to_string(),
+            };
 
-        let mut user_agent_value = "unknown".to_string();
-        if let Some(the_user_agent) = req.headers().get("User-Agent") {
-            if let Ok(ua_value) = the_user_agent.to_str() {
-                user_agent_value = ua_value.to_string();
+            if let Ok(session_id) = awa_login_post(
+                email_value,
+                password_value,  // TODO: This is not encrypted!!!
+                                 /* Currently, password check is done in the
+                                  * database. It may be more secure to do this
+                                  * in the web server, but the downside is that
+                                  * instead of one query, we would need to do two
+                                  * queries: one for the password check, and
+                                  * another one for the new session.
+                                  */
+                user_agent_value,
+            ) {
+
+                let encode_buffer_value = &mut Uuid::encode_buffer();
+
+                let session_id_up = session_id
+                    .to_simple()
+                    .encode_upper(encode_buffer_value);
+
+                id.remember(session_id_up.to_owned());
+
+                HttpResponse::Found()
+                    .header(
+                        "Location",
+                        "/{lang}/admin/".replace("{lang}", &data.lang.code),
+                    )
+                    .finish()
+                
+
+            } else {
+
+                // TODO: Email or password not correct
+                HttpResponse::Found()
+                    .header(
+                        "Location",
+                        "/{lang}/admin/login"
+                            .replace("{lang}", &data.lang.code),
+                    )
+                    .finish()
+
             }
-        }
-
-        if let Ok(session_id) = awa_login_post(
-            email_value,
-            password_value,  // TODO: This is not encrypted!!!
-                             /* Currently, password check is done in the
-                              * database. It may be more secure to do this
-                              * in the web server, but the downside is that
-                              * instead of one query, we would need to do two
-                              * queries: one for the password check, and
-                              * another one for the new session.
-                              */
-            user_agent_value,
-        ) {
-
-            let encode_buffer_value = &mut Uuid::encode_buffer();
-
-            let session_id_up = session_id
-                .to_simple()
-                .encode_upper(encode_buffer_value);
-
-            id.remember(session_id_up.to_owned());
-
-            redirect_dir = "/{lang}/admin/".replace("{lang}", &lang.code);
-            
-
-        } else {
-
-            // Email or password not correct
-            redirect_dir = login_route;
 
         }
 
-        HttpResponse::Found()
-            .header("Location", redirect_dir)
-            .finish()
-
-    } else {
-
-        HttpResponse::Found()
-            .header("Location", "/")  // TODO
-            .finish()
+        Err(r) => r
 
     }
 

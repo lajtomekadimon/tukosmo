@@ -3,14 +3,7 @@ CREATE OR REPLACE FUNCTION s_languages(
     language_of_user INT8
 )
 
-RETURNS TABLE(
-    id INT8,
-    code TEXT,
-    name TEXT,
-    original_name TEXT,
-    date TEXT,
-    has_all_names BOOL
-)
+RETURNS "LanguageDB"[]
 
 LANGUAGE SQL
 VOLATILE
@@ -19,33 +12,43 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT
-    tl_id AS id,
+SELECT ARRAY(
+    SELECT (
+        -- id
+        tl_id,
 
-    tl_code AS code,
+        -- code
+        tl_code,
 
-    COALESCE(
-        tln_name,
-        '[untranslated: ' || tl_code || ']'
-    ) AS name,
-
-    COALESCE(
-        (
-            SELECT b.tln_name
-            FROM t_language_names b
-            WHERE b.tln_lang = tl_id
-                AND b.tln_name_lang = tl_id
+        -- name
+        COALESCE(
+            tln_name,
+            '[untranslated: ' || tl_code || ']'
         ),
-        '[untranslated: ' || tl_code || ']'
-    ) AS original_name,
 
-    COALESCE(tln_date::TEXT, '') AS date,
+        -- original_name
+        COALESCE(
+            (
+                SELECT b.tln_name
+                FROM t_language_names b
+                WHERE b.tln_lang = tl_id
+                    AND b.tln_name_lang = tl_id
+            ),
+            '[untranslated: ' || tl_code || ']'
+        ),
 
-    c_language_has_all_names(tl_id) AS has_all_names
-FROM t_languages
-LEFT JOIN t_language_names
-ON tl_id = tln_lang
-    AND tln_name_lang = language_of_user
-ORDER BY tln_name
+        -- date
+        COALESCE(tln_date::TEXT, ''),
+
+        -- has_all_names
+        c_language_has_all_names(tl_id)
+    )::"LanguageDB"
+
+    FROM t_languages
+    LEFT JOIN t_language_names
+    ON tl_id = tln_lang
+        AND tln_name_lang = language_of_user
+    ORDER BY tln_name
+)
 
 $$;

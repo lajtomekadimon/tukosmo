@@ -3,14 +3,7 @@ CREATE OR REPLACE FUNCTION s_current_language_by_code(
     lang_code TEXT
 )
 
-RETURNS TABLE(
-    id INT8,
-    code TEXT,
-    name TEXT,
-    original_name TEXT,
-    date TEXT,
-    has_all_names BOOL
-)
+RETURNS "LanguageDB"
 
 LANGUAGE SQL
 VOLATILE
@@ -19,16 +12,20 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT
-    tl_id AS id,
+SELECT (
+    -- id
+    tl_id,
 
-    tl_code AS code,
+    -- code
+    tl_code,
 
+    -- name
     COALESCE(
         tln_name,
         '[untranslated: ' || tl_code || ']'
-    ) AS name,
+    ),
 
+    -- original_name
     COALESCE(
         (
             SELECT b.tln_name
@@ -37,11 +34,15 @@ SELECT
                 AND b.tln_name_lang = tl_id
         ),
         '[untranslated: ' || tl_code || ']'
-    ) AS original_name,
+    ),
 
-    COALESCE(tln_date::TEXT, '') AS date,
+    -- date
+    COALESCE(tln_date::TEXT, ''),
 
-    c_language_has_all_names(tl_id) AS has_all_names
+    -- has_all_names
+    c_language_has_all_names(tl_id)
+)::"LanguageDB"
+
 FROM t_languages
 LEFT JOIN t_language_names
 ON tl_id = tln_lang

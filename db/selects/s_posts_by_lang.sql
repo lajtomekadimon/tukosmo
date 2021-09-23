@@ -3,23 +3,7 @@ CREATE OR REPLACE FUNCTION s_posts_by_lang(
     language_of_user INT8
 )
 
-RETURNS TABLE(
-    id BIGINT,
-    trans_id BIGINT,
-    lang BIGINT,
-    title TEXT,
-    description TEXT,
-    body TEXT,
-    permalink TEXT,
-    author BIGINT,
-    author_name TEXT,
-    translator BIGINT,
-    translator_name TEXT,
-    date TEXT,
-    date_trans TEXT,
-    draft BOOL,
-    deleted BOOL
-)
+RETURNS "PostDB"[]
 
 LANGUAGE SQL
 VOLATILE
@@ -28,36 +12,55 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT
-    tp_id AS id,
-    tpt_id AS trans_id,
-    tpt_lang AS lang,
-    tpt_title AS title,
-    tpt_description AS description,
-    tpt_body AS body,
-    tpt_permalink AS permalink,
-    tp_author AS author,
-    b.tu_name AS author_name,
-    tpt_translator AS translator,
-    a.tu_name AS translator_name,
-    tp_date AS date,
-    tpt_date AS date_trans,
-    tpt_draft AS draft,
-    tpt_deleted AS deleted
-FROM t_posts
+SELECT ARRAY(
+    SELECT (
+        -- id
+        tp_id,
+        -- trans_id
+        tpt_id,
+        -- lang
+        tpt_lang,
+        -- title
+        tpt_title,
+        -- description
+        tpt_description,
+        -- body
+        tpt_body,
+        -- permalink
+        tpt_permalink,
+        -- author
+        tp_author,
+        -- author_name
+        b.tu_name,
+        -- translator
+        tpt_translator,
+        -- translator_name
+        a.tu_name,
+        -- date
+        tp_date,
+        -- date_trans
+        tpt_date,
+        -- draft
+        tpt_draft,
+        -- deleted
+        tpt_deleted
+    )::"PostDB"
 
-INNER JOIN t_post_translations
-ON tp_id = tpt_post
-    AND tpt_lang = language_of_user
-    AND (NOT tpt_deleted)
-    AND (NOT tpt_draft)
+    FROM t_posts
 
-INNER JOIN t_users a
-ON tpt_translator = a.tu_id
+    INNER JOIN t_post_translations
+    ON tp_id = tpt_post
+        AND tpt_lang = language_of_user
+        AND (NOT tpt_deleted)
+        AND (NOT tpt_draft)
 
-INNER JOIN t_users b
-ON tp_author = b.tu_id
+    INNER JOIN t_users a
+    ON tpt_translator = a.tu_id
 
-ORDER BY tp_date DESC
+    INNER JOIN t_users b
+    ON tp_author = b.tu_id
+
+    ORDER BY tp_date DESC
+)
 
 $$;

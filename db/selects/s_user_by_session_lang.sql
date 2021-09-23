@@ -7,11 +7,7 @@ CREATE OR REPLACE FUNCTION s_user_by_session_lang(
 
 )
 
-RETURNS TABLE(
-    id BIGINT,
-    email TEXT,
-    name TEXT
-)
+RETURNS "UserDB"
 
 LANGUAGE SQL
 VOLATILE
@@ -20,10 +16,15 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT
-    tu_id AS id,
-    tu_email AS email,
-    tu_name AS name
+SELECT (
+    -- id
+    tu_id,
+    -- email
+    tu_email,
+    -- name
+    tu_name
+)::"UserDB"
+
 FROM t_users
 INNER JOIN t_sessions
 ON ts_user = tu_id

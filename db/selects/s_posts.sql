@@ -3,23 +3,7 @@ CREATE OR REPLACE FUNCTION s_posts(
     language_of_user BIGINT
 )
 
-RETURNS TABLE(
-    id BIGINT,
-    trans_id BIGINT,
-    lang BIGINT,
-    title TEXT,
-    description TEXT,
-    body TEXT,
-    permalink TEXT,
-    author BIGINT,
-    author_name TEXT,
-    translator BIGINT,
-    translator_name TEXT,
-    date TEXT,
-    date_trans TEXT,
-    draft BOOL,
-    deleted BOOL
-)
+RETURNS "PostDB"[]
 
 LANGUAGE SQL
 VOLATILE
@@ -28,56 +12,75 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT
-    tp_id AS id,
+SELECT ARRAY(
+    SELECT (
+        -- id
+        tp_id,
 
-    COALESCE(tpt_id, 0) AS trans_id,
+        -- trans_id
+        COALESCE(tpt_id, 0),
 
-    COALESCE(tpt_lang, 0) AS lang,
+        -- lang
+        COALESCE(tpt_lang, 0),
 
-    COALESCE(
-        tpt_title,
-        s_untrans_post_title_by_id(tp_id)
-    ) AS title,
+        -- title
+        COALESCE(
+            tpt_title,
+            s_untrans_post_title_by_id(tp_id)
+        ),
 
-    COALESCE(tpt_description, '') AS description,
+        -- description
+        COALESCE(tpt_description, ''),
 
-    COALESCE(tpt_body, '') AS body,
+        -- body
+        COALESCE(tpt_body, ''),
 
-    COALESCE(tpt_permalink, '') AS permalink,
+        -- permalink
+        COALESCE(tpt_permalink, ''),
 
-    tp_author AS author,
+        -- author
+        tp_author,
 
-    b.tu_name AS author_name,
+        -- author_name
+        b.tu_name,
 
-    COALESCE(tpt_translator, 0) AS translator,
+        -- translator
+        COALESCE(tpt_translator, 0),
 
-    COALESCE(a.tu_name, '') AS translator_name,
+        -- translator_name
+        COALESCE(a.tu_name, ''),
 
-    tp_date::TEXT AS date,
+        -- date
+        tp_date::TEXT,
 
-    COALESCE(tpt_date::TEXT, '') AS date_trans,
+        -- date_trans
+        COALESCE(tpt_date::TEXT, ''),
 
-    COALESCE(tpt_draft, TRUE) AS draft,
+        -- draft
+        COALESCE(tpt_draft, TRUE),
 
-    COALESCE(tpt_deleted, FALSE) AS deleted
-FROM t_posts
+        -- deleted
+        COALESCE(tpt_deleted, FALSE)
+    )::"PostDB"
 
-LEFT JOIN t_post_translations
-ON tp_id = tpt_post
-    AND CASE
-        WHEN tpt_lang IS NULL
-        THEN TRUE
-        ELSE tpt_lang = language_of_user
-    END
-    AND NOT tpt_deleted
+    FROM t_posts
 
-LEFT JOIN t_users a
-ON tpt_translator = a.tu_id
+    LEFT JOIN t_post_translations
+    ON tp_id = tpt_post
+        AND CASE
+            WHEN tpt_lang IS NULL
+            THEN TRUE
+            ELSE tpt_lang = language_of_user
+        END
+        AND NOT tpt_deleted
 
-INNER JOIN t_users b
-ON tp_author = b.tu_id
+    LEFT JOIN t_users a
+    ON tpt_translator = a.tu_id
 
-ORDER BY tp_date DESC
+    INNER JOIN t_users b
+    ON tp_author = b.tu_id
+
+    ORDER BY tp_date DESC
+)
 
 $$;
