@@ -43,6 +43,11 @@ markup::define! {
                             },
                         ] {
                             @lang.name
+                            @if data.lang.code != lang.code {
+                                " ("
+                                @lang.original_name
+                                ")"
+                            }
                         }
                     }
                 }

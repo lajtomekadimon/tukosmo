@@ -13,6 +13,7 @@ pub struct LanguageDB {
     pub id: i64,
     pub code: String,
     pub name: String,
+    pub original_name: String,
     pub date: String,
     pub has_all_names: bool,
 }

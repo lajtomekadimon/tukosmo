@@ -7,6 +7,7 @@ RETURNS TABLE(
     id INT8,
     code TEXT,
     name TEXT,
+    original_name TEXT,
     date TEXT,
     has_all_names BOOL
 )
@@ -27,6 +28,16 @@ SELECT
         tln_name,
         '[untranslated: ' || tl_code || ']'
     ) AS name,
+
+    COALESCE(
+        (
+            SELECT b.tln_name
+            FROM t_language_names b
+            WHERE b.tln_lang = tl_id
+                AND b.tln_name_lang = tl_id
+        ),
+        '[untranslated: ' || tl_code || ']'
+    ) AS original_name,
 
     COALESCE(tln_date::TEXT, '') AS date,
 

@@ -26,6 +26,8 @@ SELECT ARRAY(
             lang_code,
             -- name
             lang_name,
+            -- original_name
+            lang_original_name,
             -- date
             lang_date,
             -- has_all_names

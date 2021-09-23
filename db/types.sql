@@ -9,6 +9,7 @@ CREATE TYPE "LanguageDB" AS (
     id BIGINT,
     code TEXT,
     name TEXT,
+    original_name TEXT,
     date TEXT,  -- TIMESTAMPTZ?
     has_all_names BOOL
 );

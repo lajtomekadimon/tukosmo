@@ -28,14 +28,28 @@ WITH variables (userd, lang, languages) AS ( VALUES (
 
     -- lang
     (
-        SELECT (id, code, name, date, has_all_names)::"LanguageDB"
+        SELECT (
+            id,
+            code,
+            name,
+            original_name,
+            date,
+            has_all_names
+        )::"LanguageDB"
         FROM s_current_language_by_code(lang_code)
     )::"LanguageDB",
 
     -- languages
     (
         ARRAY(
-            SELECT (id, code, name, date, has_all_names)::"LanguageDB"
+            SELECT (
+                id,
+                code,
+                name,
+                original_name,
+                date,
+                has_all_names
+            )::"LanguageDB"
             FROM s_languages(
                 s_language_id_by_code(lang_code)
             )
