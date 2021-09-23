@@ -44,7 +44,9 @@ markup::define! {
                 }
             }
 
-            @Footer {}
+            @Footer {
+                data: data,
+            }
         }
     }
 }

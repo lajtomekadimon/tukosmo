@@ -4,6 +4,7 @@ use crate::i18n::translate_en::translate_en;
 pub fn translate_es(text_value: &str) -> &str {
     match text_value {
         "(website_name)" => "MyExample",
+        "{name} © {year} [copyright]" => "{name} © {year}",
         "Account" => "Cuenta",
         "Add language" => "Añadir idioma",
         "Author" => "Autor",

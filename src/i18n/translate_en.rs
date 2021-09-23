@@ -3,6 +3,7 @@
 pub fn translate_en(text_value: &str) -> &str {
     match text_value {
         "(website_name)" => "MyExample",
+        "{name} © {year} [copyright]" => "{name} © {year}",
         "Account" => "Account",
         "Add language" => "Add language",
         "Author" => "Author",
