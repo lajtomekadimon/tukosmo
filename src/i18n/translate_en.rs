@@ -18,7 +18,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Draft" => "Draft",
         "Drafts" => "Drafts",
         "Edit" => "Edit",
-        "Edit language: '{lang}'" => "Edit language: '{lang}'",
+        "Edit language: {name}" => "Edit language: {name}",
         "Edit post: '{title}'" => "Edit post: '{title}'",
         "Example: en" => "Example: en",
         "Files" => "Files",

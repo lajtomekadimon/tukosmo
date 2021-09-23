@@ -4,7 +4,7 @@ use actix_identity::Identity;
 use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::languages::Languages;
-use crate::database::s_languages::s_languages;
+use crate::database::awa_languages::awa_languages;
 
 
 pub async fn languages(
@@ -23,7 +23,7 @@ pub async fn languages(
                     b = &t("Tukosmo Admin Panel", &data.lang.code)
                 ),
                 data: &data,
-                languages: &s_languages(data.lang.id),
+                languages: &awa_languages(data.lang.id),
             };
 
             HttpResponse::Ok().body(html.to_string())

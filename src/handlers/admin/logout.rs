@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use uuid::Uuid;
 
 use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::d_session::d_session;
+use crate::database::awa_logout::awa_logout;
 
 
 pub async fn logout(
@@ -29,7 +29,7 @@ pub async fn logout(
                     id.forget();
 
                     // Delete session from database
-                    if let Ok(_) = d_session(session_id) {
+                    if let Ok(_) = awa_logout(session_id) {
 
                         // Redirect to login page
                         HttpResponse::Found()

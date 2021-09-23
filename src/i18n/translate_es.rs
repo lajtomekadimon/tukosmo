@@ -19,7 +19,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Draft" => "Borrador",
         "Drafts" => "Borradores",
         "Edit" => "Editar",
-        "Edit language: '{lang}'" => "Editar idioma: '{lang}'",
+        "Edit language: {name}" => "Editar idioma: {name}",
         "Edit post: '{title}'" => "Editar entrada: '{title}'",
         "Example: en" => "Ejemplo: en",
         "Files" => "Archivos",

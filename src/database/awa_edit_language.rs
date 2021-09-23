@@ -1,27 +1,23 @@
 use postgres::{Client, NoTls};
 
 use crate::config::global::db_auth_string;
-use crate::database::types::NameDB;
+use crate::database::types::LanguageWithNamesDB;
 
 
 pub fn awa_edit_language(
-    language_of_user: i64,
     language_id: i64,
-) -> Vec<NameDB> {
+    language_of_user: i64,
+) -> Option<LanguageWithNamesDB> {
     if let Ok(mut client) = Client::connect(db_auth_string(), NoTls) {
         if let Ok(row) = client.query_one(
             "SELECT awa_edit_language($1, $2)",
-            &[&language_of_user, &language_id]
+            &[&language_id, &language_of_user]
         ) {
-            if let Some(vec) = row.get(0) {
-                vec
-            } else {
-                Vec::new()
-            }
+            row.get(0)
         } else {
-            Vec::new()
+            None
         }
     } else {
-        Vec::new()
+        None
     }
 }

@@ -10,13 +10,23 @@ CREATE TYPE "LanguageDB" AS (
     code TEXT,
     name TEXT,
     original_name TEXT,
-    date TEXT,  -- TIMESTAMPTZ?
+    date TEXT,
     has_all_names BOOL
 );
 
 CREATE TYPE "NameDB" AS (
     name TEXT,
     lang "LanguageDB"
+);
+
+CREATE TYPE "LanguageWithNamesDB" AS (
+    id BIGINT,
+    code TEXT,
+    name TEXT,
+    original_name TEXT,
+    date TEXT,
+    has_all_names BOOL,
+    names "NameDB"[]
 );
 
 CREATE TYPE "PostDB" AS (

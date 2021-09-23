@@ -5,7 +5,6 @@ use serde::Deserialize;
 use crate::handlers::admin::admin_handler::admin_handler;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_language::EditLanguage;
-use crate::database::s_lang_code_by_id::s_lang_code_by_id;
 use crate::database::awa_edit_language::awa_edit_language;
 
 
@@ -25,28 +24,26 @@ pub async fn edit_language(
 
         Ok(data) => {
 
-            if let Some(lang_id_code) = s_lang_code_by_id(lang_id) {
+            if let Some(lang_wnames) = awa_edit_language(
+                lang_id.clone(),
+                data.lang.id,
+            ) {
                 let html = EditLanguage {
                     title: &format!(
                         "{a} - {b}",
                         a = &t(
-                            "Edit language: '{lang}'",
+                            "Edit language: {name}",
                             &data.lang.code
-                        ).replace("{lang}", &lang_id_code),
+                        ).replace("{name}", &lang_wnames.name),
                         b = &t("Tukosmo Admin Panel", &data.lang.code)
                     ),
-                    lang_id: &lang_id.clone(),
-                    lang_id_code: &lang_id_code,
                     data: &data,
-                    names: &awa_edit_language(
-                        data.lang.id,
-                        lang_id.clone()
-                    )
+                    lang_wnames: &lang_wnames,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
             } else {
-                panic!("AHHHH");
+                panic!("AHHHH");  // TODO: Error 404
             }
 
         }

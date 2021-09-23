@@ -8,7 +8,7 @@ use rand::Rng;
 mod config;
 
 mod database;
-use crate::database::d_all_sessions::d_all_sessions;
+use crate::database::as_clean_sessions::as_clean_sessions;
 
 mod i18n;
 
@@ -34,7 +34,7 @@ async fn main() -> std::io::Result<()> {
     println!("Done!");
     
     // Delete all previous sessions
-    if let Err(e) = d_all_sessions() {
+    if let Err(e) = as_clean_sessions() {
         panic!("Database couldn't delete all sessions. Error: {}", e);
     }
 

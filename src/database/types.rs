@@ -23,6 +23,17 @@ pub struct NameDB {
     pub name: String,
     pub lang: LanguageDB,
 }
+ 
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct LanguageWithNamesDB {
+    pub id: i64,
+    pub code: String,
+    pub name: String,
+    pub original_name: String,
+    pub date: String,
+    pub has_all_names: bool,
+    pub names: Vec<NameDB>,
+}
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PostDB {

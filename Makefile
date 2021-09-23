@@ -71,6 +71,7 @@ DFUNDB=db/checks/*.sql \
        db/inserts/*.sql \
        db/deletes/*.sql \
        db/updates/*.sql \
+       db/api/server/*.sql \
        db/api/web/website/*.sql \
        db/api/web/admin/*.sql
 

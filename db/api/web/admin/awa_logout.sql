@@ -1,0 +1,19 @@
+
+CREATE OR REPLACE FUNCTION awa_logout(
+
+    session_id UUID
+
+)
+
+RETURNS UUID
+
+LANGUAGE SQL
+VOLATILE
+CALLED ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT d_session(session_id)
+
+$$;

@@ -4,50 +4,44 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::{AdminDataDB, NameDB};
+use crate::database::types::{AdminDataDB, LanguageWithNamesDB};
 
 
 markup::define! {
     EditLanguage<'a>(
         title: &'a str,
-        lang_id: &'a i64,
-        lang_id_code: &'a str,
         data: &'a AdminDataDB,
-        names: &'a Vec<NameDB>,
+        lang_wnames: &'a LanguageWithNamesDB,
     ) {
         @AdminLayout {
             title: title,
             data: data,
             content: AdminPanel {
                 content: Content {
-                    lang_id: lang_id,
-                    lang_id_code: lang_id_code,
                     data: data,
-                    names: names,
+                    lang_wnames: lang_wnames,
                 },
-                current_page: "new_language",
+                current_page: "edit_language",
                 data: data,
             },
         }
     }
 
     Content<'a>(
-        lang_id: &'a i64,
-        lang_id_code: &'a str,
         data: &'a AdminDataDB,
-        names: &'a Vec<NameDB>,
+        lang_wnames: &'a LanguageWithNamesDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
                 {&t(
-                    "Edit language: '{lang}'",
+                    "Edit language: {name}",
                     &data.lang.code
-                ).replace("{lang}", &lang_id_code)}
+                ).replace("{name}", &lang_wnames.name)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
                         route: &"/admin/edit_language?id={id}"
-                            .replace("{id}", &lang_id.to_string()),
+                            .replace("{id}", &lang_wnames.id.to_string()),
                         data: data,
                     }
                 }
@@ -66,13 +60,13 @@ markup::define! {
                         input[
                             type = "hidden",
                             name = "language_id",
-                            value = &lang_id.to_string(),
+                            value = &lang_wnames.id.to_string(),
                         ];
                         input[
                             class = "input",
                             type = "text",
                             name = "lang_code",
-                            value = &lang_id_code,
+                            value = &lang_wnames.code,
                             placeholder = &t("Example: en", &data.lang.code),
                         ];
                     }
@@ -83,7 +77,7 @@ markup::define! {
                         {&t("Language name", &data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for name in names.iter() {
+                        @for name in lang_wnames.names.iter() {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {

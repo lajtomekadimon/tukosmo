@@ -1,6 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_languages(
-    language_of_user INT8
+    language_of_user BIGINT
 )
 
 RETURNS "LanguageDB"[]
