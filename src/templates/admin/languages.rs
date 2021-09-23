@@ -71,7 +71,13 @@ markup::define! {
                 }
                 tbody {
                     @for lang in languages.iter() {
-                        tr {
+                        tr[
+                            class = if !lang.has_all_names {
+                                "has-background-danger-light"
+                            } else {
+                                ""
+                            },
+                        ] {
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_language\
@@ -81,12 +87,19 @@ markup::define! {
                                             "{id}",
                                             &lang.id.to_string()
                                         ),
+                                    class = if !lang.has_all_names {
+                                        "has-text-danger"
+                                    } else {
+                                        ""
+                                    },
                                 ] {
                                     @lang.name
-                                }
 
-                                @if !lang.has_all_names {
-                                    " (!)"
+                                    @if lang.id != data.lang.id {
+                                        " ("
+                                        @lang.original_name
+                                        ")"
+                                    }
                                 }
                             }
                             td {

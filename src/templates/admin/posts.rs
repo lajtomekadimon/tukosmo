@@ -74,7 +74,15 @@ markup::define! {
                 }
                 tbody {
                     @for post in posts.iter() {
-                        tr {
+                        tr[
+                            class = if post.translator == 0 {
+                                "has-background-danger-light"
+                            } else if post.draft {
+                                "has-background-warning-light"
+                            } else {
+                                ""
+                            },
+                        ] {
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_post?id={id}"
@@ -83,18 +91,22 @@ markup::define! {
                                             "{id}",
                                             &post.id.to_string()
                                         ),
+                                    class = if post.translator == 0 {
+                                        "has-text-danger"
+                                    } else if post.draft {
+                                        "has-text-warning-dark"
+                                    } else {
+                                        ""
+                                    },
                                 ] {
                                     @post.title
                                 }
                             }
                             td {
-                                @if post.draft {
+                                @if post.translator == 0 {
+                                    {&t("Untranslated", &data.lang.code)}
+                                } else if post.draft {
                                     {&t("Draft", &data.lang.code)}
-                                    @if post.translator == 0 {
-                                        " ("
-                                        {&t("untranslated", &data.lang.code)}
-                                        ")"
-                                    }
                                 } else {
                                     {&t("Published", &data.lang.code)}
                                 }
@@ -118,6 +130,13 @@ markup::define! {
                                             "{id}",
                                             &post.author.to_string()
                                         ),
+                                    class = if post.translator == 0 {
+                                        "has-text-danger"
+                                    } else if post.draft {
+                                        "has-text-warning-dark"
+                                    } else {
+                                        ""
+                                    },
                                 ] {
                                     @post.author_name
                                 }
