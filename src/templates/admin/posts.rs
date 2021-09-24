@@ -57,6 +57,11 @@ markup::define! {
                 }
             }
 
+            h2[class = "subtitle"] {
+                "Page "
+                @current_page.to_string()
+            }
+
             table[
                 class = "table is-bordered is-hoverable is-fullwidth",
             ] {
