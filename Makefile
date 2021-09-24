@@ -45,7 +45,8 @@ createdb:
 	@echo "Installing extensions..."
 	su -m postgres -c "cat db/extensions.sql | psql -q -d $(PG_DB)"
 	@echo "Creating types..."
-	su -m postgres -c "cat db/types.sql | psql -q -d $(PG_DB)"
+	su -m postgres -c "cat db/types/types.sql | psql -q -d $(PG_DB)"
+	su -m postgres -c "cat db/types/handlers.sql | psql -q -d $(PG_DB)"
 
 FUNDB=db/extra/*.sql
 
