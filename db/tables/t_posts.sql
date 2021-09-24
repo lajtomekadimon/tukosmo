@@ -6,3 +6,4 @@ CREATE TABLE t_posts (
     tp_author BIGINT      NOT NULL REFERENCES t_users
 
 );
+

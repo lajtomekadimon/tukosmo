@@ -1,6 +1,8 @@
 
 CREATE OR REPLACE FUNCTION s_posts(
-    language_of_user BIGINT
+    language_of_user BIGINT,
+    results_number BIGINT,
+    page_number BIGINT
 )
 
 RETURNS "PostDB"[]
@@ -81,6 +83,15 @@ SELECT ARRAY(
     ON tp_author = b.tu_id
 
     ORDER BY tp_date DESC
+
+    /* IMPORTANT NOTE:
+     * Pagination using LIMIT + OFFSET is not an efficient solution, as it gets
+     * slower and slower as the table grows. Indexing immutable rows could be
+     * a solution, but then you'd have pages with different number of results
+     * once you delete something.
+     */
+    LIMIT results_number
+    OFFSET (page_number - 1) * results_number
 )
 
 $$;

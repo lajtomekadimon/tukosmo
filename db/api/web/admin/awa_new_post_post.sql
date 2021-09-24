@@ -39,7 +39,7 @@ BEGIN
     lang_id := s_language_id_by_code(lang_code);
 
     IF post_id = 0 THEN
-        post_id := i_post_id(author_id);
+        post_id := i_post(author_id);
     END IF;
 
     post_trans_id := i_post_translation(

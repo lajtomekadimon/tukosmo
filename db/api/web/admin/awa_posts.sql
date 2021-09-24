@@ -1,6 +1,8 @@
 
 CREATE OR REPLACE FUNCTION awa_posts(
-    language_of_user BIGINT
+    language_of_user BIGINT,
+    results_number BIGINT,
+    page_number BIGINT
 )
 
 RETURNS "PostDB"[]
@@ -12,7 +14,10 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT s_posts(language_of_user)
-
+SELECT s_posts(
+    language_of_user,
+    results_number,
+    page_number
+)
 
 $$;

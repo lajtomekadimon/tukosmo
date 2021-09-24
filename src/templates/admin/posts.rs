@@ -5,6 +5,7 @@ use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
+use crate::templates::widgets::admin_pagination::AdminPagination;
 use crate::database::types::{AdminDataDB, PostDB};
 
 
@@ -13,6 +14,7 @@ markup::define! {
         title: &'a str,
         data: &'a AdminDataDB,
         posts: &'a Vec<PostDB>,
+        current_page: &'a i64,
     ) {
         @AdminLayout {
             title: title,
@@ -21,6 +23,7 @@ markup::define! {
                 content: Content {
                     data: data,
                     posts: posts,
+                    current_page: current_page,
                 },
                 current_page: "posts",
                 data: data,
@@ -31,6 +34,7 @@ markup::define! {
     Content<'a>(
         data: &'a AdminDataDB,
         posts: &'a Vec<PostDB>,
+        current_page: &'a i64,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -155,6 +159,13 @@ markup::define! {
                         }
                     }
                 }
+            }
+
+            @AdminPagination {
+                data: data,
+                route: "/{lang}/admin/posts?p={page}",
+                current_page: current_page,
+                number_of_pages: &8,  // TODO!!!
             }
         }
     }

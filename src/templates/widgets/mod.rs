@@ -2,6 +2,7 @@ pub mod admin_lang_dropdown;
 pub mod admin_sidebar;
 pub mod admin_navbar;
 pub mod admin_panel;
+pub mod admin_pagination;
 
 pub mod footer;
 pub mod header;

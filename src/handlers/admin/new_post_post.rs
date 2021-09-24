@@ -33,7 +33,7 @@ pub async fn new_post_post(
                 None => false,
             };
 
-            if let Ok(_post_trans_id) = awa_new_post_post(
+            match awa_new_post_post(
                 0,  // new
                 data.lang.code.clone(),
                 title_value,
@@ -43,20 +43,24 @@ pub async fn new_post_post(
                 data.userd.id,
                 is_draft,
             ) {
-                let redirect_route = "/{lang}/admin/posts"
-                    .replace("{lang}", &data.lang.code);
+                Ok(_) => {
+                    let redirect_route = "/{lang}/admin/posts"
+                        .replace("{lang}", &data.lang.code);
 
-                HttpResponse::Found()
-                    .header("Location", redirect_route)
-                    .finish()
-            } else {
-                let redirect_route = "/{lang}/admin/new_post"
-                    .replace("{lang}", &data.lang.code);
-                // TODO: Show what failed in the template!
+                    HttpResponse::Found()
+                        .header("Location", redirect_route)
+                        .finish()
+                    }
+                Err(r) => {
+                    println!("{}", r);
+                    let redirect_route = "/{lang}/admin/new_post"
+                        .replace("{lang}", &data.lang.code);
+                    // TODO: Show what failed in the template!
 
-                HttpResponse::Found()
-                    .header("Location", redirect_route)
-                    .finish()
+                    HttpResponse::Found()
+                        .header("Location", redirect_route)
+                        .finish()
+                }
             }
         }
 
