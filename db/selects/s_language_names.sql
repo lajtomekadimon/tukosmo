@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE FUNCTION s_language_names(
-    language_of_user INT8,
-    language_id INT8
+    language_id INT8,
+    language_of_user INT8
 )
 
 RETURNS "NameDB"[]

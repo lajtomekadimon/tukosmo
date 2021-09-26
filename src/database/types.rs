@@ -1,5 +1,20 @@
 use postgres_types::{ToSql, FromSql};
+use uuid::Uuid;
 
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct AdminRequest {
+    pub session: Uuid,
+    pub lang_code: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct WebsiteRequest {
+    pub session: Option<Uuid>,
+    pub lang_code: String,
+}
+
+/*---*/
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct UserDB {

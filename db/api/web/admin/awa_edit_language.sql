@@ -1,10 +1,21 @@
 
-CREATE OR REPLACE FUNCTION awa_edit_language(
-    language_id BIGINT,
-    language_of_user BIGINT
+CREATE TYPE "EditLanguageAR" AS (
+    req "AdminRequest",
+    lang BIGINT
+);
+
+CREATE TYPE "EditLanguageAH" AS (
+    data "AdminDataDB",
+    lang "LanguageDB",
+    names "NameDB"[]
+);
+
+
+CREATE OR REPLACE FUNCTION query_db(
+    r "EditLanguageAR"
 )
 
-RETURNS "LanguageWithNamesDB"
+RETURNS "EditLanguageAH"
 
 LANGUAGE SQL
 VOLATILE
@@ -13,24 +24,28 @@ PARALLEL UNSAFE
 
 AS $$
 
+WITH variables (handler_data, language_of_user) AS (
+    SELECT d, (d.lang).id
+    FROM s_admin_handler_data(r.req) d
+)
+
 SELECT (
-    id,
-    code,
-    name,
-    original_name,
-    date,
-    has_all_names,
+    -- data
+    handler_data,
+
+    -- lang
+    s_language_by_id_lang(
+        r.lang,
+        language_of_user
+    ),
 
     -- names
     s_language_names(
-        language_of_user,
-        language_id
+        r.lang,
+        language_of_user
     )
-)::"LanguageWithNamesDB"
+)::"EditLanguageAH"
 
-FROM s_language_by_id_lang(
-    language_id,
-    language_of_user
-)
+FROM variables
 
 $$;

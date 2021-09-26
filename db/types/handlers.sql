@@ -7,12 +7,6 @@ CREATE TYPE "DashboardAH" AS (
     data "AdminDataDB"
 );
 
-CREATE TYPE "EditLanguageAH" AS (
-    data "AdminDataDB",
-    lang "LanguageDB",
-    names "NameDB"[]
-);
-
 CREATE TYPE "EditLanguagePostAH" AS (
     data "AdminDataDB"
 );

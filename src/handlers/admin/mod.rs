@@ -1,4 +1,5 @@
 pub mod admin_handler;
+pub mod user_request;
 
 pub mod dashboard;
 pub mod statistics;
