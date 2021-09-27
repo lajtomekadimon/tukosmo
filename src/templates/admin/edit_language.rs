@@ -4,13 +4,13 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::edit_language::EditLanguageAH;
+use crate::handlers::admin::edit_language::EditLanguageAResponse;
 
 
 markup::define! {
     EditLanguage<'a>(
         title: &'a str,
-        q: &'a EditLanguageAH,
+        q: &'a EditLanguageAResponse,
     ) {
         @AdminLayout {
             title: title,
@@ -26,7 +26,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a EditLanguageAH,
+        q: &'a EditLanguageAResponse,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {

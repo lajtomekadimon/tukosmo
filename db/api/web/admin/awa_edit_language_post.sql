@@ -1,17 +1,18 @@
 
-CREATE OR REPLACE FUNCTION awa_edit_language_post(
-
+CREATE TYPE "EditLanguagePostARequest" AS (
+    req "AdminRequest",
     language_id BIGINT,
-
-    code_value TEXT,
-
+    lang_code TEXT,
     lang_ids BIGINT[],
-
     lang_names TEXT[]
+);
 
+
+CREATE OR REPLACE FUNCTION awa_edit_language_post(
+    r "EditLanguagePostARequest"
 )
 
-RETURNS BIGINT
+RETURNS VOID
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -30,23 +31,23 @@ DECLARE
 BEGIN
 
     PERFORM u_language(
-        language_id,
-        code_value
+        r.language_id,
+        r.lang_code
     );
 
-    FOR i IN 1..ARRAY_LENGTH(lang_names, 1) LOOP
-        lang_id := lang_ids[i];
-        lang_name := lang_names[i];
+    FOR i IN 1..ARRAY_LENGTH(r.lang_names, 1) LOOP
+        lang_id := r.lang_ids[i];
+        lang_name := r.lang_names[i];
 
         lang_name_id = s_lname_id_by_lang_nlang(
-            language_id,
+            r.language_id,
             lang_id
         );
 
         IF lang_name_id IS NULL THEN
 
             PERFORM i_language_name(
-                language_id,
+                r.language_id,
                 lang_name,
                 lang_id
             );
@@ -60,8 +61,6 @@ BEGIN
 
         END IF;
     END LOOP;
-
-    RETURN language_id;
 
 END;
 

@@ -2,9 +2,11 @@ use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
+use postgres_types::{ToSql, FromSql};
 
-use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::awa_edit_language_post::awa_edit_language_post;
+use crate::handlers::admin::user_request::user_request;
+use crate::database::types;
+use crate::database::query_db::{QueryFunction, query_db};
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -69,6 +71,7 @@ impl<'de> Deserialize<'de> for FormData {
     }
 }
 
+
 pub struct FormData {
     language_id: i64,
     lang_code: String,
@@ -76,46 +79,74 @@ pub struct FormData {
     lang_names: Vec<String>,
 }
 
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct EditLanguagePostARequest {
+    pub req: types::AdminRequest,
+    pub language_id: i64,
+    pub lang_code: String,
+    pub lang_ids: Vec<i64>,
+    pub lang_names: Vec<String>,
+}
+
+impl QueryFunction for EditLanguagePostARequest {
+    fn query(&self) -> &str {
+        "SELECT awa_edit_language_post($1)"
+    }
+}
+
+
 pub async fn edit_language_post(
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
 ) -> impl Responder {
 
-    match admin_handler(req, id) {
+    match user_request(req, id) {
 
-        Ok(data) => {
+        Ok(user_req) => {
 
             let language_id = (form.language_id).clone();
-            let lang_code_value = (form.lang_code).clone();
+            let lang_code = (form.lang_code).clone();
             let lang_ids = (form.lang_ids).clone();
             let lang_names = (form.lang_names).clone();
 
-            if let Ok(_language_id2) = awa_edit_language_post(
-                language_id,
-                lang_code_value,
-                lang_ids,
-                lang_names,
+            match query_db(
+                EditLanguagePostARequest {
+                    req: user_req.clone(),
+                    language_id: language_id,
+                    lang_code: lang_code,
+                    lang_ids: lang_ids,
+                    lang_names: lang_names,
+                },
             ) {
-                let redirect_route = "/{lang}/admin/languages"
-                    .replace("{lang}", &data.lang.code);
 
-                HttpResponse::Found()
-                    .header("Location", redirect_route)
-                    .finish()
-            } else {
-                let redirect_route = "/{lang}/admin/edit_language?id={id}"
-                    .replace("{lang}", &data.lang.code)
-                    .replace("{id}", &language_id.to_string());
-                // TODO: Show what failed in the template!
+                Ok(_row) => {
 
-                HttpResponse::Found()
-                    .header("Location", redirect_route)
-                    .finish()
+                    let redirect_route = "/{lang}/admin/languages"
+                        .replace("{lang}", &user_req.lang_code);
+
+                    HttpResponse::Found()
+                        .header("Location", redirect_route)
+                        .finish()
+                },
+
+                Err(_e) => {
+                    let redirect_route = "/{lang}/admin/edit_language?id={id}"
+                        .replace("{lang}", &user_req.lang_code)
+                        .replace("{id}", &language_id.to_string());
+                    // TODO: Show what failed in the template!
+
+                    HttpResponse::Found()
+                        .header("Location", redirect_route)
+                        .finish()
+                },
+
             }
-        }
 
-        Err(r) => {r}
+        },
+
+        Err(redirect_url) => redirect_url,
 
     }
 

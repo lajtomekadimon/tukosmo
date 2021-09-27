@@ -1,21 +1,21 @@
 
-CREATE TYPE "EditLanguageAR" AS (
+CREATE TYPE "EditLanguageARequest" AS (
     req "AdminRequest",
     lang BIGINT
 );
 
-CREATE TYPE "EditLanguageAH" AS (
+CREATE TYPE "EditLanguageAResponse" AS (
     data "AdminDataDB",
     lang "LanguageDB",
     names "NameDB"[]
 );
 
 
-CREATE OR REPLACE FUNCTION query_db(
-    r "EditLanguageAR"
+CREATE OR REPLACE FUNCTION awa_edit_language(
+    r "EditLanguageARequest"
 )
 
-RETURNS "EditLanguageAH"
+RETURNS "EditLanguageAResponse"
 
 LANGUAGE SQL
 VOLATILE
@@ -44,7 +44,7 @@ SELECT (
         r.lang,
         language_of_user
     )
-)::"EditLanguageAH"
+)::"EditLanguageAResponse"
 
 FROM variables
 

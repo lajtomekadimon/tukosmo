@@ -7,7 +7,7 @@ use crate::handlers::admin::user_request::user_request;
 use crate::i18n::t::t;
 use crate::templates::admin::edit_language::EditLanguage;
 use crate::database::types;
-use crate::database::query_db::query_db;
+use crate::database::query_db::{QueryFunction, query_db};
 
 
 #[derive(Deserialize)]
@@ -17,13 +17,19 @@ pub struct GetParamData {
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct EditLanguageAR {
+pub struct EditLanguageARequest {
     pub req: types::AdminRequest,
     pub lang: i64,
 }
 
+impl QueryFunction for EditLanguageARequest {
+    fn query(&self) -> &str {
+        "SELECT awa_edit_language($1)"
+    }
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct EditLanguageAH {
+pub struct EditLanguageAResponse {
     pub data: types::AdminDataDB,
     pub lang: types::LanguageDB,
     pub names: Vec<types::NameDB>,
@@ -39,7 +45,7 @@ pub async fn edit_language(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
-            EditLanguageAR {
+            EditLanguageARequest {
                 req: user_req,
                 lang: param.id,
             },
@@ -47,7 +53,7 @@ pub async fn edit_language(
 
             Ok(row) => {
 
-                let q: EditLanguageAH = row.get(0);
+                let q: EditLanguageAResponse = row.get(0);
 
                 let html = EditLanguage {
                     title: &format!(
@@ -65,9 +71,12 @@ pub async fn edit_language(
 
             }
 
-            Err(_e) => HttpResponse::Found()
-                .header("Location", "/")  // TODO
-                .finish(),
+            Err(e) => {
+                println!("{}", e);
+                HttpResponse::Found()
+                    .header("Location", "/")  // TODO
+                    .finish()
+            },
 
         },
 
