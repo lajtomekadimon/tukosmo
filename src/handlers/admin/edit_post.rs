@@ -8,7 +8,6 @@ use crate::i18n::t::t;
 use crate::templates::admin::edit_post::EditPost;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
-use crate::database::types::PostDB;
 
 
 #[derive(Deserialize)]
@@ -84,7 +83,7 @@ pub async fn edit_post(
                         q: &EditPostAResponse {
                             data: q.data.clone(),
                             post: Some(
-                                PostDB{
+                                types::PostDB{
                                     id: post_id,
                                     trans_id: 0,
                                     lang: 0,

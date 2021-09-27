@@ -1,27 +1,15 @@
 
+CREATE TYPE "EditPostPostARequest" AS (
+    req "AdminRequest",
+    post "PostDB"
+);
+
+
 CREATE OR REPLACE FUNCTION awa_edit_post_post(
-
-    post_id BIGINT,
-
-    lang_code TEXT,
-
-    title_value TEXT,
-
-    description_value TEXT,
-
-    body_value TEXT,
-
-    permalink_value TEXT,
-
-    is_draft BOOL,
-
-    is_deleted BOOL,
-
-    translator_id BIGINT
-
+    r "EditPostPostARequest"
 )
 
-RETURNS BIGINT
+RETURNS VOID
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -32,48 +20,44 @@ AS $$
 
 DECLARE
 
-    post_trans_id BIGINT;
-
-    lang_id BIGINT;
+    d "AdminDataDB";
 
 BEGIN
 
-    lang_id := s_language_id_by_code(lang_code);
+    d := s_admin_handler_data(r.req);
 
     -- Update existing post
     IF c_post_has_trans(
-        post_id,
-        lang_id
+        (r.post).id,
+        (d.lang).id
     ) THEN
 
-        post_trans_id := u_post_translation(
-            post_id,
-            lang_id,
-            title_value,
-            description_value,
-            body_value,
-            permalink_value,
-            is_draft,
-            is_deleted
+        PERFORM u_post_translation(
+            (r.post).id,
+            (d.lang).id,
+            (r.post).title,
+            (r.post).description,
+            (r.post).body,
+            (r.post).permalink,
+            (r.post).draft,
+            (r.post).deleted
         );
 
     -- Create new translation of the post
     ELSE
 
-        post_trans_id := i_post_translation(
-            post_id,
-            lang_id,
-            title_value,
-            description_value,
-            body_value,
-            permalink_value,
-            translator_id,
-            is_draft
+        PERFORM i_post_translation(
+            (r.post).id,
+            (d.lang).id,
+            (r.post).title,
+            (r.post).description,
+            (r.post).body,
+            (r.post).permalink,
+            (d.userd).id,
+            (r.post).draft
         );
 
     END IF;
-
-    RETURN post_trans_id;
 
 END;
 
