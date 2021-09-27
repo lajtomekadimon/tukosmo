@@ -4,45 +4,45 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::{AdminDataDB, PostDB};
+use crate::handlers::admin::edit_post::EditPostAResponse;
+use crate::database::types::PostDB;
 
 
 markup::define! {
     EditPost<'a>(
         title: &'a str,
-        post: &'a PostDB,
-        data: &'a AdminDataDB,
+        q: &'a EditPostAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &q.data,
             content: AdminPanel {
                 content: Content {
-                    post: post,
-                    data: data,
+                    q: q,
+                    post: &(q.post).as_ref().unwrap(),
                 },
                 current_page: "edit_post",
-                data: data,
+                data: &q.data,
             },
         }
     }
 
     Content<'a>(
+        q: &'a EditPostAResponse,
         post: &'a PostDB,
-        data: &'a AdminDataDB,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
                 {&t(
                     "Edit post: '{title}'",
-                    &data.lang.code
+                    &q.data.lang.code
                 ).replace("{title}", &post.id.to_string())}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
                         route: &"/admin/edit_post?id={id}"
                             .replace("{id}", &post.id.to_string()),
-                        data: data,
+                        data: &q.data,
                     }
                 }
             }
@@ -50,7 +50,7 @@ markup::define! {
             form[
                 method = "post",
                 action = "/{lang}/admin/edit_post"
-                    .replace("{lang}", &data.lang.code)
+                    .replace("{lang}", &q.data.lang.code)
                 ,
             ] {
                 input[
@@ -61,7 +61,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Title", &data.lang.code)}
+                        {&t("Title", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -75,7 +75,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Permalink", &data.lang.code)}
+                        {&t("Permalink", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -89,7 +89,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Description", &data.lang.code)}
+                        {&t("Description", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -104,7 +104,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Post's body", &data.lang.code)}
+                        {&t("Post's body", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -127,7 +127,7 @@ markup::define! {
                                 checked = post.draft,
                             ];
                             " "
-                            {&t("Draft", &data.lang.code)}
+                            {&t("Draft", &q.data.lang.code)}
                         }
                     }
                 }
@@ -143,7 +143,7 @@ markup::define! {
                                 checked = post.deleted,
                             ];
                             " "
-                            {&t("Deleted [post]", &data.lang.code)}
+                            {&t("Deleted [post]", &q.data.lang.code)}
                         }
                     }
                 }
@@ -151,17 +151,17 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &data.lang.code)}
+                            {&t("Submit", &q.data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
                             href = "/{lang}/admin/posts"
-                                .replace("{lang}", &data.lang.code)
+                                .replace("{lang}", &q.data.lang.code)
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &data.lang.code)}
+                            {&t("Cancel", &q.data.lang.code)}
                         }
                     }
                 }

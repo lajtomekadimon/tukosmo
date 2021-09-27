@@ -6,7 +6,6 @@ pub mod query_db;
 pub mod as_clean_sessions;
 
 pub mod awa_admin_handler;
-pub mod awa_edit_post;
 pub mod awa_edit_post_post;
 pub mod awa_languages;
 pub mod awa_login_post;
