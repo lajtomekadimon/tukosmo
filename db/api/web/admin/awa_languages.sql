@@ -1,9 +1,19 @@
 
+CREATE TYPE "LanguagesARequest" AS (
+    req "AdminRequest"
+);
+
+CREATE TYPE "LanguagesAResponse" AS (
+    data "AdminDataDB",
+    languages "LanguageDB"[]
+);
+
+
 CREATE OR REPLACE FUNCTION awa_languages(
-    language_of_user BIGINT
+    r "LanguagesARequest"
 )
 
-RETURNS "LanguageDB"[]
+RETURNS "LanguagesAResponse"
 
 LANGUAGE SQL
 VOLATILE
@@ -12,6 +22,19 @@ PARALLEL UNSAFE
 
 AS $$
 
-SELECT s_languages(language_of_user)
+WITH variables (handler_data, language_of_user) AS (
+    SELECT d, (d.lang).id
+    FROM s_admin_handler_data(r.req) d
+)
+
+SELECT (
+    -- data
+    handler_data,
+
+    -- languages
+    s_languages(language_of_user)
+)::"LanguagesAResponse"
+
+FROM variables
 
 $$;

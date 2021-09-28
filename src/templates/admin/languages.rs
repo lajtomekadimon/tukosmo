@@ -5,51 +5,48 @@ use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::{AdminDataDB, LanguageDB};
+use crate::handlers::admin::languages::LanguagesAResponse;
 
 
 markup::define! {
     Languages<'a>(
         title: &'a str,
-        data: &'a AdminDataDB,
-        languages: &'a Vec<LanguageDB>,
+        q: &'a LanguagesAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &q.data,
             content: AdminPanel {
                 content: Content {
-                    data: data,
-                    languages: languages,
+                    q: q,
                 },
                 current_page: "languages",
-                data: data,
+                data: &q.data,
             },
         }
     }
 
     Content<'a>(
-        data: &'a AdminDataDB,
-        languages: &'a Vec<LanguageDB>,
+        q: &'a LanguagesAResponse,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Languages", &data.lang.code)}
+                {&t("Languages", &q.data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
                         route: "/admin/languages",
-                        data: data,
+                        data: &q.data,
                     }
                 }
 
                 a[
                     href = "/{lang}/admin/new_language"
-                        .replace("{lang}", &data.lang.code),
+                        .replace("{lang}", &q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
-                    {&t("Add language", &data.lang.code)}
+                    {&t("Add language", &q.data.lang.code)}
                 }
             }
 
@@ -59,18 +56,18 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Language", &data.lang.code)}
+                            {&t("Language", &q.data.lang.code)}
                         }
                         th {
-                            {&t("Code", &data.lang.code)}
+                            {&t("Code", &q.data.lang.code)}
                         }
                         th {
-                            {&t("Last update", &data.lang.code)}
+                            {&t("Last update", &q.data.lang.code)}
                         }
                     }
                 }
                 tbody {
-                    @for lang in languages.iter() {
+                    @for lang in q.languages.iter() {
                         tr[
                             class = if !lang.has_all_names {
                                 "has-background-danger-light"
@@ -82,7 +79,7 @@ markup::define! {
                                 a[
                                     href = "/{lang}/admin/edit_language\
                                             ?id={id}"
-                                        .replace("{lang}", &data.lang.code)
+                                        .replace("{lang}", &q.data.lang.code)
                                         .replace(
                                             "{id}",
                                             &lang.id.to_string()
@@ -95,7 +92,7 @@ markup::define! {
                                 ] {
                                     @lang.name
 
-                                    @if lang.id != data.lang.id {
+                                    @if lang.id != q.data.lang.id {
                                         " ("
                                         @lang.original_name
                                         ")"
@@ -106,7 +103,7 @@ markup::define! {
                                 @lang.code
                             }
                             td {
-                                {t_date(&lang.date, &data.lang.code)}
+                                {t_date(&lang.date, &q.data.lang.code)}
                             }
                         }
                     }
