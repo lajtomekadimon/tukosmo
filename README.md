@@ -22,12 +22,14 @@ Technical features:
 https://github.com/actix/actix-web).
 - [x] No ORM! Pure SQL code called by native [PostgreSQL driver](
 https://github.com/sfackler/rust-postgres).
+- [ ] "One request, one query" policy.
 - [x] Blazingly fast HTML rendering with [markup.rs](
 https://github.com/utkarshkukreti/markup.rs).
+- [ ] Minimum of allocation and copying in Rust (efficiency!).
 - [x] Automatic CSS minifying to one single file.
 - [x] Everything works without JavaScript, which is optional.
 - [ ] Automatic JavaScript minifying to one single file.
-- [ ] Zero external resources. (CSS, JavaScript, images, etc.)
+- [ ] Zero external resources (CSS, JavaScript, images, ...).
 - [x] Themes are just CSS code; all themes share the same HTML.
 - [ ] Responsive design.
 - [x] Internationalization (i18n).
@@ -35,24 +37,26 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] Custom languages.
 - [x] Cookie-based auth.
 - [x] CommonMark-based posts and pages.
+- [ ] Self-update server OS and software (optional).
+- [ ] Self-update Tukosmo version (optional).
 
 Website features:
 
-- [ ] Homepage.
+- [ ] Custom homepage.
 - [x] Blog.
-- [x] Blog posts.
-- [ ] Pages.
-- [ ] Admin panel.
-    - [ ] Dashboard.
-    - [ ] Statistics.
-    - [ ] Server.
-    - [ ] Users.
-    - [x] Languages.
-    - [x] Posts.
-    - [ ] Pages.
-    - [ ] Files.
-    - [ ] Website.
-    - [ ] Tukosmo.
+- [ ] Static pages.
+- [ ] Contact form.
+- [ ] Custom menu.
+- [ ] Custom widgets.
+
+Admin panel features:
+
+- [ ] Website's statistics.
+- [ ] Users management.
+- [x] Languages management.
+- [x] Posts management.
+- [ ] Pages management.
+- [ ] Files management.
 
 ## Instalation
 
