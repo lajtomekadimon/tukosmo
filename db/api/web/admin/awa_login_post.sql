@@ -1,15 +1,22 @@
 
+CREATE TYPE "LoginPostARequest" AS (
+    req "WebsiteRequest",
+    email TEXT,
+    password TEXT,
+    user_agent TEXT
+);
+
+CREATE TYPE "LoginPostAResponse" AS (
+    data "WebsiteDataDB",
+    session UUID
+);
+
+
 CREATE OR REPLACE FUNCTION awa_login_post(
-
-    user_email TEXT,
-
-    user_password TEXT,
-
-    user_agent_value TEXT
-
+    r "LoginPostARequest"
 )
 
-RETURNS UUID
+RETURNS "LoginPostAResponse"
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -20,13 +27,17 @@ AS $$
 
 DECLARE
 
+    handler_data "WebsiteDataDB";
+
     real_user_password TEXT;
 
     session_id UUID;
 
 BEGIN
 
-    real_user_password := s_user_password_by_email(user_email);
+    handler_data := s_website_handler_data(r.req);
+
+    real_user_password := s_user_password_by_email(r.email);
 
     -- The user exists
     IF real_user_password IS NOT NULL THEN
@@ -39,11 +50,11 @@ BEGIN
          * queries from there: one for the password check, and
          * another one for the new session.
          */
-        IF real_user_password = CRYPT(user_password, real_user_password) THEN
+        IF real_user_password = CRYPT(r.password, real_user_password) THEN
 
             session_id := i_session_by_email(
-                user_email,
-                user_agent_value
+                r.email,
+                r.user_agent
             );
 
         -- User exists but password is not correct
@@ -60,7 +71,12 @@ BEGIN
 
     END IF;
 
-    RETURN session_id;
+    RETURN (
+        -- data
+        handler_data,
+        -- session
+        session_id
+    )::"LoginPostAResponse";
 
 END;
 
