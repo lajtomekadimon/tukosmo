@@ -26,36 +26,41 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
-    -- Update existing post
-    IF c_post_has_trans(
-        (r.post).id,
-        (d.lang).id
-    ) THEN
+    -- If the user is logged in...
+    IF d IS NOT NULL THEN
 
-        PERFORM u_post_translation(
+        -- Update existing post
+        IF c_post_has_trans(
             (r.post).id,
-            (d.lang).id,
-            (r.post).title,
-            (r.post).description,
-            (r.post).body,
-            (r.post).permalink,
-            (r.post).draft,
-            (r.post).deleted
-        );
+            (d.lang).id
+        ) THEN
 
-    -- Create new translation of the post
-    ELSE
+            PERFORM u_post_translation(
+                (r.post).id,
+                (d.lang).id,
+                (r.post).title,
+                (r.post).description,
+                (r.post).body,
+                (r.post).permalink,
+                (r.post).draft,
+                (r.post).deleted
+            );
 
-        PERFORM i_post_translation(
-            (r.post).id,
-            (d.lang).id,
-            (r.post).title,
-            (r.post).description,
-            (r.post).body,
-            (r.post).permalink,
-            (d.userd).id,
-            (r.post).draft
-        );
+        -- Create new translation of the post
+        ELSE
+
+            PERFORM i_post_translation(
+                (r.post).id,
+                (d.lang).id,
+                (r.post).title,
+                (r.post).description,
+                (r.post).body,
+                (r.post).permalink,
+                (d.userd).id,
+                (r.post).draft
+            );
+
+        END IF;
 
     END IF;
 

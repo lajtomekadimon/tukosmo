@@ -29,22 +29,27 @@ WITH variables (handler_data, language_of_user) AS (
     FROM s_admin_handler_data(r.req) d
 )
 
-SELECT (
-    -- data
-    handler_data,
+SELECT CASE
+    WHEN handler_data IS NULL THEN NULL::"EditLanguageAResponse"
 
-    -- lang
-    s_language_by_id_lang(
-        r.lang,
-        language_of_user
-    ),
+    -- User is logged in
+    ELSE (
+        -- data
+        handler_data,
 
-    -- names
-    s_language_names(
-        r.lang,
-        language_of_user
-    )
-)::"EditLanguageAResponse"
+        -- lang
+        s_language_by_id_lang(
+            r.lang,
+            language_of_user
+        ),
+
+        -- names
+        s_language_names(
+            r.lang,
+            language_of_user
+        )
+    )::"EditLanguageAResponse"
+END
 
 FROM variables
 

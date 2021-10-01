@@ -28,16 +28,21 @@ WITH variables (handler_data, language_of_user) AS (
     FROM s_admin_handler_data(r.req) d
 )
 
-SELECT (
-    -- data
-    handler_data,
+SELECT CASE
+    WHEN handler_data IS NULL THEN NULL::"EditPostAResponse"
 
-    -- post
-    s_post_by_id_lang(
-        r.post,
-        language_of_user
-    )
-)::"EditPostAResponse"
+    -- User is logged in
+    ELSE (
+        -- data
+        handler_data,
+
+        -- post
+        s_post_by_id_lang(
+            r.post,
+            language_of_user
+        )
+    )::"EditPostAResponse"
+END
 
 FROM variables
 

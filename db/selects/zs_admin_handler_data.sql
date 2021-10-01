@@ -33,7 +33,7 @@ WITH variables (userd, lang, languages) AS (
 )
 
 SELECT CASE
-    WHEN userd IS NULL THEN NULL::"AdminDataDB"
+    WHEN userd IS NULL THEN NULL::"AdminDataDB"  -- You should be logged in
     WHEN lang IS NULL THEN NULL::"AdminDataDB"
     WHEN CARDINALITY(languages) = 0 THEN NULL::"AdminDataDB"
 
