@@ -1,19 +1,30 @@
 
+CREATE TYPE "LogoutARequest" AS (
+    req "AdminRequest"
+);
+
+
 CREATE OR REPLACE FUNCTION awa_logout(
-
-    session_id UUID
-
+    r "LogoutARequest"
 )
 
-RETURNS UUID
+RETURNS VOID
 
-LANGUAGE SQL
+LANGUAGE PLPGSQL
 VOLATILE
 CALLED ON NULL INPUT
 PARALLEL UNSAFE
 
 AS $$
 
-SELECT d_session(session_id)
+BEGIN
+
+    IF s_admin_handler_data(r.req) IS NOT NULL THEN
+
+        PERFORM d_session((r.req).session);
+
+    END IF;
+
+END;
 
 $$;

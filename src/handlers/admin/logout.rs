@@ -1,9 +1,22 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
-use uuid::Uuid;
+use postgres_types::{ToSql, FromSql};
 
-use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::awa_logout::awa_logout;
+use crate::handlers::admin::user_request::user_request;
+use crate::database::types;
+use crate::database::query_db::{QueryFunction, query_db};
+
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct LogoutARequest {
+    pub req: types::AdminRequest,
+}
+
+impl QueryFunction for LogoutARequest {
+    fn query(&self) -> &str {
+        "SELECT awa_logout($1)"
+    }
+}
 
 
 pub async fn logout(
@@ -11,83 +24,47 @@ pub async fn logout(
     id: Identity,
 ) -> impl Responder {
 
-    match admin_handler(req, id.clone()) {
+    match user_request(req, id.clone()) {
 
-        Ok(data) => {
-            
+        Ok(user_req) => {
+
             let login_route = "/{lang}/admin/login"
-                .replace("{lang}", &data.lang.code);
+                .replace("{lang}", &user_req.lang_code);
 
-            // Cookie has a session
-            if let Some(session_uuid) = id.identity() {
+            match query_db(
+                LogoutARequest {
+                    req: user_req,
+                }
+            ) {
 
-                if let Ok(session_id) = Uuid::parse_str(
-                    &session_uuid
-                ) {
+                Ok(_row) => {
 
                     // Delete auth cookie
                     id.forget();
 
-                    // Delete session from database
-                    if let Ok(_) = awa_logout(session_id) {
-
-                        // Redirect to login page
-                        HttpResponse::Found()
-                            .header("Location", login_route)
-                            .finish()
-
-                    } else {
-
-                        // Redirect to dashboard
-                        HttpResponse::Found()
-                            .header(
-                                "Location",
-                                "/{lang}/admin"
-                                    .replace("{lang}", &data.lang.code)
-                                    // TODO: Couldn't logout
-                            )
-                            .finish()
-
-                    }
-
-                // TODO: "Session ID is not a valid UUID."
-                } else {
-
-                    // Delete cookie
-                    id.forget();
-
-                    // Redirect to login
+                    // Redirect to login page
                     HttpResponse::Found()
                         .header("Location", login_route)
                         .finish()
 
-                }
+                },
 
-            // No session
-            // TODO: "You need to login first."
-            } else {
+                Err(e) => {
+                    println!("{}", e);
 
-                // Redirect to login
-                HttpResponse::Found()
-                    .header("Location", login_route)
-                    .finish()
+                    // TODO: Email or password not correct
+                    HttpResponse::Found()
+                        .header("Location", login_route)
+                        .finish()
+                },
 
             }
 
-        }
+        },
 
-        Err(_e) => {
-
-            // Redirect to login page
-            HttpResponse::Found()
-                .header(
-                    "Location",
-                    "/{lang}/admin/login"
-                        .replace("{lang}", "en")  // TODO: default lang
-                )
-                .finish()
-
-        }
+        Err(redirect_url) => redirect_url,
 
     }
+
 }
+
