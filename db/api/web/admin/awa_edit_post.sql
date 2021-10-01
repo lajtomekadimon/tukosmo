@@ -16,34 +16,57 @@ CREATE OR REPLACE FUNCTION awa_edit_post(
 
 RETURNS "EditPostAResponse"
 
-LANGUAGE SQL
+LANGUAGE PLPGSQL
 VOLATILE
 RETURNS NULL ON NULL INPUT
 PARALLEL UNSAFE
 
 AS $$
 
-WITH variables (handler_data, language_of_user) AS (
-    SELECT d, (d.lang).id
-    FROM s_admin_handler_data(r.req) d
-)
+DECLARE
 
-SELECT CASE
-    WHEN handler_data IS NULL THEN NULL::"EditPostAResponse"
+    d "AdminDataDB";
+
+    language_of_user BIGINT;
+
+    post "PostDB";
+
+BEGIN
+
+    d := s_admin_handler_data(r.req);
+
+    IF d IS NULL THEN
+
+        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
+
+    END IF;
+
+    language_of_user := (d.lang).id;
+
+    post := s_post_by_id_lang(
+        r.post,
+        language_of_user
+    );
+
+    -- Currently, if NULL then it's a new translation
+    /*IF post IS NULL THEN
+
+        RAISE EXCEPTION 'TODO: Post ID is not correct.';
+
+    END IF;*/
 
     -- User is logged in
-    ELSE (
+    RETURN (
         -- data
-        handler_data,
+        d,
 
         -- post
         s_post_by_id_lang(
             r.post,
             language_of_user
         )
-    )::"EditPostAResponse"
-END
+    )::"EditPostAResponse";
 
-FROM variables
+END;
 
 $$;

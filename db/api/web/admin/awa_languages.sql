@@ -15,31 +15,50 @@ CREATE OR REPLACE FUNCTION awa_languages(
 
 RETURNS "LanguagesAResponse"
 
-LANGUAGE SQL
+LANGUAGE PLPGSQL
 VOLATILE
 RETURNS NULL ON NULL INPUT
 PARALLEL UNSAFE
 
 AS $$
 
-WITH variables (handler_data, language_of_user) AS (
-    SELECT d, (d.lang).id
-    FROM s_admin_handler_data(r.req) d
-)
+DECLARE
 
-SELECT CASE
-    WHEN handler_data IS NULL THEN NULL::"LanguagesAResponse"
+    d "AdminDataDB";
 
-    -- User is logged in
-    ELSE (
+    language_of_user BIGINT;
+
+    langs "LanguageDB"[];
+
+BEGIN
+
+    d := s_admin_handler_data(r.req);
+
+    IF d IS NULL THEN
+
+        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
+
+    END IF;
+
+    language_of_user := (d.lang).id;
+
+    langs := s_languages(language_of_user);
+
+    -- TODO: Maybe I should consider empty array too?
+    IF langs IS NULL THEN
+
+        RAISE EXCEPTION 'TODO: There''s something wrong with languages.';
+
+    END IF;
+
+    RETURN (
         -- data
-        handler_data,
+        d,
 
         -- languages
-        s_languages(language_of_user)
-    )::"LanguagesAResponse"
-END
+        langs
+    )::"LanguagesAResponse";
 
-FROM variables
+END;
 
 $$;

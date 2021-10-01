@@ -26,41 +26,42 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
-    -- If the user is logged in...
-    IF d IS NOT NULL THEN
+    IF d IS NULL THEN
 
-        -- Update existing post
-        IF c_post_has_trans(
+        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
+
+    END IF;
+
+    -- Update existing post
+    IF c_post_has_trans(
+        (r.post).id,
+        (d.lang).id
+    ) THEN
+
+        PERFORM u_post_translation(
             (r.post).id,
-            (d.lang).id
-        ) THEN
+            (d.lang).id,
+            (r.post).title,
+            (r.post).description,
+            (r.post).body,
+            (r.post).permalink,
+            (r.post).draft,
+            (r.post).deleted
+        );
 
-            PERFORM u_post_translation(
-                (r.post).id,
-                (d.lang).id,
-                (r.post).title,
-                (r.post).description,
-                (r.post).body,
-                (r.post).permalink,
-                (r.post).draft,
-                (r.post).deleted
-            );
+    -- Create new translation of the post
+    ELSE
 
-        -- Create new translation of the post
-        ELSE
-
-            PERFORM i_post_translation(
-                (r.post).id,
-                (d.lang).id,
-                (r.post).title,
-                (r.post).description,
-                (r.post).body,
-                (r.post).permalink,
-                (d.userd).id,
-                (r.post).draft
-            );
-
-        END IF;
+        PERFORM i_post_translation(
+            (r.post).id,
+            (d.lang).id,
+            (r.post).title,
+            (r.post).description,
+            (r.post).body,
+            (r.post).permalink,
+            (d.userd).id,
+            (r.post).draft
+        );
 
     END IF;
 

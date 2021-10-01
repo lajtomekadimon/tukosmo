@@ -19,16 +19,13 @@ AS $$
 
 BEGIN
 
-    -- If the user is logged in...
-    IF s_admin_handler_data(r.req) IS NOT NULL THEN
+    IF s_admin_handler_data(r.req) IS NULL THEN
 
-        PERFORM d_session((r.req).session);
-
-    ELSE
-
-        RAISE EXCEPTION 'TODO';
+        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
 
     END IF;
+
+    PERFORM d_session((r.req).session);
 
 END;
 
