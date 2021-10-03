@@ -70,6 +70,7 @@ Install dependencies (only on FreeBSD for now):
 ```sh
 make -s dep
 # The shell must be restarted after installing Rust
+# It's important to add postgresql_enable="yes" to /etc/rc.conf in FreeBSD
 ```
 
 Create (or reset) database:
