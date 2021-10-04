@@ -61,10 +61,7 @@ BEGIN
         d,
 
         -- post
-        s_post_by_id_lang(
-            r.post,
-            language_of_user
-        )
+        post
     )::"EditPostAResponse";
 
 END;

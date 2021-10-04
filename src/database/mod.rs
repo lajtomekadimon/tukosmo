@@ -7,6 +7,5 @@ pub mod query_db;
 pub mod awa_admin_handler;
 
 pub mod aww_website_handler;
-pub mod aww_blog_post;
 
 pub mod as_clean_sessions;

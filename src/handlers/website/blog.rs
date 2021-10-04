@@ -64,11 +64,11 @@ pub async fn blog(
 
             HttpResponse::Ok().body(html.to_string())
 
-        }
+        },
 
         Err(e) => {
             println!("{}", e);
-            panic!("HAAAA");  // TODO
+            HttpResponse::Ok().body("Unknown error.")  // TODO
         },
 
     }

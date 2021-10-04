@@ -1,9 +1,30 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use postgres_types::{ToSql, FromSql};
 
+use crate::handlers::website::user_request::user_request;
 use crate::templates::website::blog_post::BlogPost;
-use crate::handlers::website::website_handler::website_handler;
-use crate::database::aww_blog_post::aww_blog_post;
+use crate::database::types;
+use crate::database::query_db::{QueryFunction, query_db};
+
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct BlogPostWRequest {
+    pub req: types::WebsiteRequest,
+    pub permalink: String,
+}
+
+impl QueryFunction for BlogPostWRequest {
+    fn query(&self) -> &str {
+        "SELECT aww_blog_post($1)"
+    }
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct BlogPostWResponse {
+    pub data: types::WebsiteDataDB,
+    pub post: types::PostDB,
+}
 
 
 pub async fn blog_post(
@@ -11,39 +32,39 @@ pub async fn blog_post(
     id: Identity,
 ) -> impl Responder {
 
-    match website_handler(req.clone(), id) {
+    let user_req = user_request(req.clone(), id);
 
-        Ok(data) => {
+    let permalink_value: String = req.match_info()
+        .get("permalink").unwrap().parse().unwrap();
 
-            let permalink_value: String = req.match_info()
-                .get("permalink").unwrap().parse().unwrap();
+    match query_db(
+        BlogPostWRequest {
+            req: user_req,
+            permalink: permalink_value,
+        },
+    ) {
 
-            if let Some(post) = aww_blog_post(
-                data.lang.id.clone(),
-                permalink_value
-            ) {
+        Ok(row) => {
 
-                let html = BlogPost {
-                    title: &format!(
-                        "{a} - {b}",
-                        a = post.title,
-                        b = "MyExample"
-                    ),
-                    data: &data,
-                    post: &post,
-                };
+            let q: BlogPostWResponse = row.get(0);
 
-                HttpResponse::Ok().body(html.to_string())
-                
-            } else {
+            let html = BlogPost {
+                title: &format!(
+                    "{a} - {b}",
+                    a = q.post.title,
+                    b = "MyExample"
+                ),
+                q: &q,
+            };
 
-                HttpResponse::Ok().body("Error 404.")  // TODO
+            HttpResponse::Ok().body(html.to_string())
 
-            }
+        },
 
-        }
-
-        Err(r) => {r}
+        Err(e) => {
+            println!("{}", e);
+            HttpResponse::Ok().body("Error 404.")  // TODO
+        },
 
     }
 
