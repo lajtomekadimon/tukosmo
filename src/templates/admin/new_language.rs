@@ -4,41 +4,38 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::{AdminDataDB, LanguageDB};
+use crate::handlers::admin::new_language::NewLanguageAResponse;
 
 
 markup::define! {
     NewLanguage<'a>(
         title: &'a str,
-        data: &'a AdminDataDB,
-        languages: &'a Vec<LanguageDB>,
+        q: &'a NewLanguageAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &q.data,
             content: AdminPanel {
                 content: Content {
-                    data: data,
-                    languages: languages,
+                    q: q,
                 },
                 current_page: "new_language",
-                data: data,
+                data: &q.data,
             },
         }
     }
 
     Content<'a>(
-        data: &'a AdminDataDB,
-        languages: &'a Vec<LanguageDB>,
+        q: &'a NewLanguageAResponse,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Add language", &data.lang.code)}
+                {&t("Add language", &q.data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
                         route: "/admin/new_language",
-                        data: data,
+                        data: &q.data,
                     }
                 }
             }
@@ -46,28 +43,28 @@ markup::define! {
             form[
                 method = "post",
                 action = "/{lang}/admin/new_language"
-                    .replace("{lang}", &data.lang.code),
+                    .replace("{lang}", &q.data.lang.code),
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Code", &data.lang.code)}
+                        {&t("Code", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
                             class = "input",
                             type = "text",
                             name = "lang_code",
-                            placeholder = &t("Example: en", &data.lang.code),
+                            placeholder = &t("Example: en", &q.data.lang.code),
                         ];
                     }
                 }
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Language name", &data.lang.code)}
+                        {&t("Language name", &q.data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for lang in languages.iter() {
+                        @for lang in q.languages.iter() {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
@@ -94,16 +91,16 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &data.lang.code)}
+                            {&t("Submit", &q.data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
                             href = "/{lang}/admin/languages"
-                                .replace("{lang}", &data.lang.code),
+                                .replace("{lang}", &q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &data.lang.code)}
+                            {&t("Cancel", &q.data.lang.code)}
                         }
                     }
                 }
