@@ -1,37 +1,125 @@
 use markup;
 
+use crate::i18n::t::t;
+use crate::i18n::t_date::t_date;
 use crate::templates::website_layout::WebsiteLayout;
 use crate::templates::widgets::website::Website;
-use crate::templates::widgets::post_list::PostList;
-use crate::database::types::{WebsiteDataDB, PostDB};
+use crate::handlers::website::blog::BlogWResponse;
 
 
 markup::define! {
     Blog<'a>(
         title: &'a str,
-        data: &'a WebsiteDataDB,
-        posts: &'a Vec<PostDB>,
+        q: &'a BlogWResponse,
     ) {
         @WebsiteLayout {
             title: title,
-            data: &data,
+            data: &q.data,
             content: Website {
                 content: Content {
-                    data: data,
-                    posts: posts,
+                    q: q,
                 },
-                data: data,
+                data: &q.data,
             },
         }
     }
 
     Content<'a>(
-        data: &'a WebsiteDataDB,
-        posts: &'a Vec<PostDB>,
+        q: &'a BlogWResponse,
     ) {
-        @PostList {
-            data: data,
-            posts: posts,
+        div[
+            class = "post-list",
+        ] {
+            @for post in q.posts.iter() {
+                section[
+                    class = "post-wrapper"
+                ] {
+                    div[
+                        class = "post-wrapper-image"
+                    ] {
+                        a[
+                            href = "/{lang}/blog/{permalink}"
+                                .replace("{lang}", &q.data.lang.code)
+                                .replace(
+                                    "{permalink}",
+                                    &post.permalink.to_string()
+                                ),
+                        ] {
+                            figure[
+                                style = "background-image: url(https://www.\
+                                         azamara.com/sites/default/files/\
+                                         heros/reykjavik-iceland-\
+                                         1800x1000.jpg);",
+                            ] {}
+                        }
+                    }
+
+                    div[
+                        class = "post-wrapper-data",
+                    ] {
+                        div[
+                            class = "post-wrapper-data-meta",
+                        ] {
+                            div[
+                                class = "post-wrapper-data-meta-date",
+                            ] {
+                                a[
+                                    href = "/{lang}/blog/{permalink}"
+                                        .replace("{lang}", &q.data.lang.code)
+                                        .replace(
+                                            "{permalink}",
+                                            &post.permalink.to_string()
+                                        ),
+                                ] {
+                                    i[class = "eos-icons"] {
+                                        "calendar_today"
+                                    }
+
+                                    " "
+
+                                    time[
+                                        datetime = "2021-08-11T20:37:29+00:00",
+                                    ] {
+                                        {t_date(&post.date, &q.data.lang.code)}
+                                    }
+                                }
+                            }
+                        }
+
+                        h2 {
+                            a[
+                                href = "/{lang}/blog/{permalink}"
+                                    .replace("{lang}", &q.data.lang.code)
+                                    .replace(
+                                        "{permalink}",
+                                        &post.permalink.to_string()
+                                    ),
+                            ] {
+                                @post.title
+                            }
+                        }
+
+                        p {
+                            @post.description
+                        }
+
+                        div[
+                            class = "post-wrapper-data-more",
+                        ] {
+                            a[
+                                href = "/{lang}/blog/{permalink}"
+                                    .replace("{lang}", &q.data.lang.code)
+                                    .replace(
+                                        "{permalink}",
+                                        &post.permalink.to_string()
+                                    ),
+                            ] {
+                                {&t("Read more", &q.data.lang.code)}
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

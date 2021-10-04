@@ -1,6 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_post_by_lang_permalink(
-    language_of_user INT8,
+    language_of_user BIGINT,
     permalink_value TEXT
 )
 
