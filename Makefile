@@ -70,6 +70,7 @@ structuredb:
 
 DFUNDB=db/checks/*.sql \
        db/selects/*.sql \
+       db/selects/count/*.sql \
        db/inserts/*.sql \
        db/deletes/*.sql \
        db/updates/*.sql \

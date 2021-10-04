@@ -3,6 +3,8 @@
 pub fn translate_en(text_value: &str) -> &str {
     match text_value {
         "(website_name)" => "MyExample",
+        "{n} posts" => "{n} posts",
+        "{n} results of {m}" => "{n} results of {m}",
         "{name} © {year} [copyright]" => "{name} © {year}",
         "Account" => "Account",
         "Add language" => "Add language",
@@ -38,6 +40,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "New post" => "New post",
         "Next [page]" => "Next",
         "Original author" => "Original author",
+        "Page {n}" => "Page {n}",
         "Pages" => "Pages",
         "Permalink" => "Permalink",
         "Posts" => "Posts",

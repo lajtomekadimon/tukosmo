@@ -9,7 +9,8 @@ markup::define! {
         data: &'a AdminDataDB,
         route: &'a str,
         current_page: &'a i64,
-        number_of_pages: &'a i64,
+        total_pages: &'a i64,
+        results_per_page: &'a i64,
     ) {
         nav[
             class = "pagination is-centered pt-5",
@@ -31,20 +32,20 @@ markup::define! {
                 href = route
                     .replace("{lang}", &data.lang.code)
                     .replace("{page}", &(**current_page + 1).to_string()),
-                disabled = current_page == number_of_pages,
+                disabled = current_page == total_pages,
             ] {
                 {&t("Next [page]", &data.lang.code)}
             }
 
             ul[class = "pagination-list"] {
-                @for p in 1..(**number_of_pages + 1) {
+                @for p in 1..(**total_pages + 1) {
 
                     // TODO: Optimize using a vector of just 1~5 elements
                     @if p == 1 ||
                         p == (**current_page - 1) ||
                         p == **current_page ||
                         p == (**current_page + 1) ||
-                        p == **number_of_pages
+                        p == **total_pages
                     {
 
                         @if p == (**current_page - 1) && **current_page > 3 {
@@ -66,14 +67,18 @@ markup::define! {
                                 },
                                 href = route
                                     .replace("{lang}", &data.lang.code)
-                                    .replace("{page}", &p.to_string()),
+                                    .replace("{page}", &p.to_string())
+                                    .replace(
+                                        "{rpp}",
+                                        &results_per_page.to_string()
+                                    ),
                             ] {
                                 @p.to_string()
                             }
                         }
                         
                         @if p == (**current_page + 1) &&
-                            **current_page < (**number_of_pages - 2)
+                            **current_page < (**total_pages - 2)
                         {
                             li {
                                 span[

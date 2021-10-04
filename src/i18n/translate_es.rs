@@ -4,6 +4,8 @@ use crate::i18n::translate_en::translate_en;
 pub fn translate_es(text_value: &str) -> &str {
     match text_value {
         "(website_name)" => "MyExample",
+        "{n} posts" => "{n} entradas",
+        "{n} results of {m}" => "{n} resultados de {m}",
         "{name} © {year} [copyright]" => "{name} © {year}",
         "Account" => "Cuenta",
         "Add language" => "Añadir idioma",
@@ -39,6 +41,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "New post" => "Nueva entrada",
         "Next [page]" => "Siguiente",
         "Original author" => "Autor original",
+        "Page {n}" => "Página {n}",
         "Pages" => "Páginas",
         "Permalink" => "Permalink",
         "Posts" => "Entradas",

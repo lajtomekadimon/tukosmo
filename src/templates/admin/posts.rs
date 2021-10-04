@@ -6,60 +6,62 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::templates::widgets::admin_pagination::AdminPagination;
-use crate::database::types::{AdminDataDB, PostDB};
+use crate::handlers::admin::posts::PostsAResponse;
 
 
 markup::define! {
     Posts<'a>(
         title: &'a str,
-        data: &'a AdminDataDB,
-        posts: &'a Vec<PostDB>,
-        current_page: &'a i64,
+        q: &'a PostsAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &q.data,
             content: AdminPanel {
                 content: Content {
-                    data: data,
-                    posts: posts,
-                    current_page: current_page,
+                    q: q,
                 },
                 current_page: "posts",
-                data: data,
+                data: &q.data,
             },
         }
     }
 
     Content<'a>(
-        data: &'a AdminDataDB,
-        posts: &'a Vec<PostDB>,
-        current_page: &'a i64,
+        q: &'a PostsAResponse,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Posts", &data.lang.code)}
+                {&t("Posts", &q.data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
                         route: "/admin/posts",
-                        data: data,
+                        data: &q.data,
                     }
                 }
 
                 a[
                     href = "/{lang}/admin/new_post"
-                        .replace("{lang}", &data.lang.code),
+                        .replace("{lang}", &q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
-                    {&t("New post", &data.lang.code)}
+                    {&t("New post", &q.data.lang.code)}
                 }
             }
 
             h2[class = "subtitle"] {
-                "Page "
-                @current_page.to_string()
+                {&t("Page {n}", &q.data.lang.code)
+                    .replace("{n}", &q.page.to_string())
+                }
+
+                " ("
+                {&t("{n} results of {m}", &q.data.lang.code)
+                    .replace("{n}", &(q.posts.iter().len()).to_string())
+                    .replace("{m}", &q.total_results.to_string())
+                }
+                ")"
             }
 
             table[
@@ -68,21 +70,21 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Title", &data.lang.code)}
+                            {&t("Title", &q.data.lang.code)}
                         }
                         th {
-                            {&t("Status", &data.lang.code)}
+                            {&t("Status", &q.data.lang.code)}
                         }
                         th {
-                            {&t("Published", &data.lang.code)}
+                            {&t("Published", &q.data.lang.code)}
                         }
                         th {
-                            {&t("Author", &data.lang.code)}
+                            {&t("Author", &q.data.lang.code)}
                         }
                     }
                 }
                 tbody {
-                    @for post in posts.iter() {
+                    @for post in q.posts.iter() {
                         tr[
                             class = if post.translator == 0 {
                                 "has-background-danger-light"
@@ -95,7 +97,7 @@ markup::define! {
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_post?id={id}"
-                                        .replace("{lang}", &data.lang.code)
+                                        .replace("{lang}", &q.data.lang.code)
                                         .replace(
                                             "{id}",
                                             &post.id.to_string()
@@ -113,28 +115,31 @@ markup::define! {
                             }
                             td {
                                 @if post.translator == 0 {
-                                    {&t("Untranslated", &data.lang.code)}
+                                    {&t("Untranslated", &q.data.lang.code)}
                                 } else if post.draft {
-                                    {&t("Draft", &data.lang.code)}
+                                    {&t("Draft", &q.data.lang.code)}
                                 } else {
-                                    {&t("Published", &data.lang.code)}
+                                    {&t("Published", &q.data.lang.code)}
                                 }
                             }
                             td {
-                                {t_date(&post.date, &data.lang.code)}
+                                {t_date(&post.date, &q.data.lang.code)}
 
                                 @if (post.author_name != post.translator_name)
                                     && (post.translator != 0)
                                 {
                                     " ("
-                                    {t_date(&post.date_trans, &data.lang.code)}
+                                    {t_date(
+                                        &post.date_trans,
+                                        &q.data.lang.code
+                                    )}
                                     ")"
                                 }
                             }
                             td {
                                 a[
                                     href = "/{lang}/admin/edit_user?id={id}"
-                                        .replace("{lang}", &data.lang.code)
+                                        .replace("{lang}", &q.data.lang.code)
                                         .replace(
                                             "{id}",
                                             &post.author.to_string()
@@ -156,7 +161,7 @@ markup::define! {
                                     " ("
                                     {&t(
                                         "translated by {name}",
-                                        &data.lang.code
+                                        &q.data.lang.code
                                     ).replace("{name}", &post.translator_name)}
                                     ")"
                                 }
@@ -167,10 +172,11 @@ markup::define! {
             }
 
             @AdminPagination {
-                data: data,
-                route: "/{lang}/admin/posts?p={page}",
-                current_page: current_page,
-                number_of_pages: &8,  // TODO!!!
+                data: &q.data,
+                route: "/{lang}/admin/posts?p={page}&rpp={rpp}",
+                current_page: &q.page,
+                total_pages: &q.total_pages,
+                results_per_page: &q.results_per_page,
             }
         }
     }
