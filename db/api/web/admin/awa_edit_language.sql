@@ -70,7 +70,7 @@ BEGIN
     END IF;
 
 
-    RETURN (
+    RETURN ROW(
         -- data
         d,
 
@@ -79,7 +79,7 @@ BEGIN
 
         -- names
         language_names
-    )::"EditLanguageAResponse";
+    );
 
 END;
 

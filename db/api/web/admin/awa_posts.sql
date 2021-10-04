@@ -69,7 +69,7 @@ BEGIN
 
     total_pages := CEIL(total_results / r.results_per_page::NUMERIC);
 
-    RETURN (
+    RETURN ROW(
         -- data
         d,
 
@@ -87,7 +87,7 @@ BEGIN
 
         -- total_pages
         total_pages
-    )::"PostsAResponse";
+    );
 
 END;
 

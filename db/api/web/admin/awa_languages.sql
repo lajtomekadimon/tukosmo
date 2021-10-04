@@ -51,13 +51,13 @@ BEGIN
 
     END IF;
 
-    RETURN (
+    RETURN ROW(
         -- data
         d,
 
         -- languages
         langs
-    )::"LanguagesAResponse";
+    );
 
 END;
 

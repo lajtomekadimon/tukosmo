@@ -1,8 +1,28 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use postgres_types::{ToSql, FromSql};
 
+use crate::handlers::website::user_request::user_request;
 use crate::templates::website::page::Page;
-use crate::handlers::website::website_handler::website_handler;
+use crate::database::types;
+use crate::database::query_db::{QueryFunction, query_db};
+
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct PageWRequest {
+    pub req: types::WebsiteRequest,
+}
+
+impl QueryFunction for PageWRequest {
+    fn query(&self) -> &str {
+        "SELECT aww_page($1)"
+    }
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct PageWResponse {
+    pub data: types::WebsiteDataDB,
+}
 
 
 pub async fn page(
@@ -10,9 +30,17 @@ pub async fn page(
     id: Identity,
 ) -> impl Responder {
 
-    match website_handler(req, id) {
+    let user_req = user_request(req, id);
 
-        Ok(data) => {
+    match query_db(
+        PageWRequest {
+            req: user_req,
+        },
+    ) {
+
+        Ok(row) => {
+
+            let q: PageWResponse = row.get(0);
 
             let html = Page {
                 title: &format!(
@@ -20,15 +48,19 @@ pub async fn page(
                     a = "[page title]",
                     b = "MyExample"
                 ),
-                data: &data,
+                q: &q,
             };
 
             HttpResponse::Ok().body(html.to_string())
 
-        }
+        },
 
-        Err(r) => {r}
+        Err(e) => {
+            println!("{}", e);
+            HttpResponse::Ok().body("Unknown error.")  // TODO
+        },
 
     }
 
 }
+

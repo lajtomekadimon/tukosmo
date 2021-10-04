@@ -75,13 +75,13 @@ BEGIN
 
     END IF;
 
-    RETURN (
+    RETURN ROW(
         -- data
         handler_data,
 
         -- session
         session_id
-    )::"LoginPostAResponse";
+    );
 
 END;
 

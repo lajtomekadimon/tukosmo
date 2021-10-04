@@ -55,13 +55,13 @@ BEGIN
     END IF;
 
     -- User is logged in
-    RETURN (
+    RETURN ROW(
         -- data
         d,
 
         -- post
         post
-    )::"BlogPostWResponse";
+    );
 
 END;
 

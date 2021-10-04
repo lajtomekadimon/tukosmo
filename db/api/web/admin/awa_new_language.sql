@@ -52,13 +52,13 @@ BEGIN
     END IF;
 
 
-    RETURN (
+    RETURN ROW(
         -- data
         d,
 
         -- languages
         langs
-    )::"NewLanguageAResponse";
+    );
 
 END;
 
