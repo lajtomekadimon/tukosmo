@@ -2,9 +2,11 @@ use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
+use postgres_types::{ToSql, FromSql};
 
-use crate::handlers::admin::admin_handler::admin_handler;
-use crate::database::awa_new_language_post::awa_new_language_post;
+use crate::handlers::admin::user_request::user_request;
+use crate::database::types;
+use crate::database::query_db::{QueryFunction, query_db};
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -70,43 +72,70 @@ pub struct FormData {
     lang_names: Vec<String>,
 }
 
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct NewLanguagePostARequest {
+    pub req: types::AdminRequest,
+    pub lang_code: String,
+    pub lang_ids: Vec<i64>,
+    pub lang_names: Vec<String>,
+}
+
+impl QueryFunction for NewLanguagePostARequest {
+    fn query(&self) -> &str {
+        "SELECT awa_new_language_post($1)"
+    }
+}
+
+
 pub async fn new_language_post(
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
 ) -> impl Responder {
 
-    match admin_handler(req, id) {
+    match user_request(req, id) {
 
-        Ok(data) => {
+        Ok(user_req) => {
 
-            let lang_code_value = (form.lang_code).clone();
+            let lang_code = (form.lang_code).clone();
             let lang_ids = (form.lang_ids).clone();
             let lang_names = (form.lang_names).clone();
 
-            if let Ok(_lang_code_id) = awa_new_language_post(
-                lang_code_value,
-                lang_ids,
-                lang_names,
+            match query_db(
+                NewLanguagePostARequest {
+                    req: user_req.clone(),
+                    lang_code: lang_code,
+                    lang_ids: lang_ids,
+                    lang_names: lang_names,
+                },
             ) {
-                let redirect_route = "/{lang}/admin/languages"
-                    .replace("{lang}", &data.lang.code);
 
-                HttpResponse::Found()
-                    .header("Location", redirect_route)
-                    .finish()
-            } else {
-                let redirect_route = "/{lang}/admin/new_language"
-                    .replace("{lang}", &data.lang.code);
-                // TODO: Show what failed in the template!
+                Ok(_row) => {
 
-                HttpResponse::Found()
-                    .header("Location", redirect_route)
-                    .finish()
+                    let redirect_route = "/{lang}/admin/languages"
+                        .replace("{lang}", &user_req.lang_code);
+
+                    HttpResponse::Found()
+                        .header("Location", redirect_route)
+                        .finish()
+                },
+
+                Err(_e) => {
+                    let redirect_route = "/{lang}/admin/new_language"
+                        .replace("{lang}", &user_req.lang_code);
+                    // TODO: Show what failed in the template!
+
+                    HttpResponse::Found()
+                        .header("Location", redirect_route)
+                        .finish()
+                },
+
             }
-        }
 
-        Err(r) => {r}
+        },
+
+        Err(redirect_url) => redirect_url,
 
     }
 

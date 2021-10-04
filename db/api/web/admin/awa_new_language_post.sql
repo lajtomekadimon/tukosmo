@@ -1,15 +1,17 @@
 
-CREATE OR REPLACE FUNCTION awa_new_language_post(
-
-    code_value TEXT,
-
+CREATE TYPE "NewLanguagePostARequest" AS (
+    req "AdminRequest",
+    lang_code TEXT,
     lang_ids BIGINT[],
-
     lang_names TEXT[]
+);
 
+
+CREATE OR REPLACE FUNCTION awa_new_language_post(
+    r "NewLanguagePostARequest"
 )
 
-RETURNS BIGINT
+RETURNS VOID
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -26,11 +28,17 @@ DECLARE
 
 BEGIN
 
-    language_id := i_language(code_value);
+    IF s_admin_handler_data(r.req) IS NULL THEN
 
-    FOR i IN 1..ARRAY_LENGTH(lang_names, 1) LOOP
-        lang_id := lang_ids[i];
-        lang_name := lang_names[i];
+        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
+
+    END IF;
+
+    language_id := i_language(r.lang_code);
+
+    FOR i IN 1..ARRAY_LENGTH(r.lang_names, 1) LOOP
+        lang_id := r.lang_ids[i];
+        lang_name := r.lang_names[i];
 
         PERFORM i_language_name(
             language_id,
@@ -40,8 +48,7 @@ BEGIN
         /* IDEA: Insert all of them at once using a SELECT */
     END LOOP;
 
-    RETURN language_id;
-
 END;
 
 $$;
+
