@@ -1,25 +1,15 @@
 
+CREATE TYPE "NewPostPostARequest" AS (
+    req "AdminRequest",
+    post "PostDB"
+);
+
+
 CREATE OR REPLACE FUNCTION awa_new_post_post(
-
-    post_id BIGINT,
-
-    lang_code TEXT,
-
-    title_value TEXT,
-
-    description_value TEXT,
-
-    body_value TEXT,
-
-    permalink_value TEXT,
-
-    author_id BIGINT,
-
-    is_draft BOOL
-
+    r "NewPostPostARequest"
 )
 
-RETURNS BIGINT
+RETURNS VOID
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -30,30 +20,36 @@ AS $$
 
 DECLARE
 
-    post_trans_id BIGINT;
+    d "AdminDataDB";
 
-    lang_id BIGINT;
+    post_id BIGINT;
 
 BEGIN
 
-    lang_id := s_language_id_by_code(lang_code);
+    d := s_admin_handler_data(r.req);
 
-    IF post_id = 0 THEN
-        post_id := i_post(author_id);
+    IF d IS NULL THEN
+
+        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
+
     END IF;
 
-    post_trans_id := i_post_translation(
-        post_id,
-        lang_id,
-        title_value,
-        description_value,
-        body_value,
-        permalink_value,
-        author_id,
-        is_draft
-    );
+    IF (r.post).id = 0 THEN
+        post_id := i_post((d.userd).id);
+    ELSE
+        post_id := (r.post).id;
+    END IF;
 
-    RETURN post_trans_id;
+    PERFORM i_post_translation(
+        post_id,
+        (d.lang).id,
+        (r.post).title,
+        (r.post).description,
+        (r.post).body,
+        (r.post).permalink,
+        (d.userd).id,
+        (r.post).draft
+    );
 
 END;
 
