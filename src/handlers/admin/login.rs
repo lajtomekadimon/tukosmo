@@ -1,10 +1,29 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use postgres_types::{ToSql, FromSql};
 
+use crate::handlers::website::user_request::user_request;
 use crate::i18n::t::t;
 use crate::templates::admin::login::Login;
-use crate::handlers::website::website_handler::website_handler;
-use crate::database::types::{AdminDataDB, UserDB};
+use crate::database::types;
+use crate::database::query_db::{QueryFunction, query_db};
+
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct LoginARequest {
+    pub req: types::WebsiteRequest,
+}
+
+impl QueryFunction for LoginARequest {
+    fn query(&self) -> &str {
+        "SELECT awa_login($1)"
+    }
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct LoginAResponse {
+    pub data: types::WebsiteDataDB,
+}
 
 
 pub async fn login(
@@ -12,14 +31,22 @@ pub async fn login(
     id: Identity,
 ) -> impl Responder {
 
-    match website_handler(req, id.clone()) {
+    let user_req = user_request(req.clone(), id.clone());
 
-        Ok(data) => {
+    match query_db(
+        LoginARequest {
+            req: user_req,
+        },
+    ) {
 
-            if let Some(_user) = data.userd {
+        Ok(row) => {
+
+            let q: LoginAResponse = row.get(0);
+
+            if let Some(_user) = q.data.userd {
 
                 let dashboard_route = "/{lang}/admin/"
-                    .replace("{lang}", &data.lang.code);
+                    .replace("{lang}", &q.data.lang.code);
 
                 HttpResponse::Found()
                     .header("Location", dashboard_route)
@@ -33,27 +60,24 @@ pub async fn login(
                 let html = Login {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Login [noun]", &data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &data.lang.code)
+                        a = &t("Login [noun]", &q.data.lang.code),
+                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                     ),
-                    data: &AdminDataDB {
-                        userd: UserDB {
-                            id: 0,
-                            email: "".to_string(),
-                            name: "".to_string(),
-                        },
-                        lang: data.lang,
-                        languages: data.languages,
-                    },
+                    q: &q,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
 
             }
 
-        }
+        },
 
-        Err(r) => r
+        Err(e) => {
+            println!("{}", e);
+            HttpResponse::Found()
+                .header("Location", "/")  // TODO
+                .finish()
+        },
 
     }
 

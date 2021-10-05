@@ -3,25 +3,34 @@ use markup;
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::AdminDataDB;
+use crate::handlers::admin::login::LoginAResponse;
+use crate::database::types::{AdminDataDB, UserDB};
 
 
 markup::define! {
     Login<'a>(
         title: &'a str,
-        data: &'a AdminDataDB,
+        q: &'a LoginAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &AdminDataDB {
+                userd: UserDB {
+                    id: 0,
+                    email: "".to_string(),
+                    name: "".to_string(),
+                },
+                lang: q.data.lang.clone(),
+                languages: q.data.languages.clone(),
+            },
             content: Content {
-                data: data,
+                q: q,
             },
         }
     }
 
     Content<'a>(
-        data: &'a AdminDataDB,
+        q: &'a LoginAResponse,
     ) {
 
         section[class = "hero is-success is-fullheight"] {
@@ -34,26 +43,34 @@ markup::define! {
                             }
 
                             @Form {
-                                data: data,
+                                q: q,
                             }
                         }
 
                         p[class = "has-text-grey"] {
                             a[href = "/"] {
-                                {&t("Sign up [verb]", &data.lang.code)}
+                                {&t("Sign up [verb]", &q.data.lang.code)}
                             }
 
                             " · "
 
                             a[href = "/"] {
-                                {&t("Forgotten password?", &data.lang.code)}
+                                {&t("Forgotten password?", &q.data.lang.code)}
                             }
                         }
 
                         div[class = "mt-3"] {
                             @AdminLangDropdown {
                                 route: "/admin/login",
-                                data: data,
+                                data: &AdminDataDB {
+                                    userd: UserDB {
+                                        id: 0,
+                                        email: "".to_string(),
+                                        name: "".to_string(),
+                                    },
+                                    lang: q.data.lang.clone(),
+                                    languages: q.data.languages.clone(),
+                                },
                             }
                         }
                     }
@@ -64,11 +81,11 @@ markup::define! {
     }
 
     Form<'a>(
-        data: &'a AdminDataDB,
+        q: &'a LoginAResponse,
     ) {
         form[
             action = "/{lang}/admin/login"
-                .replace("{lang}", &data.lang.code),
+                .replace("{lang}", &q.data.lang.code),
             method = "post",
         ] {
             div[class = "field"] {
@@ -77,7 +94,7 @@ markup::define! {
                         class = "input is-large",
                         name = "email",
                         type = "email",
-                        placeholder = &t("Your email", &data.lang.code),
+                        placeholder = &t("Your email", &q.data.lang.code),
                         autofocus = "",
                     ];
                 }
@@ -89,7 +106,7 @@ markup::define! {
                         class = "input is-large",
                         name = "password",
                         type = "password",
-                        placeholder = &t("Your password", &data.lang.code),
+                        placeholder = &t("Your password", &q.data.lang.code),
                     ];
                 }
             }
@@ -97,7 +114,7 @@ markup::define! {
             button[
                 class = "button is-block is-info is-large is-fullwidth",
             ] {
-                {&t("Login [verb]", &data.lang.code)}
+                {&t("Login [verb]", &q.data.lang.code)}
                 " "
                 i[class = "eos-icons"] { "login" }
             }
