@@ -4,38 +4,38 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::database::types::AdminDataDB;
+use crate::handlers::admin::new_post::NewPostAResponse;
 
 
 markup::define! {
     NewPost<'a>(
         title: &'a str,
-        data: &'a AdminDataDB,
+        q: &'a NewPostAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &q.data,
             content: AdminPanel {
                 content: Content {
-                    data: data,
+                    q: q,
                 },
                 current_page: "new_post",
-                data: data,
+                data: &q.data,
             },
         }
     }
 
     Content<'a>(
-        data: &'a AdminDataDB,
+        q: &'a NewPostAResponse,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("New post", &data.lang.code)}
+                {&t("New post", &q.data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
                         route: "/admin/new_post",
-                        data: data,
+                        data: &q.data,
                     }
                 }
             }
@@ -43,12 +43,12 @@ markup::define! {
             form[
                 method = "post",
                 action = "/{lang}/admin/new_post"
-                    .replace("{lang}", &data.lang.code)
+                    .replace("{lang}", &q.data.lang.code)
                 ,
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Title", &data.lang.code)}
+                        {&t("Title", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -61,7 +61,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Permalink", &data.lang.code)}
+                        {&t("Permalink", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         input[
@@ -74,7 +74,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Description", &data.lang.code)}
+                        {&t("Description", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -87,7 +87,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Post's body", &data.lang.code)}
+                        {&t("Post's body", &q.data.lang.code)}
                     }
                     div[class = "control"] {
                         textarea[
@@ -107,7 +107,7 @@ markup::define! {
                                 value = "yes",
                             ];
                             " "
-                            {&t("Draft", &data.lang.code)}
+                            {&t("Draft", &q.data.lang.code)}
                         }
                     }
                 }
@@ -115,17 +115,17 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &data.lang.code)}
+                            {&t("Submit", &q.data.lang.code)}
                         }
                     }
                     div[class = "control"] {
                         a[
                             href = "/{lang}/admin/posts"
-                                .replace("{lang}", &data.lang.code)
+                                .replace("{lang}", &q.data.lang.code)
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &data.lang.code)}
+                            {&t("Cancel", &q.data.lang.code)}
                         }
                     }
                 }
