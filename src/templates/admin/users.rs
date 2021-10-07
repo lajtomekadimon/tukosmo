@@ -2,21 +2,21 @@ use markup;
 
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::database::types::AdminDataDB;
+use crate::handlers::admin::users::UsersAResponse;
 
 
 markup::define! {
     Users<'a>(
         title: &'a str,
-        data: &'a AdminDataDB,
+        q: &'a UsersAResponse,
     ) {
         @AdminLayout {
             title: title,
-            data: data,
+            data: &q.data,
             content: AdminPanel {
                 content: Content {},
                 current_page: "users",
-                data: data,
+                data: &q.data,
             },
         }
     }
