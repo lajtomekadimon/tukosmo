@@ -1,4 +1,16 @@
 
+CREATE TYPE "AdminRequest" AS (
+    session UUID,
+    lang_code TEXT
+);
+
+CREATE TYPE "WebsiteRequest" AS (
+    session UUID,
+    lang_code TEXT
+);
+
+/*------------*/
+
 CREATE TYPE "UserDB" AS (
     id BIGINT,
     email TEXT,
