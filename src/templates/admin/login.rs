@@ -112,7 +112,7 @@ markup::define! {
             }
 
             button[
-                class = "button is-block is-info is-large is-fullwidth",
+                class = "button is-block is-link is-large is-fullwidth",
             ] {
                 {&t("Login [verb]", &q.data.lang.code)}
                 " "
