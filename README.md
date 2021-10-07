@@ -22,7 +22,7 @@ Technical features:
 https://github.com/actix/actix-web).
 - [x] No ORM! Pure SQL code called by native [PostgreSQL driver](
 https://github.com/sfackler/rust-postgres).
-- [ ] "One request, one query" policy.
+- [x] "One request, one query" policy.
 - [x] Blazingly fast HTML rendering with [markup.rs](
 https://github.com/utkarshkukreti/markup.rs).
 - [ ] Minimum of allocation and copying in Rust (efficiency!).
