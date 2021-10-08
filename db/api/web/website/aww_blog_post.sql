@@ -43,9 +43,9 @@ BEGIN
         r.permalink
     );
 
-    -- TODO: Check post's permalink
+    -- Check permalink
     IF post IS NULL THEN
-        RAISE EXCEPTION 'TODO: Post permalink is not correct.';
+        PERFORM err_wrong_post_permalink();
     END IF;
 
     -- User is logged in
