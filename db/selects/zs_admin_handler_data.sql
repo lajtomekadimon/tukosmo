@@ -27,21 +27,19 @@ BEGIN
         s_language_id_by_code((req).lang_code)
     );
 
+    IF userd IS NULL THEN
+        PERFORM err_user_not_logged_in();
+    END IF;
+
     lang := s_current_language_by_code((req).lang_code);
+
+    IF lang IS NULL THEN
+        PERFORM err_wrong_lang_code();
+    END IF;
 
     languages := s_languages(
         s_language_id_by_code((req).lang_code)
     );
-
-    IF userd IS NULL THEN
-
-        PERFORM err_user_not_logged_in();
-
-    ELSIF lang IS NULL THEN
-
-        RAISE EXCEPTION '';
-
-    END IF;
 
     RETURN (
         userd,
