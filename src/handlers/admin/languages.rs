@@ -22,8 +22,7 @@ impl QueryFunction for LanguagesARequest {
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LanguagesAResponse {
-    pub data: types::AdminDataDB,
-    pub languages: Vec<types::LanguageDB>,
+    pub data: types::AdminDataDB
 }
 
 

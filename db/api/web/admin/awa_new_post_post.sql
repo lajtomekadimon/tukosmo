@@ -28,6 +28,8 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
+    -- TODO: Check all fields
+
     IF (r.post).id = 0 THEN
         post_id := i_post((d.userd).id);
     ELSE

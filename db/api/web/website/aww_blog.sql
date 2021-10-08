@@ -46,13 +46,6 @@ BEGIN
 
     posts := s_posts_by_lang(language_of_user);
 
-    -- TODO: Maybe I should consider empty array too?
-    IF posts IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: There''s something wrong with posts.';
-
-    END IF;
-
     total_results := sc_posts_by_lang(language_of_user);
 
     RETURN ROW(

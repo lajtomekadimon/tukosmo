@@ -44,9 +44,7 @@ BEGIN
 
     -- Currently, if NULL then it's a new translation
     /*IF post IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Post ID is not correct.';
-
+        RAISE EXCEPTION '';
     END IF;*/
 
     -- User is logged in

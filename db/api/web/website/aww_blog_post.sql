@@ -42,10 +42,9 @@ BEGIN
         r.permalink
     );
 
+    -- TODO: Check post's permalink
     IF post IS NULL THEN
-
         RAISE EXCEPTION 'TODO: Post permalink is not correct.';
-
     END IF;
 
     -- User is logged in

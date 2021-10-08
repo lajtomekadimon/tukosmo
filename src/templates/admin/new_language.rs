@@ -64,7 +64,7 @@ markup::define! {
                         {&t("Language name", &q.data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for lang in q.languages.iter() {
+                        @for lang in q.data.languages.iter() {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {

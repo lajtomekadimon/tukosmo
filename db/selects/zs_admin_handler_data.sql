@@ -14,6 +14,8 @@ AS $$
 
 DECLARE
 
+    language_of_user BIGINT;
+
     userd "UserDB";
 
     lang "LanguageDB";
@@ -22,9 +24,11 @@ DECLARE
 
 BEGIN
 
+    language_of_user := s_language_id_by_code((req).lang_code);
+
     userd := s_user_by_session_lang(
         (req).session,
-        s_language_id_by_code((req).lang_code)
+        language_of_user
     );
 
     IF userd IS NULL THEN
@@ -37,9 +41,7 @@ BEGIN
         PERFORM err_wrong_lang_code();
     END IF;
 
-    languages := s_languages(
-        s_language_id_by_code((req).lang_code)
-    );
+    languages := s_languages(language_of_user);
 
     RETURN (
         userd,

@@ -30,6 +30,10 @@ BEGIN
 
     PERFORM s_admin_handler_data(r.req);
 
+    -- TODO: Check lang_code
+
+    -- TODO: Check lang_ids
+
     language_id := i_language(r.lang_code);
 
     FOR i IN 1..ARRAY_LENGTH(r.lang_names, 1) LOOP

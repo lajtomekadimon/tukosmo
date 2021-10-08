@@ -67,7 +67,7 @@ markup::define! {
                     }
                 }
                 tbody {
-                    @for lang in q.languages.iter() {
+                    @for lang in q.data.languages.iter() {
                         tr[
                             class = if !lang.has_all_names {
                                 "has-background-danger-light"

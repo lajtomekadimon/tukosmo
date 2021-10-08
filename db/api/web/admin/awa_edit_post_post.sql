@@ -26,6 +26,8 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
+    -- TODO: Check all fields
+
     -- Update existing post
     IF c_post_has_trans(
         (r.post).id,
