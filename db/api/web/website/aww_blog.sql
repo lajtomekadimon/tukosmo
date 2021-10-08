@@ -40,6 +40,7 @@ DECLARE
 
 BEGIN
 
+    -- Check request and select common data
     d := s_website_handler_data(r.req);
 
     language_of_user := (d.lang).id;

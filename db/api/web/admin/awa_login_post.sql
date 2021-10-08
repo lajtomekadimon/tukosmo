@@ -35,6 +35,7 @@ DECLARE
 
 BEGIN
 
+    -- Check request and select common data
     handler_data := s_website_handler_data(r.req);
 
     real_user_password := s_user_password_by_email(r.email);

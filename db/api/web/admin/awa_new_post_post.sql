@@ -26,6 +26,7 @@ DECLARE
 
 BEGIN
 
+    -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
     -- TODO: Check all fields

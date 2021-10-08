@@ -36,6 +36,7 @@ DECLARE
 
 BEGIN
 
+    -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
     language_of_user := (d.lang).id;

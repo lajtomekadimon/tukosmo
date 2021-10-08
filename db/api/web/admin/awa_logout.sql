@@ -19,6 +19,7 @@ AS $$
 
 BEGIN
 
+    -- Check request
     PERFORM s_admin_handler_data(r.req);
 
     PERFORM d_session((r.req).session);

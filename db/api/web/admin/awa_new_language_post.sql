@@ -28,6 +28,7 @@ DECLARE
 
 BEGIN
 
+    -- Check request
     PERFORM s_admin_handler_data(r.req);
 
     IF NOT e_is_lang_code(r.lang_code) THEN

@@ -30,6 +30,7 @@ DECLARE
 
 BEGIN
 
+    -- Check request
     PERFORM s_admin_handler_data(r.req);
 
     IF NOT c_lang_by_id(r.language_id) THEN
