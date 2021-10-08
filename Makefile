@@ -67,6 +67,7 @@ structuredb:
 	su -m postgres -c "cat $(STRUDB) | psql -q -d $(PG_DB)"
 
 DFUNDB=db/checks/*.sql \
+	   db/errors/*.sql \
        db/selects/*.sql \
        db/selects/count/*.sql \
        db/inserts/*.sql \
