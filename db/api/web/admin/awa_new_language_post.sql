@@ -22,6 +22,8 @@ AS $$
 
 DECLARE
 
+    other_lang_id BIGINT;
+
     language_id BIGINT;
     lang_name TEXT;
     lang_id BIGINT;
@@ -35,7 +37,12 @@ BEGIN
         PERFORM err_field_is_not_lang_code();
     END IF;
 
-    -- TODO: Check lang code is unique
+    other_lang_id := s_language_id_by_code(r.lang_code);
+    IF other_lang_id IS NOT NULL THEN
+        IF other_lang_id <> r.language_id THEN
+            PERFORM err_lang_code_already_exists();
+        END IF;
+    END IF;
 
     -- TODO: Check lang_ids
 
