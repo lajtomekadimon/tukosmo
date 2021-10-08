@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION c_lang_by_id(
+    lang_id BIGINT
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT EXISTS(
+    SELECT 1
+    FROM t_languages
+    WHERE tl_id = lang_id
+    LIMIT 1
+)
+
+$$;

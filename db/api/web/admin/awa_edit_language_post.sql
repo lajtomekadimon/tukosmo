@@ -32,6 +32,14 @@ BEGIN
 
     PERFORM s_admin_handler_data(r.req);
 
+    IF NOT c_lang_by_id(r.language_id) THEN
+        PERFORM err_wrong_lang_id();
+    END IF;
+
+    -- TODO: Check lang code
+
+    -- TODO: Check lang_ids
+
     PERFORM u_language(
         r.language_id,
         r.lang_code

@@ -46,23 +46,13 @@ BEGIN
     );
 
     IF lang IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Language ID is not correct.';
-
+        PERFORM err_wrong_lang_id();
     END IF;
 
     language_names := s_language_names(
         r.lang,
         language_of_user
     );
-
-    -- TODO: Maybe I should consider empty array too?
-    IF language_names IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: There''s something wrong with language names.';
-
-    END IF;
-
 
     RETURN ROW(
         -- data
