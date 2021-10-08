@@ -60,13 +60,13 @@ BEGIN
 
         ELSE
 
-            RAISE EXCEPTION 'TODO: User exists but password is not valid.';
+            PERFORM err_wrong_user_password();
 
         END IF;
 
     ELSE
 
-        RAISE EXCEPTION 'TODO: No user has that email.';
+        PERFORM err_wrong_user_email();
 
     END IF;
 

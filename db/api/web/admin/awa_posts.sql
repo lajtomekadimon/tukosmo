@@ -53,13 +53,6 @@ BEGIN
         r.page
     );
 
-    -- TODO: Maybe I should consider empty array too?
-    IF posts IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: There''s something wrong with posts.';
-
-    END IF;
-
     total_results := sc_posts(language_of_user);
 
     total_pages := CEIL(total_results / r.results_per_page::NUMERIC);

@@ -33,15 +33,15 @@ BEGIN
     -- Check request
     PERFORM s_admin_handler_data(r.req);
 
+    -- Check language code is correct
     IF NOT e_is_lang_code(r.lang_code) THEN
         PERFORM err_field_is_not_lang_code();
     END IF;
 
+    -- Check language code is unique
     other_lang_id := s_language_id_by_code(r.lang_code);
     IF other_lang_id IS NOT NULL THEN
-        IF other_lang_id <> r.language_id THEN
-            PERFORM err_lang_code_already_exists();
-        END IF;
+        PERFORM err_lang_code_already_exists();
     END IF;
 
     language_id := i_language(r.lang_code);
@@ -50,10 +50,12 @@ BEGIN
         lang_id := r.lang_ids[i];
         lang_name := r.lang_names[i];
 
+        -- Check each language ID of each name is correct
         IF NOT c_lang_by_id(lang_id) THEN
             PERFORM err_some_wrong_lang_id_of_name();
         END IF;
 
+        -- Check each name is correct
         IF NOT e_is_lang_name(lang_name) THEN
             PERFORM err_some_wrong_lang_name();
         END IF;

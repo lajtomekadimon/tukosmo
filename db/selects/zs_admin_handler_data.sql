@@ -31,12 +31,14 @@ BEGIN
         language_of_user
     );
 
+    -- Check that user is logged in
     IF userd IS NULL THEN
         PERFORM err_user_not_logged_in();
     END IF;
 
     lang := s_current_language_by_code((req).lang_code);
 
+    -- Check language code is correct
     IF lang IS NULL THEN
         PERFORM err_wrong_lang_code();
     END IF;

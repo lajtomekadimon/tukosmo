@@ -46,6 +46,7 @@ BEGIN
         language_of_user
     );
 
+    -- Check language ID is correct
     IF lang IS NULL THEN
         PERFORM err_wrong_lang_id();
     END IF;
