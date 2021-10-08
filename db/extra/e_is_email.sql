@@ -12,6 +12,7 @@ PARALLEL SAFE
 
 AS $$
 
+-- This is case insensitive (~ for sensitive)
 SELECT text_value ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
 
 $$;

@@ -36,7 +36,11 @@ BEGIN
         PERFORM err_wrong_lang_id();
     END IF;
 
-    -- TODO: Check lang code
+    IF NOT e_is_lang_code(r.lang_code) THEN
+        PERFORM err_field_is_not_lang_code();
+    END IF;
+
+    -- TODO: Check lang code is unique
 
     -- TODO: Check lang_ids
 
