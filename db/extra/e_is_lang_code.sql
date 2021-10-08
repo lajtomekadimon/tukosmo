@@ -12,12 +12,12 @@ PARALLEL SAFE
 
 AS $$
 
-SELECT (text_value ~ '^[a-z]+$' AND CHAR_LENGTH(text_value) = 2)
+SELECT (text_value ~ '^[a-z]+$' AND LENGTH(text_value) = 2)
     OR (
-        SUBSTRING(text_value FOR 2) ~ '^[a-z]+$' AND
+        LEFT(text_value, 2) ~ '^[a-z]+$' AND
         SUBSTRING(text_value FROM 3 FOR 1) = '-' AND
-        SUBSTRING(text_value FROM 4) ~ '^[a-z]+$' AND
-        CHAR_LENGTH(text_value) = 5
+        RIGHT(text_value, 2) ~ '^[a-z]+$' AND
+        LENGTH(text_value) = 5
     )
 
 $$;

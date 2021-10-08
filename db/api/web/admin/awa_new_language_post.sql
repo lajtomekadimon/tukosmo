@@ -54,6 +54,10 @@ BEGIN
             PERFORM err_some_wrong_lang_id_of_name();
         END IF;
 
+        IF NOT e_is_lang_name(lang_name) THEN
+            PERFORM err_some_wrong_lang_name();
+        END IF;
+
         PERFORM i_language_name(
             language_id,
             lang_name,

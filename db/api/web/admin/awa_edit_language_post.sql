@@ -63,6 +63,10 @@ BEGIN
             PERFORM err_some_wrong_lang_id_of_name();
         END IF;
 
+        IF NOT e_is_lang_name(lang_name) THEN
+            PERFORM err_some_wrong_lang_name();
+        END IF;
+
         lang_name_id = s_lname_id_by_lang_nlang(
             r.language_id,
             lang_id
