@@ -19,11 +19,7 @@ AS $$
 
 BEGIN
 
-    IF s_admin_handler_data(r.req) IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
-
-    END IF;
+    PERFORM s_admin_handler_data(r.req);
 
     PERFORM d_session((r.req).session);
 

@@ -28,12 +28,6 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
-    IF d IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
-
-    END IF;
-
     IF (r.post).id = 0 THEN
         post_id := i_post((d.userd).id);
     ELSE

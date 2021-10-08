@@ -26,12 +26,6 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
-    IF d IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
-
-    END IF;
-
     -- Update existing post
     IF c_post_has_trans(
         (r.post).id,

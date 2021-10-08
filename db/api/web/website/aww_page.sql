@@ -31,12 +31,6 @@ BEGIN
 
     d := s_website_handler_data(r.req);
 
-    IF d IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Wrong request.';
-
-    END IF;
-
     language_of_user := (d.lang).id;
 
     ---

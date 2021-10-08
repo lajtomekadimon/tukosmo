@@ -28,11 +28,7 @@ DECLARE
 
 BEGIN
 
-    IF s_admin_handler_data(r.req) IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
-
-    END IF;
+    PERFORM s_admin_handler_data(r.req);
 
     language_id := i_language(r.lang_code);
 

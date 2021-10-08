@@ -35,12 +35,6 @@ BEGIN
 
     d := s_admin_handler_data(r.req);
 
-    IF d IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Wrong request or user not logged in.';
-
-    END IF;
-
     language_of_user := (d.lang).id;
 
     post := s_post_by_id_lang(

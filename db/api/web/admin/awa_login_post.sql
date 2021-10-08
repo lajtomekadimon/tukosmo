@@ -37,12 +37,6 @@ BEGIN
 
     handler_data := s_website_handler_data(r.req);
 
-    IF handler_data.lang IS NULL THEN
-
-        RAISE EXCEPTION 'TODO: Bad request (probably lang_code).';
-
-    END IF;
-
     real_user_password := s_user_password_by_email(r.email);
 
     -- The user exists
