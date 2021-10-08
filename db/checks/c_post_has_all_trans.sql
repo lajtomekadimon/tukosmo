@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION c_post_has_all_trans(
-
     post_id BIGINT
-
 )
 
 RETURNS BOOL

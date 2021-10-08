@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_language_id_by_code(
-
     lang_code TEXT
-
 )
 
 RETURNS BIGINT

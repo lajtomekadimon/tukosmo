@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_post_translation(
-
     post_trans_id BIGINT
-
 )
 
 RETURNS BIGINT

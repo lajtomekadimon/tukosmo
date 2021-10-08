@@ -1,6 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_posts_by_lang(
-    language_of_user INT8
+    language_of_user BIGINT
 )
 
 RETURNS "PostDB"[]

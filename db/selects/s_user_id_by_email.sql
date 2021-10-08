@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_user_id_by_email(
-
     email_value TEXT
-
 )
 
 RETURNS BIGINT

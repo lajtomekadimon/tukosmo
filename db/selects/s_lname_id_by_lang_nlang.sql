@@ -1,10 +1,7 @@
 
 CREATE OR REPLACE FUNCTION s_lname_id_by_lang_nlang(
-
     lang_id BIGINT,
-
     name_lang_id BIGINT
-
 )
 
 RETURNS BIGINT

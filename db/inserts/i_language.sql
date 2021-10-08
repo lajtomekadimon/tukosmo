@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION i_language(
-
     code_value TEXT
-
 )
 
 RETURNS BIGINT

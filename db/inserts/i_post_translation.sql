@@ -1,22 +1,13 @@
 
 CREATE OR REPLACE FUNCTION i_post_translation(
-
     post_id BIGINT,
-
     lang_id BIGINT,
-
     title_value TEXT,
-
     description_value TEXT,
-
     body_value TEXT,
-
     permalink_value TEXT,
-
     translator_id BIGINT,
-
     is_draft BOOL
-
 )
 
 RETURNS BIGINT

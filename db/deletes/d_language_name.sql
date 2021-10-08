@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_language_name(
-
     lang_name_id BIGINT
-
 )
 
 RETURNS BIGINT

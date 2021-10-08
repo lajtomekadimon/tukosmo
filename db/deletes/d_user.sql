@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_user(
-
     user_id BIGINT
-
 )
 
 RETURNS BIGINT

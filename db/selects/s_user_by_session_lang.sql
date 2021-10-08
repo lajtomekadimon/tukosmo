@@ -1,10 +1,7 @@
 
 CREATE OR REPLACE FUNCTION s_user_by_session_lang(
-
     session_id UUID,
-
     lang_id BIGINT  -- This is for multilang names
-
 )
 
 RETURNS "UserDB"

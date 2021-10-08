@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_post(
-
     post_id BIGINT
-
 )
 
 RETURNS BIGINT

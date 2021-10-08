@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_page_translation(
-
     page_trans_id BIGINT
-
 )
 
 RETURNS BIGINT

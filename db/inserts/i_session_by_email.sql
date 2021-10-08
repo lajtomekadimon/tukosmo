@@ -1,10 +1,7 @@
 
 CREATE OR REPLACE FUNCTION i_session_by_email(
-
     user_email TEXT,
-
     user_agent_value TEXT
-
 )
 
 RETURNS UUID

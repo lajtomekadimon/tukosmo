@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION c_session_by_id(
-
     session_id UUID
-
 )
 
 RETURNS BOOL

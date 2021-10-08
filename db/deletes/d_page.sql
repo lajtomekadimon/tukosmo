@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_page(
-
     page_id BIGINT
-
 )
 
 RETURNS BIGINT

@@ -1,12 +1,8 @@
 
 CREATE OR REPLACE FUNCTION i_language_name(
-
     lang_id BIGINT,
-
     name_value TEXT,
-
     name_lang_id BIGINT
-
 )
 
 RETURNS BIGINT

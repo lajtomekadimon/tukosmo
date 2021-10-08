@@ -1,10 +1,7 @@
 
 CREATE OR REPLACE FUNCTION c_post_has_trans(
-
     post_id BIGINT,
-
     lang_id BIGINT
-
 )
 
 RETURNS BOOL

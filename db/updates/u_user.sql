@@ -1,14 +1,9 @@
 
 CREATE OR REPLACE FUNCTION u_user(
-
     user_id BIGINT,
-
     email_value TEXT,
-
     new_epassword_value TEXT,
-
     name_value TEXT
-
 )
 
 RETURNS BIGINT

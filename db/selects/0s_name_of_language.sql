@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE FUNCTION s_name_of_language(
-    language_id INT8,
-    language_of_name INT8
+    language_id BIGINT,
+    language_of_name BIGINT
 )
 
 RETURNS TEXT

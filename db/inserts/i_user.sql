@@ -1,12 +1,8 @@
 
 CREATE OR REPLACE FUNCTION i_user(
-
     email_value TEXT,
-
     epassword_value TEXT,
-
     name_value TEXT
-
 )
 
 RETURNS BIGINT

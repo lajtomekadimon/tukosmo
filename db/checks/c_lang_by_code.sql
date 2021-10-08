@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION c_lang_by_code(
-
     lang_code TEXT
-
 )
 
 RETURNS BOOL

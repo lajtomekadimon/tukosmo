@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_admin_handler_data(
-
     req "AdminRequest"
-
 )
 
 RETURNS "AdminDataDB"

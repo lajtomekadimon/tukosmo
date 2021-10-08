@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE FUNCTION s_language_by_code_lang(
     lang_code TEXT,
-    language_of_user INT8
+    language_of_user BIGINT
 )
 
 RETURNS "LanguageDB"

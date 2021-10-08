@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION c_language_has_all_names(
-
     language_id BIGINT
-
 )
 
 RETURNS BOOL

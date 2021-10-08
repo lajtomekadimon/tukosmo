@@ -1,10 +1,7 @@
 
 CREATE OR REPLACE FUNCTION i_session(
-
     user_id BIGINT,
-
     user_agent_value TEXT
-
 )
 
 RETURNS UUID

@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION d_session(
-
     session_id UUID
-
 )
 
 RETURNS UUID

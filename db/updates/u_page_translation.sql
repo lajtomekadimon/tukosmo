@@ -1,22 +1,13 @@
 
 CREATE OR REPLACE FUNCTION u_page_translation(
-
     page_id BIGINT,
-
     lang_id BIGINT,
-
     title_value TEXT,
-
     body_value TEXT,
-
     permalink_value TEXT,
-
     author_id BIGINT,
-
     is_draft BOOL,
-
     is_deleted BOOL
-
 )
 
 RETURNS BIGINT

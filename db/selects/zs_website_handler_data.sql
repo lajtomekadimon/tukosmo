@@ -1,8 +1,6 @@
 
 CREATE OR REPLACE FUNCTION s_website_handler_data(
-
     req "WebsiteRequest"
-
 )
 
 RETURNS "WebsiteDataDB"
