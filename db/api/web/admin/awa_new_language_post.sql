@@ -44,13 +44,15 @@ BEGIN
         END IF;
     END IF;
 
-    -- TODO: Check lang_ids
-
     language_id := i_language(r.lang_code);
 
     FOR i IN 1..ARRAY_LENGTH(r.lang_names, 1) LOOP
         lang_id := r.lang_ids[i];
         lang_name := r.lang_names[i];
+
+        IF NOT c_lang_by_id(lang_id) THEN
+            PERFORM err_some_wrong_lang_id_of_name();
+        END IF;
 
         PERFORM i_language_name(
             language_id,
