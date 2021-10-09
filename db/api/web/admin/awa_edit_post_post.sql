@@ -27,13 +27,24 @@ BEGIN
     -- Check request
     d := s_admin_handler_data(r.req);
 
-    -- TODO: Check all fields
+    -- Check post title
+    IF NOT e_is_title((r.post).title) THEN
+        PERFORM err_wrong_title;
+    END IF;
+
+    -- TODO: Check post description
+
+    -- TODO: Check post body
+
+    -- TODO: Check post permalink
 
     -- Update existing post
     IF c_post_has_trans(
         (r.post).id,
         (d.lang).id
     ) THEN
+
+        -- TODO: Check post ID
 
         PERFORM u_post_translation(
             (r.post).id,
