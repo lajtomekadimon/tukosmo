@@ -37,7 +37,10 @@ BEGIN
         PERFORM err_wrong_description;
     END IF;
 
-    -- TODO: Check post body
+    -- Check post body
+    IF NOT e_is_body_text((r.post).body) THEN
+        PERFORM err_wrong_body_text;
+    END IF;
 
     -- TODO: Check post permalink
 

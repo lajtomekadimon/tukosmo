@@ -1,0 +1,17 @@
+
+CREATE OR REPLACE FUNCTION e_is_body_text(
+    text_value TEXT
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+IMMUTABLE
+RETURNS NULL ON NULL INPUT
+PARALLEL SAFE
+
+AS $$
+
+SELECT (LENGTH(text_value) > 0)
+
+$$;

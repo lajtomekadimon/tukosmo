@@ -5,7 +5,7 @@ CREATE TABLE t_page_translations (
     tpt_page       BIGINT      NOT NULL REFERENCES t_pages,
     tpt_lang       BIGINT      NOT NULL REFERENCES t_languages,
     tpt_title      TEXT        NOT NULL CHECK(e_is_title(tpt_title)),
-    tpt_body       TEXT        NOT NULL,
+    tpt_body       TEXT        NOT NULL CHECK(e_is_body_text(tpt_body)),
     tpt_permalink  TEXT        NOT NULL,  /* TODO: Check max length */
     tpt_translator BIGINT      NOT NULL REFERENCES t_users,
     tpt_date       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
