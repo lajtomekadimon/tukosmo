@@ -44,7 +44,10 @@ BEGIN
         PERFORM err_wrong_body_text;
     END IF;
 
-    -- TODO: Check post permalink
+    -- Check post permalink
+    IF NOT e_is_permalink((r.post).permalink) THEN
+        PERFORM err_wrong_permalink;
+    END IF;
 
     IF (r.post).id = 0 THEN
 

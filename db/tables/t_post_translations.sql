@@ -7,7 +7,7 @@ CREATE TABLE t_post_translations (
     tpt_title       TEXT        NOT NULL CHECK(e_is_title(tpt_title)),
     tpt_description TEXT        NOT NULL CHECK(e_is_description(tpt_description)),
     tpt_body        TEXT        NOT NULL CHECK(e_is_body_text(tpt_body)),
-    tpt_permalink   TEXT        NOT NULL,  /* TODO: Check max length */
+    tpt_permalink   TEXT        NOT NULL CHECK(e_is_permalink(tpt_permalink)),
     tpt_translator  BIGINT      NOT NULL REFERENCES t_users,
     tpt_date        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     tpt_draft       BOOL        NOT NULL,
