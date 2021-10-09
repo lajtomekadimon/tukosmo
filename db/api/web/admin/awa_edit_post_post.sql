@@ -32,7 +32,10 @@ BEGIN
         PERFORM err_wrong_title;
     END IF;
 
-    -- TODO: Check post description
+    -- Check post description
+    IF NOT e_is_description((r.post).description) THEN
+        PERFORM err_wrong_description;
+    END IF;
 
     -- TODO: Check post body
 

@@ -5,7 +5,7 @@ CREATE TABLE t_post_translations (
     tpt_post        BIGINT      NOT NULL REFERENCES t_posts,
     tpt_lang        BIGINT      NOT NULL REFERENCES t_languages,
     tpt_title       TEXT        NOT NULL CHECK(e_is_title(tpt_title)),
-    tpt_description TEXT        NOT NULL,  /* TODO: Check max length */
+    tpt_description TEXT        NOT NULL CHECK(e_is_description(tpt_description)),
     tpt_body        TEXT        NOT NULL,
     tpt_permalink   TEXT        NOT NULL,  /* TODO: Check max length */
     tpt_translator  BIGINT      NOT NULL REFERENCES t_users,
