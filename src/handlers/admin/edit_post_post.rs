@@ -6,6 +6,13 @@ use postgres_types::{ToSql, FromSql};
 use crate::handlers::admin::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::i18n::t::t;
+use crate::i18n::t_error::t_error;
+use crate::handlers::admin::edit_post::{
+    EditPostARequest,
+    EditPostAResponse,
+};
+use crate::templates::admin::edit_post::EditPost;
 
 
 #[derive(Deserialize)]
@@ -81,24 +88,95 @@ pub async fn edit_post_post(
             ) {
 
                 Ok(_row) => {
+
                     let redirect_route = "/{lang}/admin/posts?success=yes"
                         .replace("{lang}", &user_req.lang_code);
 
                     HttpResponse::Found()
                         .header("Location", redirect_route)
                         .finish()
+
                 },
-                Err(e) => {
-                    println!("{}", e);
 
-                    let redirect_route = "/{lang}/admin/edit_post?id={id}"
-                        .replace("{lang}", &user_req.lang_code)
-                        .replace("{id}", &post_id.to_string());
-                    // TODO: Show what failed in the template!
+                Err(e) => match query_db(
+                    EditPostARequest {
+                        req: user_req,
+                        post: post_id.clone(),
+                    },
+                ) {
 
-                    HttpResponse::Found()
-                        .header("Location", redirect_route)
-                        .finish()
+                    Ok(row) => {
+
+                        let q: EditPostAResponse = row.get(0);
+
+                        if let Some(ref post) = q.post {
+                            let html = EditPost {
+                                title: &format!(
+                                    "{a} - {b}",
+                                    a = &t(
+                                        "Edit post: '{title}'",
+                                        &q.data.lang.code
+                                    ).replace("{title}", &post.title),
+                                    b = &t(
+                                        "Tukosmo Admin Panel",
+                                        &q.data.lang.code,
+                                    ),
+                                ),
+                                q: &q,
+                                error: &Some(t_error(e, &q.data.lang.code)),
+                            };
+
+                            HttpResponse::Ok().body(html.to_string())
+                        } else {
+                            let html = EditPost {
+                                title: &format!(
+                                    "{a} - {b}",
+                                    a = &t(
+                                        "Edit post: '{title}'",
+                                        &q.data.lang.code
+                                    ).replace("{title}", &post_id.to_string()),
+                                    b = &t(
+                                        "Tukosmo Admin Panel",
+                                        &q.data.lang.code,
+                                    ),
+                                ),
+                                q: &EditPostAResponse {
+                                    data: q.data.clone(),
+                                    post: Some(
+                                        types::PostDB{
+                                            id: post_id,
+                                            trans_id: 0,
+                                            lang: 0,
+                                            title: "".to_string(),
+                                            description: "".to_string(),
+                                            body: "".to_string(),
+                                            permalink: "".to_string(),
+                                            author: 0,
+                                            author_name: "".to_string(),
+                                            translator: q.data.userd.id,
+                                            translator_name: "".to_string(),
+                                            date: "".to_string(),
+                                            date_trans: "".to_string(),
+                                            draft: false,
+                                            deleted: false,
+                                        }
+                                    ),
+                                },
+                                error: &Some(t_error(e, &q.data.lang.code)),
+                            };
+
+                            HttpResponse::Ok().body(html.to_string())
+                        }
+
+                    }
+
+                    Err(e) => {
+                        println!("{}", e);
+                        HttpResponse::Found()
+                            .header("Location", "/")  // TODO
+                            .finish()
+                    },
+
                 },
 
             }

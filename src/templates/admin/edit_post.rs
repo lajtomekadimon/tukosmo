@@ -6,12 +6,14 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::edit_post::EditPostAResponse;
 use crate::database::types::PostDB;
+use crate::i18n::t_error::ErrorDB;
 
 
 markup::define! {
     EditPost<'a>(
         title: &'a str,
         q: &'a EditPostAResponse,
+        error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -20,6 +22,7 @@ markup::define! {
                 content: Content {
                     q: q,
                     post: &(q.post).as_ref().unwrap(),
+                    error: error,
                 },
                 current_page: "edit_post",
                 data: &q.data,
@@ -30,6 +33,7 @@ markup::define! {
     Content<'a>(
         q: &'a EditPostAResponse,
         post: &'a PostDB,
+        error: &'a Option<ErrorDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -44,6 +48,15 @@ markup::define! {
                             .replace("{id}", &post.id.to_string()),
                         data: &q.data,
                     }
+                }
+            }
+
+            @if let Some(e) = error {
+                div[
+                    class = "notification is-danger",
+                ] {
+                    button[class = "delete"] {}
+                    @e.message
                 }
             }
 

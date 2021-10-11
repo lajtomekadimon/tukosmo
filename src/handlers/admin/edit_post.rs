@@ -67,6 +67,7 @@ pub async fn edit_post(
                             b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                         ),
                         q: &q,
+                        error: &None,
                     };
 
                     HttpResponse::Ok().body(html.to_string())
@@ -102,6 +103,7 @@ pub async fn edit_post(
                                 }
                             ),
                         },
+                        error: &None,
                     };
 
                     HttpResponse::Ok().body(html.to_string())
