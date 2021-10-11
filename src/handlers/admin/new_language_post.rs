@@ -113,7 +113,7 @@ pub async fn new_language_post(
 
                 Ok(_row) => {
 
-                    let redirect_route = "/{lang}/admin/languages"
+                    let redirect_route = "/{lang}/admin/languages?success=yes"
                         .replace("{lang}", &user_req.lang_code);
 
                     HttpResponse::Found()

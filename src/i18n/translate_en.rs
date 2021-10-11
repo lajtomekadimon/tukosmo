@@ -80,6 +80,8 @@ pub fn translate_en(text_value: &str) -> &str {
         "Statistics" => "Statistics",
         "Status" => "Status",
         "Submit" => "Submit",
+        "There are languages without names." =>
+            "There are languages without names.",
         "Title" => "Title",
         "translated by {name}" => "translated by {name}",
         "Trash" => "Trash",
@@ -93,6 +95,8 @@ pub fn translate_en(text_value: &str) -> &str {
         "Website" => "Website",
         "Your email" => "Your email",
         "Your password" => "Your password",
+        "Your website languages were successfully updated." =>
+            "Your website languages were successfully updated.",
 
         //--------------//
 

@@ -79,6 +79,8 @@ pub fn translate_es(text_value: &str) -> &str {
         "Statistics" => "Estadísticas",
         "Status" => "Estado",
         "Submit" => "Enviar",
+        "There are languages without names." =>
+            "Hay idiomas sin nombres.",
         "Title" => "Título",
         "translated by {name}" => "traducido por {name}",
         "Trash" => "Papelera",
@@ -92,6 +94,9 @@ pub fn translate_es(text_value: &str) -> &str {
         "Website" => "Página web",
         "Your email" => "Tu correo electrónico",
         "Your password" => "Tu contraseña",
+        "Your website languages were successfully updated." =>
+            "Los idiomas de tu página web se actualizaron \
+            satisfactoriamente.",
 
         //--------------//
 

@@ -12,6 +12,7 @@ markup::define! {
     Languages<'a>(
         title: &'a str,
         q: &'a LanguagesAResponse,
+        success: &'a bool,
     ) {
         @AdminLayout {
             title: title,
@@ -19,6 +20,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    success: success,
                 },
                 current_page: "languages",
                 data: &q.data,
@@ -28,6 +30,7 @@ markup::define! {
 
     Content<'a>(
         q: &'a LanguagesAResponse,
+        success: &'a bool,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -47,6 +50,30 @@ markup::define! {
                              has-text-weight-normal mr-4",
                 ] {
                     {&t("Add language", &q.data.lang.code)}
+                }
+            }
+
+            @if **success {
+                div[
+                    class = "notification is-success",
+                ] {
+                    button[class = "delete"] {}
+                    {&t(
+                        "Your website languages were successfully updated.",
+                        &q.data.lang.code
+                    )}
+                }
+            }
+
+            @if q.some_lang_without_names {
+                div[
+                    class = "notification is-danger",
+                ] {
+                    button[class = "delete"] {}
+                    {&t(
+                        "There are languages without names.",
+                        &q.data.lang.code
+                    )}
                 }
             }
 

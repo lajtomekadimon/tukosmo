@@ -4,7 +4,8 @@ CREATE TYPE "LanguagesARequest" AS (
 );
 
 CREATE TYPE "LanguagesAResponse" AS (
-    data "AdminDataDB"
+    data "AdminDataDB",
+    some_lang_without_names BOOL
 );
 
 
@@ -27,6 +28,8 @@ DECLARE
 
     language_of_user BIGINT;
 
+    some_lang_without_names BOOL := FALSE;
+
 BEGIN
 
     -- Check request and select common data
@@ -34,9 +37,19 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
+    some_lang_without_names := EXISTS(
+        SELECT 1
+        FROM UNNEST(d.languages) lang
+        WHERE NOT lang.has_all_names
+        LIMIT 1
+    );
+
     RETURN ROW(
         -- data
-        d
+        d,
+
+        -- some_lang_without_names
+        some_lang_without_names
     );
 
 END;
