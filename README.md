@@ -40,23 +40,43 @@ https://github.com/utkarshkukreti/markup.rs).
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
 
-Website features:
+## Roadmap
 
-- [ ] Custom homepage.
-- [x] Blog.
-- [ ] Static pages.
-- [ ] Contact form.
-- [ ] Custom menu.
-- [ ] Custom widgets.
-
-Admin panel features:
-
-- [ ] Website's statistics.
-- [ ] Users management.
-- [x] Languages management.
-- [x] Posts management.
-- [ ] Pages management.
-- [ ] Files management.
+- [ ] 0.1
+    - [ ] Foundations of Tukosmo
+    - [x] Users system
+    - [x] Custom languages
+    - [x] Blog
+    - [ ] Pages
+    - [ ] Files
+    - [x] Admin Panel
+- [ ] 0.2
+    - [ ] FAQ
+    - [ ] Special pages (contact, team, cv, etc.)
+    - [ ] RSS
+    - [ ] Social links
+    - [ ] OpenGraph cards for Facebook, Twitter, Mastodon...
+- [ ] 0.3
+    - [ ] Custom homepage
+    - [ ] Custom menus and widgets
+    - [ ] Searcher
+- [ ] 0.4
+    - [ ] Improved user experience with JavaScript
+        - [ ] WYSIWYG CommonMark editor for posts, pages and FAQ
+        - [ ] Real-time form validation
+        - [ ] Change pages loading just the new content using Ajax
+- [ ] 0.5
+    - [ ] Statistics
+    - [ ] Server info
+- [ ] 1.0
+    - [ ] Self-update server
+    - [ ] Self-update Tukosmo
+- [ ] ?.?
+    - [ ] Download any post as PDF
+    - [ ] Safe payments between users
+    - [ ] Membership
+    - [ ] Shop
+    - [ ] Forum
 
 ## Instalation
 
