@@ -85,7 +85,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Language name", &q.data.lang.code)}
+                        {&t("Language names", &q.data.lang.code)}
                     }
                     p[class = "control"] {
                         @for name in q.names.iter() {

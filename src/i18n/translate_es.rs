@@ -49,6 +49,7 @@ pub fn translate_es(text_value: &str) -> &str {
             "¡Espero que tengas un buen día!",
         "Language" => "Idioma",
         "Language name" => "Nombre del idioma",
+        "Language names" => "Nombres del idioma",
         "Languages" => "Idiomas",
         "Last update" => "Última actualización",
         "Login [noun]" => "Inicio de sesión",

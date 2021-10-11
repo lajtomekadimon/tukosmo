@@ -53,6 +53,7 @@ pub fn translate_en(text_value: &str) -> &str {
             "I hope you are having a great day!",
         "Language" => "Language",
         "Language name" => "Language name",
+        "Language names" => "Language names",
         "Languages" => "Languages",
         "Last update" => "Last update",
         "Login [noun]" => "Login",
