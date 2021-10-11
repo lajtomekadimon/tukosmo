@@ -131,7 +131,9 @@ pub async fn edit_language_post(
                         .finish()
                 },
 
-                Err(_e) => {
+                Err(e) => {
+                    println!("{}", e);
+
                     let redirect_route = "/{lang}/admin/edit_language?id={id}"
                         .replace("{lang}", &user_req.lang_code)
                         .replace("{id}", &language_id.to_string());

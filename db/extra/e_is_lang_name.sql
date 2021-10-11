@@ -14,6 +14,7 @@ AS $$
 
 SELECT (LEFT(text_value, 1) <> ' ') AND
     (RIGHT(text_value, 1) <> ' ') AND
-    (POSITION('  ' IN text_value) = 0)
+    (POSITION('  ' IN text_value) = 0) AND
+    (LENGTH(text_value) > 0)
 
 $$;

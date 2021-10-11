@@ -53,8 +53,6 @@ BEGIN
         (d.lang).id
     ) THEN
 
-        -- TODO: Check post ID
-
         PERFORM u_post_translation(
             (r.post).id,
             (d.lang).id,

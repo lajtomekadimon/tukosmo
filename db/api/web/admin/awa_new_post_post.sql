@@ -49,17 +49,7 @@ BEGIN
         PERFORM err_wrong_permalink;
     END IF;
 
-    IF (r.post).id = 0 THEN
-
-        post_id := i_post((d.userd).id);
-
-    ELSE
-
-        post_id := (r.post).id;
-
-        -- TODO: Check post ID
-
-    END IF;
+    post_id := i_post((d.userd).id);
 
     PERFORM i_post_translation(
         post_id,
