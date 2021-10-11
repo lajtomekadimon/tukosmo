@@ -6,6 +6,13 @@ use postgres_types::{ToSql, FromSql};
 use crate::handlers::admin::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::i18n::t::t;
+use crate::i18n::t_error::t_error;
+use crate::handlers::admin::new_post::{
+    NewPostARequest,
+    NewPostAResponse,
+};
+use crate::templates::admin::new_post::NewPost;
 
 
 #[derive(Deserialize)]
@@ -74,22 +81,50 @@ pub async fn new_post_post(
             ) {
 
                 Ok(_) => {
+
                     let redirect_route = "/{lang}/admin/posts?success=yes"
                         .replace("{lang}", &user_req.lang_code);
 
                     HttpResponse::Found()
                         .header("Location", redirect_route)
                         .finish()
-                },
-                Err(r) => {
-                    println!("{}", r);
-                    let redirect_route = "/{lang}/admin/new_post"
-                        .replace("{lang}", &user_req.lang_code);
-                    // TODO: Show what failed in the template!
 
-                    HttpResponse::Found()
-                        .header("Location", redirect_route)
-                        .finish()
+                },
+
+                Err(e) => match query_db(
+                    NewPostARequest {
+                        req: user_req,
+                    },
+                ) {
+
+                    Ok(row) => {
+
+                        let q: NewPostAResponse = row.get(0);
+
+                        let html = NewPost {
+                            title: &format!(
+                                "{a} - {b}",
+                                a = &t("New post", &q.data.lang.code),
+                                b = &t(
+                                    "Tukosmo Admin Panel",
+                                    &q.data.lang.code,
+                                ),
+                            ),
+                            q: &q,
+                            error: &Some(t_error(e, &q.data.lang.code)),
+                        };
+
+                        HttpResponse::Ok().body(html.to_string())
+
+                    }
+
+                    Err(e2) => {
+                        println!("{}", e2);
+                        HttpResponse::Found()
+                            .header("Location", "/")  // TODO
+                            .finish()
+                    },
+
                 },
 
             }

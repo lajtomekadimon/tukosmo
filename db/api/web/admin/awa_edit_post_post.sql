@@ -29,22 +29,22 @@ BEGIN
 
     -- Check post title
     IF NOT e_is_title((r.post).title) THEN
-        PERFORM err_wrong_title;
+        PERFORM err_wrong_title();
     END IF;
 
     -- Check post description
     IF NOT e_is_description((r.post).description) THEN
-        PERFORM err_wrong_description;
+        PERFORM err_wrong_description();
     END IF;
 
     -- Check post body
     IF NOT e_is_body_text((r.post).body) THEN
-        PERFORM err_wrong_body_text;
+        PERFORM err_wrong_body_text();
     END IF;
 
     -- Check post permalink
     IF NOT e_is_permalink((r.post).permalink) THEN
-        PERFORM err_wrong_permalink;
+        PERFORM err_wrong_permalink();
     END IF;
 
     -- Update existing post
