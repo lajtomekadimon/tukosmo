@@ -138,47 +138,43 @@ pub async fn edit_language_post(
                         .finish()
                 },
 
-                Err(e) => {
+                Err(e) => match query_db(
+                    EditLanguageARequest {
+                        req: user_req,
+                        lang: language_id,
+                    },
+                ) {
 
-                    match query_db(
-                        EditLanguageARequest {
-                            req: user_req,
-                            lang: language_id,
-                        },
-                    ) {
+                    Ok(row) => {
 
-                        Ok(row) => {
+                        let q: EditLanguageAResponse = row.get(0);
 
-                            let q: EditLanguageAResponse = row.get(0);
-
-                            let html = EditLanguage {
-                                title: &format!(
-                                    "{a} - {b}",
-                                    a = &t(
-                                        "Edit language: {name}",
-                                        &q.data.lang.code
-                                    ).replace("{name}", &q.lang.name),
-                                    b = &t(
-                                        "Tukosmo Admin Panel",
-                                        &q.data.lang.code,
-                                    ),
+                        let html = EditLanguage {
+                            title: &format!(
+                                "{a} - {b}",
+                                a = &t(
+                                    "Edit language: {name}",
+                                    &q.data.lang.code
+                                ).replace("{name}", &q.lang.name),
+                                b = &t(
+                                    "Tukosmo Admin Panel",
+                                    &q.data.lang.code,
                                 ),
-                                q: &q,
-                                error: &Some(t_error(e, &q.data.lang.code)),
-                            };
+                            ),
+                            q: &q,
+                            error: &Some(t_error(e, &q.data.lang.code)),
+                        };
 
-                            HttpResponse::Ok().body(html.to_string())
-
-                        }
-
-                        Err(e2) => {
-                            println!("{}", e2);
-                            HttpResponse::Found()
-                                .header("Location", "/")  // TODO
-                                .finish()
-                        },
+                        HttpResponse::Ok().body(html.to_string())
 
                     }
+
+                    Err(e2) => {
+                        println!("{}", e2);
+                        HttpResponse::Found()
+                            .header("Location", "/")  // TODO
+                            .finish()
+                    },
 
                 },
 

@@ -7,6 +7,13 @@ use postgres_types::{ToSql, FromSql};
 use crate::handlers::admin::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::i18n::t::t;
+use crate::i18n::t_error::t_error;
+use crate::handlers::admin::new_language::{
+    NewLanguageARequest,
+    NewLanguageAResponse,
+};
+use crate::templates::admin::new_language::NewLanguage;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -121,14 +128,40 @@ pub async fn new_language_post(
                         .finish()
                 },
 
-                Err(_e) => {
-                    let redirect_route = "/{lang}/admin/new_language"
-                        .replace("{lang}", &user_req.lang_code);
-                    // TODO: Show what failed in the template!
+                Err(e) => match query_db(
+                    NewLanguageARequest {
+                        req: user_req,
+                    },
+                ) {
 
-                    HttpResponse::Found()
-                        .header("Location", redirect_route)
-                        .finish()
+                    Ok(row) => {
+
+                        let q: NewLanguageAResponse = row.get(0);
+
+                        let html = NewLanguage {
+                            title: &format!(
+                                "{a} - {b}",
+                                a = &t("Add language", &q.data.lang.code),
+                                b = &t(
+                                    "Tukosmo Admin Panel",
+                                    &q.data.lang.code,
+                                ),
+                            ),
+                            q: &q,
+                            error: &Some(t_error(e, &q.data.lang.code)),
+                        };
+
+                        HttpResponse::Ok().body(html.to_string())
+
+                    }
+
+                    Err(e2) => {
+                        println!("{}", e2);
+                        HttpResponse::Found()
+                            .header("Location", "/")  // TODO
+                            .finish()
+                    },
+
                 },
 
             }

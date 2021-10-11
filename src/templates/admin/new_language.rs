@@ -5,12 +5,14 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::new_language::NewLanguageAResponse;
+use crate::i18n::t_error::ErrorDB;
 
 
 markup::define! {
     NewLanguage<'a>(
         title: &'a str,
         q: &'a NewLanguageAResponse,
+        error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -18,6 +20,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    error: error,
                 },
                 current_page: "new_language",
                 data: &q.data,
@@ -27,6 +30,7 @@ markup::define! {
 
     Content<'a>(
         q: &'a NewLanguageAResponse,
+        error: &'a Option<ErrorDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -37,6 +41,15 @@ markup::define! {
                         route: "/admin/new_language",
                         data: &q.data,
                     }
+                }
+            }
+
+            @if let Some(e) = error {
+                div[
+                    class = "notification is-danger",
+                ] {
+                    button[class = "delete"] {}
+                    @e.message
                 }
             }
 
