@@ -13,6 +13,7 @@ markup::define! {
     Posts<'a>(
         title: &'a str,
         q: &'a PostsAResponse,
+        success: &'a bool,
     ) {
         @AdminLayout {
             title: title,
@@ -20,6 +21,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    success: success,
                 },
                 current_page: "posts",
                 data: &q.data,
@@ -29,6 +31,7 @@ markup::define! {
 
     Content<'a>(
         q: &'a PostsAResponse,
+        success: &'a bool,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -62,6 +65,18 @@ markup::define! {
                     .replace("{m}", &q.total_results.to_string())
                 }
                 ")"
+            }
+
+            @if **success {
+                div[
+                    class = "notification is-success",
+                ] {
+                    button[class = "delete"] {}
+                    {&t(
+                        "Your website posts were successfully updated.",
+                        &q.data.lang.code
+                    )}
+                }
             }
 
             table[

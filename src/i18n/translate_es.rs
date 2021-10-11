@@ -95,8 +95,9 @@ pub fn translate_es(text_value: &str) -> &str {
         "Your email" => "Tu correo electrónico",
         "Your password" => "Tu contraseña",
         "Your website languages were successfully updated." =>
-            "Los idiomas de tu página web se actualizaron \
-            satisfactoriamente.",
+            "Los idiomas de tu página web se actualizaron con éxito.",
+        "Your website posts were successfully updated." =>
+            "Las entradas de tu página web se actualizaron con éxito.",
 
         //--------------//
 

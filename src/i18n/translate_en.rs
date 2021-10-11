@@ -97,6 +97,8 @@ pub fn translate_en(text_value: &str) -> &str {
         "Your password" => "Your password",
         "Your website languages were successfully updated." =>
             "Your website languages were successfully updated.",
+        "Your website posts were successfully updated." =>
+            "Your website posts were successfully updated.",
 
         //--------------//
 

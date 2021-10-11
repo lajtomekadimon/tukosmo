@@ -14,6 +14,7 @@ use crate::database::query_db::{QueryFunction, query_db};
 pub struct GetParamData {
     rpp: Option<i64>,
     p: Option<i64>,
+    success: Option<String>,
 }
 
 
@@ -71,6 +72,10 @@ pub async fn posts(
                         b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                     ),
                     q: &q,
+                    success: match param.success {
+                        Some(_) => &true,
+                        None => &false,
+                    },
                 };
 
                 HttpResponse::Ok().body(html.to_string())

@@ -81,7 +81,7 @@ pub async fn edit_post_post(
             ) {
 
                 Ok(_row) => {
-                    let redirect_route = "/{lang}/admin/posts"
+                    let redirect_route = "/{lang}/admin/posts?success=yes"
                         .replace("{lang}", &user_req.lang_code);
 
                     HttpResponse::Found()

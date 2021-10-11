@@ -74,7 +74,7 @@ pub async fn new_post_post(
             ) {
 
                 Ok(_) => {
-                    let redirect_route = "/{lang}/admin/posts"
+                    let redirect_route = "/{lang}/admin/posts?success=yes"
                         .replace("{lang}", &user_req.lang_code);
 
                     HttpResponse::Found()
