@@ -7,6 +7,13 @@ use postgres_types::{ToSql, FromSql};
 use crate::handlers::admin::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::i18n::t::t;
+use crate::i18n::t_error::t_error;
+use crate::handlers::admin::edit_language::{
+    EditLanguageARequest,
+    EditLanguageAResponse,
+};
+use crate::templates::admin::edit_language::EditLanguage;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -132,16 +139,47 @@ pub async fn edit_language_post(
                 },
 
                 Err(e) => {
-                    println!("{}", e);
 
-                    let redirect_route = "/{lang}/admin/edit_language?id={id}"
-                        .replace("{lang}", &user_req.lang_code)
-                        .replace("{id}", &language_id.to_string());
-                    // TODO: Show what failed in the template!
+                    match query_db(
+                        EditLanguageARequest {
+                            req: user_req,
+                            lang: language_id,
+                        },
+                    ) {
 
-                    HttpResponse::Found()
-                        .header("Location", redirect_route)
-                        .finish()
+                        Ok(row) => {
+
+                            let q: EditLanguageAResponse = row.get(0);
+
+                            let html = EditLanguage {
+                                title: &format!(
+                                    "{a} - {b}",
+                                    a = &t(
+                                        "Edit language: {name}",
+                                        &q.data.lang.code
+                                    ).replace("{name}", &q.lang.name),
+                                    b = &t(
+                                        "Tukosmo Admin Panel",
+                                        &q.data.lang.code,
+                                    ),
+                                ),
+                                q: &q,
+                                error: &Some(t_error(e, &q.data.lang.code)),
+                            };
+
+                            HttpResponse::Ok().body(html.to_string())
+
+                        }
+
+                        Err(e2) => {
+                            println!("{}", e2);
+                            HttpResponse::Found()
+                                .header("Location", "/")  // TODO
+                                .finish()
+                        },
+
+                    }
+
                 },
 
             }

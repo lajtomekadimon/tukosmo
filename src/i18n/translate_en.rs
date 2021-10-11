@@ -22,6 +22,27 @@ pub fn translate_en(text_value: &str) -> &str {
         "Edit" => "Edit",
         "Edit language: {name}" => "Edit language: {name}",
         "Edit post: '{title}'" => "Edit post: '{title}'",
+        "ERROR:field_is_not_lang_code" => "The language code is not valid.",
+        "ERROR:lang_code_already_exists" =>
+            "That language code already exists.",
+        "ERROR:some_wrong_lang_id_of_name" =>
+            "Some of the language IDs are not correct.",
+        "ERROR:some_wrong_lang_name" =>
+            "Some of the language names are not valid.",
+        "ERROR:unknown_error" => "Unknown error.",
+        "ERROR:user_not_logged_in" => "You must be logged in.",
+        "ERROR:wrong_body_text" => "Body text can't be empty.",
+        "ERROR:wrong_description" =>
+            "Description can't start or begin with empty space or has more \
+            than 600 characters.",
+        "ERROR:wrong_lang_code" => "The language code is not correct.",
+        "ERROR:wrong_lang_id" => "The language ID is not correct.",
+        "ERROR:wrong_permalink" => "The permalink is not valid.",
+        "ERROR:wrong_post_id" => "The post ID is not correct.",
+        "ERROR:wrong_post_permalink" => "That post doesn't exist.",
+        "ERROR:wrong_title" => "The title is not valid.",
+        "ERROR:wrong_user_email" => "No user has that email.",
+        "ERROR:wrong_user_password" => "The password is not correct.",
         "Example: en" => "Example: en",
         "Files" => "Files",
         "Forgotten password?" => "Forgotten password?",

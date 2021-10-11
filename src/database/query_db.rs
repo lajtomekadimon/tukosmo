@@ -20,10 +20,7 @@ pub fn query_db<RequestType: QueryFunction + ToSql + std::marker::Sync>(
             &[&r,]
         ),
 
-        Err(e) => {
-            println!("{}", e);  // this is just for fixing bugs
-            Err(e)
-        },
+        Err(e) => Err(e),
 
     }
 
