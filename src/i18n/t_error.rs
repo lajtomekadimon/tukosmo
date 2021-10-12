@@ -1,5 +1,8 @@
 use postgres::Error;
+
+
 use crate::i18n::t::t;
+use crate::database::error_codes as ec;
 
 
 pub struct ErrorDB {
@@ -23,21 +26,24 @@ pub fn t_error(
             let error_code = &error_message[8..];
 
             let m = match error_code {
-                "C3BA3FC81BB9" => "ERROR:field_is_not_lang_code",
-                "4C66AB9F871B" => "ERROR:lang_code_already_exists",
-                "55F1A77CE041" => "ERROR:some_wrong_lang_id_of_name",
-                "39464FAE6EEB" => "ERROR:some_wrong_lang_name",
-                "D994FEF2356A" => "ERROR:user_not_logged_in",
-                "F24F7F99E78D" => "ERROR:wrong_body_text",
-                "4E576E6BB1EE" => "ERROR:wrong_description",
-                "9F4297D0460F" => "ERROR:wrong_lang_code",
-                "92165E44AFE4" => "ERROR:wrong_lang_id",
-                "7D637808B8AA" => "ERROR:wrong_permalink",
-                "E4E9108D630B" => "ERROR:wrong_post_id",
-                "C90EAC6F8E2E" => "ERROR:wrong_post_permalink",
-                "7B744BC3C936" => "ERROR:wrong_title",
-                "9CF674E24CDC" => "ERROR:wrong_user_email",
-                "C37F7C062377" => "ERROR:wrong_user_password",
+                ec::FIELD_IS_NOT_LANG_CODE =>
+                    "ERROR:field_is_not_lang_code",
+                ec::LANG_CODE_ALREADY_EXISTS =>
+                    "ERROR:lang_code_already_exists",
+                ec::SOME_WRONG_LANG_ID_OF_NAME =>
+                    "ERROR:some_wrong_lang_id_of_name",
+                ec::SOME_WRONG_LANG_NAME => "ERROR:some_wrong_lang_name",
+                ec::USER_NOT_LOGGED_IN => "ERROR:user_not_logged_in",
+                ec::WRONG_BODY_TEXT => "ERROR:wrong_body_text",
+                ec::WRONG_DESCRIPTION => "ERROR:wrong_description",
+                ec::WRONG_LANG_CODE => "ERROR:wrong_lang_code",
+                ec::WRONG_LANG_ID => "ERROR:wrong_lang_id",
+                ec::WRONG_PERMALINK => "ERROR:wrong_permalink",
+                ec::WRONG_POST_ID => "ERROR:wrong_post_id",
+                ec::WRONG_POST_PERMALINK => "ERROR:wrong_post_permalink",
+                ec::WRONG_TITLE => "ERROR:wrong_title",
+                ec::WRONG_USER_EMAIL => "ERROR:wrong_user_email",
+                ec::WRONG_USER_PASSWORD => "ERROR:wrong_user_password",
 
                 // ---- //
 
@@ -55,7 +61,7 @@ pub fn t_error(
             println!("debugging: {}", e);
 
             ErrorDB {
-                code: "BCDD2EA230A5".to_string(),
+                code: ec::UNKNOWN_ERROR.to_string(),
                 message: t("ERROR:unknown_error", lang_code),
             }
 
@@ -67,7 +73,7 @@ pub fn t_error(
         println!("debugging: {}", e);
 
         ErrorDB {
-            code: "BCDD2EA230A5".to_string(),
+            code: ec::UNKNOWN_ERROR.to_string(),
             message: t("ERROR:unknown_error", lang_code),
         }
 
