@@ -5,6 +5,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::login::LoginAResponse;
 use crate::database::types::{AdminDataDB, UserDB};
+use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 
 
@@ -57,6 +58,7 @@ markup::define! {
 
                             @Form {
                                 q: q,
+                                error: error,
                             }
                         }
 
@@ -95,6 +97,7 @@ markup::define! {
 
     Form<'a>(
         q: &'a LoginAResponse,
+        error: &'a Option<ErrorDB>,
     ) {
         form[
             action = "/{lang}/admin/login"
@@ -104,7 +107,15 @@ markup::define! {
             div[class = "field"] {
                 div[class = "control"] {
                     input[
-                        class = "input is-large",
+                        class = if let Some(e) = error {
+                            if e.code == ec::WRONG_USER_EMAIL {
+                                "input is-large is-danger"
+                            } else {
+                                "input is-large"
+                            }
+                        } else {
+                            "input is-large"
+                        },
                         name = "email",
                         type = "email",
                         placeholder = &t("Your email", &q.data.lang.code),
@@ -116,7 +127,15 @@ markup::define! {
             div[class = "field"] {
                 div[class = "control"] {
                     input[
-                        class = "input is-large",
+                        class = if let Some(e) = error {
+                            if e.code == ec::WRONG_USER_PASSWORD  {
+                                "input is-large is-danger"
+                            } else {
+                                "input is-large"
+                            }
+                        } else {
+                            "input is-large"
+                        },
                         name = "password",
                         type = "password",
                         placeholder = &t("Your password", &q.data.lang.code),
