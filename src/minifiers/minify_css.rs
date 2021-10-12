@@ -1,7 +1,7 @@
 use css_minify::optimizations::{Minifier, Level};
 use std::fs;
 
-use crate::config::global::current_theme_dir;
+use crate::config::global::CURRENT_THEME_DIR;
 
 
 pub fn minify_css() {
@@ -9,7 +9,7 @@ pub fn minify_css() {
     ////////////
     let normalize_css = fs::read_to_string("static/css/normalize.css")
         .expect("Something went wrong reading normalize.css!");
-    let theme_css = fs::read_to_string(current_theme_dir())
+    let theme_css = fs::read_to_string(CURRENT_THEME_DIR)
         .expect("Something went wrong reading CSS theme file!");
 
     let mut css_to_minify = String::new();
