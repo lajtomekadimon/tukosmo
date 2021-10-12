@@ -5,6 +5,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::new_post::NewPostAResponse;
+use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 
 
@@ -65,7 +66,15 @@ markup::define! {
                     }
                     div[class = "control"] {
                         input[
-                            class = "input",
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_TITLE {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
                             type = "text",
                             name = "title",
                         ];
@@ -78,7 +87,15 @@ markup::define! {
                     }
                     div[class = "control"] {
                         input[
-                            class = "input",
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_PERMALINK {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
                             type = "text",
                             name = "permalink",
                         ];
@@ -91,7 +108,15 @@ markup::define! {
                     }
                     div[class = "control"] {
                         textarea[
-                            class = "textarea has-fixed-size",
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_DESCRIPTION {
+                                    "textarea has-fixed-size is-danger"
+                                } else {
+                                    "textarea has-fixed-size"
+                                }
+                            } else {
+                                "textarea has-fixed-size"
+                            },
                             name = "description",
                             rows = "3",
                         ] {}
@@ -104,7 +129,15 @@ markup::define! {
                     }
                     div[class = "control"] {
                         textarea[
-                            class = "textarea is-family-monospace",
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_BODY_TEXT {
+                                    "textarea is-family-monospace is-danger"
+                                } else {
+                                    "textarea is-family-monospace"
+                                }
+                            } else {
+                                "textarea is-family-monospace"
+                            },
                             name = "body",
                             rows = "12",
                         ] {}

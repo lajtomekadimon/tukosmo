@@ -5,6 +5,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::new_language::NewLanguageAResponse;
+use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 
 
@@ -64,7 +65,17 @@ markup::define! {
                     }
                     div[class = "control"] {
                         input[
-                            class = "input",
+                            class = if let Some(e) = error {
+                                if e.code == ec::FIELD_IS_NOT_LANG_CODE ||
+                                    e.code == ec::LANG_CODE_ALREADY_EXISTS
+                                {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
                             type = "text",
                             name = "lang_code",
                             placeholder = &t("Example: en", &q.data.lang.code),
@@ -91,7 +102,17 @@ markup::define! {
                                         value = &lang.id.to_string(),
                                     ];
                                     input[
-                                        class = "input",
+                                        class = if let Some(e) = error {
+                                            if e.code ==
+                                                ec::SOME_WRONG_LANG_NAME
+                                            {
+                                                "input is-danger"
+                                            } else {
+                                                "input"
+                                            }
+                                        } else {
+                                            "input"
+                                        },
                                         type = "text",
                                         name = "lang_name",
                                     ];
