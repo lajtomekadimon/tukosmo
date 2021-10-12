@@ -7,6 +7,13 @@ use uuid::Uuid;
 use crate::handlers::website::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::i18n::t::t;
+use crate::i18n::t_error::t_error;
+use crate::handlers::admin::login::{
+    LoginARequest,
+    LoginAResponse,
+};
+use crate::templates::admin::login::Login;
 
 
 #[derive(Deserialize)]
@@ -96,17 +103,53 @@ pub async fn login_post(
                 .finish()
         },
 
-        Err(e) => {
-            println!("{}", e);
+        Err(e) => match query_db(
+            LoginARequest {
+                req: user_req,
+            },
+        ) {
 
-            // TODO: Email or password not correct
-            HttpResponse::Found()
-                .header(
-                    "Location",
-                    "/{lang}/admin/login"
-                        .replace("{lang}", &user_req.lang_code),
-                )
-                .finish()
+            Ok(row) => {
+
+                let q: LoginAResponse = row.get(0);
+
+                if let Some(_user) = q.data.userd {
+
+                    let dashboard_route = "/{lang}/admin/"
+                        .replace("{lang}", &q.data.lang.code);
+
+                    HttpResponse::Found()
+                        .header("Location", dashboard_route)
+                        .finish()
+
+                } else {
+
+                    // Delete cookie
+                    id.forget();
+
+                    let html = Login {
+                        title: &format!(
+                            "{a} - {b}",
+                            a = &t("Login [noun]", &q.data.lang.code),
+                            b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        ),
+                        q: &q,
+                        error: &Some(t_error(e, &q.data.lang.code)),
+                    };
+
+                    HttpResponse::Ok().body(html.to_string())
+
+                }
+
+            },
+
+            Err(e2) => {
+                println!("{}", e2);
+                HttpResponse::Found()
+                    .header("Location", "/")  // TODO
+                    .finish()
+            },
+
         },
 
     }

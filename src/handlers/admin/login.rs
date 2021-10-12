@@ -64,6 +64,7 @@ pub async fn login(
                         b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                     ),
                     q: &q,
+                    error: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

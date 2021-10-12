@@ -5,12 +5,14 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::login::LoginAResponse;
 use crate::database::types::{AdminDataDB, UserDB};
+use crate::i18n::t_error::ErrorDB;
 
 
 markup::define! {
     Login<'a>(
         title: &'a str,
         q: &'a LoginAResponse,
+        error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
             title: title,
@@ -25,12 +27,14 @@ markup::define! {
             },
             content: Content {
                 q: q,
+                error: error,
             },
         }
     }
 
     Content<'a>(
         q: &'a LoginAResponse,
+        error: &'a Option<ErrorDB>,
     ) {
 
         section[class = "hero is-success is-fullheight"] {
@@ -40,6 +44,15 @@ markup::define! {
                         div[class = "box"] {
                             figure[class = "avatar"] {
                                 img[src = "/static/img/tukosmo-logo-128.png"];
+                            }
+
+                            @if let Some(e) = error {
+                                div[
+                                    class = "notification is-danger",
+                                ] {
+                                    button[class = "delete"] {}
+                                    @e.message
+                                }
                             }
 
                             @Form {
