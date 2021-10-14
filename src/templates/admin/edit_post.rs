@@ -68,9 +68,9 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/edit_post"
+                action = "/{lang}/admin/edit_post?id={id}"
                     .replace("{lang}", &q.data.lang.code)
-                ,
+                    .replace("{id}", &post.id.to_string()),
             ] {
                 input[
                     type = "hidden",
