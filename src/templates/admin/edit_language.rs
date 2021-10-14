@@ -1,3 +1,4 @@
+use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::i18n::t::t;
@@ -5,6 +6,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::edit_language::EditLanguageAResponse;
+use crate::handlers::admin::edit_language_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 
@@ -14,6 +16,7 @@ markup::define! {
         title: &'a str,
         q: &'a EditLanguageAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         @AdminLayout {
             title: title,
@@ -22,6 +25,7 @@ markup::define! {
                 content: Content {
                     q: q,
                     error: error,
+                    form: form,
                 },
                 current_page: "edit_language",
                 data: &q.data,
@@ -32,6 +36,7 @@ markup::define! {
     Content<'a>(
         q: &'a EditLanguageAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -88,8 +93,10 @@ markup::define! {
                             },
                             type = "text",
                             name = "lang_code",
-                            value = &q.lang.code,
                             placeholder = &t("Example: en", &q.data.lang.code),
+                            value = if let Some(f) = form {
+                                &f.lang_code
+                            } else { &q.lang.code },
                         ];
                     }
                 }
@@ -99,7 +106,7 @@ markup::define! {
                         {&t("Language names", &q.data.lang.code)}
                     }
                     p[class = "control"] {
-                        @for name in q.names.iter() {
+                        @for (i, name) in q.names.iter().enumerate() {
                             div[class = "field has-addons is-marginless"] {
                                 div[class = "control"] {
                                     span[class = "button is-static"] {
@@ -126,7 +133,9 @@ markup::define! {
                                         },
                                         type = "text",
                                         name = "lang_name",
-                                        value = &name.name,
+                                        value = if let Some(f) = form {
+                                            &f.lang_names[i]
+                                        } else { &name.name },
                                     ];
                                 }
                             }

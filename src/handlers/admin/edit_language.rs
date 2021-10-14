@@ -66,6 +66,7 @@ pub async fn edit_language(
                     ),
                     q: &q,
                     error: &None,
+                    form: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
