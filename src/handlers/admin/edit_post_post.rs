@@ -17,13 +17,13 @@ use crate::templates::admin::edit_post::EditPost;
 
 #[derive(Deserialize)]
 pub struct FormData {
-    id: i64,
-    title: String,
-    description: String,
-    body: String,
-    permalink: String,
-    draft: Option<String>,
-    deleted: Option<String>,
+    pub id: i64,
+    pub title: String,
+    pub description: String,
+    pub body: String,
+    pub permalink: String,
+    pub draft: Option<String>,
+    pub deleted: Option<String>,
 }
 
 
@@ -124,6 +124,7 @@ pub async fn edit_post_post(
                                 ),
                                 q: &q,
                                 error: &Some(t_error(e, &q.data.lang.code)),
+                                form: &Some(form),
                             };
 
                             HttpResponse::Ok().body(html.to_string())
@@ -163,6 +164,7 @@ pub async fn edit_post_post(
                                     ),
                                 },
                                 error: &Some(t_error(e, &q.data.lang.code)),
+                                form: &Some(form),
                             };
 
                             HttpResponse::Ok().body(html.to_string())

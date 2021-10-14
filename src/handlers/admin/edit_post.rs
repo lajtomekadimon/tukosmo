@@ -68,6 +68,7 @@ pub async fn edit_post(
                         ),
                         q: &q,
                         error: &None,
+                        form: &None,
                     };
 
                     HttpResponse::Ok().body(html.to_string())
@@ -104,6 +105,7 @@ pub async fn edit_post(
                             ),
                         },
                         error: &None,
+                        form: &None,
                     };
 
                     HttpResponse::Ok().body(html.to_string())

@@ -1,3 +1,4 @@
+use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::i18n::t::t;
@@ -5,6 +6,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::edit_post::EditPostAResponse;
+use crate::handlers::admin::edit_post_post::FormData;
 use crate::database::types::PostDB;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
@@ -15,6 +17,7 @@ markup::define! {
         title: &'a str,
         q: &'a EditPostAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         @AdminLayout {
             title: title,
@@ -24,6 +27,7 @@ markup::define! {
                     q: q,
                     post: &(q.post).as_ref().unwrap(),
                     error: error,
+                    form: form,
                 },
                 current_page: "edit_post",
                 data: &q.data,
@@ -35,6 +39,7 @@ markup::define! {
         q: &'a EditPostAResponse,
         post: &'a PostDB,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -90,7 +95,9 @@ markup::define! {
                             },
                             type = "text",
                             name = "title",
-                            value = &post.title,
+                            value = if let Some(f) = form {
+                                &f.title
+                            } else { &post.title },
                         ];
                     }
                 }
@@ -112,7 +119,9 @@ markup::define! {
                             },
                             type = "text",
                             name = "permalink",
-                            value = &post.permalink,
+                            value = if let Some(f) = form {
+                                &f.permalink
+                            } else { &post.permalink },
                         ];
                     }
                 }
@@ -135,7 +144,9 @@ markup::define! {
                             name = "description",
                             rows = "3",
                         ] {
-                            @post.description
+                            @if let Some(f) = form {
+                                {&f.description}
+                            } else { @post.description }
                         }
                     }
                 }
@@ -158,7 +169,9 @@ markup::define! {
                             name = "body",
                             rows = "12",
                         ] {
-                            @post.body
+                            @if let Some(f) = form {
+                                {&f.body}
+                            } else { @post.body }
                         }
                     }
                 }
@@ -170,7 +183,12 @@ markup::define! {
                                 type = "checkbox",
                                 name = "draft",
                                 value = "yes",
-                                checked = post.draft,
+                                checked = if let Some(f) = form {
+                                    match &f.draft {
+                                        Some(_) => true,
+                                        None => false,
+                                    }
+                                } else { post.draft },
                             ];
                             " "
                             {&t("Draft", &q.data.lang.code)}
@@ -186,7 +204,12 @@ markup::define! {
                                 type = "checkbox",
                                 name = "deleted",
                                 value = "yes",
-                                checked = post.deleted,
+                                checked = if let Some(f) = form {
+                                    match &f.deleted {
+                                        Some(_) => true,
+                                        None => false,
+                                    }
+                                } else { post.deleted },
                             ];
                             " "
                             {&t("Deleted [post]", &q.data.lang.code)}
