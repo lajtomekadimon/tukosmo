@@ -1,9 +1,11 @@
+use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::login::LoginAResponse;
+use crate::handlers::admin::login_post::FormData;
 use crate::database::types::{AdminDataDB, UserDB};
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
@@ -14,6 +16,7 @@ markup::define! {
         title: &'a str,
         q: &'a LoginAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         @AdminLayout {
             title: title,
@@ -29,6 +32,7 @@ markup::define! {
             content: Content {
                 q: q,
                 error: error,
+                form: form,
             },
         }
     }
@@ -36,6 +40,7 @@ markup::define! {
     Content<'a>(
         q: &'a LoginAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
 
         section[class = "hero is-success is-fullheight"] {
@@ -59,6 +64,7 @@ markup::define! {
                             @Form {
                                 q: q,
                                 error: error,
+                                form: form,
                             }
                         }
 
@@ -98,6 +104,7 @@ markup::define! {
     Form<'a>(
         q: &'a LoginAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         form[
             action = "/{lang}/admin/login"
@@ -119,7 +126,10 @@ markup::define! {
                         name = "email",
                         type = "email",
                         placeholder = &t("Your email", &q.data.lang.code),
-                        autofocus = "",
+                        value = if let Some(f) = form {
+                            &f.email
+                        } else { "" },
+                        "autofocus",
                     ];
                 }
             }

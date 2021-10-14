@@ -65,6 +65,7 @@ pub async fn login(
                     ),
                     q: &q,
                     error: &None,
+                    form: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

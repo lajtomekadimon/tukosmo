@@ -18,8 +18,8 @@ use crate::templates::admin::login::Login;
 
 #[derive(Deserialize)]
 pub struct FormData {
-    email: String,
-    password: String,
+    pub email: String,
+    pub password: String,
 }
 
 
@@ -135,6 +135,7 @@ pub async fn login_post(
                         ),
                         q: &q,
                         error: &Some(t_error(e, &q.data.lang.code)),
+                        form: &Some(form),
                     };
 
                     HttpResponse::Ok().body(html.to_string())
