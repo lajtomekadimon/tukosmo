@@ -129,7 +129,11 @@ markup::define! {
                         value = if let Some(f) = form {
                             &f.email
                         } else { "" },
-                        "autofocus",
+                        autofocus = if let Some(e) = error {
+                            e.code == ec::WRONG_USER_EMAIL
+                        } else {
+                            true
+                        },
                     ];
                 }
             }
@@ -138,7 +142,7 @@ markup::define! {
                 div[class = "control"] {
                     input[
                         class = if let Some(e) = error {
-                            if e.code == ec::WRONG_USER_PASSWORD  {
+                            if e.code == ec::WRONG_USER_PASSWORD {
                                 "input is-large is-danger"
                             } else {
                                 "input is-large"
@@ -149,6 +153,11 @@ markup::define! {
                         name = "password",
                         type = "password",
                         placeholder = &t("Your password", &q.data.lang.code),
+                        autofocus = if let Some(e) = error {
+                            e.code == ec::WRONG_USER_PASSWORD
+                        } else {
+                            false
+                        },
                     ];
                 }
             }

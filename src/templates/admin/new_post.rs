@@ -1,3 +1,4 @@
+use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::i18n::t::t;
@@ -5,6 +6,7 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::new_post::NewPostAResponse;
+use crate::handlers::admin::new_post_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 
@@ -14,6 +16,7 @@ markup::define! {
         title: &'a str,
         q: &'a NewPostAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         @AdminLayout {
             title: title,
@@ -22,6 +25,7 @@ markup::define! {
                 content: Content {
                     q: q,
                     error: error,
+                    form: form,
                 },
                 current_page: "new_post",
                 data: &q.data,
@@ -32,6 +36,7 @@ markup::define! {
     Content<'a>(
         q: &'a NewPostAResponse,
         error: &'a Option<ErrorDB>,
+        form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
@@ -77,6 +82,9 @@ markup::define! {
                             },
                             type = "text",
                             name = "title",
+                            value = if let Some(f) = form {
+                                &f.title
+                            } else { "" },
                         ];
                     }
                 }
@@ -98,6 +106,9 @@ markup::define! {
                             },
                             type = "text",
                             name = "permalink",
+                            value = if let Some(f) = form {
+                                &f.permalink
+                            } else { "" },
                         ];
                     }
                 }
@@ -119,7 +130,11 @@ markup::define! {
                             },
                             name = "description",
                             rows = "3",
-                        ] {}
+                        ] {
+                            @if let Some(f) = form {
+                                {&f.description}
+                            } else { "" }
+                        }
                     }
                 }
 
@@ -140,7 +155,11 @@ markup::define! {
                             },
                             name = "body",
                             rows = "12",
-                        ] {}
+                        ] {
+                            @if let Some(f) = form {
+                                {&f.body}
+                            } else { "" }
+                        }
                     }
                 }
 
@@ -151,6 +170,12 @@ markup::define! {
                                 type = "checkbox",
                                 name = "draft",
                                 value = "yes",
+                                checked = if let Some(f) = form {
+                                    match &f.draft {
+                                        Some(_) => true,
+                                        None => false,
+                                    }
+                                } else { false },
                             ];
                             " "
                             {&t("Draft", &q.data.lang.code)}

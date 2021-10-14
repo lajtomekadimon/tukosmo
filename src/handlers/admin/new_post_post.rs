@@ -17,11 +17,11 @@ use crate::templates::admin::new_post::NewPost;
 
 #[derive(Deserialize)]
 pub struct FormData {
-    title: String,
-    description: String,
-    body: String,
-    permalink: String,
-    draft: Option<String>,
+    pub title: String,
+    pub description: String,
+    pub body: String,
+    pub permalink: String,
+    pub draft: Option<String>,
 }
 
 
@@ -112,6 +112,7 @@ pub async fn new_post_post(
                             ),
                             q: &q,
                             error: &Some(t_error(e, &q.data.lang.code)),
+                            form: &Some(form),
                         };
 
                         HttpResponse::Ok().body(html.to_string())
