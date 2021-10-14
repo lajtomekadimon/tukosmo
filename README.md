@@ -47,19 +47,19 @@ https://github.com/utkarshkukreti/markup.rs).
     - [x] Users system
     - [x] Custom languages
     - [x] Blog
-    - [ ] Pages
     - [ ] Files
     - [x] Admin Panel
 - [ ] 0.2
+    - [ ] Custom menus and widgets
+    - [ ] Pages
+    - [ ] Special pages (contact, team, cv, homepage?, etc.)
+    - [ ] Custom homepage
+- [ ] 0.3
     - [ ] FAQ
-    - [ ] Special pages (contact, team, cv, etc.)
     - [ ] RSS
+    - [ ] Searcher
     - [ ] Social links
     - [ ] OpenGraph cards for Facebook, Twitter, Mastodon...
-- [ ] 0.3
-    - [ ] Custom homepage
-    - [ ] Custom menus and widgets
-    - [ ] Searcher
 - [ ] 0.4
     - [ ] Improved user experience with JavaScript
         - [ ] WYSIWYG CommonMark editor for posts, pages and FAQ
