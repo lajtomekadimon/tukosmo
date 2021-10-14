@@ -74,9 +74,9 @@ impl<'de> Deserialize<'de> for FormData {
 }
 
 pub struct FormData {
-    lang_code: String,
-    lang_ids: Vec<i64>,
-    lang_names: Vec<String>,
+    pub lang_code: String,
+    pub lang_ids: Vec<i64>,
+    pub lang_names: Vec<String>,
 }
 
 
@@ -149,6 +149,7 @@ pub async fn new_language_post(
                             ),
                             q: &q,
                             error: &Some(t_error(e, &q.data.lang.code)),
+                            form: &Some(form),
                         };
 
                         HttpResponse::Ok().body(html.to_string())

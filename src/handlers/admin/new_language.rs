@@ -51,6 +51,7 @@ pub async fn new_language(
                     ),
                     q: &q,
                     error: &None,
+                    form: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
