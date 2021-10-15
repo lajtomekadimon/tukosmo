@@ -41,19 +41,27 @@ impl<'de> Deserialize<'de> for FormData {
             where V: MapAccess<'de>
             {
                 let mut lang_code: String = "".to_string();
+                let mut own_lang_name: String = "".to_string();
                 let mut lang_ids: Vec<i64> = Vec::default();
                 let mut lang_names: Vec<String> = Vec::default();
+                let mut names_for_langs: Vec<String> = Vec::default();
 
                 while let Some(key) = map.next_key()? {
                     match key {
                         "lang_code" => {
                             lang_code = map.next_value::<String>()?;
                         }
+                        "own_lang_name" => {
+                            own_lang_name = map.next_value::<String>()?;
+                        }
                         "lang_id" => {
                             lang_ids.push(map.next_value::<i64>()?);
                         }
                         "lang_name" => {
                             lang_names.push(map.next_value::<String>()?);
+                        }
+                        "name_for_lang" => {
+                            names_for_langs.push(map.next_value::<String>()?);
                         }
                         _ => unreachable!()
                     }
@@ -63,8 +71,10 @@ impl<'de> Deserialize<'de> for FormData {
 
                 Ok(FormData {
                     lang_code: lang_code,
+                    own_lang_name: own_lang_name,
                     lang_ids: lang_ids,
                     lang_names: lang_names,
+                    names_for_langs: names_for_langs,
                 })
             }
         }
@@ -75,8 +85,10 @@ impl<'de> Deserialize<'de> for FormData {
 
 pub struct FormData {
     pub lang_code: String,
+    pub own_lang_name: String,
     pub lang_ids: Vec<i64>,
     pub lang_names: Vec<String>,
+    pub names_for_langs: Vec<String>,
 }
 
 
@@ -84,8 +96,10 @@ pub struct FormData {
 pub struct NewLanguagePostARequest {
     pub req: types::AdminRequest,
     pub lang_code: String,
+    pub own_lang_name: String,
     pub lang_ids: Vec<i64>,
     pub lang_names: Vec<String>,
+    pub names_for_langs: Vec<String>,
 }
 
 impl QueryFunction for NewLanguagePostARequest {
@@ -106,15 +120,19 @@ pub async fn new_language_post(
         Ok(user_req) => {
 
             let lang_code = (form.lang_code).clone();
+            let own_lang_name = (form.own_lang_name).clone();
             let lang_ids = (form.lang_ids).clone();
             let lang_names = (form.lang_names).clone();
+            let names_for_langs = (form.names_for_langs).clone();
 
             match query_db(
                 NewLanguagePostARequest {
                     req: user_req.clone(),
                     lang_code: lang_code,
+                    own_lang_name: own_lang_name,
                     lang_ids: lang_ids,
                     lang_names: lang_names,
+                    names_for_langs: names_for_langs,
                 },
             ) {
 

@@ -29,6 +29,8 @@ pub fn translate_es(text_value: &str) -> &str {
             "Algunas de las ID de los idiomas no son correctas.",
         "ERROR:some_wrong_lang_name" =>
             "Algunos de los nombres del idioma no son válidos.",
+        "ERROR:some_wrong_name_for_lang" =>
+            "Algunos de los nombres (en el nuevo idioma) no son válidos.",
         "ERROR:unknown_error" => "Error desconocido.",
         "ERROR:user_not_logged_in" => "Debes estar conectado con tu usuario.",
         "ERROR:wrong_body_text" => "El texto del cuerpo no puede estar vacío.",
@@ -37,6 +39,8 @@ pub fn translate_es(text_value: &str) -> &str {
             tampoco puede exceder los 600 caracteres.",
         "ERROR:wrong_lang_code" => "El código del idioma no es correcto.",
         "ERROR:wrong_lang_id" => "La ID del idioma no es correcta.",
+        "ERROR:wrong_own_lang_name" =>
+            "El nombre del idioma (en el nuevo idioma) no es válido.",
         "ERROR:wrong_permalink" => "El permalink no es válido.",
         "ERROR:wrong_post_id" => "La ID de la entrada no es correcta.",
         "ERROR:wrong_post_permalink" => "Esa entrada no existe.",
@@ -44,6 +48,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "ERROR:wrong_user_email" => "Ningún usuario tiene ese email.",
         "ERROR:wrong_user_password" => "La contraseña no es correcta.",
         "Example: en" => "Ejemplo: en",
+        "Examples: English, Español..." => "Ejemplos: English, Español...",
         "Files" => "Archivos",
         "Forgotten password?" => "¿Contraseña olvidada?",
         "General" => "General",
@@ -59,6 +64,9 @@ pub fn translate_es(text_value: &str) -> &str {
         "Login [noun]" => "Inicio de sesión",
         "Login [verb]" => "Iniciar sesión",
         "Logout [verb]" => "Cerrar sesión",
+        "Name (in the new language)" => "Nombre (en el nuevo idioma)",
+        "Names (in the new language) for each language" =>
+            "Nombres (en el nuevo idioma) para cada idioma",
         "New post" => "Nueva entrada",
         "Next [page]" => "Siguiente",
         "Original author" => "Autor original",

@@ -7,6 +7,8 @@ pub const SOME_WRONG_LANG_ID_OF_NAME: &'static str = "55F1A77CE041";
 
 pub const SOME_WRONG_LANG_NAME: &'static str = "39464FAE6EEB";
 
+pub const SOME_WRONG_NAME_FOR_LANG: &'static str = "55FF47829756";
+
 pub const USER_NOT_LOGGED_IN: &'static str = "D994FEF2356A";
 
 pub const WRONG_BODY_TEXT: &'static str = "F24F7F99E78D";
@@ -16,6 +18,8 @@ pub const WRONG_DESCRIPTION: &'static str = "4E576E6BB1EE";
 pub const WRONG_LANG_CODE: &'static str = "9F4297D0460F";
 
 pub const WRONG_LANG_ID: &'static str = "92165E44AFE4";
+
+pub const WRONG_OWN_LANG_NAME: &'static str = "4FDBD7CA47CE";
 
 pub const WRONG_PERMALINK: &'static str = "7D637808B8AA";
 

@@ -33,11 +33,14 @@ pub fn t_error(
                 ec::SOME_WRONG_LANG_ID_OF_NAME =>
                     "ERROR:some_wrong_lang_id_of_name",
                 ec::SOME_WRONG_LANG_NAME => "ERROR:some_wrong_lang_name",
+                ec::SOME_WRONG_NAME_FOR_LANG =>
+                    "ERROR:some_wrong_name_for_lang",
                 ec::USER_NOT_LOGGED_IN => "ERROR:user_not_logged_in",
                 ec::WRONG_BODY_TEXT => "ERROR:wrong_body_text",
                 ec::WRONG_DESCRIPTION => "ERROR:wrong_description",
                 ec::WRONG_LANG_CODE => "ERROR:wrong_lang_code",
                 ec::WRONG_LANG_ID => "ERROR:wrong_lang_id",
+                ec::WRONG_OWN_LANG_NAME => "ERROR:wrong_own_lang_name",
                 ec::WRONG_PERMALINK => "ERROR:wrong_permalink",
                 ec::WRONG_POST_ID => "ERROR:wrong_post_id",
                 ec::WRONG_POST_PERMALINK => "ERROR:wrong_post_permalink",

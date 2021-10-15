@@ -66,6 +66,34 @@ markup::define! {
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
+                        {&t("Name (in the new language)", &q.data.lang.code)}
+                    }
+                    div[class = "control"] {
+                        input[
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_OWN_LANG_NAME {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
+                            type = "text",
+                            name = "own_lang_name",
+                            placeholder = &t(
+                                "Examples: English, Español...",
+                                &q.data.lang.code,
+                            ),
+                            value = if let Some(f) = form {
+                                &f.own_lang_name
+                            } else { "" },
+                        ];
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
                         {&t("Code", &q.data.lang.code)}
                     }
                     div[class = "control"] {
@@ -125,6 +153,46 @@ markup::define! {
                                         name = "lang_name",
                                         value = if let Some(f) = form {
                                             &f.lang_names[i]
+                                        } else { "" },
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        {&t(
+                            "Names (in the new language) for each language",
+                            &q.data.lang.code,
+                        )}
+                    }
+                    p[class = "control"] {
+                        @for (i, lang) in q.data.languages.iter().enumerate() {
+                            div[class = "field has-addons is-marginless"] {
+                                div[class = "control"] {
+                                    span[class = "button is-static"] {
+                                        @lang.name
+                                    }
+                                }
+                                div[class = "control is-expanded"] {
+                                    input[
+                                        class = if let Some(e) = error {
+                                            if e.code ==
+                                                ec::SOME_WRONG_NAME_FOR_LANG
+                                            {
+                                                "input is-danger"
+                                            } else {
+                                                "input"
+                                            }
+                                        } else {
+                                            "input"
+                                        },
+                                        type = "text",
+                                        name = "name_for_lang",
+                                        value = if let Some(f) = form {
+                                            &f.names_for_langs[i]
                                         } else { "" },
                                     ];
                                 }

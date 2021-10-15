@@ -30,6 +30,8 @@ pub fn translate_en(text_value: &str) -> &str {
             "Some of the language IDs are not correct.",
         "ERROR:some_wrong_lang_name" =>
             "Some of the language names are not valid.",
+        "ERROR:some_wrong_name_for_lang" =>
+            "Some of the names (in the new language) are not valid.",
         "ERROR:unknown_error" => "Unknown error.",
         "ERROR:user_not_logged_in" => "You must be logged in.",
         "ERROR:wrong_body_text" => "Body text can't be empty.",
@@ -38,6 +40,8 @@ pub fn translate_en(text_value: &str) -> &str {
             it can't have more than 600 characters either.",
         "ERROR:wrong_lang_code" => "The language code is not correct.",
         "ERROR:wrong_lang_id" => "The language ID is not correct.",
+        "ERROR:wrong_own_lang_name" =>
+            "The language name (in the new language) is not valid.",
         "ERROR:wrong_permalink" => "The permalink is not valid.",
         "ERROR:wrong_post_id" => "The post ID is not correct.",
         "ERROR:wrong_post_permalink" => "That post doesn't exist.",
@@ -45,6 +49,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "ERROR:wrong_user_email" => "No user has that email.",
         "ERROR:wrong_user_password" => "The password is not correct.",
         "Example: en" => "Example: en",
+        "Examples: English, Español..." => "Examples: English, Español...",
         "Files" => "Files",
         "Forgotten password?" => "Forgotten password?",
         "General" => "General",
@@ -60,6 +65,9 @@ pub fn translate_en(text_value: &str) -> &str {
         "Login [noun]" => "Login",
         "Login [verb]" => "Login",
         "Logout [verb]" => "Logout",
+        "Name (in the new language)" => "Name (in the new language)",
+        "Names (in the new language) for each language" =>
+            "Names (in the new language) for each language",
         "New post" => "New post",
         "Next [page]" => "Next",
         "Original author" => "Original author",
