@@ -63,7 +63,14 @@ pub async fn new_post_post(
                     post: types::PostDB {
                         id: 0,
                         trans_id: 0,
-                        lang: 0,
+                        lang: types::LanguageDB {
+                            id: 0,
+                            code: "".to_string(),
+                            name: "".to_string(),
+                            original_name: "".to_string(),
+                            date: "".to_string(),
+                            has_all_names: false,
+                        },
                         title: title_value,
                         description: description_value,
                         body: body_value,

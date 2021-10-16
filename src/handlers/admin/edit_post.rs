@@ -88,7 +88,7 @@ pub async fn edit_post(
                                 types::PostDB{
                                     id: post_id,
                                     trans_id: 0,
-                                    lang: 0,
+                                    lang: q.data.lang.clone(),
                                     title: "".to_string(),
                                     description: "".to_string(),
                                     body: "".to_string(),

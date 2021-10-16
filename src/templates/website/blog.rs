@@ -39,7 +39,7 @@ markup::define! {
                     ] {
                         a[
                             href = "/{lang}/blog/{permalink}"
-                                .replace("{lang}", &q.data.lang.code)
+                                .replace("{lang}", &post.lang.code)
                                 .replace(
                                     "{permalink}",
                                     &post.permalink.to_string()
@@ -65,7 +65,7 @@ markup::define! {
                             ] {
                                 a[
                                     href = "/{lang}/blog/{permalink}"
-                                        .replace("{lang}", &q.data.lang.code)
+                                        .replace("{lang}", &post.lang.code)
                                         .replace(
                                             "{permalink}",
                                             &post.permalink.to_string()
@@ -82,6 +82,19 @@ markup::define! {
                                     ] {
                                         {t_date(&post.date, &q.data.lang.code)}
                                     }
+
+                                    @if post.lang.id != q.data.lang.id {
+                                        " "
+
+                                        b {
+                                            "("
+                                            {t(
+                                                "untranslated",
+                                                &q.data.lang.code,
+                                            )}
+                                            ")"
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -89,7 +102,7 @@ markup::define! {
                         h2 {
                             a[
                                 href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &q.data.lang.code)
+                                    .replace("{lang}", &post.lang.code)
                                     .replace(
                                         "{permalink}",
                                         &post.permalink.to_string()
@@ -108,13 +121,13 @@ markup::define! {
                         ] {
                             a[
                                 href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &q.data.lang.code)
+                                    .replace("{lang}", &post.lang.code)
                                     .replace(
                                         "{permalink}",
                                         &post.permalink.to_string()
                                     ),
                             ] {
-                                {&t("Read more", &q.data.lang.code)}
+                                {&t("Read more", &post.lang.code)}
                             }
                         }
                     }

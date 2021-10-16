@@ -45,9 +45,9 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
-    posts := s_posts_by_lang(language_of_user);
+    posts := s_posts_by_pref_lang(language_of_user);
 
-    total_results := sc_posts_by_lang(language_of_user);
+    total_results := sc_posts_by_pref_lang(language_of_user);
 
     RETURN ROW(
         -- data

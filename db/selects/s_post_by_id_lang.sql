@@ -19,7 +19,10 @@ SELECT (
     -- trans_id
     tpt_id,
     -- lang
-    tpt_lang,
+    s_language_by_id_lang(
+        tpt_lang,
+        post_lang
+    ),
     -- title
     tpt_title,
     -- description

@@ -54,7 +54,7 @@ pub struct LanguageWithNamesDB {
 pub struct PostDB {
     pub id: i64,
     pub trans_id: i64,
-    pub lang: i64,
+    pub lang: LanguageDB,
     pub title: String,
     pub description: String,
     pub body: String,

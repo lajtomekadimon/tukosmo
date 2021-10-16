@@ -23,7 +23,15 @@ SELECT ARRAY(
         COALESCE(tpt_id, 0),
 
         -- lang
-        COALESCE(tpt_lang, 0),
+        COALESCE(
+            s_language_by_id_lang(
+                tpt_lang,
+                language_of_user
+            ),
+            (
+                0, '', '', '', '', FALSE
+            )::"LanguageDB"
+        ),
 
         -- title
         COALESCE(

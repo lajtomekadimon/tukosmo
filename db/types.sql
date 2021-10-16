@@ -44,7 +44,7 @@ CREATE TYPE "LanguageWithNamesDB" AS (
 CREATE TYPE "PostDB" AS (
     id BIGINT,
     trans_id BIGINT,
-    lang BIGINT,
+    lang "LanguageDB",
     title TEXT,
     description TEXT,
     body TEXT,
