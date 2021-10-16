@@ -6,6 +6,7 @@ use crate::handlers::website::user_request::user_request;
 use crate::i18n::t::t;
 use crate::templates::website::error::Error;
 use crate::database::types;
+use crate::database::error_codes as ec;
 use crate::database::query_db::{QueryFunction, query_db};
 
 
@@ -57,8 +58,39 @@ pub async fn error(
         },
 
         Err(e) => {
-            println!("{}", e);
-            HttpResponse::Ok().body("UNKNOWN ERROR")  // TODO
+            println!("{}", e);  // for debugging
+
+            if let Some(dberror) = e.as_db_error() {
+
+                let error_message = dberror.message();
+
+                if &error_message[..8] == "TUKOSMO:" {
+
+                    // Extract X from "TUKOSMO:X"
+                    let error_code = &error_message[8..];
+
+                    if error_code == ec::WRONG_LANG_CODE {
+
+                        HttpResponse::Ok().body("WRONG URL LANGUAGE CODE")
+                        // TODO: Redirect to same URL using default language
+
+                    } else {
+
+                        HttpResponse::Ok().body("UNKNOWN ERROR")  // TODO
+
+                    }
+
+                } else {
+
+                    HttpResponse::Ok().body("UNKNOWN ERROR")  // TODO
+
+                }
+
+            } else {
+
+                HttpResponse::Ok().body("UNKNOWN ERROR")  // TODO
+
+            }
         },
 
     }
