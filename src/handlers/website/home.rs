@@ -17,7 +17,7 @@ pub async fn home(
 
     match query_db(
         BlogWRequest {
-            req: user_req,
+            req: user_req.clone(),
             //results_per_page: results_per_page,
             //page: current_page,
         },
@@ -42,7 +42,12 @@ pub async fn home(
 
         Err(e) => {
             println!("{}", e);
-            panic!("HAAAA");  // TODO
+            // TODO
+            HttpResponse::Found()
+                .header("Location", "/{lang}/error"
+                    .replace("{lang}", &user_req.lang_code)
+                )
+                .finish()
         },
 
     }

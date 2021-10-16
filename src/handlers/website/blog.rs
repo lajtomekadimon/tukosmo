@@ -43,7 +43,7 @@ pub async fn blog(
 
     match query_db(
         BlogWRequest {
-            req: user_req,
+            req: user_req.clone(),
             //results_per_page: results_per_page,
             //page: current_page,
         },
@@ -68,7 +68,12 @@ pub async fn blog(
 
         Err(e) => {
             println!("{}", e);
-            HttpResponse::Ok().body("Unknown error.")  // TODO
+            // TODO
+            HttpResponse::Found()
+                .header("Location", "/{lang}/error"
+                    .replace("{lang}", &user_req.lang_code)
+                )
+                .finish()
         },
 
     }

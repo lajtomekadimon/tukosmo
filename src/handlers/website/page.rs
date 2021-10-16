@@ -34,7 +34,7 @@ pub async fn page(
 
     match query_db(
         PageWRequest {
-            req: user_req,
+            req: user_req.clone(),
         },
     ) {
 
@@ -57,7 +57,12 @@ pub async fn page(
 
         Err(e) => {
             println!("{}", e);
-            HttpResponse::Ok().body("Unknown error.")  // TODO
+            // TODO
+            HttpResponse::Found()
+                .header("Location", "/{lang}/error"
+                    .replace("{lang}", &user_req.lang_code)
+                )
+                .finish()
         },
 
     }

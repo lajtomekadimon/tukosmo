@@ -39,7 +39,7 @@ pub async fn blog_post(
 
     match query_db(
         BlogPostWRequest {
-            req: user_req,
+            req: user_req.clone(),
             permalink: permalink_value,
         },
     ) {
@@ -63,7 +63,12 @@ pub async fn blog_post(
 
         Err(e) => {
             println!("{}", e);
-            HttpResponse::Ok().body("Error 404.")  // TODO
+            // TODO
+            HttpResponse::Found()
+                .header("Location", "/{lang}/error"
+                    .replace("{lang}", &user_req.lang_code)
+                )
+                .finish()
         },
 
     }
