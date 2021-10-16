@@ -130,6 +130,13 @@ async fn main() -> std::io::Result<()> {
                     )
                 )
 
+                // Error
+                .service(web::resource("/error")
+                    .route(web::get()
+                        .to(website::error::error)
+                    )
+                )
+
                 // Admin Panel dashboard (/{lang}/admin)
                 .service(web::resource("/admin")
                     .route(web::get()

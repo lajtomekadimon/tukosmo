@@ -23,6 +23,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Edit" => "Editar",
         "Edit language: {name}" => "Editar idioma: {name}",
         "Edit post: '{title}'" => "Editar entrada: '{title}'",
+        "Error" => "Error",
         "ERROR:field_is_not_lang_code" => "El código del idioma no es válido.",
         "ERROR:lang_code_already_exists" => "Ese código de idioma ya existe.",
         "ERROR:some_wrong_lang_id_of_name" =>
