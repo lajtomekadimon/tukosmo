@@ -1,0 +1,134 @@
+
+.post-list {
+    width: 100%;
+}
+
+.post-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    margin: 1.875rem 0 0 0;
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 1, 0.05);
+}
+
+.post-wrapper:nth-of-type(1) {
+    margin: 0;
+}
+
+.post-wrapper-image {
+    display: block;
+    position: relative;
+    width: 330px;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.post-wrapper-image figure {
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: #ccc;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    position: absolute;
+    transition: all 0.5s ease;
+}
+
+.post-wrapper-image figure:hover {
+    transform: scale(1.1) rotate(1deg);
+}
+
+.post-wrapper-data {
+    align-self: center;
+    width: calc(100% - 330px);
+    padding: 2.8125rem;
+}
+
+.post-wrapper-data-meta {
+    width: 100%;
+    margin: 0 0 10px 0;
+    font-size: 0.875rem;
+}
+
+.post-wrapper-data-meta a,
+.post-wrapper-data-meta a:visited,
+.post-wrapper-data-meta a time {
+    color: #3d3d3d;
+    text-decoration: none;
+}
+
+.post-wrapper-data-meta a:hover {
+    color: #020202;
+    text-decoration: underline;
+}
+
+.post-wrapper-data-meta-date,
+.post-wrapper-data-meta-date .eos-icons {
+    font-size: 0.875rem;
+}
+
+.post-wrapper-data-meta-date a:hover,
+.post-wrapper-data-meta-date time:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+.post-wrapper-data h2 {
+    margin: 0 0 15px 0;
+    padding: 0;
+    clear: none;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.post-wrapper-data h2 a,
+.post-wrapper-data h2 a:visited {
+    color: #020202;
+    text-decoration: none;
+}
+
+.post-wrapper-data h2 a:hover {
+    color: #020202;
+    text-decoration: underline;
+}
+
+.post-wrapper-data p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1.7;
+    word-wrap: break-word;
+}
+
+.post-wrapper-data-more {
+    width: 100%;
+    margin: 15px 0 0 0;
+}
+
+.post-wrapper-data-more a,
+.post-wrapper-data-more a:visited {
+    display: inline-block;
+    padding: 0.3125rem 0.9375rem;
+    background-color: #020202;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all .25s ease-out;
+}
+
+.post-wrapper-data-more a:hover {
+    background-color: #333;
+}

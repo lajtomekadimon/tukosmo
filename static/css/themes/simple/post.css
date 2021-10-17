@@ -1,0 +1,124 @@
+
+.post {
+    display: block;
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 1, 0.05);
+}
+
+.post-image {
+    display: inline-block;
+    width: 100%;
+}
+
+.post-image figure {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.post-image figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border: 0;
+}
+
+.post-image figure figcaption {
+
+}
+
+.post-content {
+    padding: 2.8125rem;
+}
+
+.post-header {
+    position: relative;
+    width: 90%;
+    margin: 0 auto 2.8125rem;
+    padding: 0;
+    text-align: center;
+}
+
+.post-title {
+    margin: 0;
+    padding: 0 0 4px 0;
+    font-size: 2.375rem;
+    font-weight: 700;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.post-meta {
+    color: #3d3d3d;
+    text-align: center;
+}
+
+.post-meta,
+.post-meta .eos-icons {
+    font-size: 0.875rem;
+}
+.post-meta span {
+    display: inline-block;
+    margin-top: 0.625rem;
+    margin: 0.625rem 0.5rem 0 0.5rem;
+}
+
+.post-meta a {
+    text-decoration: none;
+}
+
+.post-meta a:hover,
+.post-meta time:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+.post-meta-author {
+
+}
+
+.post-meta-date {
+
+}
+
+.post-body {
+    margin: 0;
+    padding: 0;
+    word-wrap: break-word;
+}
+
+.post-body a:hover {
+    color: #555;
+}
+
+.footnote-reference {
+    font-weight: bold;
+}
+
+.footnote-definition {
+    display: flex;
+    flex-direction: row;
+}
+
+.footnote-definition p {
+    display: inline-block;
+    margin: 0;
+    font-size: 90%;
+}
+
+.footnote-definition-label {
+    display: block;
+    top: 0;
+    padding: 0 6px 0 0;
+    font-size: 90%;
+    line-height: 1.8;
+}
+
+.footnote-definition-label:after {
+    content: ".";
+}
