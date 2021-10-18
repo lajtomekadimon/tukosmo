@@ -2,12 +2,14 @@
 CREATE TYPE "PostsARequest" AS (
     req "AdminRequest",
     results_per_page BIGINT,
-    page BIGINT
+    page BIGINT,
+    filter TEXT
 );
 
 CREATE TYPE "PostsAResponse" AS (
     data "AdminDataDB",
     posts "PostDB"[],
+    filter TEXT,
     results_per_page BIGINT,
     page BIGINT,
     total_results BIGINT,
@@ -36,6 +38,8 @@ DECLARE
 
     posts "PostDB"[];
 
+    the_filter TEXT;
+
     total_results BIGINT;
 
     total_pages BIGINT;
@@ -47,13 +51,67 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
-    posts := s_posts(
-        language_of_user,
-        r.results_per_page,
-        r.page
-    );
+    IF r.filter = 'drafts' THEN
 
-    total_results := sc_posts(language_of_user);
+        posts := s_posts_f_drafts(
+            language_of_user,
+            r.results_per_page,
+            r.page
+        );
+
+        the_filter := 'drafts';
+
+        total_results := sc_posts_f_drafts(language_of_user);
+
+    ELSIF r.filter = 'published' THEN
+
+        posts := s_posts_f_published(
+            language_of_user,
+            r.results_per_page,
+            r.page
+        );
+
+        the_filter := 'published';
+
+        total_results := sc_posts_f_published(language_of_user);
+
+    ELSIF r.filter = 'untranslated' THEN
+
+        posts := s_posts_f_untranslated(
+            language_of_user,
+            r.results_per_page,
+            r.page
+        );
+
+        the_filter := 'untranslated';
+
+        total_results := sc_posts_f_untranslated(language_of_user);
+
+    ELSIF r.filter = 'deleted' THEN
+
+        posts := s_posts_f_deleted(
+            language_of_user,
+            r.results_per_page,
+            r.page
+        );
+
+        the_filter := 'deleted';
+
+        total_results := sc_posts_f_deleted(language_of_user);
+
+    ELSE
+
+        posts := s_posts(
+            language_of_user,
+            r.results_per_page,
+            r.page
+        );
+
+        the_filter := 'all';
+
+        total_results := sc_posts(language_of_user);
+
+    END IF;
 
     total_pages := CEIL(total_results / r.results_per_page::NUMERIC);
 
@@ -63,6 +121,9 @@ BEGIN
 
         -- posts
         posts,
+
+        -- filter
+        the_filter,
 
         -- results_per_page
         r.results_per_page,

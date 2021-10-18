@@ -95,37 +95,68 @@ markup::define! {
                     ] {
                         {&t("Posts", &data.lang.code)}
                     }
-                    ul {
-                        li {
-                            a[
-                                href = "/{lang}/admin/posts"
-                                    .replace("{lang}", &data.lang.code),
-                            ] {
-                                {&t("Drafts", &data.lang.code)}
+
+                    @if current_page == &"posts"
+                        || current_page == &"posts-drafts"
+                        || current_page == &"posts-published"
+                        || current_page == &"posts-untranslated"
+                        || current_page == &"posts-deleted"
+                    {
+                        ul {
+                            li {
+                                a[
+                                    href = "/{lang}/admin/posts?f=drafts"
+                                        .replace("{lang}", &data.lang.code),
+                                    class = if
+                                        current_page == &"posts-drafts"
+                                    {
+                                        "is-active"
+                                    } else { "" },
+                                ] {
+                                    {&t("Drafts", &data.lang.code)}
+                                }
                             }
-                        }
-                        li {
-                            a[
-                                href = "/{lang}/admin/posts"
-                                    .replace("{lang}", &data.lang.code),
-                            ] {
-                                {&t("Published [posts]", &data.lang.code)}
+                            li {
+                                a[
+                                    href = "/{lang}/admin/posts?f=published"
+                                        .replace("{lang}", &data.lang.code),
+                                    class = if
+                                        current_page == &"posts-published"
+                                    {
+                                        "is-active"
+                                    } else { "" },
+                                ] {
+                                    {&t("Published [posts]", &data.lang.code)}
+                                }
                             }
-                        }
-                        li {
-                            a[
-                                href = "/{lang}/admin/posts"
-                                    .replace("{lang}", &data.lang.code),
-                            ] {
-                                {&t("Untranslated [posts]", &data.lang.code)}
+                            li {
+                                a[
+                                    href = "/{lang}/admin/posts?f=untranslated"
+                                        .replace("{lang}", &data.lang.code),
+                                    class = if
+                                        current_page == &"posts-untranslated"
+                                    {
+                                        "is-active"
+                                    } else { "" },
+                                ] {
+                                    {&t(
+                                        "Untranslated [posts]",
+                                        &data.lang.code,
+                                    )}
+                                }
                             }
-                        }
-                        li {
-                            a[
-                                href = "/{lang}/admin/posts"
-                                    .replace("{lang}", &data.lang.code),
-                            ] {
-                                {&t("Trash", &data.lang.code)}
+                            li {
+                                a[
+                                    href = "/{lang}/admin/posts?f=deleted"
+                                        .replace("{lang}", &data.lang.code),
+                                    class = if
+                                        current_page == &"posts-deleted"
+                                    {
+                                        "is-active"
+                                    } else { "" },
+                                ] {
+                                    {&t("Trash", &data.lang.code)}
+                                }
                             }
                         }
                     }

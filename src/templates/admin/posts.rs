@@ -23,7 +23,17 @@ markup::define! {
                     q: q,
                     success: success,
                 },
-                current_page: "posts",
+                current_page: if q.filter == "drafts" {
+                    "posts-drafts"
+                } else if q.filter == "published" {
+                    "posts-published"
+                } else if q.filter == "untranslated" {
+                    "posts-untranslated"
+                } else if q.filter == "deleted" {
+                    "posts-deleted"
+                } else {
+                    "posts"
+                },
                 data: &q.data,
             },
         }
@@ -35,11 +45,31 @@ markup::define! {
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Posts", &q.data.lang.code)}
+                {&t(if q.filter == "drafts" {
+                    "Draft posts"
+                } else if q.filter == "published" {
+                    "Published posts"
+                } else if q.filter == "untranslated" {
+                    "Untranslated posts"
+                } else if q.filter == "deleted" {
+                    "Deleted posts"
+                } else {
+                    "Posts"
+                }, &q.data.lang.code)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        route: "/admin/posts",
+                        route: if q.filter == "drafts" {
+                            "/admin/posts?f=drafts"
+                        } else if q.filter == "published" {
+                            "/admin/posts?f=published"
+                        } else if q.filter == "untranslated" {
+                            "/admin/posts?f=untranslated"
+                        } else if q.filter == "deleted" {
+                            "/admin/posts?f=deleted"
+                        } else {
+                            "/admin/posts"
+                        },
                         data: &q.data,
                     }
                 }
@@ -188,7 +218,17 @@ markup::define! {
 
             @AdminPagination {
                 data: &q.data,
-                route: "/{lang}/admin/posts?p={page}&rpp={rpp}",
+                route: if q.filter == "drafts" {
+                    "/{lang}/admin/posts?f=drafts&p={page}&rpp={rpp}"
+                } else if q.filter == "published" {
+                    "/{lang}/admin/posts?f=published&p={page}&rpp={rpp}"
+                } else if q.filter == "untranslated" {
+                    "/{lang}/admin/posts?f=untranslated&p={page}&rpp={rpp}"
+                } else if q.filter == "deleted" {
+                    "/{lang}/admin/posts?f=deleted&p={page}&rpp={rpp}"
+                } else {
+                    "/{lang}/admin/posts?p={page}&rpp={rpp}"
+                },
                 current_page: &q.page,
                 total_pages: &q.total_pages,
                 results_per_page: &q.results_per_page,

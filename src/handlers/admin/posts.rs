@@ -14,6 +14,7 @@ use crate::database::query_db::{QueryFunction, query_db};
 pub struct GetParamData {
     rpp: Option<i64>,
     p: Option<i64>,
+    f: Option<String>,
     success: Option<String>,
 }
 
@@ -23,6 +24,7 @@ pub struct PostsARequest {
     pub req: types::AdminRequest,
     pub results_per_page: i64,
     pub page: i64,
+    pub filter: String,
 }
 
 impl QueryFunction for PostsARequest {
@@ -35,6 +37,7 @@ impl QueryFunction for PostsARequest {
 pub struct PostsAResponse {
     pub data: types::AdminDataDB,
     pub posts: Vec<types::PostDB>,
+    pub filter: String,
     pub results_per_page: i64,
     pub page: i64,
     pub total_results: i64,
@@ -58,6 +61,7 @@ pub async fn posts(
                 req: user_req,
                 results_per_page: results_per_page,
                 page: current_page,
+                filter: (param.f).clone().unwrap_or("all".to_string()),
             },
         ) {
 
@@ -68,7 +72,17 @@ pub async fn posts(
                 let html = Posts {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Posts", &q.data.lang.code),
+                        a = &t(if q.filter == "drafts" {
+                            "Draft posts"
+                        } else if q.filter == "published" {
+                            "Published posts"
+                        } else if q.filter == "untranslated" {
+                            "Untranslated posts"
+                        } else if q.filter == "deleted" {
+                            "Deleted posts"
+                        } else {
+                            "Posts"
+                        }, &q.data.lang.code),
                         b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                     ),
                     q: &q,
