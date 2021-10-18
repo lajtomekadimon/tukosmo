@@ -17,24 +17,40 @@ markup::define! {
             role = "navigation",
             "aria-label" = "pagination",
         ] {
-            a[
-                class = "pagination-previous",
-                href = route
-                    .replace("{lang}", &data.lang.code)
-                    .replace("{page}", &(**current_page - 1).to_string()),
-                disabled = **current_page == 1,
-            ] {
-                {&t("Previous [page]", &data.lang.code)}
+            @if **current_page == 1 {
+                button[
+                    class = "pagination-previous",
+                    disabled = true,
+                ] {
+                    {&t("Previous [page]", &data.lang.code)}
+                }
+            } else {
+                a[
+                    class = "pagination-previous",
+                    href = route
+                        .replace("{lang}", &data.lang.code)
+                        .replace("{page}", &(**current_page - 1).to_string()),
+                ] {
+                    {&t("Previous [page]", &data.lang.code)}
+                }
             }
 
-            a[
-                class = "pagination-next",
-                href = route
-                    .replace("{lang}", &data.lang.code)
-                    .replace("{page}", &(**current_page + 1).to_string()),
-                disabled = current_page == total_pages,
-            ] {
-                {&t("Next [page]", &data.lang.code)}
+            @if current_page == total_pages {
+                button[
+                    class = "pagination-next",
+                    disabled = true,
+                ] {
+                    {&t("Next [page]", &data.lang.code)}
+                }
+            } else {
+                a[
+                    class = "pagination-next",
+                    href = route
+                        .replace("{lang}", &data.lang.code)
+                        .replace("{page}", &(**current_page + 1).to_string()),
+                ] {
+                    {&t("Next [page]", &data.lang.code)}
+                }
             }
 
             ul[class = "pagination-list"] {
