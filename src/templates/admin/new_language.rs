@@ -111,7 +111,7 @@ markup::define! {
                             },
                             type = "text",
                             name = "lang_code",
-                            placeholder = &t("Example: en", &q.data.lang.code),
+                            placeholder = &t("Examples: en, en-us...", &q.data.lang.code),
                             value = if let Some(f) = form {
                                 &f.lang_code
                             } else { "" },
