@@ -50,21 +50,21 @@ https://github.com/utkarshkukreti/markup.rs).
     - [ ] Files
     - [x] Admin Panel
 - [ ] 0.2
+    - [ ] Improved user experience with JavaScript
+        - [ ] WYSIWYG CommonMark editor for posts
+        - [ ] Real-time form validation
+        - [ ] Change pages loading just the new content using Ajax
+- [ ] 0.3
     - [ ] Custom menus and widgets
     - [ ] Pages
     - [ ] Special pages (contact, team, cv, homepage?, etc.)
     - [ ] Custom homepage
-- [ ] 0.3
+- [ ] 0.4
     - [ ] FAQ
     - [ ] RSS
     - [ ] Searcher
     - [ ] Social links
     - [ ] OpenGraph cards for Facebook, Twitter, Mastodon...
-- [ ] 0.4
-    - [ ] Improved user experience with JavaScript
-        - [ ] WYSIWYG CommonMark editor for posts, pages and FAQ
-        - [ ] Real-time form validation
-        - [ ] Change pages loading just the new content using Ajax
 - [ ] 0.5
     - [ ] Statistics
     - [ ] Server info

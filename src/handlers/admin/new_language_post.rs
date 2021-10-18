@@ -166,6 +166,7 @@ pub async fn new_language_post(
                                 ),
                             ),
                             q: &q,
+                            auto: &None,
                             error: &Some(t_error(e, &q.data.lang.code)),
                             form: &Some(form),
                         };

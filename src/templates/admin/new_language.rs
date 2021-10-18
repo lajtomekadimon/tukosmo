@@ -1,7 +1,9 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::SUPPORTED_LANGUAGES;
 use crate::i18n::t::t;
+use crate::i18n::get_lang_name::get_lang_name;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -15,6 +17,7 @@ markup::define! {
     NewLanguage<'a>(
         title: &'a str,
         q: &'a NewLanguageAResponse,
+        auto: &'a Option<String>,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -24,6 +27,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    auto: auto,
                     error: error,
                     form: form,
                 },
@@ -35,6 +39,7 @@ markup::define! {
 
     Content<'a>(
         q: &'a NewLanguageAResponse,
+        auto: &'a Option<String>,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -46,6 +51,31 @@ markup::define! {
                     @AdminLangDropdown {
                         route: "/admin/new_language",
                         data: &q.data,
+                    }
+                }
+            }
+
+            p[
+                class = "mb-4",
+            ] {
+                {&t("Autocomplete for:", &q.data.lang.code)}
+                " "
+
+                // TODO: Should I ignore current languages in use?
+                @for (i, lang) in SUPPORTED_LANGUAGES.iter().enumerate() {
+                    @if i != 0 {
+                        ", "
+                    }
+
+                    a[
+                        href = "/{lang}/admin/new_language?auto={code}"
+                            .replace("{lang}", &q.data.lang.code)
+                            .replace("{code}", lang),
+                    ] {
+                        {&t(
+                            &"LANG:{code}".replace("{code}", lang),
+                            &q.data.lang.code,
+                        )}
                     }
                 }
             }
@@ -69,26 +99,39 @@ markup::define! {
                         {&t("Name (in the new language)", &q.data.lang.code)}
                     }
                     div[class = "control"] {
-                        input[
-                            class = if let Some(e) = error {
-                                if e.code == ec::WRONG_OWN_LANG_NAME {
-                                    "input is-danger"
+                        @if form.is_some() || auto.is_none() {
+                            input[
+                                class = if let Some(e) = error {
+                                    if e.code == ec::WRONG_OWN_LANG_NAME {
+                                        "input is-danger"
+                                    } else {
+                                        "input"
+                                    }
                                 } else {
                                     "input"
-                                }
-                            } else {
-                                "input"
-                            },
-                            type = "text",
-                            name = "own_lang_name",
-                            placeholder = &t(
-                                "Examples: English, Español...",
-                                &q.data.lang.code,
-                            ),
-                            value = if let Some(f) = form {
-                                &f.own_lang_name
-                            } else { "" },
-                        ];
+                                },
+                                type = "text",
+                                name = "own_lang_name",
+                                placeholder = &t(
+                                    "Examples: English, Español...",
+                                    &q.data.lang.code,
+                                ),
+                                value = if let Some(f) = form {
+                                    &f.own_lang_name
+                                } else { "" },
+                            ];
+                        } else if let Some(auto_code) = auto {
+                            input[
+                                class = "input",
+                                type = "text",
+                                name = "own_lang_name",
+                                placeholder = &t(
+                                    "Examples: English, Español...",
+                                    &q.data.lang.code,
+                                ),
+                                value = &get_lang_name(auto_code, auto_code),
+                            ];
+                        }
                     }
                 }
 
@@ -114,6 +157,8 @@ markup::define! {
                             placeholder = &t("Examples: en, en-us...", &q.data.lang.code),
                             value = if let Some(f) = form {
                                 &f.lang_code
+                            } else if let Some(auto_code) = auto {
+                                &auto_code
                             } else { "" },
                         ];
                     }
@@ -137,24 +182,36 @@ markup::define! {
                                         name = "lang_id",
                                         value = &lang.id.to_string(),
                                     ];
-                                    input[
-                                        class = if let Some(e) = error {
-                                            if e.code ==
-                                                ec::SOME_WRONG_LANG_NAME
-                                            {
-                                                "input is-danger"
+                                    @if form.is_some() || auto.is_none() {
+                                        input[
+                                            class = if let Some(e) = error {
+                                                if e.code ==
+                                                    ec::SOME_WRONG_LANG_NAME
+                                                {
+                                                    "input is-danger"
+                                                } else {
+                                                    "input"
+                                                }
                                             } else {
                                                 "input"
-                                            }
-                                        } else {
-                                            "input"
-                                        },
-                                        type = "text",
-                                        name = "lang_name",
-                                        value = if let Some(f) = form {
-                                            &f.lang_names[i]
-                                        } else { "" },
-                                    ];
+                                            },
+                                            type = "text",
+                                            name = "lang_name",
+                                            value = if let Some(f) = form {
+                                                &f.lang_names[i]
+                                            } else { "" },
+                                        ];
+                                    } else if let Some(auto_code) = auto {
+                                        input[
+                                            class = "input",
+                                            type = "text",
+                                            name = "lang_name",
+                                            value = &get_lang_name(
+                                                auto_code,
+                                                &lang.code,
+                                            ),
+                                        ];
+                                    }
                                 }
                             }
                         }
@@ -177,24 +234,36 @@ markup::define! {
                                     }
                                 }
                                 div[class = "control is-expanded"] {
-                                    input[
-                                        class = if let Some(e) = error {
-                                            if e.code ==
-                                                ec::SOME_WRONG_NAME_FOR_LANG
-                                            {
-                                                "input is-danger"
+                                    @if form.is_some() || auto.is_none() {
+                                        input[
+                                            class = if let Some(e) = error {
+                                                if e.code ==
+                                                   ec::SOME_WRONG_NAME_FOR_LANG
+                                                {
+                                                    "input is-danger"
+                                                } else {
+                                                    "input"
+                                                }
                                             } else {
                                                 "input"
-                                            }
-                                        } else {
-                                            "input"
-                                        },
-                                        type = "text",
-                                        name = "name_for_lang",
-                                        value = if let Some(f) = form {
-                                            &f.names_for_langs[i]
-                                        } else { "" },
-                                    ];
+                                            },
+                                            type = "text",
+                                            name = "name_for_lang",
+                                            value = if let Some(f) = form {
+                                                &f.names_for_langs[i]
+                                            } else { "" },
+                                        ];
+                                    } else if let Some(auto_code) = auto {
+                                        input[
+                                            class = "input",
+                                            type = "text",
+                                            name = "name_for_lang",
+                                            value = &get_lang_name(
+                                                &lang.code,
+                                                auto_code,
+                                            ),
+                                        ];
+                                    }
                                 }
                             }
                         }

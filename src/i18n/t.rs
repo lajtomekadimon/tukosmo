@@ -14,7 +14,7 @@ pub fn t(
 
         //--------------//
 
-        //_ => "[unstranslated]"
+        //_ => "[untranslated]"
         _ => translate_en(text_value),
     }.to_string()
 

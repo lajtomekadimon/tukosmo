@@ -1,12 +1,20 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::SUPPORTED_LANGUAGES;
 use crate::handlers::admin::user_request::user_request;
 use crate::i18n::t::t;
 use crate::templates::admin::new_language::NewLanguage;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+
+
+#[derive(Deserialize)]
+pub struct GetParamData {
+    auto: Option<String>,
+}
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
@@ -29,6 +37,7 @@ pub struct NewLanguageAResponse {
 pub async fn new_language(
     req: HttpRequest,
     id: Identity,
+    web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -43,6 +52,15 @@ pub async fn new_language(
 
                 let q: NewLanguageAResponse = row.get(0);
 
+                let maybe_auto_code = (param.auto).clone();
+
+                let auto_code = match maybe_auto_code {
+                    Some(the_auto_code) => if SUPPORTED_LANGUAGES.contains(
+                        &the_auto_code.as_str()
+                    ) { Some(the_auto_code) } else { None },
+                    None => None,
+                };
+
                 let html = NewLanguage {
                     title: &format!(
                         "{a} - {b}",
@@ -50,6 +68,7 @@ pub async fn new_language(
                         b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                     ),
                     q: &q,
+                    auto: &auto_code,
                     error: &None,
                     form: &None,
                 };

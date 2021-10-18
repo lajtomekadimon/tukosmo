@@ -10,6 +10,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Account" => "Account",
         "Add language" => "Add language",
         "Author" => "Author",
+        "Autocomplete for:" => "Autocomplete for:",
         "Blog" => "Blog",
         "Cancel" => "Cancel",
         "Code" => "Code",
@@ -60,6 +61,9 @@ pub fn translate_en(text_value: &str) -> &str {
         "Help [noun]" => "Help",
         "I hope you are having a great day!" =>
             "I hope you are having a great day!",
+        "LANG:en" => "English",
+        "LANG:es" => "Spanish",
+        "LANG:ja" => "Japanese",
         "Language" => "Language",
         "Language name" => "Language name",
         "Language names" => "Language names",
@@ -115,7 +119,7 @@ pub fn translate_en(text_value: &str) -> &str {
 
         //--------------//
 
-        _ => "[unstranslated]"
+        _ => "[untranslated]"
     }
 }
 
