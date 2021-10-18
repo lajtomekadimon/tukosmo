@@ -129,86 +129,108 @@ markup::define! {
                     }
                 }
                 tbody {
-                    @for post in q.posts.iter() {
-                        tr[
-                            class = if post.translator == 0 {
-                                "has-background-danger-light"
-                            } else if post.draft {
-                                "has-background-warning-light"
-                            } else {
-                                ""
-                            },
-                        ] {
-                            td {
-                                a[
-                                    href = "/{lang}/admin/edit_post?id={id}"
-                                        .replace("{lang}", &q.data.lang.code)
-                                        .replace(
-                                            "{id}",
-                                            &post.id.to_string()
-                                        ),
-                                    class = if post.translator == 0 {
-                                        "has-text-danger"
-                                    } else if post.draft {
-                                        "has-text-warning-dark"
-                                    } else {
-                                        ""
-                                    },
-                                ] {
-                                    @post.title
-                                }
-                            }
-                            td {
-                                @if post.translator == 0 {
-                                    {&t("Untranslated", &q.data.lang.code)}
+                    @if q.posts.len() == 0 {
+                        tr {
+                            td { "-" }
+                            td { "-" }
+                            td { "-" }
+                            td { "-" }
+                        }
+                    } else {
+                        @for post in q.posts.iter() {
+                            tr[
+                                class = if post.translator == 0 {
+                                    "has-background-danger-light"
                                 } else if post.draft {
-                                    {&t("Draft", &q.data.lang.code)}
+                                    "has-background-warning-light"
                                 } else {
-                                    {&t("Published", &q.data.lang.code)}
+                                    ""
+                                },
+                            ] {
+                                td {
+                                    a[
+                                        href = "/{lang}/admin/edit_post\
+                                                ?id={id}"
+                                            .replace(
+                                                "{lang}",
+                                                &q.data.lang.code,
+                                            )
+                                            .replace(
+                                                "{id}",
+                                                &post.id.to_string()
+                                            ),
+                                        class = if post.translator == 0 {
+                                            "has-text-danger"
+                                        } else if post.draft {
+                                            "has-text-warning-dark"
+                                        } else {
+                                            ""
+                                        },
+                                    ] {
+                                        @post.title
+                                    }
                                 }
-                            }
-                            td {
-                                {t_date(&post.date, &q.data.lang.code)}
-
-                                @if (post.author_name != post.translator_name)
-                                    && (post.translator != 0)
-                                {
-                                    " ("
-                                    {t_date(
-                                        &post.date_trans,
-                                        &q.data.lang.code
-                                    )}
-                                    ")"
-                                }
-                            }
-                            td {
-                                a[
-                                    href = "/{lang}/admin/edit_user?id={id}"
-                                        .replace("{lang}", &q.data.lang.code)
-                                        .replace(
-                                            "{id}",
-                                            &post.author.to_string()
-                                        ),
-                                    class = if post.translator == 0 {
-                                        "has-text-danger"
+                                td {
+                                    @if post.translator == 0 {
+                                        {&t("Untranslated", &q.data.lang.code)}
                                     } else if post.draft {
-                                        "has-text-warning-dark"
+                                        {&t("Draft", &q.data.lang.code)}
                                     } else {
-                                        ""
-                                    },
-                                ] {
-                                    @post.author_name
+                                        {&t("Published", &q.data.lang.code)}
+                                    }
                                 }
+                                td {
+                                    {t_date(&post.date, &q.data.lang.code)}
 
-                                @if (post.author_name != post.translator_name)
-                                    && (post.translator != 0)
-                                {
-                                    " ("
-                                    {&t(
-                                        "translated by {name}",
-                                        &q.data.lang.code
-                                    ).replace("{name}", &post.translator_name)}
-                                    ")"
+                                    @if (post.author_name
+                                         != post.translator_name)
+                                        && (post.translator != 0)
+                                    {
+                                        " ("
+                                        {t_date(
+                                            &post.date_trans,
+                                            &q.data.lang.code
+                                        )}
+                                        ")"
+                                    }
+                                }
+                                td {
+                                    a[
+                                        href = "/{lang}/admin/edit_user\
+                                                ?id={id}"
+                                            .replace(
+                                                "{lang}",
+                                                &q.data.lang.code,
+                                            )
+                                            .replace(
+                                                "{id}",
+                                                &post.author.to_string()
+                                            ),
+                                        class = if post.translator == 0 {
+                                            "has-text-danger"
+                                        } else if post.draft {
+                                            "has-text-warning-dark"
+                                        } else {
+                                            ""
+                                        },
+                                    ] {
+                                        @post.author_name
+                                    }
+
+                                    @if (post.author_name
+                                         != post.translator_name)
+                                        && (post.translator != 0)
+                                    {
+                                        " ("
+                                        {&t(
+                                            "translated by {name}",
+                                            &q.data.lang.code
+                                        ).replace(
+                                            "{name}",
+                                            &post.translator_name,
+                                        )}
+                                        ")"
+                                    }
                                 }
                             }
                         }
