@@ -10,3 +10,4 @@ pub mod navigation;
 pub mod sidebar;
 pub mod post;
 pub mod website;
+pub mod blog_pagination;

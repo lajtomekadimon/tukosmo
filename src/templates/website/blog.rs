@@ -4,6 +4,7 @@ use crate::i18n::t::t;
 use crate::i18n::t_date::t_date;
 use crate::templates::website_layout::WebsiteLayout;
 use crate::templates::widgets::website::Website;
+use crate::templates::widgets::blog_pagination::BlogPagination;
 use crate::handlers::website::blog::BlogWResponse;
 
 
@@ -133,6 +134,14 @@ markup::define! {
                     }
                 }
             }
+        }
+
+        @BlogPagination {
+            data: &q.data,
+            route: "/{lang}/blog?p={page}&rpp={rpp}",
+            current_page: &q.page,
+            total_pages: &q.total_pages,
+            results_per_page: &q.results_per_page,
         }
     }
 }

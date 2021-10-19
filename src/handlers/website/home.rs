@@ -1,5 +1,6 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use serde::Deserialize;
 
 use crate::handlers::website::blog::{BlogWRequest, BlogWResponse};
 use crate::handlers::website::user_request::user_request;
@@ -8,18 +9,29 @@ use crate::templates::website::blog::Blog;
 use crate::database::query_db::query_db;
 
 
+#[derive(Deserialize)]
+pub struct GetParamData {
+    rpp: Option<i64>,
+    p: Option<i64>,
+}
+
+
 pub async fn home(
     req: HttpRequest,
     id: Identity,
+    web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
 
     let user_req = user_request(req, id);
 
+    let results_per_page = (param.rpp).clone().unwrap_or(10);
+    let current_page = (param.p).clone().unwrap_or(1);
+
     match query_db(
         BlogWRequest {
             req: user_req.clone(),
-            //results_per_page: results_per_page,
-            //page: current_page,
+            results_per_page: results_per_page,
+            page: current_page,
         },
     ) {
 

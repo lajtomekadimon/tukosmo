@@ -1,6 +1,6 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
-//use serde::Deserialize;
+use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
 use crate::handlers::website::user_request::user_request;
@@ -10,11 +10,18 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 
 
+#[derive(Deserialize)]
+pub struct GetParamData {
+    rpp: Option<i64>,
+    p: Option<i64>,
+}
+
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct BlogWRequest {
     pub req: types::WebsiteRequest,
-    //pub results_per_page: i64,
-    //pub page: i64,
+    pub results_per_page: i64,
+    pub page: i64,
 }
 
 impl QueryFunction for BlogWRequest {
@@ -27,25 +34,29 @@ impl QueryFunction for BlogWRequest {
 pub struct BlogWResponse {
     pub data: types::WebsiteDataDB,
     pub posts: Vec<types::PostDB>,
-    //pub results_per_page: i64,
-    //pub page: i64,
+    pub results_per_page: i64,
+    pub page: i64,
     pub total_results: i64,
-    //pub total_pages: i64,
+    pub total_pages: i64,
 }
 
 
 pub async fn blog(
     req: HttpRequest,
     id: Identity,
+    web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
 
     let user_req = user_request(req, id);
 
+    let results_per_page = (param.rpp).clone().unwrap_or(10);
+    let current_page = (param.p).clone().unwrap_or(1);
+
     match query_db(
         BlogWRequest {
             req: user_req.clone(),
-            //results_per_page: results_per_page,
-            //page: current_page,
+            results_per_page: results_per_page,
+            page: current_page,
         },
     ) {
 
