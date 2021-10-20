@@ -29,6 +29,7 @@ markup::define! {
                     class = "pagination-previous",
                     href = route
                         .replace("{lang}", &data.lang.code)
+                        .replace("{rpp}", &results_per_page.to_string())
                         .replace("{page}", &(**current_page - 1).to_string()),
                 ] {
                     {&t("Previous [page]", &data.lang.code)}
@@ -47,6 +48,7 @@ markup::define! {
                     class = "pagination-next",
                     href = route
                         .replace("{lang}", &data.lang.code)
+                        .replace("{rpp}", &results_per_page.to_string())
                         .replace("{page}", &(**current_page + 1).to_string()),
                 ] {
                     {&t("Next [page]", &data.lang.code)}
@@ -83,6 +85,10 @@ markup::define! {
                                 },
                                 href = route
                                     .replace("{lang}", &data.lang.code)
+                                    .replace(
+                                        "{rpp}",
+                                        &results_per_page.to_string(),
+                                    )
                                     .replace("{page}", &p.to_string())
                                     .replace(
                                         "{rpp}",

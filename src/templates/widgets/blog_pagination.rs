@@ -13,22 +13,23 @@ markup::define! {
         results_per_page: &'a i64,
     ) {
         nav[
-            class = "pagination is-centered pt-5",
+            class = "blog-pagination",
             role = "navigation",
             "aria-label" = "pagination",
         ] {
             @if **current_page == 1 {
                 button[
-                    class = "pagination-previous",
+                    class = "blog-pagination-previous",
                     disabled = true,
                 ] {
                     {&t("Previous [page]", &data.lang.code)}
                 }
             } else {
                 a[
-                    class = "pagination-previous",
+                    class = "blog-pagination-previous",
                     href = route
                         .replace("{lang}", &data.lang.code)
+                        .replace("{rpp}", &results_per_page.to_string())
                         .replace("{page}", &(**current_page - 1).to_string()),
                 ] {
                     {&t("Previous [page]", &data.lang.code)}
@@ -37,23 +38,24 @@ markup::define! {
 
             @if current_page == total_pages {
                 button[
-                    class = "pagination-next",
+                    class = "blog-pagination-next",
                     disabled = true,
                 ] {
                     {&t("Next [page]", &data.lang.code)}
                 }
             } else {
                 a[
-                    class = "pagination-next",
+                    class = "blog-pagination-next",
                     href = route
                         .replace("{lang}", &data.lang.code)
+                        .replace("{rpp}", &results_per_page.to_string())
                         .replace("{page}", &(**current_page + 1).to_string()),
                 ] {
                     {&t("Next [page]", &data.lang.code)}
                 }
             }
 
-            ul[class = "pagination-list"] {
+            ul[class = "blog-pagination-list"] {
                 @for p in 1..(**total_pages + 1) {
 
                     // TODO: Optimize using a vector of just 1~5 elements
@@ -67,7 +69,7 @@ markup::define! {
                         @if p == (**current_page - 1) && **current_page > 3 {
                             li {
                                 span[
-                                    class = "pagination-ellipsis",
+                                    class = "blog-pagination-ellipsis",
                                 ] {
                                     "…"
                                 }
@@ -77,12 +79,13 @@ markup::define! {
                         li {
                             a[
                                 class = if p == **current_page {
-                                    "pagination-link is-current"
+                                    "blog-pagination-link is-current"
                                 } else {
-                                    "pagination-link"
+                                    "blog-pagination-link"
                                 },
                                 href = route
                                     .replace("{lang}", &data.lang.code)
+                                    .replace("{rpp}", &results_per_page.to_string())
                                     .replace("{page}", &p.to_string())
                                     .replace(
                                         "{rpp}",
@@ -98,7 +101,7 @@ markup::define! {
                         {
                             li {
                                 span[
-                                    class = "pagination-ellipsis",
+                                    class = "blog-pagination-ellipsis",
                                 ] {
                                     "…"
                                 }

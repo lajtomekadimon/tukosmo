@@ -22,6 +22,6 @@ ON tp_id = tpt_post
         THEN TRUE
         ELSE tpt_lang = language_of_user
     END
-    AND NOT tpt_deleted
+    AND (NOT tpt_deleted)
 
 $$;
