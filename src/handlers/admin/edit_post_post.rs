@@ -42,8 +42,8 @@ impl QueryFunction for EditPostPostARequest {
 
 pub async fn edit_post_post(
     req: HttpRequest,
-    form: web::Form<FormData>,
     id: Identity,
+    form: web::Form<FormData>,
 ) -> impl Responder {
 
     match user_request(req, id) {

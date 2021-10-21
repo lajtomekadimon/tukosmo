@@ -27,6 +27,8 @@ BEGIN
     -- Check request
     d := s_admin_handler_data(r.req);
 
+    -- TODO: Check post ID is correct
+
     -- Check post title
     IF NOT e_is_title((r.post).title) THEN
         PERFORM err_wrong_title();

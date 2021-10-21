@@ -27,6 +27,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Edit" => "Edit",
         "Edit language: {name}" => "Edit language: {name}",
         "Edit post: '{title}'" => "Edit post: '{title}'",
+        "Edit user: '{name}'" => "Edit user: '{name}'",
         "Email" => "Email",
         "Error" => "Error",
         "ERROR:email_already_exists" => "That email is already in use.",
