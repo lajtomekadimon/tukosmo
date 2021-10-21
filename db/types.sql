@@ -14,7 +14,8 @@ CREATE TYPE "WebsiteRequest" AS (
 CREATE TYPE "UserDB" AS (
     id BIGINT,
     email TEXT,
-    name TEXT
+    name TEXT,
+    date TEXT
 );
 
 CREATE TYPE "LanguageDB" AS (

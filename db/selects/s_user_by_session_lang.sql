@@ -19,7 +19,9 @@ SELECT (
     -- email
     tu_email,
     -- name
-    tu_name
+    tu_name,
+    -- date
+    tu_date
 )::"UserDB"
 
 FROM t_users

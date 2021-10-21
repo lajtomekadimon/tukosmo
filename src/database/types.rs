@@ -21,6 +21,7 @@ pub struct UserDB {
     pub id: i64,
     pub email: String,
     pub name: String,
+    pub date: String,
 }
  
 #[derive(Clone, Debug, ToSql, FromSql)]

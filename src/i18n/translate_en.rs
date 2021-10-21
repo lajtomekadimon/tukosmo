@@ -16,6 +16,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Code" => "Code",
         "Dashboard" => "Dashboard",
         "Data" => "Data",
+        "Date" => "Date",
         "Deleted [post]" => "Deleted",
         "Deleted posts" => "Deleted posts",
         "Description" => "Description",
@@ -26,6 +27,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Edit" => "Edit",
         "Edit language: {name}" => "Edit language: {name}",
         "Edit post: '{title}'" => "Edit post: '{title}'",
+        "Email" => "Email",
         "Error" => "Error",
         "ERROR:field_is_not_lang_code" => "The language code is not valid.",
         "ERROR:lang_code_already_exists" =>
@@ -72,10 +74,12 @@ pub fn translate_en(text_value: &str) -> &str {
         "Login [noun]" => "Login",
         "Login [verb]" => "Login",
         "Logout [verb]" => "Logout",
+        "Name" => "Name",
         "Name (in the new language)" => "Name (in the new language)",
         "Names (in the new language) for each language" =>
             "Names (in the new language) for each language",
         "New post" => "New post",
+        "New user" => "New user",
         "Next [page]" => "Next",
         "Original author" => "Original author",
         "Page {n}" => "Page {n}",
