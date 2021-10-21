@@ -9,7 +9,9 @@ CREATE TABLE t_users (
     /* Insert: CRYPT('__the_password__', GEN_SALT('bf'))
      * Check: tu_password = CRYPT('__the_password__', tu_password)
      */
-    tu_name TEXT NOT NULL UNIQUE, /* IDEA: Name in different languages? */
+    tu_name TEXT NOT NULL CHECK (e_is_user_name(tu_name)),
+                          /* IDEA: Name in different languages? */
+                          -- TODO: UNIQUE?
 
     tu_date TIMESTAMPTZ NOT NULL DEFAULT NOW()
 

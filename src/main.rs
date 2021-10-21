@@ -208,6 +208,14 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::users::users)
                         )
                     )
+                    .service(web::resource("/new_user")
+                        .route(web::get()
+                            .to(admin::new_user::new_user)
+                        )
+                        .route(web::post()
+                            .to(admin::new_user_post::new_user_post)
+                        )
+                    )
 
                     // Languages
                     .service(web::resource("/languages")

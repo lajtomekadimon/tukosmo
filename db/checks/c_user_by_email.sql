@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION c_user_by_email(
+    email_value TEXT
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT EXISTS(
+    SELECT 1
+    FROM t_users
+    WHERE tu_email = email_value
+    LIMIT 1
+)
+
+$$;

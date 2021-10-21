@@ -40,8 +40,8 @@ impl QueryFunction for NewPostPostARequest {
 
 pub async fn new_post_post(
     req: HttpRequest,
-    form: web::Form<FormData>,
     id: Identity,
+    form: web::Form<FormData>,
 ) -> impl Responder {
 
     match user_request(req, id) {

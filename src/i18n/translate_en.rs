@@ -29,9 +29,11 @@ pub fn translate_en(text_value: &str) -> &str {
         "Edit post: '{title}'" => "Edit post: '{title}'",
         "Email" => "Email",
         "Error" => "Error",
+        "ERROR:email_already_exists" => "That email is already in use.",
         "ERROR:field_is_not_lang_code" => "The language code is not valid.",
         "ERROR:lang_code_already_exists" =>
             "That language code already exists.",
+        "ERROR:passwords_do_not_match" => "Passwords do not match.",
         "ERROR:some_wrong_lang_id_of_name" =>
             "Some of the language IDs are not correct.",
         "ERROR:some_wrong_lang_name" =>
@@ -44,15 +46,19 @@ pub fn translate_en(text_value: &str) -> &str {
         "ERROR:wrong_description" =>
             "Description can't start or begin with empty space; \
             it can't have more than 600 characters either.",
+        "ERROR:wrong_email" => "That email is not valid.",
         "ERROR:wrong_lang_code" => "The language code is not correct.",
         "ERROR:wrong_lang_id" => "The language ID is not correct.",
         "ERROR:wrong_own_lang_name" =>
             "The language name (in the new language) is not valid.",
+        "ERROR:wrong_password" => "That password is not valid; \
+                                   it should have 8 or more characters.",
         "ERROR:wrong_permalink" => "The permalink is not valid.",
         "ERROR:wrong_post_id" => "The post ID is not correct.",
         "ERROR:wrong_post_permalink" => "That post doesn't exist.",
         "ERROR:wrong_title" => "The title is not valid.",
         "ERROR:wrong_user_email" => "No user has that email.",
+        "ERROR:wrong_user_name" => "That user name is not valid.",
         "ERROR:wrong_user_password" => "The password is not correct.",
         "Examples: English, Español..." => "Examples: English, Español...",
         "Examples: en, en-us..." => "Examples: en, en-us...",
@@ -84,6 +90,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Original author" => "Original author",
         "Page {n}" => "Page {n}",
         "Pages" => "Pages",
+        "Password" => "Password",
         "Permalink" => "Permalink",
         "Posts" => "Posts",
         "Post's body" => "Post's body",
@@ -92,6 +99,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Published [posts]" => "Published",
         "Published posts" => "Published posts",
         "Read more" => "Read more",
+        "Repeat password" => "Repeat password",
         "Scheduled [posts]" => "Scheduled",
         "Server" => "Server",
         "Sessions" => "Sessions",
@@ -120,10 +128,12 @@ pub fn translate_en(text_value: &str) -> &str {
             "Your website languages were successfully updated.",
         "Your website posts were successfully updated." =>
             "Your website posts were successfully updated.",
+        "Your website users were successfully updated." =>
+            "Your website users were successfully updated.",
 
         //--------------//
 
-        _ => "[untranslated]"
+        _ => "[untranslated]"  // TODO: Include text_value string
     }
 }
 
