@@ -61,7 +61,10 @@ markup::define! {
                 }
 
                 " ("
-                {&t("{n} results of {m}", &q.data.lang.code)
+                {&t(match q.users.iter().len() {
+                    1 => "{n} result of {m}",
+                    _ => "{n} results of {m}",
+                }, &q.data.lang.code)
                     .replace("{n}", &(q.users.iter().len()).to_string())
                     .replace("{m}", &q.total_results.to_string())
                 }

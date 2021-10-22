@@ -5,6 +5,7 @@ pub fn translate_en(text_value: &str) -> &str {
     match text_value {
         "(website_name)" => "MyExample",
         "{n} posts" => "{n} posts",
+        "{n} result of {m}" => "{n} result of {m}",
         "{n} results of {m}" => "{n} results of {m}",
         "{name} © {year} [copyright]" => "{name} © {year}",
         "Account" => "Account",
