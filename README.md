@@ -2,12 +2,13 @@
 
 ![Tukosmo](./static/faviconadmin/favicon-96x96.png)
 
-**Tukosmo** (WIP!): Website generator made with Rust and PostgreSQL.
+**Tukosmo**: Website generator made with Rust and PostgreSQL.
+
+**(this is a work in progress!)**
 
 [![License: MIT](
 https://img.shields.io/badge/License-MIT-blue.svg)](
 https://github.com/lajtomekadimon/tukosmo/blob/main/LICENSE)
-
 
 </div>
 
@@ -40,7 +41,7 @@ https://github.com/utkarshkukreti/markup.rs).
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
 
-## Roadmap
+Roadmap:
 
 - [ ] 0.1
     - [ ] Foundations of Tukosmo
