@@ -34,11 +34,23 @@ SELECT ARRAY(
         -- author
         tp_author,
         -- author_name
-        b.tu_name,
+        COALESCE(
+            s_user_name_by_user_lang(
+                b.tu_id,
+                language_of_user
+            ),
+            b.tu_name
+        ),
         -- translator
         tpt_translator,
         -- translator_name
-        a.tu_name,
+        COALESCE(
+            s_user_name_by_user_lang(
+                a.tu_id,
+                language_of_user
+            ),
+            a.tu_name
+        ),
         -- date
         tp_date,
         -- date_trans

@@ -52,13 +52,26 @@ SELECT ARRAY(
         tp_author,
 
         -- author_name
-        b.tu_name,
+        COALESCE(
+            s_user_name_by_user_lang(
+                b.tu_id,
+                language_of_user
+            ),
+            b.tu_name
+        ),
 
         -- translator
         COALESCE(tpt_translator, 0),
 
         -- translator_name
-        COALESCE(a.tu_name, ''),
+        COALESCE(
+            s_user_name_by_user_lang(
+                a.tu_id,
+                language_of_user
+            ),
+            a.tu_name,
+            ''
+        ),
 
         -- date
         tp_date::TEXT,

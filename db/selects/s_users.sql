@@ -23,7 +23,13 @@ SELECT ARRAY(
         tu_email,
 
         -- name
-        tu_name,  -- TODO: i18n names
+        COALESCE(
+            s_user_name_by_user_lang(
+                tu_id,
+                language_of_user
+            ),
+            tu_name
+        ),
 
         -- date
         tu_date::TEXT

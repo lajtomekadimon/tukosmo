@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE FUNCTION s_user_by_session_lang(
     session_id UUID,
-    lang_id BIGINT  -- This is for multilang names
+    lang_id BIGINT
 )
 
 RETURNS "UserDB"
@@ -19,7 +19,13 @@ SELECT (
     -- email
     tu_email,
     -- name
-    tu_name,
+    COALESCE(
+        s_user_name_by_user_lang(
+            tu_id,
+            lang_id
+        ),
+        tu_name
+    ),
     -- date
     tu_date
 )::"UserDB"

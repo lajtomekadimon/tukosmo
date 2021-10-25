@@ -43,7 +43,13 @@ SELECT ARRAY(
         tp_author,
 
         -- author_name
-        b.tu_name,
+        COALESCE(
+            s_user_name_by_user_lang(
+                b.tu_id,
+                language_of_user
+            ),
+            b.tu_name
+        ),
 
         -- translator
         0,
