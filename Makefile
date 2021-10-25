@@ -57,6 +57,7 @@ STRUDB=db/tables/t_users.sql \
 	   db/tables/t_sessions.sql \
 	   db/tables/t_languages.sql \
 	   db/tables/t_language_names.sql \
+	   db/tables/t_user_names.sql \
 	   db/tables/t_pages.sql \
 	   db/tables/t_page_translations.sql \
 	   db/tables/t_posts.sql \

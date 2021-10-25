@@ -36,6 +36,8 @@ pub fn translate_en(text_value: &str) -> &str {
         "ERROR:lang_code_already_exists" =>
             "That language code already exists.",
         "ERROR:passwords_do_not_match" => "Passwords do not match.",
+        "ERROR:some_wrong_i18n_user_name" =>
+            "Some of the user names for each language are not valid.",
         "ERROR:some_wrong_lang_id_of_name" =>
             "Some of the language IDs are not correct.",
         "ERROR:some_wrong_lang_name" =>
@@ -84,11 +86,13 @@ pub fn translate_en(text_value: &str) -> &str {
         "Logout [verb]" => "Logout",
         "Name" => "Name",
         "Name (in the new language)" => "Name (in the new language)",
+        "Names for each language" => "Names for each language",
         "Names (in the new language) for each language" =>
             "Names (in the new language) for each language",
         "New post" => "New post",
         "New user" => "New user",
         "Next [page]" => "Next",
+        "optional" => "optional",
         "Original author" => "Original author",
         "Page {n}" => "Page {n}",
         "Pages" => "Pages",

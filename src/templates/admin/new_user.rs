@@ -161,6 +161,54 @@ markup::define! {
                     }
                 }
 
+                div[class = "field"] {
+                    label[class = "label"] {
+                        {&t("Names for each language", &q.data.lang.code)}
+
+                        " ("
+                        {&t("optional", &q.data.lang.code)}
+                        ")"
+                    }
+                    p[class = "control"] {
+                        @for (i, lang) in q.data.languages.iter().enumerate() {
+                            div[class = "field has-addons is-marginless"] {
+                                div[class = "control"] {
+                                    span[class = "button is-static"] {
+                                        @lang.name
+                                    }
+                                }
+                                div[class = "control is-expanded"] {
+                                    input[
+                                        type = "hidden",
+                                        name = "i18n_name_lang",
+                                        value = &lang.id.to_string(),
+                                    ];
+
+                                    input[
+                                        class = if let Some(e) = error {
+                                            if e.code ==
+                                                ec::SOME_WRONG_I18N_USER_NAME
+                                            {
+                                                "input is-danger"
+                                            } else {
+                                                "input"
+                                            }
+                                        } else {
+                                            "input"
+                                        },
+                                        type = "text",
+                                        name = "i18n_name",
+                                        value = if let Some(f) = form {
+                                            &f.i18n_names[i]
+                                        } else { "" },
+                                    ];
+                                }
+                            }
+                        }
+                    }
+                }
+
+
                 // TODO
                 /*
                 div[class = "field"] {

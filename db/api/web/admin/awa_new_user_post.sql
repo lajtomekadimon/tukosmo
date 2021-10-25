@@ -4,7 +4,9 @@ CREATE TYPE "NewUserPostARequest" AS (
     name TEXT,
     email TEXT,
     password TEXT,
-    repeat_password TEXT
+    repeat_password TEXT,
+    i18n_name_langs BIGINT[],
+    i18n_names TEXT[]
 );
 
 
@@ -25,7 +27,10 @@ DECLARE
 
     d "AdminDataDB";
 
-    post_id BIGINT;
+    user_id BIGINT;
+
+    lang_id BIGINT;
+    i18n_name TEXT;
 
 BEGIN
 
@@ -57,11 +62,36 @@ BEGIN
         PERFORM err_passwords_do_not_match();
     END IF;
 
-    PERFORM i_user(
+    user_id := i_user(
         r.email,
         CRYPT(r.password, GEN_SALT('bf')),
         r.name
     );
+
+    FOR i IN 1..ARRAY_LENGTH(r.i18n_name_langs, 1) LOOP
+        lang_id := r.i18n_name_langs[i];
+        i18n_name := r.i18n_names[i];
+
+        IF i18n_name <> '' THEN
+            -- Check each language ID of each name is correct
+            IF NOT c_lang_by_id(lang_id) THEN
+                PERFORM err_some_wrong_lang_id_of_name();
+            END IF;
+
+            -- Check each name is correct
+            IF NOT e_is_user_name(i18n_name) THEN
+                PERFORM err_some_wrong_i18n_user_name();
+            END IF;
+
+            PERFORM i_user_name(
+                user_id,
+                i18n_name,
+                lang_id
+            );
+
+            /* IDEA: Insert all of them at once using a SELECT */
+        END IF;
+    END LOOP;
 
 END;
 

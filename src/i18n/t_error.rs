@@ -32,6 +32,8 @@ pub fn t_error(
                 ec::LANG_CODE_ALREADY_EXISTS =>
                     "ERROR:lang_code_already_exists",
                 ec::PASSWORDS_DO_NOT_MATCH => "ERROR:passwords_do_not_match",
+                ec::SOME_WRONG_I18N_USER_NAME =>
+                    "ERROR:some_wrong_i18n_user_name",
                 ec::SOME_WRONG_LANG_ID_OF_NAME =>
                     "ERROR:some_wrong_lang_id_of_name",
                 ec::SOME_WRONG_LANG_NAME => "ERROR:some_wrong_lang_name",

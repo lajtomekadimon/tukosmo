@@ -36,6 +36,9 @@ pub fn translate_es(text_value: &str) -> &str {
         "ERROR:field_is_not_lang_code" => "El código del idioma no es válido.",
         "ERROR:lang_code_already_exists" => "Ese código de idioma ya existe.",
         "ERROR:passwords_do_not_match" => "Las contraseñas no coinciden.",
+        "ERROR:some_wrong_i18n_user_name" => "Algunos de los nombres del \
+                                              usuario para cada idioma no son \
+                                              válidos.",
         "ERROR:some_wrong_lang_id_of_name" =>
             "Algunas de las ID de los idiomas no son correctas.",
         "ERROR:some_wrong_lang_name" =>
@@ -84,11 +87,13 @@ pub fn translate_es(text_value: &str) -> &str {
         "Logout [verb]" => "Cerrar sesión",
         "Name" => "Nombre",
         "Name (in the new language)" => "Nombre (en el nuevo idioma)",
+        "Names for each language" => "Nombres para cada idioma",
         "Names (in the new language) for each language" =>
             "Nombres (en el nuevo idioma) para cada idioma",
         "New post" => "Nueva entrada",
         "New user" => "Nuevo usuario",
         "Next [page]" => "Siguiente",
+        "optional" => "opcional",
         "Original author" => "Autor original",
         "Page {n}" => "Página {n}",
         "Pages" => "Páginas",

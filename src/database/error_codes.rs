@@ -7,6 +7,8 @@ pub const LANG_CODE_ALREADY_EXISTS: &'static str = "4C66AB9F871B";
 
 pub const PASSWORDS_DO_NOT_MATCH: &'static str = "51FE0497F895";
 
+pub const SOME_WRONG_I18N_USER_NAME: &'static str = "E5A977280ECE";
+
 pub const SOME_WRONG_LANG_ID_OF_NAME: &'static str = "55F1A77CE041";
 
 pub const SOME_WRONG_LANG_NAME: &'static str = "39464FAE6EEB";
