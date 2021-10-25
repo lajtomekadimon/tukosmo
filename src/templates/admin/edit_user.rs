@@ -9,6 +9,7 @@ use crate::handlers::admin::edit_user::EditUserAResponse;
 use crate::handlers::admin::edit_user_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
+use crate::i18n::get_name_from_names::get_name_from_names;
 
 
 markup::define! {
@@ -122,6 +123,74 @@ markup::define! {
                                 &f.name
                             } else { &q.user_data.name },
                         ];
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        {&t("Names for each language", &q.data.lang.code)}
+
+                        " ("
+                        {&t("optional", &q.data.lang.code)}
+                        ")"
+                    }
+                    p[class = "control"] {
+                        @for (i, lang) in q.data.languages.iter().enumerate() {
+                            div[class = "field has-addons is-marginless"] {
+                                div[class = "control"] {
+                                    span[class = "button is-static"] {
+                                        @lang.name
+                                    }
+                                }
+                                div[class = "control is-expanded"] {
+                                    input[
+                                        type = "hidden",
+                                        name = "i18n_name_lang",
+                                        value = &lang.id.to_string(),
+                                    ];
+
+                                    @if let Some(f) = form {
+                                        input[
+                                            class = if let Some(e) = error {
+                                                if e.code ==
+                                                ec::SOME_WRONG_I18N_USER_NAME
+                                                {
+                                                    "input is-danger"
+                                                } else {
+                                                    "input"
+                                                }
+                                            } else {
+                                                "input"
+                                            },
+                                            type = "text",
+                                            name = "i18n_name",
+                                            value = &f.i18n_names[i],
+                                        ];
+                                    } else {
+                                        input[
+                                            class = if let Some(e) = error {
+                                                if e.code ==
+                                                ec::SOME_WRONG_I18N_USER_NAME
+                                                {
+                                                    "input is-danger"
+                                                } else {
+                                                    "input"
+                                                }
+                                            } else {
+                                                "input"
+                                            },
+                                            type = "text",
+                                            name = "i18n_name",
+                                            value = &get_name_from_names(
+                                                lang.id,
+                                                &q.i18n_names,
+                                            ),
+                                        ];
+                                    }
+
+                                }
+                            }
+                        }
                     }
                 }
 

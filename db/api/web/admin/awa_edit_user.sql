@@ -6,7 +6,8 @@ CREATE TYPE "EditUserARequest" AS (
 
 CREATE TYPE "EditUserAResponse" AS (
     data "AdminDataDB",
-    user_data "UserDB"
+    user_data "UserDB",
+    i18n_names "NameDB"[]
 );
 
 
@@ -31,6 +32,8 @@ DECLARE
 
     user_data "UserDB";
 
+    i18n_names "NameDB"[];
+
 BEGIN
 
     -- Check request and select common data
@@ -45,13 +48,21 @@ BEGIN
         language_of_user
     );
 
+    i18n_names := s_user_names_by_id(
+        r.id,
+        language_of_user
+    );
+
     -- User is logged in
     RETURN ROW(
         -- data
         d,
 
         -- user_data
-        user_data
+        user_data,
+
+        -- i18n_names
+        i18n_names
     );
 
 END;

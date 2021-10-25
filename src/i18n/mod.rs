@@ -6,3 +6,4 @@ pub mod t_date;
 pub mod t_error;
 pub mod month_name;
 pub mod get_lang_name;
+pub mod get_name_from_names;

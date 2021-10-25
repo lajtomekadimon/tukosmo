@@ -32,6 +32,7 @@ impl QueryFunction for EditUserARequest {
 pub struct EditUserAResponse {
     pub data: types::AdminDataDB,
     pub user_data: types::UserDB,
+    pub i18n_names: Vec<types::NameDB>,
 }
 
 
