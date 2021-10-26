@@ -25,6 +25,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Data" => "Datos",
         "Date" => "Fecha",
         "Delete" => "Eliminar",
+        "Delete (permanent)" => "Eliminar (permanente)",
         "Deleted [post]" => "Eliminada",
         "Deleted posts" => "Entradas eliminadas",
         "Delete language: {name}" => "Eliminar idioma: {name}",
@@ -125,6 +126,10 @@ pub fn translate_es(text_value: &str) -> &str {
         "Statistics" => "Estadísticas",
         "Status" => "Estado",
         "Submit" => "Enviar",
+        "The post will be permanent deleted." =>
+            "La entrada será eliminada de forma permanente.",
+        "The post will be sent to trash." =>
+            "La entrada será enviada a la papelera.",
         "There are languages without names." =>
             "Hay idiomas sin nombres.",
         "Title" => "Título",

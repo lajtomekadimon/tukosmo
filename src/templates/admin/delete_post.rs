@@ -64,6 +64,24 @@ markup::define! {
                         &q.data.lang.code,
                     )}
                 }
+                p {
+                    b[
+                        class = if q.post.deleted {
+                            "has-text-danger"
+                        } else {
+                            ""
+                        },
+                    ] {
+                        {&t(
+                            if q.post.deleted {
+                                "The post will be permanent deleted."
+                            } else {
+                                "The post will be sent to trash."
+                            },
+                            &q.data.lang.code,
+                        )}
+                    }
+                }
             }
 
             form[

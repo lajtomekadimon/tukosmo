@@ -95,13 +95,14 @@ SELECT ARRAY(
             THEN TRUE
             ELSE tpt_lang = language_of_user
         END
-        AND NOT tpt_deleted
 
     LEFT JOIN t_users a
     ON tpt_translator = a.tu_id
 
     INNER JOIN t_users b
     ON tp_author = b.tu_id
+
+    WHERE NOT tpt_deleted
 
     ORDER BY tp_date DESC
 

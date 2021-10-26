@@ -242,7 +242,14 @@ markup::define! {
                             class = "button is-danger \
                                      has-text-weight-normal mr-4",
                         ] {
-                            {&t("Delete", &q.data.lang.code)}
+                            {&t(
+                                if post.deleted {
+                                    "Delete (permanent)"
+                                } else {
+                                    "Delete"
+                                },
+                                &q.data.lang.code,
+                            )}
                         }
                     }
                 }

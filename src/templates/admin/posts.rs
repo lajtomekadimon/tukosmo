@@ -174,8 +174,16 @@ markup::define! {
                                     }
                                 }
                                 td {
-                                    @if post.translator == 0 {
-                                        {&t("Untranslated", &q.data.lang.code)}
+                                    @if post.deleted {
+                                        {&t(
+                                            "Deleted [post]",
+                                            &q.data.lang.code,
+                                        )}
+                                    } else if post.translator == 0 {
+                                        {&t(
+                                            "Untranslated",
+                                            &q.data.lang.code,
+                                        )}
                                     } else if post.draft {
                                         {&t("Draft", &q.data.lang.code)}
                                     } else {

@@ -82,6 +82,17 @@ BEGIN
 
     END IF;
 
+    -- Send post to trash if deleted=TRUE
+    IF (r.post).deleted THEN
+
+        PERFORM u_post_to_trash((r.post).id);
+
+    ELSE
+
+        PERFORM u_post_out_of_trash((r.post).id);
+
+    END IF;
+
 END;
 
 $$;
