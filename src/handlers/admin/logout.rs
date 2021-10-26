@@ -52,7 +52,6 @@ pub async fn logout(
                 Err(e) => {
                     println!("{}", e);
 
-                    // TODO: Email or password not correct
                     HttpResponse::Found()
                         .header("Location", login_route)
                         .finish()

@@ -24,3 +24,5 @@ pub mod delete_post;
 
 pub mod account;
 pub mod sessions;
+
+pub mod error;

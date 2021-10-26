@@ -5,6 +5,7 @@ use postgres_types::{ToSql, FromSql};
 
 use crate::handlers::admin::user_request::user_request;
 use crate::i18n::t::t;
+use crate::i18n::error_admin_route::error_admin_route;
 use crate::templates::admin::users::Users;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
@@ -55,7 +56,7 @@ pub async fn users(
 
         Ok(user_req) => match query_db(
             UsersARequest {
-                req: user_req,
+                req: user_req.clone(),
                 results_per_page: results_per_page,
                 page: current_page,
             },
@@ -82,12 +83,7 @@ pub async fn users(
 
             },
 
-            Err(e) => {
-                println!("{}", e);
-                HttpResponse::Found()
-                    .header("Location", "/")  // TODO
-                    .finish()
-            },
+            Err(e) => error_admin_route(e, &user_req.lang_code),
 
         },
 

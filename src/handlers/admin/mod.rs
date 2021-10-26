@@ -38,3 +38,5 @@ pub mod logout;
 
 pub mod account;
 pub mod sessions;
+
+pub mod error;

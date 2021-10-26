@@ -153,6 +153,13 @@ async fn main() -> std::io::Result<()> {
                         )
                     )
 
+                    // Error
+                    .service(web::resource("/error")
+                        .route(web::get()
+                            .to(admin::error::error)
+                        )
+                    )
+
                     // Login
                     .service(web::resource("/login")
                         .route(web::get()

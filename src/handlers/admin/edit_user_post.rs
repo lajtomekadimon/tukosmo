@@ -9,6 +9,7 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 use crate::i18n::t::t;
 use crate::i18n::t_error::t_error;
+use crate::i18n::error_admin_route::error_admin_route;
 use crate::handlers::admin::edit_user::{
     EditUserARequest,
     EditUserAResponse,
@@ -150,7 +151,7 @@ pub async fn edit_user_post(
 
                 Err(e) => match query_db(
                     EditUserARequest {
-                        req: user_req,
+                        req: user_req.clone(),
                         id: user_id,
                     },
                 ) {
@@ -180,12 +181,7 @@ pub async fn edit_user_post(
 
                     }
 
-                    Err(e) => {
-                        println!("{}", e);
-                        HttpResponse::Found()
-                            .header("Location", "/")  // TODO
-                            .finish()
-                    },
+                    Err(e2) => error_admin_route(e2, &user_req.lang_code),
 
                 },
 

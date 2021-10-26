@@ -7,3 +7,5 @@ pub mod t_error;
 pub mod month_name;
 pub mod get_lang_name;
 pub mod get_name_from_names;
+pub mod error_code_message;
+pub mod error_admin_route;

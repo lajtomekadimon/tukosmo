@@ -9,6 +9,7 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 use crate::i18n::t::t;
 use crate::i18n::t_error::t_error;
+use crate::i18n::error_admin_route::error_admin_route;
 use crate::handlers::admin::new_user::{
     NewUserARequest,
     NewUserAResponse,
@@ -159,7 +160,7 @@ pub async fn new_user_post(
 
                 Err(e) => match query_db(
                     NewUserARequest {
-                        req: user_req,
+                        req: user_req.clone(),
                     },
                 ) {
 
@@ -185,12 +186,7 @@ pub async fn new_user_post(
 
                     },
 
-                    Err(e2) => {
-                        println!("{}", e2);
-                        HttpResponse::Found()
-                            .header("Location", "/")  // TODO
-                            .finish()
-                    },
+                    Err(e2) => error_admin_route(e2, &user_req.lang_code),
 
                 },
 

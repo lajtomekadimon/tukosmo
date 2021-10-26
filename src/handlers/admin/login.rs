@@ -77,7 +77,7 @@ pub async fn login(
         Err(e) => {
             println!("{}", e);
             HttpResponse::Found()
-                .header("Location", "/")  // TODO
+                .header("Location", "/")  // TODO: Send to website's error page
                 .finish()
         },
 
