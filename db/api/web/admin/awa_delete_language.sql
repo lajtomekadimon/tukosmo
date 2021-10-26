@@ -1,20 +1,20 @@
 
-CREATE TYPE "DeletePostARequest" AS (
+CREATE TYPE "DeleteLanguageARequest" AS (
     req "AdminRequest",
     id BIGINT
 );
 
-CREATE TYPE "DeletePostAResponse" AS (
+CREATE TYPE "DeleteLanguageAResponse" AS (
     data "AdminDataDB",
-    post "PostDB"
+    lang "LanguageDB"
 );
 
 
-CREATE OR REPLACE FUNCTION awa_delete_post(
-    r "DeletePostARequest"
+CREATE OR REPLACE FUNCTION awa_delete_language(
+    r "DeleteLanguageARequest"
 )
 
-RETURNS "DeletePostAResponse"
+RETURNS "DeleteLanguageAResponse"
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -29,7 +29,7 @@ DECLARE
 
     language_of_user BIGINT;
 
-    post "PostDB";
+    lang "LanguageDB";
 
 BEGIN
 
@@ -38,14 +38,14 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
-    post := s_post_by_id_lang(
+    lang := s_language_by_id_lang(
         r.id,
         language_of_user
     );
 
-    -- Check post ID is correct
-    IF post IS NULL THEN
-        PERFORM err_wrong_post_id();
+    -- Check language ID is correct
+    IF lang IS NULL THEN
+        PERFORM err_wrong_lang_id();
     END IF;
 
     -- User is logged in
@@ -53,8 +53,8 @@ BEGIN
         -- data
         d,
 
-        -- post
-        post
+        -- lang
+        lang
     );
 
 END;

@@ -158,6 +158,18 @@ markup::define! {
                             {&t("Cancel", &q.data.lang.code)}
                         }
                     }
+
+                    div[class = "control"] {
+                        a[
+                            href = "/{lang}/admin/delete_language?id={id}"
+                                .replace("{lang}", &q.data.lang.code)
+                                .replace("{id}", &q.lang.id.to_string()),
+                            class = "button is-danger \
+                                     has-text-weight-normal mr-4",
+                        ] {
+                            {&t("Delete", &q.data.lang.code)}
+                        }
+                    }
                 }
             }
         }

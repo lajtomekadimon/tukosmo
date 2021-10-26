@@ -4,14 +4,14 @@ use crate::i18n::t::t;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::delete_post::DeletePostAResponse;
+use crate::handlers::admin::delete_language::DeleteLanguageAResponse;
 use crate::i18n::t_error::ErrorDB;
 
 
 markup::define! {
-    DeletePost<'a>(
+    DeleteLanguage<'a>(
         title: &'a str,
-        q: &'a DeletePostAResponse,
+        q: &'a DeleteLanguageAResponse,
         error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
@@ -22,27 +22,27 @@ markup::define! {
                     q: q,
                     error: error,
                 },
-                current_page: "delete_post",
+                current_page: "delete_language",
                 data: &q.data,
             },
         }
     }
 
     Content<'a>(
-        q: &'a DeletePostAResponse,
+        q: &'a DeleteLanguageAResponse,
         error: &'a Option<ErrorDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
                 {&t(
-                    "Delete post: '{title}'",
+                    "Delete language: {name}",
                     &q.data.lang.code
-                ).replace("{title}", &q.post.id.to_string())}
+                ).replace("{name}", &q.lang.name)}
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        route: &"/admin/delete_post?id={id}"
-                            .replace("{id}", &q.post.id.to_string()),
+                        route: &"/admin/delete_language?id={id}"
+                            .replace("{id}", &q.lang.id.to_string()),
                         data: &q.data,
                     }
                 }
@@ -60,7 +60,7 @@ markup::define! {
             div[class = "content"] {
                 p {
                     {&t(
-                        "Are you sure that you want to delete this post?",
+                        "Are you sure that you want to delete this language?",
                         &q.data.lang.code,
                     )}
                 }
@@ -68,14 +68,14 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/delete_post?id={id}"
+                action = "/{lang}/admin/delete_language?id={id}"
                     .replace("{lang}", &q.data.lang.code)
-                    .replace("{id}", &q.post.id.to_string()),
+                    .replace("{id}", &q.lang.id.to_string()),
             ] {
                 input[
                     type = "hidden",
                     name = "id",
-                    value = &q.post.id,
+                    value = &q.lang.id,
                 ];
 
                 div[class = "field is-grouped"] {
@@ -86,7 +86,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/posts"
+                            href = "/{lang}/admin/languages"
                                 .replace("{lang}", &q.data.lang.code)
                             ,
                             class = "button is-link is-light",

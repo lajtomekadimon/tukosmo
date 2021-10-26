@@ -10,6 +10,8 @@ pub fn translate_en(text_value: &str) -> &str {
         "{name} © {year} [copyright]" => "{name} © {year}",
         "Account" => "Account",
         "Add language" => "Add language",
+        "Are you sure that you want to delete this language?" =>
+            "Are you sure that you want to delete this language?",
         "Are you sure that you want to delete this post?" =>
             "Are you sure that you want to delete this post?",
         "Author" => "Author",
@@ -23,6 +25,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Delete" => "Delete",
         "Deleted [post]" => "Deleted",
         "Deleted posts" => "Deleted posts",
+        "Delete language: {name}" => "Delete language: {name}",
         "Delete post: '{title}'" => "Delete post: '{title}'",
         "Description" => "Description",
         "Documentation" => "Documentation",

@@ -8,11 +8,11 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 use crate::i18n::t::t;
 use crate::i18n::t_error::t_error;
-use crate::handlers::admin::delete_post::{
-    DeletePostARequest,
-    DeletePostAResponse,
+use crate::handlers::admin::delete_language::{
+    DeleteLanguageARequest,
+    DeleteLanguageAResponse,
 };
-use crate::templates::admin::delete_post::DeletePost;
+use crate::templates::admin::delete_language::DeleteLanguage;
 
 
 #[derive(Deserialize)]
@@ -22,19 +22,19 @@ pub struct FormData {
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct DeletePostPostARequest {
+pub struct DeleteLanguagePostARequest {
     pub req: types::AdminRequest,
     pub id: i64,
 }
 
-impl QueryFunction for DeletePostPostARequest {
+impl QueryFunction for DeleteLanguagePostARequest {
     fn query(&self) -> &str {
-        "SELECT awa_delete_post_post($1)"
+        "SELECT awa_delete_language_post($1)"
     }
 }
 
 
-pub async fn delete_post_post(
+pub async fn delete_language_post(
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -44,18 +44,18 @@ pub async fn delete_post_post(
 
         Ok(user_req) => {
 
-            let post_id = (form.id).clone();
+            let lang_id = (form.id).clone();
 
             match query_db(
-                DeletePostPostARequest {
+                DeleteLanguagePostARequest {
                     req: user_req.clone(),
-                    id: post_id.clone(),
+                    id: lang_id.clone(),
                 },
             ) {
 
                 Ok(_row) => {
 
-                    let redirect_route = "/{lang}/admin/posts?success=yes"
+                    let redirect_route = "/{lang}/admin/languages?success=yes"
                         .replace("{lang}", &user_req.lang_code);
 
                     HttpResponse::Found()
@@ -65,23 +65,23 @@ pub async fn delete_post_post(
                 },
 
                 Err(e) => match query_db(
-                    DeletePostARequest {
+                    DeleteLanguageARequest {
                         req: user_req,
-                        id: post_id.clone(),
+                        id: lang_id.clone(),
                     },
                 ) {
 
                     Ok(row) => {
 
-                        let q: DeletePostAResponse = row.get(0);
+                        let q: DeleteLanguageAResponse = row.get(0);
 
-                        let html = DeletePost {
+                        let html = DeleteLanguage {
                             title: &format!(
                                 "{a} - {b}",
                                 a = &t(
-                                    "Delete post: '{title}'",
+                                    "Delete language: {name}",
                                     &q.data.lang.code
-                                ).replace("{title}", &q.post.title),
+                                ).replace("{name}", &q.lang.name),
                                 b = &t(
                                     "Tukosmo Admin Panel",
                                     &q.data.lang.code,
