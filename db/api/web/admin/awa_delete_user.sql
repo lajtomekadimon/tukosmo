@@ -1,21 +1,20 @@
 
-CREATE TYPE "EditUserARequest" AS (
+CREATE TYPE "DeleteUserARequest" AS (
     req "AdminRequest",
     id BIGINT
 );
 
-CREATE TYPE "EditUserAResponse" AS (
+CREATE TYPE "DeleteUserAResponse" AS (
     data "AdminDataDB",
-    user_data "UserDB",
-    i18n_names "NameDB"[]
+    user_data "UserDB"
 );
 
 
-CREATE OR REPLACE FUNCTION awa_edit_user(
-    r "EditUserARequest"
+CREATE OR REPLACE FUNCTION awa_delete_user(
+    r "DeleteUserARequest"
 )
 
-RETURNS "EditUserAResponse"
+RETURNS "DeleteUserAResponse"
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -32,8 +31,6 @@ DECLARE
 
     user_data "UserDB";
 
-    i18n_names "NameDB"[];
-
 BEGIN
 
     -- Check request and select common data
@@ -41,18 +38,12 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
-    -- TODO: Don't confuse between the neutral name and the pref name!!!
     user_data := s_user_by_id_lang(
         r.id,
         language_of_user
     );
 
-    -- TODO: Check user ID is correct
-
-    i18n_names := s_user_names_by_id(
-        r.id,
-        language_of_user
-    );
+    -- TODO: Check user ID
 
     -- User is logged in
     RETURN ROW(
@@ -60,10 +51,7 @@ BEGIN
         d,
 
         -- user_data
-        user_data,
-
-        -- i18n_names
-        i18n_names
+        user_data
     );
 
 END;

@@ -15,6 +15,8 @@ pub mod new_user;
 pub mod new_user_post;
 pub mod edit_user;
 pub mod edit_user_post;
+pub mod delete_user;
+pub mod delete_user_post;
 
 pub mod new_language;
 pub mod new_language_post;

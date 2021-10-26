@@ -12,6 +12,7 @@ pub mod tukosmo;
 
 pub mod new_user;
 pub mod edit_user;
+pub mod delete_user;
 
 pub mod new_language;
 pub mod edit_language;

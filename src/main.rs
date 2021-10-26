@@ -224,6 +224,14 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::edit_user_post::edit_user_post)
                         )
                     )
+                    .service(web::resource("/delete_user")
+                        .route(web::get()
+                            .to(admin::delete_user::delete_user)
+                        )
+                        .route(web::post()
+                            .to(admin::delete_user_post::delete_user_post)
+                        )
+                    )
 
                     // Languages
                     .service(web::resource("/languages")

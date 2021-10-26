@@ -14,6 +14,8 @@ pub fn translate_en(text_value: &str) -> &str {
             "Are you sure that you want to delete this language?",
         "Are you sure that you want to delete this post?" =>
             "Are you sure that you want to delete this post?",
+        "Are you sure that you want to delete this user?" =>
+            "Are you sure that you want to delete this user?",
         "Author" => "Author",
         "Autocomplete for:" => "Autocomplete for:",
         "Blog" => "Blog",
@@ -27,6 +29,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Deleted posts" => "Deleted posts",
         "Delete language: {name}" => "Delete language: {name}",
         "Delete post: '{title}'" => "Delete post: '{title}'",
+        "Delete user: {name}" => "Delete user: {name}",
         "Description" => "Description",
         "Documentation" => "Documentation",
         "Draft" => "Draft",
