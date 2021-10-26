@@ -25,6 +25,8 @@ pub mod new_post;
 pub mod new_post_post;
 pub mod edit_post;
 pub mod edit_post_post;
+pub mod delete_post;
+pub mod delete_post_post;
 
 pub mod login;
 pub mod login_post;

@@ -18,6 +18,7 @@ pub mod edit_language;
 
 pub mod new_post;
 pub mod edit_post;
+pub mod delete_post;
 
 pub mod account;
 pub mod sessions;
