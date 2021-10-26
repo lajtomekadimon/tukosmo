@@ -41,11 +41,7 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
-    -- TODO: Don't confuse between the neutral name and the pref name!!!
-    user_data := s_user_by_id_lang(
-        r.id,
-        language_of_user
-    );
+    user_data := s_user_by_id(r.id);
 
     -- TODO: Check user ID is correct
 
