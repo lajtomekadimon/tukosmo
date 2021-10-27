@@ -4,7 +4,9 @@ CREATE TYPE "AccountARequest" AS (
 );
 
 CREATE TYPE "AccountAResponse" AS (
-    data "AdminDataDB"
+    data "AdminDataDB",
+    user_data "UserDB",
+    i18n_names "NameDB"[]
 );
 
 
@@ -27,6 +29,10 @@ DECLARE
 
     language_of_user BIGINT;
 
+    user_data "UserDB";
+
+    i18n_names "NameDB"[];
+
 BEGIN
 
     -- Check request and select common data
@@ -34,9 +40,25 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
+    user_data := s_user_by_id((d.userd).id);
+
+    -- TODO: Check user ID is correct
+
+    i18n_names := s_user_names_by_id(
+        (d.userd).id,
+        language_of_user
+    );
+
+    -- User is logged in
     RETURN ROW(
         -- data
-        d
+        d,
+
+        -- user_data
+        user_data,
+
+        -- i18n_names
+        i18n_names
     );
 
 END;

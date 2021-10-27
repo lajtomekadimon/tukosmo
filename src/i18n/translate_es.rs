@@ -21,6 +21,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Blog" => "Blog",
         "Cancel" => "Cancelar",
         "Code" => "Código",
+        "Current password" => "Contraseña actual",
         "Dashboard" => "Pantalla principal",
         "Data" => "Datos",
         "Date" => "Fecha",
@@ -101,6 +102,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Names for each language" => "Nombres para cada idioma",
         "Names (in the new language) for each language" =>
             "Nombres (en el nuevo idioma) para cada idioma",
+        "New password" => "Nueva contraseña",
         "New post" => "Nueva entrada",
         "New user" => "Nuevo usuario",
         "Next [page]" => "Siguiente",
@@ -117,6 +119,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Published [posts]" => "Publicadas",
         "Published posts" => "Entradas publicadas",
         "Read more" => "Leer más",
+        "Repeat new password" => "Repite la contraseña nueva",
         "Repeat password" => "Repite la contraseña",
         "Scheduled [posts]" => "Programadas",
         "Server" => "Servidor",
@@ -144,6 +147,8 @@ pub fn translate_es(text_value: &str) -> &str {
         "Users" => "Usuarios",
         "Visit website" => "Visitar página web",
         "Website" => "Página web",
+        "Your account has been successfully updated." =>
+            "Tu cuenta ha sido actualizada con éxito.",
         "Your email" => "Tu correo electrónico",
         "Your password" => "Tu contraseña",
         "Your website languages were successfully updated." =>

@@ -182,6 +182,9 @@ async fn main() -> std::io::Result<()> {
                         .route(web::get()
                             .to(admin::account::account)
                         )
+                        .route(web::post()
+                            .to(admin::account_post::account_post)
+                        )
                     )
 
                     // Sessions

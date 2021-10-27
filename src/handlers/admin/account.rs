@@ -24,6 +24,8 @@ impl QueryFunction for AccountARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct AccountAResponse {
     pub data: types::AdminDataDB,
+    pub user_data: types::UserDB,
+    pub i18n_names: Vec<types::NameDB>,
 }
 
 
@@ -51,6 +53,9 @@ pub async fn account(
                         b = &t("Tukosmo Admin Panel", &q.data.lang.code)
                     ),
                     q: &q,
+                    success: &false,
+                    error: &None,
+                    form: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

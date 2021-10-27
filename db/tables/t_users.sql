@@ -13,8 +13,6 @@ CREATE TABLE t_users (
 
     tu_name TEXT NOT NULL
                  CHECK (e_is_user_name(tu_name)),
-                 /* IDEA: Name in different languages? */
-                 -- TODO: UNIQUE?
 
     tu_date TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
