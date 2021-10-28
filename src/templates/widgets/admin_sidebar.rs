@@ -21,6 +21,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "dashboard" }
+                        " "
                         {&t("Dashboard", &data.lang.code)}
                     }
                 }
@@ -41,6 +43,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "bar_chart" }
+                        " "
                         {&t("Statistics", &data.lang.code)}
                     }
                 }
@@ -52,6 +56,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "database" }
+                        " "
                         {&t("Server", &data.lang.code)}
                     }
                 }
@@ -71,6 +77,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "supervisor_account" }
+                        " "
                         {&t("Users", &data.lang.code)}
                     }
                 }
@@ -82,6 +90,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "translate" }
+                        " "
                         {&t("Languages", &data.lang.code)}
                     }
                 }
@@ -93,6 +103,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "article" }
+                        " "
                         {&t("Posts", &data.lang.code)}
                     }
 
@@ -169,6 +181,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "description" }
+                        " "
                         {&t("Pages", &data.lang.code)}
                     }
                 }
@@ -180,6 +194,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "file_present" }
+                        " "
                         {&t("Files", &data.lang.code)}
                     }
                 }
@@ -199,6 +215,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "web" }
+                        " "
                         {&t("Website", &data.lang.code)}
                     }
                 }
@@ -210,6 +228,8 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
+                        i[class = "eos-icons"] { "settings_suggest" }
+                        " "
                         {&t("Tukosmo", &data.lang.code)}
                     }
                 }
