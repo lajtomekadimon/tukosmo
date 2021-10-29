@@ -35,7 +35,7 @@ pub async fn login(
 
     match query_db(
         LoginARequest {
-            req: user_req,
+            req: user_req.clone(),
         },
     ) {
 
@@ -75,9 +75,13 @@ pub async fn login(
         },
 
         Err(e) => {
-            println!("{}", e);
+            println!("{}", e);  // for debugging
+
+            let error_route = "/{lang}/error"
+                .replace("{lang}", &user_req.lang_code);
+
             HttpResponse::Found()
-                .header("Location", "/")  // TODO: Send to website's error page
+                .header("Location", error_route)
                 .finish()
         },
 

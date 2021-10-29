@@ -95,6 +95,15 @@ pub async fn error(
                             HttpResponse::Ok().body("WRONG URL LANGUAGE CODE")
                             // TODO: Redirect to same URL using default lang
 
+                        } else if error_code == ec::USER_NOT_LOGGED_IN {
+
+                            let login_route = "/{lang}/admin/login"
+                                .replace("{lang}", &user_req.lang_code);
+
+                            HttpResponse::Found()
+                                .header("Location", login_route)
+                                .finish()
+
                         } else {
 
                             let e_message = "ERROR {code}: {message}"
