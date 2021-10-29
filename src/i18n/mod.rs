@@ -12,3 +12,7 @@ pub mod error_admin_route;
 
 pub mod get_os_from_user_agent;
 pub mod get_browser_from_user_agent;
+
+pub mod translate_i18n;
+
+pub mod languages;
