@@ -4,7 +4,8 @@ CREATE TYPE "SessionsARequest" AS (
 );
 
 CREATE TYPE "SessionsAResponse" AS (
-    data "AdminDataDB"
+    data "AdminDataDB",
+    sessions "SessionDB"[]
 );
 
 
@@ -27,6 +28,8 @@ DECLARE
 
     language_of_user BIGINT;
 
+    sessions "SessionDB"[];
+
 BEGIN
 
     -- Check request and select common data
@@ -34,11 +37,17 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
+    sessions := s_sessions_by_user((d.userd).id);
+
     RETURN ROW(
         -- data
-        d
+        d,
+
+        -- sessions
+        sessions
     );
 
 END;
 
 $$;
+

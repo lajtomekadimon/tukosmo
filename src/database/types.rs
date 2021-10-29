@@ -23,6 +23,12 @@ pub struct UserDB {
     pub name: String,
     pub date: String,
 }
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct SessionDB {
+    pub user_agent: String,
+    pub date: String,
+}
  
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LanguageDB {

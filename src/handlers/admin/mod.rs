@@ -40,5 +40,6 @@ pub mod account;
 pub mod account_post;
 
 pub mod sessions;
+pub mod sessions_post;
 
 pub mod error;

@@ -38,8 +38,6 @@ BEGIN
     -- Check request
     d := s_admin_handler_data(r.req);
 
-    -- TODO: Check user ID is correct
-
     -- Check user name
     IF NOT e_is_user_name(r.name) THEN
         PERFORM err_wrong_user_name();

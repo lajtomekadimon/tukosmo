@@ -169,7 +169,7 @@ markup::define! {
             ] {
                 {&t("Login [verb]", &q.data.lang.code)}
                 " "
-                i[class = "eos-icons"] { "login" }
+                i[class = "eos-icons ml-2"] { "login" }
             }
         }
     }

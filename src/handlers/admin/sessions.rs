@@ -24,6 +24,7 @@ impl QueryFunction for SessionsARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct SessionsAResponse {
     pub data: types::AdminDataDB,
+    pub sessions: Vec<types::SessionDB>,
 }
 
 
@@ -48,9 +49,11 @@ pub async fn sessions(
                     title: &format!(
                         "{a} - {b}",
                         a = &t("Sessions", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        b = &t("Tukosmo Admin Panel", &q.data.lang.code),
                     ),
                     q: &q,
+                    success: &false,
+                    error: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

@@ -20,6 +20,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Autocomplete for:" => "Autocomplete for:",
         "Blog" => "Blog",
         "Cancel" => "Cancel",
+        "Close [session]" => "Close",
         "Code" => "Code",
         "Current password" => "Current password",
         "Dashboard" => "Dashboard",
@@ -33,6 +34,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Delete post: '{title}'" => "Delete post: '{title}'",
         "Delete user: {name}" => "Delete user: {name}",
         "Description" => "Description",
+        "Device" => "Device",
         "Documentation" => "Documentation",
         "Draft" => "Draft",
         "Draft posts" => "Draft posts",
@@ -125,6 +127,7 @@ pub fn translate_en(text_value: &str) -> &str {
         "Sessions" => "Sessions",
         "Settings" => "Settings",
         "Sign up [verb]" => "Sign up",
+        "Since" => "Since",
         "Statistics" => "Statistics",
         "Status" => "Status",
         "Submit" => "Submit",
@@ -150,6 +153,8 @@ pub fn translate_en(text_value: &str) -> &str {
             "Your account has been successfully updated.",
         "Your email" => "Your email",
         "Your password" => "Your password",
+        "Your sessions have been successfully updated." =>
+            "Your sessions have been successfully updated.",
         "Your website languages were successfully updated." =>
             "Your website languages were successfully updated.",
         "Your website posts were successfully updated." =>

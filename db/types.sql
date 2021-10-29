@@ -18,6 +18,11 @@ CREATE TYPE "UserDB" AS (
     date TEXT
 );
 
+CREATE TYPE "SessionDB" AS (
+    user_agent TEXT,
+    date TEXT
+);
+
 CREATE TYPE "LanguageDB" AS (
     id BIGINT,
     code TEXT,
