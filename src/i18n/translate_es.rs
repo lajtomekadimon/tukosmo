@@ -19,6 +19,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Author" => "Autor",
         "Autocomplete for:" => "Autocompletar para:",
         "Blog" => "Blog",
+        "Browser" => "Navegador",
         "Cancel" => "Cancelar",
         "Close [session]" => "Cerrar",
         "Code" => "Código",
@@ -132,6 +133,7 @@ pub fn translate_es(text_value: &str) -> &str {
         "Statistics" => "Estadísticas",
         "Status" => "Estado",
         "Submit" => "Enviar",
+        "System [OS]" => "Sistema",
         "The post will be permanent deleted." =>
             "La entrada será eliminada de forma permanente.",
         "The post will be sent to trash." =>

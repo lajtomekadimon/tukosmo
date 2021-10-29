@@ -7,6 +7,8 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::sessions::SessionsAResponse;
 use crate::i18n::t_error::ErrorDB;
+use crate::i18n::get_browser_from_user_agent::get_browser_from_user_agent;
+use crate::i18n::get_os_from_user_agent::get_os_from_user_agent;
 
 
 markup::define! {
@@ -75,7 +77,10 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Device", &q.data.lang.code)}
+                            {&t("Browser", &q.data.lang.code)}
+                        }
+                        th {
+                            {&t("System [OS]", &q.data.lang.code)}
                         }
                         th {
                             {&t("Since", &q.data.lang.code)}
@@ -89,7 +94,14 @@ markup::define! {
                     @for sessiond in q.sessions.iter() {
                         tr {
                             td {
-                                @sessiond.user_agent
+                                {&get_browser_from_user_agent(
+                                    &sessiond.user_agent
+                                )}
+                            }
+                            td {
+                                {&get_os_from_user_agent(
+                                    &sessiond.user_agent
+                                )}
                             }
                             td {
                                 {t_date(&sessiond.date, &q.data.lang.code)}
