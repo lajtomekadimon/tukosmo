@@ -94,7 +94,7 @@ markup::define! {
 
                 " ("
                 {(match q.posts.iter().len() {
-                    1 => t.n_result_of_m,
+                    1 => t.one_result_of_m,
                     _ => t.n_results_of_m,
                 })
                     .replace("{n}", &(q.posts.iter().len()).to_string())

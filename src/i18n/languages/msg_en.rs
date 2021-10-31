@@ -163,8 +163,6 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Logout",
     n_posts:
         "{n} posts",
-    n_result_of_m:
-        "{n} result of {m}",
     n_results_of_m:
         "{n} results of {m}",
     name:
@@ -185,6 +183,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "New user",
     next:
         "Next",
+    one_result_of_m:
+        "1 result of {m}",
     optional:
         "optional",
     original_author:

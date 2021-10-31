@@ -163,8 +163,6 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Cerrar sesión",
     n_posts:
         "{n} entradas",
-    n_result_of_m:
-        "{n} resultado de {m}",
     n_results_of_m:
         "{n} resultados de {m}",
     name:
@@ -185,6 +183,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Nuevo usuario",
     next:
         "Siguiente",
+    one_result_of_m:
+        "1 resultado de {m}",
     optional:
         "opcional",
     original_author:
