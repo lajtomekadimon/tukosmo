@@ -1,12 +1,13 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
 
 
 markup::define! {
     AdminNavbar<'a>(
         data: &'a AdminDataDB,
+        t: &'a TranslateI18N,
     ) {
         nav[class = "navbar is-white"] {
             div[class = "container"] {
@@ -15,7 +16,7 @@ markup::define! {
                         class = "navbar-item brand-text tap-logo",
                         href = "/{lang}/admin/"
                             .replace("{lang}", &data.lang.code),
-                        title = &t("Tukosmo Admin Panel", &data.lang.code),
+                        title = t.tukosmo_admin_panel,
                     ] {}
                     div[class = "navbar-burger burger"] {
                         span {}
@@ -35,21 +36,21 @@ markup::define! {
                                 .replace("{lang}", &data.lang.code),
                             target = "_blank",
                         ] {
-                            {&t("Visit website", &data.lang.code)}
+                            @t.visit_website
                         }
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's docs
                             target = "_blank",
                         ] {
-                            {&t("Documentation", &data.lang.code)}
+                            @t.documentation
                         }
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's help
                             target = "_blank",
                         ] {
-                            {&t("Help [noun]", &data.lang.code)}
+                            @t.help
                         }
                     }
 
@@ -69,7 +70,7 @@ markup::define! {
                                         .replace("{lang}", &data.lang.code)
                                     ,
                                 ] {
-                                    {&t("Account", &data.lang.code)}
+                                    @t.account
                                 }
 
                                 a[
@@ -78,7 +79,7 @@ markup::define! {
                                         .replace("{lang}", &data.lang.code)
                                     ,
                                 ] {
-                                    {&t("Sessions", &data.lang.code)}
+                                    @t.sessions
                                 }
 
                                 hr[class = "navbar-divider"];
@@ -89,7 +90,7 @@ markup::define! {
                                     ,
                                     class = "navbar-item",
                                 ] {
-                                    {&t("Logout [verb]", &data.lang.code)}
+                                    @t.logout_k_verb
                                 }
                             }
                         }

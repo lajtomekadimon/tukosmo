@@ -55,22 +55,24 @@ pub async fn error(
             Ok(row) => {
 
                 let q: ErrorAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let e: ErrorDB = ErrorDB {
                     code: error_code.clone(),
                     message: error_code_message(
                         &error_code,
                         &q.data.lang.code,
-                    ),
+                    ).to_string(),
                 };
 
                 let html = Error {
                     title: &format!(
                         "{a} - {b}",
                         a = "ERROR {code}".replace("{code}", &e.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     e: &e,
                 };
 

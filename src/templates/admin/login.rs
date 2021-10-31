@@ -1,7 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::login::LoginAResponse;
@@ -15,6 +15,7 @@ markup::define! {
     Login<'a>(
         title: &'a str,
         q: &'a LoginAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -32,6 +33,7 @@ markup::define! {
             },
             content: Content {
                 q: q,
+                t: t,
                 error: error,
                 form: form,
             },
@@ -40,6 +42,7 @@ markup::define! {
 
     Content<'a>(
         q: &'a LoginAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -64,6 +67,7 @@ markup::define! {
 
                             @Form {
                                 q: q,
+                                t: t,
                                 error: error,
                                 form: form,
                             }
@@ -71,13 +75,13 @@ markup::define! {
 
                         p[class = "has-text-grey"] {
                             a[href = "/"] {
-                                {&t("Sign up [verb]", &q.data.lang.code)}
+                                @t.sign_up_k_verb
                             }
 
                             " · "
 
                             a[href = "/"] {
-                                {&t("Forgotten password?", &q.data.lang.code)}
+                                @t.forgotten_password
                             }
                         }
 
@@ -105,6 +109,7 @@ markup::define! {
 
     Form<'a>(
         q: &'a LoginAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -127,7 +132,7 @@ markup::define! {
                         },
                         name = "email",
                         type = "email",
-                        placeholder = &t("Your email", &q.data.lang.code),
+                        placeholder = t.your_email,
                         value = if let Some(f) = form {
                             &f.email
                         } else { "" },
@@ -154,7 +159,7 @@ markup::define! {
                         },
                         name = "password",
                         type = "password",
-                        placeholder = &t("Your password", &q.data.lang.code),
+                        placeholder = t.your_password,
                         autofocus = if let Some(e) = error {
                             e.code == ec::WRONG_USER_PASSWORD
                         } else {
@@ -167,7 +172,7 @@ markup::define! {
             button[
                 class = "button is-block is-link is-large is-fullwidth",
             ] {
-                {&t("Login [verb]", &q.data.lang.code)}
+                @t.login_k_verb
                 " "
                 i[class = "eos-icons ml-2"] { "login" }
             }

@@ -43,14 +43,16 @@ pub async fn files(
             Ok(row) => {
 
                 let q: FilesAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Files {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Files", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.files,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

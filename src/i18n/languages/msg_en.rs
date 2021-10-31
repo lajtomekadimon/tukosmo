@@ -199,7 +199,7 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Posts",
     post_s_body:
         "Post's body",
-    previous_k_page:
+    previous:
         "Previous",
     published:
         "Published",

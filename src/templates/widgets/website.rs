@@ -1,5 +1,6 @@
 use markup;
 
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::widgets::header::Header;
 use crate::templates::widgets::navigation::Navigation;
 use crate::templates::widgets::sidebar::Sidebar;
@@ -11,6 +12,7 @@ markup::define! {
     Website<'a, BodyContent: markup::Render>(
         content: BodyContent,
         data: &'a WebsiteDataDB,
+        t: &'a TranslateI18N,
     ) {
         div[
             id = "page",
@@ -46,6 +48,7 @@ markup::define! {
 
             @Footer {
                 data: data,
+                t: t,
             }
         }
     }

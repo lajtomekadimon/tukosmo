@@ -43,14 +43,16 @@ pub async fn error(
         Ok(row) => {
 
             let q: ErrorWResponse = row.get(0);
+            let t = &t(&q.data.lang.code);
 
             let html = Error {
                 title: &format!(
                     "{a} - {b}",
-                    a = &t("Error", &q.data.lang.code),
+                    a = t.error,
                     b = "MyExample"
                 ),
                 q: &q,
+                t: t,
             };
 
             HttpResponse::Ok().body(html.to_string())

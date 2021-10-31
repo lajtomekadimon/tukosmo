@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -12,6 +12,7 @@ markup::define! {
     DeletePost<'a>(
         title: &'a str,
         q: &'a DeletePostAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
@@ -20,24 +21,25 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     error: error,
                 },
                 current_page: "delete_post",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a DeletePostAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t(
-                    "Delete post: '{title}'",
-                    &q.data.lang.code
-                ).replace("{title}", &q.post.id.to_string())}
+                @t.delete_post_w_title
+                    .replace("{title}", &q.post.id.to_string())
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -59,10 +61,7 @@ markup::define! {
 
             div[class = "content"] {
                 p {
-                    {&t(
-                        "Are you sure that you want to delete this post?",
-                        &q.data.lang.code,
-                    )}
+                    @t.are_you_sure_that_you_want_to_delete_this_post
                 }
                 p {
                     b[
@@ -72,14 +71,11 @@ markup::define! {
                             ""
                         },
                     ] {
-                        {&t(
-                            if q.post.deleted {
-                                "The post will be permanent deleted."
-                            } else {
-                                "The post will be sent to trash."
-                            },
-                            &q.data.lang.code,
-                        )}
+                        @if q.post.deleted {
+                            @t.the_post_will_be_permanently_deleted
+                        } else {
+                            @t.the_post_will_be_sent_to_trash
+                        }
                     }
                 }
             }
@@ -99,7 +95,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-danger"] {
-                            {&t("Delete", &q.data.lang.code)}
+                            @t.delete
                         }
                     }
                     div[class = "control"] {
@@ -109,7 +105,7 @@ markup::define! {
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
                 }

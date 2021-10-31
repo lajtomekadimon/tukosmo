@@ -69,24 +69,26 @@ pub async fn posts(
             Ok(row) => {
 
                 let q: PostsAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Posts {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t(if q.filter == "drafts" {
-                            "Draft posts"
+                        a = if q.filter == "drafts" {
+                            t.draft_posts
                         } else if q.filter == "published" {
-                            "Published posts"
+                            t.published_posts
                         } else if q.filter == "untranslated" {
-                            "Untranslated posts"
+                            t.untranslated_posts
                         } else if q.filter == "deleted" {
-                            "Deleted posts"
+                            t.deleted_posts
                         } else {
-                            "Posts"
-                        }, &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                            t.posts
+                        },
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     success: match param.success {
                         Some(_) => &true,
                         None => &false,

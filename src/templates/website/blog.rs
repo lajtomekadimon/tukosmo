@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::templates::website_layout::WebsiteLayout;
 use crate::templates::widgets::website::Website;
@@ -12,6 +12,7 @@ markup::define! {
     Blog<'a>(
         title: &'a str,
         q: &'a BlogWResponse,
+        t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {
             title: title,
@@ -19,14 +20,17 @@ markup::define! {
             content: Website {
                 content: Content {
                     q: q,
+                    t: t,
                 },
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a BlogWResponse,
+        t: &'a TranslateI18N,
     ) {
         div[
             class = "post-list",
@@ -89,10 +93,7 @@ markup::define! {
 
                                         b {
                                             "("
-                                            {t(
-                                                "untranslated",
-                                                &q.data.lang.code,
-                                            )}
+                                            @t.untranslated_k_lower
                                             ")"
                                         }
                                     }
@@ -128,7 +129,7 @@ markup::define! {
                                         &post.permalink.to_string()
                                     ),
                             ] {
-                                {&t("Read more", &post.lang.code)}
+                                @t.read_more
                             }
                         }
                     }
@@ -138,6 +139,7 @@ markup::define! {
 
         @BlogPagination {
             data: &q.data,
+            t: t,
             route: "/{lang}/blog?p={page}&rpp={rpp}",
             current_page: &q.page,
             total_pages: &q.total_pages,

@@ -2,6 +2,7 @@ use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::i18n::t::t;
 use crate::handlers::website::user_request::user_request;
 use crate::templates::website::page::Page;
 use crate::database::types;
@@ -41,6 +42,7 @@ pub async fn page(
         Ok(row) => {
 
             let q: PageWResponse = row.get(0);
+            let t = &t(&q.data.lang.code);
 
             let html = Page {
                 title: &format!(
@@ -49,6 +51,7 @@ pub async fn page(
                     b = "MyExample"
                 ),
                 q: &q,
+                t: t,
             };
 
             HttpResponse::Ok().body(html.to_string())

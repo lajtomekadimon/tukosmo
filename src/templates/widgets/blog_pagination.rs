@@ -1,12 +1,13 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::WebsiteDataDB;
 
 
 markup::define! {
     BlogPagination<'a>(
         data: &'a WebsiteDataDB,
+        t: &'a TranslateI18N,
         route: &'a str,
         current_page: &'a i64,
         total_pages: &'a i64,
@@ -22,7 +23,7 @@ markup::define! {
                     class = "blog-pagination-previous",
                     disabled = true,
                 ] {
-                    {&t("Previous [page]", &data.lang.code)}
+                    @t.previous
                 }
             } else {
                 a[
@@ -32,7 +33,7 @@ markup::define! {
                         .replace("{rpp}", &results_per_page.to_string())
                         .replace("{page}", &(**current_page - 1).to_string()),
                 ] {
-                    {&t("Previous [page]", &data.lang.code)}
+                    @t.previous
                 }
             }
 
@@ -41,7 +42,7 @@ markup::define! {
                     class = "blog-pagination-next",
                     disabled = true,
                 ] {
-                    {&t("Next [page]", &data.lang.code)}
+                    @t.next
                 }
             } else {
                 a[
@@ -51,7 +52,7 @@ markup::define! {
                         .replace("{rpp}", &results_per_page.to_string())
                         .replace("{page}", &(**current_page + 1).to_string()),
                 ] {
-                    {&t("Next [page]", &data.lang.code)}
+                    @t.next
                 }
             }
 

@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
@@ -13,6 +13,7 @@ markup::define! {
     Users<'a>(
         title: &'a str,
         q: &'a UsersAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         @AdminLayout {
@@ -21,10 +22,12 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     success: success,
                 },
                 current_page: "users",
                 data: &q.data,
+                t: t,
             },
         }
     }
@@ -32,11 +35,12 @@ markup::define! {
 
     Content<'a>(
         q: &'a UsersAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Users", &q.data.lang.code)}
+                @t.users
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -51,20 +55,19 @@ markup::define! {
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
-                    {&t("New user", &q.data.lang.code)}
+                    @t.new_user
                 }
             }
 
             h2[class = "subtitle"] {
-                {&t("Page {n}", &q.data.lang.code)
-                    .replace("{n}", &q.page.to_string())
-                }
+                {t.page_n
+                    .replace("{n}", &q.page.to_string())}
 
                 " ("
-                {&t(match q.users.iter().len() {
-                    1 => "{n} result of {m}",
-                    _ => "{n} results of {m}",
-                }, &q.data.lang.code)
+                {(match q.users.iter().len() {
+                    1 => t.n_result_of_m,
+                    _ => t.n_results_of_m,
+                })
                     .replace("{n}", &(q.users.iter().len()).to_string())
                     .replace("{m}", &q.total_results.to_string())
                 }
@@ -76,10 +79,7 @@ markup::define! {
                     class = "notification is-success",
                 ] {
                     button[class = "delete"] {}
-                    {&t(
-                        "Your website users were successfully updated.",
-                        &q.data.lang.code
-                    )}
+                    @t.your_website_users_were_successfully_updated
                 }
             }
 
@@ -89,13 +89,13 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Name", &q.data.lang.code)}
+                            @t.name
                         }
                         th {
-                            {&t("Email", &q.data.lang.code)}
+                            @t.email
                         }
                         th {
-                            {&t("Date", &q.data.lang.code)}
+                            @t.date
                         }
                     }
                 }
@@ -139,6 +139,7 @@ markup::define! {
 
             @AdminPagination {
                 data: &q.data,
+                t: t,
                 route: "/{lang}/admin/users?p={page}&rpp={rpp}",
                 current_page: &q.page,
                 total_pages: &q.total_pages,

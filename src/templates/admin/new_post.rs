@@ -1,7 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -15,6 +15,7 @@ markup::define! {
     NewPost<'a>(
         title: &'a str,
         q: &'a NewPostAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -24,23 +25,26 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     error: error,
                     form: form,
                 },
                 current_page: "new_post",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a NewPostAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("New post", &q.data.lang.code)}
+                @t.new_post
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -67,7 +71,7 @@ markup::define! {
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Title", &q.data.lang.code)}
+                        @t.title
                     }
                     div[class = "control"] {
                         input[
@@ -91,7 +95,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Permalink", &q.data.lang.code)}
+                        @t.permalink
                     }
                     div[class = "control"] {
                         input[
@@ -115,7 +119,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Description", &q.data.lang.code)}
+                        @t.description
                     }
                     div[class = "control"] {
                         textarea[
@@ -140,7 +144,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Post's body", &q.data.lang.code)}
+                        @t.post_s_body
                     }
                     div[class = "control"] {
                         textarea[
@@ -178,7 +182,7 @@ markup::define! {
                                 } else { false },
                             ];
                             " "
-                            {&t("Draft", &q.data.lang.code)}
+                            @t.draft
                         }
                     }
                 }
@@ -186,7 +190,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &q.data.lang.code)}
+                            @t.submit
                         }
                     }
                     div[class = "control"] {
@@ -196,7 +200,7 @@ markup::define! {
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
                 }

@@ -98,7 +98,7 @@ pub struct TranslateI18N {
     pub permalink: &'static str,
     pub posts: &'static str,
     pub post_s_body: &'static str,
-    pub previous_k_page: &'static str,
+    pub previous: &'static str,
     pub published: &'static str,
     pub published_k_posts: &'static str,
     pub published_posts: &'static str,

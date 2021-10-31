@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
@@ -13,6 +13,7 @@ markup::define! {
     Posts<'a>(
         title: &'a str,
         q: &'a PostsAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         @AdminLayout {
@@ -21,6 +22,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     success: success,
                 },
                 current_page: if q.filter == "drafts" {
@@ -35,27 +37,29 @@ markup::define! {
                     "posts"
                 },
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a PostsAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t(if q.filter == "drafts" {
-                    "Draft posts"
+                @if q.filter == "drafts" {
+                    @t.draft_posts
                 } else if q.filter == "published" {
-                    "Published posts"
+                    @t.published_posts
                 } else if q.filter == "untranslated" {
-                    "Untranslated posts"
+                    @t.untranslated_posts
                 } else if q.filter == "deleted" {
-                    "Deleted posts"
+                    @t.deleted_posts
                 } else {
-                    "Posts"
-                }, &q.data.lang.code)}
+                    @t.posts
+                }
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -80,20 +84,19 @@ markup::define! {
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
-                    {&t("New post", &q.data.lang.code)}
+                    @t.new_post
                 }
             }
 
             h2[class = "subtitle"] {
-                {&t("Page {n}", &q.data.lang.code)
+                @t.page_n
                     .replace("{n}", &q.page.to_string())
-                }
 
                 " ("
-                {&t(match q.posts.iter().len() {
-                    1 => "{n} result of {m}",
-                    _ => "{n} results of {m}",
-                }, &q.data.lang.code)
+                {(match q.posts.iter().len() {
+                    1 => t.n_result_of_m,
+                    _ => t.n_results_of_m,
+                })
                     .replace("{n}", &(q.posts.iter().len()).to_string())
                     .replace("{m}", &q.total_results.to_string())
                 }
@@ -105,10 +108,7 @@ markup::define! {
                     class = "notification is-success",
                 ] {
                     button[class = "delete"] {}
-                    {&t(
-                        "Your website posts were successfully updated.",
-                        &q.data.lang.code
-                    )}
+                    @t.your_website_posts_were_successfully_updated
                 }
             }
 
@@ -118,16 +118,16 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Title", &q.data.lang.code)}
+                            @t.title
                         }
                         th {
-                            {&t("Status", &q.data.lang.code)}
+                            @t.status
                         }
                         th {
-                            {&t("Published", &q.data.lang.code)}
+                            @t.published
                         }
                         th {
-                            {&t("Author", &q.data.lang.code)}
+                            @t.author
                         }
                     }
                 }
@@ -175,19 +175,13 @@ markup::define! {
                                 }
                                 td {
                                     @if post.deleted {
-                                        {&t(
-                                            "Deleted [post]",
-                                            &q.data.lang.code,
-                                        )}
+                                        @t.deleted_k_post
                                     } else if post.translator == 0 {
-                                        {&t(
-                                            "Untranslated",
-                                            &q.data.lang.code,
-                                        )}
+                                        @t.untranslated
                                     } else if post.draft {
-                                        {&t("Draft", &q.data.lang.code)}
+                                        @t.draft
                                     } else {
-                                        {&t("Published", &q.data.lang.code)}
+                                        @t.published
                                     }
                                 }
                                 td {
@@ -233,13 +227,11 @@ markup::define! {
                                         && (post.translator != 0)
                                     {
                                         " ("
-                                        {&t(
-                                            "translated by {name}",
-                                            &q.data.lang.code
-                                        ).replace(
-                                            "{name}",
-                                            &post.translator_name,
-                                        )}
+                                        {t.translated_by_user
+                                            .replace(
+                                                "{name}",
+                                                &post.translator_name,
+                                            )}
                                         ")"
                                     }
                                 }
@@ -251,6 +243,7 @@ markup::define! {
 
             @AdminPagination {
                 data: &q.data,
+                t: t,
                 route: if q.filter == "drafts" {
                     "/{lang}/admin/posts?f=drafts&p={page}&rpp={rpp}"
                 } else if q.filter == "published" {

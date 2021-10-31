@@ -43,10 +43,12 @@ pub async fn dashboard(
             Ok(row) => {
 
                 let q: DashboardAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Dashboard {
-                    title: &t("Tukosmo Admin Panel", &q.data.lang.code),
+                    title: t.tukosmo_admin_panel,
                     q: &q,
+                    t: t,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

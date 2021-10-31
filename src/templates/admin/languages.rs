@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
@@ -12,6 +12,7 @@ markup::define! {
     Languages<'a>(
         title: &'a str,
         q: &'a LanguagesAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         @AdminLayout {
@@ -20,21 +21,24 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     success: success,
                 },
                 current_page: "languages",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a LanguagesAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Languages", &q.data.lang.code)}
+                @t.languages
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -49,7 +53,7 @@ markup::define! {
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
-                    {&t("Add language", &q.data.lang.code)}
+                    @t.add_language
                 }
             }
 
@@ -58,10 +62,7 @@ markup::define! {
                     class = "notification is-success",
                 ] {
                     button[class = "delete"] {}
-                    {&t(
-                        "Your website languages were successfully updated.",
-                        &q.data.lang.code
-                    )}
+                    @t.your_website_languages_were_successfully_updated
                 }
             }
 
@@ -70,10 +71,7 @@ markup::define! {
                     class = "notification is-danger",
                 ] {
                     button[class = "delete"] {}
-                    {&t(
-                        "There are languages without names.",
-                        &q.data.lang.code
-                    )}
+                    @t.there_are_languages_without_names
                 }
             }
 
@@ -83,13 +81,13 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Language", &q.data.lang.code)}
+                            @t.language
                         }
                         th {
-                            {&t("Code", &q.data.lang.code)}
+                            @t.code
                         }
                         th {
-                            {&t("Last update", &q.data.lang.code)}
+                            @t.last_update
                         }
                     }
                 }

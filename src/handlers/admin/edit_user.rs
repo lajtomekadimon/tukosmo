@@ -57,17 +57,17 @@ pub async fn edit_user(
             Ok(row) => {
 
                 let q: EditUserAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = EditUser {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t(
-                            "Edit user: '{name}'",
-                            &q.data.lang.code,
-                        ).replace("{name}", &q.user_data.name),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.edit_user_w_name
+                            .replace("{name}", &q.user_data.name),
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     error: &None,
                     form: &None,
                 };

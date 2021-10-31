@@ -52,6 +52,7 @@ pub async fn new_language(
             Ok(row) => {
 
                 let q: NewLanguageAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let maybe_auto_code = (param.auto).clone();
 
@@ -65,10 +66,11 @@ pub async fn new_language(
                 let html = NewLanguage {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Add language", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.add_language,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     auto: &auto_code,
                     error: &None,
                     form: &None,

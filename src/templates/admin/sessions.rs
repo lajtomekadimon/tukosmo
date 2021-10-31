@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
@@ -15,6 +15,7 @@ markup::define! {
     Sessions<'a>(
         title: &'a str,
         q: &'a SessionsAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
     ) {
@@ -24,23 +25,26 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     success: success,
                     error: error,
                 },
                 current_page: "sessions",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a SessionsAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Sessions", &q.data.lang.code)}
+                @t.sessions
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -55,10 +59,7 @@ markup::define! {
                     class = "notification is-success",
                 ] {
                     button[class = "delete"] {}
-                    {&t(
-                        "Your sessions have been successfully updated.",
-                        &q.data.lang.code
-                    )}
+                    @t.your_sessions_have_been_successfully_updated
                 }
             }
 
@@ -77,16 +78,16 @@ markup::define! {
                 thead {
                     tr {
                         th {
-                            {&t("Browser", &q.data.lang.code)}
+                            @t.browser
                         }
                         th {
-                            {&t("System [OS]", &q.data.lang.code)}
+                            @t.system_k_os
                         }
                         th {
-                            {&t("Since", &q.data.lang.code)}
+                            @t.since
                         }
                         th {
-                            {&t("Close [session]", &q.data.lang.code)}
+                            @t.close_k_session
                         }
                     }
                 }
@@ -127,10 +128,7 @@ markup::define! {
                                     button[
                                         class = "button is-danger is-small",
                                         type = "submit",
-                                        title = &t(
-                                            "Logout [verb]",
-                                            &q.data.lang.code,
-                                        ),
+                                        title = t.logout_k_verb,
                                     ] {
                                         i[class = "eos-icons is-size-5"] {
                                             "logout"

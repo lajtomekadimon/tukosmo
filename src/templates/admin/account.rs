@@ -1,7 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -16,6 +16,7 @@ markup::define! {
     Account<'a>(
         title: &'a str,
         q: &'a AccountAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
@@ -26,25 +27,28 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     success: success,
                     error: error,
                     form: form,
                 },
                 current_page: "account",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a AccountAResponse,
+        t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Account", &q.data.lang.code)}
+                @t.account
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -59,10 +63,7 @@ markup::define! {
                     class = "notification is-success",
                 ] {
                     button[class = "delete"] {}
-                    {&t(
-                        "Your account has been successfully updated.",
-                        &q.data.lang.code
-                    )}
+                    @t.your_account_has_been_successfully_updated
                 }
             }
 
@@ -82,7 +83,7 @@ markup::define! {
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Email", &q.data.lang.code)}
+                        @t.email
                     }
                     div[class = "control"] {
                         input[
@@ -108,7 +109,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Name", &q.data.lang.code)}
+                        @t.name
                     }
                     div[class = "control"] {
                         input[
@@ -132,7 +133,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Current password", &q.data.lang.code)}
+                        @t.current_password
                     }
                     div[class = "control"] {
                         input[
@@ -154,10 +155,10 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("New password", &q.data.lang.code)}
+                        @t.new_password
 
                         " ("
-                        {&t("optional", &q.data.lang.code)}
+                        @t.optional
                         ")"
                     }
                     div[class = "control"] {
@@ -182,10 +183,10 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Repeat new password", &q.data.lang.code)}
+                        @t.repeat_new_password
 
                         " ("
-                        {&t("optional", &q.data.lang.code)}
+                        @t.optional
                         ")"
                     }
                     div[class = "control"] {
@@ -208,10 +209,10 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Names for each language", &q.data.lang.code)}
+                        @t.names_for_each_language
 
                         " ("
-                        {&t("optional", &q.data.lang.code)}
+                        @t.optional
                         ")"
                     }
                     p[class = "control"] {
@@ -291,7 +292,7 @@ markup::define! {
                                 } else { false },
                             ];
                             " "
-                            {&t("Admin", &q.data.lang.code)}
+                            @t.admin
                         }
                     }
                 }
@@ -300,7 +301,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &q.data.lang.code)}
+                            @t.submit
                         }
                     }
                     div[class = "control"] {
@@ -310,7 +311,7 @@ markup::define! {
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
                 }

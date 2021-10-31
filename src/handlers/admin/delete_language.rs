@@ -56,17 +56,17 @@ pub async fn delete_language(
             Ok(row) => {
 
                 let q: DeleteLanguageAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = DeleteLanguage {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t(
-                            "Delete language: {name}",
-                            &q.data.lang.code
-                        ).replace("{name}", &q.lang.name),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.delete_language_w_name
+                            .replace("{name}", &q.lang.name),
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     error: &None,
                 };
 

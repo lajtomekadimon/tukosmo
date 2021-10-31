@@ -149,20 +149,17 @@ pub async fn edit_language_post(
                     Ok(row) => {
 
                         let q: EditLanguageAResponse = row.get(0);
+                        let t = &t(&q.data.lang.code);
 
                         let html = EditLanguage {
                             title: &format!(
                                 "{a} - {b}",
-                                a = &t(
-                                    "Edit language: {name}",
-                                    &q.data.lang.code
-                                ).replace("{name}", &q.lang.name),
-                                b = &t(
-                                    "Tukosmo Admin Panel",
-                                    &q.data.lang.code,
-                                ),
+                                a = t.edit_language_w_name
+                                    .replace("{name}", &q.lang.name),
+                                b = t.tukosmo_admin_panel,
                             ),
                             q: &q,
+                            t: t,
                             error: &Some(t_error(e, &q.data.lang.code)),
                             form: &Some(form),
                         };

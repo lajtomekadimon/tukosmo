@@ -43,14 +43,16 @@ pub async fn new_user(
             Ok(row) => {
 
                 let q: NewUserAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = NewUser {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("New user", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.new_user,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     error: &None,
                     form: &None,
                 };

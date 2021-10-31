@@ -75,20 +75,17 @@ pub async fn delete_user_post(
                     Ok(row) => {
 
                         let q: DeleteUserAResponse = row.get(0);
+                        let t = &t(&q.data.lang.code);
 
                         let html = DeleteUser {
                             title: &format!(
                                 "{a} - {b}",
-                                a = &t(
-                                    "Delete user: {name}",
-                                    &q.data.lang.code
-                                ).replace("{name}", &q.user_data.name),
-                                b = &t(
-                                    "Tukosmo Admin Panel",
-                                    &q.data.lang.code,
-                                ),
+                                a = t.delete_user_w_name
+                                    .replace("{name}", &q.user_data.name),
+                                b = t.tukosmo_admin_panel,
                             ),
                             q: &q,
+                            t: t,
                             error: &Some(t_error(e, &q.data.lang.code)),
                         };
 

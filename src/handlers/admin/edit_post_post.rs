@@ -116,21 +116,18 @@ pub async fn edit_post_post(
                     Ok(row) => {
 
                         let q: EditPostAResponse = row.get(0);
+                        let t = &t(&q.data.lang.code);
 
                         if let Some(ref post) = q.post {
                             let html = EditPost {
                                 title: &format!(
                                     "{a} - {b}",
-                                    a = &t(
-                                        "Edit post: '{title}'",
-                                        &q.data.lang.code
-                                    ).replace("{title}", &post.title),
-                                    b = &t(
-                                        "Tukosmo Admin Panel",
-                                        &q.data.lang.code,
-                                    ),
+                                    a = t.edit_post_w_title
+                                        .replace("{title}", &post.title),
+                                    b = t.tukosmo_admin_panel,
                                 ),
                                 q: &q,
+                                t: t,
                                 error: &Some(t_error(e, &q.data.lang.code)),
                                 form: &Some(form),
                             };
@@ -140,14 +137,9 @@ pub async fn edit_post_post(
                             let html = EditPost {
                                 title: &format!(
                                     "{a} - {b}",
-                                    a = &t(
-                                        "Edit post: '{title}'",
-                                        &q.data.lang.code
-                                    ).replace("{title}", &post_id.to_string()),
-                                    b = &t(
-                                        "Tukosmo Admin Panel",
-                                        &q.data.lang.code,
-                                    ),
+                                    a = t.edit_post_w_title
+                                        .replace("{title}", &post_id.to_string()),
+                                    b = t.tukosmo_admin_panel,
                                 ),
                                 q: &EditPostAResponse {
                                     data: q.data.clone(),
@@ -178,6 +170,7 @@ pub async fn edit_post_post(
                                         }
                                     ),
                                 },
+                                t: t,
                                 error: &Some(t_error(e, &q.data.lang.code)),
                                 form: &Some(form),
                             };

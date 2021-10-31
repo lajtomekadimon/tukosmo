@@ -42,6 +42,7 @@ pub async fn login(
         Ok(row) => {
 
             let q: LoginAResponse = row.get(0);
+            let t = &t(&q.data.lang.code);
 
             if let Some(_user) = q.data.userd {
 
@@ -60,10 +61,11 @@ pub async fn login(
                 let html = Login {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Login [noun]", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.login_k_noun,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     error: &None,
                     form: &None,
                 };

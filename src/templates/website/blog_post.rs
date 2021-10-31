@@ -3,7 +3,7 @@ use markup;
 use crate::templates::website_layout::WebsiteLayout;
 use crate::templates::widgets::website::Website;
 use crate::handlers::website::blog_post::BlogPostWResponse;
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
 
@@ -12,6 +12,7 @@ markup::define! {
     BlogPost<'a>(
         title: &'a str,
         q: &'a BlogPostWResponse,
+        t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {
             title: title,
@@ -19,14 +20,17 @@ markup::define! {
             content: Website {
                 content: Content {
                     q: q,
+                    t: t,
                 },
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a BlogPostWResponse,
+        t: &'a TranslateI18N,
     ) {
         article[
             class = "post",
@@ -117,7 +121,7 @@ markup::define! {
 
                                     " "
 
-                                    {&t("Edit", &q.data.lang.code)}
+                                    @t.edit
                                 }
                             }
                         }

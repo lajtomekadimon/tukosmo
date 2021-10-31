@@ -38,14 +38,16 @@ pub async fn home(
         Ok(row) => {
 
             let q: BlogWResponse = row.get(0);
+            let t = &t(&q.data.lang.code);
 
             let html = Blog {
                 title: &format!(
                     "{a} - {b}",
-                    a = &t("Blog", &q.data.lang.code),
+                    a = t.blog,
                     b = "MyExample"
                 ),
                 q: &q,
+                t: t,
             };
 
             HttpResponse::Ok().body(html.to_string())

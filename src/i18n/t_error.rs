@@ -17,6 +17,8 @@ pub fn t_error(
     lang_code: &str,
 ) -> ErrorDB {
 
+    let t = &t(lang_code);
+
     if let Some(dberror) = e.as_db_error() {
 
         let error_message = dberror.message();
@@ -31,7 +33,7 @@ pub fn t_error(
                 message: error_code_message(
                     error_code,
                     lang_code,
-                ),
+                ).to_string(),
             }
 
         } else {
@@ -41,7 +43,7 @@ pub fn t_error(
 
             ErrorDB {
                 code: ec::UNKNOWN_ERROR.to_string(),
-                message: t("ERROR:unknown_error", lang_code),
+                message: t.err_unknown_error.to_string(),
             }
 
         }
@@ -53,7 +55,7 @@ pub fn t_error(
 
         ErrorDB {
             code: ec::UNKNOWN_ERROR.to_string(),
-            message: t("ERROR:unknown_error", lang_code),
+            message: t.err_unknown_error.to_string(),
         }
 
     }

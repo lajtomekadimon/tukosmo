@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -12,6 +12,7 @@ markup::define! {
     DeleteLanguage<'a>(
         title: &'a str,
         q: &'a DeleteLanguageAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
@@ -20,24 +21,25 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     error: error,
                 },
                 current_page: "delete_language",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a DeleteLanguageAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t(
-                    "Delete language: {name}",
-                    &q.data.lang.code
-                ).replace("{name}", &q.lang.name)}
+                @t.delete_language_w_name
+                    .replace("{name}", &q.lang.name)
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -59,10 +61,7 @@ markup::define! {
 
             div[class = "content"] {
                 p {
-                    {&t(
-                        "Are you sure that you want to delete this language?",
-                        &q.data.lang.code,
-                    )}
+                    @t.are_you_sure_that_you_want_to_delete_this_language
                 }
             }
 
@@ -81,7 +80,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-danger"] {
-                            {&t("Delete", &q.data.lang.code)}
+                            @t.delete
                         }
                     }
                     div[class = "control"] {
@@ -91,7 +90,7 @@ markup::define! {
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
                 }

@@ -65,14 +65,16 @@ pub async fn users(
             Ok(row) => {
 
                 let q: UsersAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Users {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Users", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.users,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     success: match param.success {
                         Some(_) => &true,
                         None => &false,

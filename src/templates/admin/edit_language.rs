@@ -1,7 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -15,6 +15,7 @@ markup::define! {
     EditLanguage<'a>(
         title: &'a str,
         q: &'a EditLanguageAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -24,26 +25,27 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     error: error,
                     form: form,
                 },
                 current_page: "edit_language",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a EditLanguageAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t(
-                    "Edit language: {name}",
-                    &q.data.lang.code
-                ).replace("{name}", &q.lang.name)}
+                @t.edit_language_w_name
+                    .replace("{name}", &q.lang.name)
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -71,7 +73,7 @@ markup::define! {
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Code", &q.data.lang.code)}
+                        @t.code
                     }
                     div[class = "control"] {
                         input[
@@ -93,7 +95,7 @@ markup::define! {
                             },
                             type = "text",
                             name = "lang_code",
-                            placeholder = &t("Examples: en, en-us...", &q.data.lang.code),
+                            placeholder = t.examples_of_lang_codes,
                             value = if let Some(f) = form {
                                 &f.lang_code
                             } else { &q.lang.code },
@@ -103,7 +105,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Language names", &q.data.lang.code)}
+                        @t.language_names
                     }
                     p[class = "control"] {
                         @for (i, name) in q.names.iter().enumerate() {
@@ -146,7 +148,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &q.data.lang.code)}
+                            @t.submit
                         }
                     }
                     div[class = "control"] {
@@ -155,7 +157,7 @@ markup::define! {
                                 .replace("{lang}", &q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
 
@@ -167,7 +169,7 @@ markup::define! {
                             class = "button is-danger \
                                      has-text-weight-normal mr-4",
                         ] {
-                            {&t("Delete", &q.data.lang.code)}
+                            @t.delete
                         }
                     }
                 }

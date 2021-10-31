@@ -156,17 +156,16 @@ pub async fn new_language_post(
                     Ok(row) => {
 
                         let q: NewLanguageAResponse = row.get(0);
+                        let t = &t(&q.data.lang.code);
 
                         let html = NewLanguage {
                             title: &format!(
                                 "{a} - {b}",
-                                a = &t("Add language", &q.data.lang.code),
-                                b = &t(
-                                    "Tukosmo Admin Panel",
-                                    &q.data.lang.code,
-                                ),
+                                a = t.add_language,
+                                b = t.tukosmo_admin_panel,
                             ),
                             q: &q,
+                            t: t,
                             auto: &None,
                             error: &Some(t_error(e, &q.data.lang.code)),
                             form: &Some(form),

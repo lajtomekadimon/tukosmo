@@ -1,7 +1,7 @@
 use crate::i18n::translate_i18n::TranslateI18N;
 
 
-pub const MSG_EN: TranslateI18N = TranslateI18N {
+pub const MSG_ES: TranslateI18N = TranslateI18N {
     account:
         "Cuenta",
     add_language:
@@ -199,7 +199,7 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Entradas",
     post_s_body:
         "Cuerpo de la entrada",
-    previous_k_page:
+    previous:
         "Anterior",
     published:
         "Publicado",

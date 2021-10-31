@@ -2,7 +2,7 @@ use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::config::global::SUPPORTED_LANGUAGES;
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::get_lang_name::get_lang_name;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
@@ -17,6 +17,7 @@ markup::define! {
     NewLanguage<'a>(
         title: &'a str,
         q: &'a NewLanguageAResponse,
+        t: &'a TranslateI18N,
         auto: &'a Option<String>,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
@@ -27,25 +28,28 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     auto: auto,
                     error: error,
                     form: form,
                 },
                 current_page: "new_language",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a NewLanguageAResponse,
+        t: &'a TranslateI18N,
         auto: &'a Option<String>,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t("Add language", &q.data.lang.code)}
+                @t.add_language
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -58,7 +62,7 @@ markup::define! {
             p[
                 class = "mb-4",
             ] {
-                {&t("Autocomplete for:", &q.data.lang.code)}
+                @t.autocomplete_for
                 " "
 
                 // TODO: Should I ignore current languages in use?
@@ -72,10 +76,7 @@ markup::define! {
                             .replace("{lang}", &q.data.lang.code)
                             .replace("{code}", lang),
                     ] {
-                        {&t(
-                            &"LANG:{code}".replace("{code}", lang),
-                            &q.data.lang.code,
-                        )}
+                        {&get_lang_name(lang, &q.data.lang.code)}
                     }
                 }
             }
@@ -96,7 +97,7 @@ markup::define! {
             ] {
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Name (in the new language)", &q.data.lang.code)}
+                        @t.name_in_the_new_language
                     }
                     div[class = "control"] {
                         @if form.is_some() || auto.is_none() {
@@ -112,10 +113,7 @@ markup::define! {
                                 },
                                 type = "text",
                                 name = "own_lang_name",
-                                placeholder = &t(
-                                    "Examples: English, Español...",
-                                    &q.data.lang.code,
-                                ),
+                                placeholder = t.examples_of_lang_names,
                                 value = if let Some(f) = form {
                                     &f.own_lang_name
                                 } else { "" },
@@ -125,11 +123,8 @@ markup::define! {
                                 class = "input",
                                 type = "text",
                                 name = "own_lang_name",
-                                placeholder = &t(
-                                    "Examples: English, Español...",
-                                    &q.data.lang.code,
-                                ),
-                                value = &get_lang_name(auto_code, auto_code),
+                                placeholder = t.examples_of_lang_names,
+                                value = get_lang_name(auto_code, auto_code),
                             ];
                         }
                     }
@@ -137,7 +132,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Code", &q.data.lang.code)}
+                        @t.code
                     }
                     div[class = "control"] {
                         input[
@@ -154,7 +149,7 @@ markup::define! {
                             },
                             type = "text",
                             name = "lang_code",
-                            placeholder = &t("Examples: en, en-us...", &q.data.lang.code),
+                            placeholder = t.examples_of_lang_codes,
                             value = if let Some(f) = form {
                                 &f.lang_code
                             } else if let Some(auto_code) = auto {
@@ -166,7 +161,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Language names", &q.data.lang.code)}
+                        @t.language_names
                     }
                     p[class = "control"] {
                         @for (i, lang) in q.data.languages.iter().enumerate() {
@@ -220,10 +215,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t(
-                            "Names (in the new language) for each language",
-                            &q.data.lang.code,
-                        )}
+                        @t.names_in_the_new_language_for_each_language
                     }
                     p[class = "control"] {
                         @for (i, lang) in q.data.languages.iter().enumerate() {
@@ -273,7 +265,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &q.data.lang.code)}
+                            @t.submit
                         }
                     }
                     div[class = "control"] {
@@ -282,7 +274,7 @@ markup::define! {
                                 .replace("{lang}", &q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
                 }

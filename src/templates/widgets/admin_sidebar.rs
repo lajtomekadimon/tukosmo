@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
 
 
@@ -8,6 +8,7 @@ markup::define! {
     AdminSidebar<'a>(
         current_page: &'a str,
         data: &'a AdminDataDB,
+        t: &'a TranslateI18N,
     ) {
         aside[class = "menu is-hidden-mobile"] {
             /* Dashboard
@@ -23,7 +24,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "dashboard" }
                         " "
-                        {&t("Dashboard", &data.lang.code)}
+                        @t.dashboard
                     }
                 }
             }
@@ -31,7 +32,7 @@ markup::define! {
             /* General
              * * * * * */
             p[class = "menu-label"] {
-                {&t("General", &data.lang.code)}
+                @t.general
             }
             ul[class = "menu-list"] {
 
@@ -45,7 +46,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "bar_chart" }
                         " "
-                        {&t("Statistics", &data.lang.code)}
+                        @t.statistics
                     }
                 }
                 li {
@@ -58,7 +59,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "database" }
                         " "
-                        {&t("Server", &data.lang.code)}
+                        @t.server
                     }
                 }
             }
@@ -66,7 +67,7 @@ markup::define! {
             /* Data
              * * * * */
             p[class = "menu-label"] {
-                {&t("Data", &data.lang.code)}
+                @t.data
             }
             ul[class = "menu-list"] {
                 li {
@@ -79,7 +80,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "supervisor_account" }
                         " "
-                        {&t("Users", &data.lang.code)}
+                        @t.users
                     }
                 }
                 li {
@@ -92,7 +93,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "translate" }
                         " "
-                        {&t("Languages", &data.lang.code)}
+                        @t.languages
                     }
                 }
                 li {
@@ -105,7 +106,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "article" }
                         " "
-                        {&t("Posts", &data.lang.code)}
+                        @t.posts
                     }
 
                     @if current_page == &"posts"
@@ -125,7 +126,7 @@ markup::define! {
                                         "is-active"
                                     } else { "" },
                                 ] {
-                                    {&t("Drafts", &data.lang.code)}
+                                    @t.drafts
                                 }
                             }
                             li {
@@ -138,7 +139,7 @@ markup::define! {
                                         "is-active"
                                     } else { "" },
                                 ] {
-                                    {&t("Published [posts]", &data.lang.code)}
+                                    @t.published_k_posts
                                 }
                             }
                             li {
@@ -151,10 +152,7 @@ markup::define! {
                                         "is-active"
                                     } else { "" },
                                 ] {
-                                    {&t(
-                                        "Untranslated [posts]",
-                                        &data.lang.code,
-                                    )}
+                                    @t.untranslated_k_posts
                                 }
                             }
                             li {
@@ -167,7 +165,7 @@ markup::define! {
                                         "is-active"
                                     } else { "" },
                                 ] {
-                                    {&t("Trash", &data.lang.code)}
+                                    @t.trash
                                 }
                             }
                         }
@@ -183,7 +181,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "description" }
                         " "
-                        {&t("Pages", &data.lang.code)}
+                        @t.pages
                     }
                 }
                 li {
@@ -196,7 +194,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "file_present" }
                         " "
-                        {&t("Files", &data.lang.code)}
+                        @t.files
                     }
                 }
             }
@@ -204,7 +202,7 @@ markup::define! {
             /* Settings
              * * * * * * */
             p[class = "menu-label"] {
-                {&t("Settings", &data.lang.code)}
+                @t.settings
             }
             ul[class = "menu-list"] {
                 li {
@@ -217,7 +215,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "web" }
                         " "
-                        {&t("Website", &data.lang.code)}
+                        @t.website
                     }
                 }
                 li {
@@ -230,7 +228,7 @@ markup::define! {
                     ] {
                         i[class = "eos-icons"] { "settings_suggest" }
                         " "
-                        {&t("Tukosmo", &data.lang.code)}
+                        @t.tukosmo
                     }
                 }
             }

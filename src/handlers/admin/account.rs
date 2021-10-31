@@ -45,14 +45,16 @@ pub async fn account(
             Ok(row) => {
 
                 let q: AccountAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Account {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Account", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.account,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     success: &false,
                     error: &None,
                     form: &None,

@@ -2,6 +2,7 @@ use actix_web::{HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::i18n::t::t;
 use crate::handlers::website::user_request::user_request;
 use crate::templates::website::blog_post::BlogPost;
 use crate::database::types;
@@ -47,6 +48,7 @@ pub async fn blog_post(
         Ok(row) => {
 
             let q: BlogPostWResponse = row.get(0);
+            let t = &t(&q.data.lang.code);
 
             let html = BlogPost {
                 title: &format!(
@@ -55,6 +57,7 @@ pub async fn blog_post(
                     b = "MyExample"
                 ),
                 q: &q,
+                t: t,
             };
 
             HttpResponse::Ok().body(html.to_string())

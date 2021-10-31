@@ -1,7 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
@@ -16,6 +16,7 @@ markup::define! {
     EditPost<'a>(
         title: &'a str,
         q: &'a EditPostAResponse,
+        t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
@@ -25,28 +26,29 @@ markup::define! {
             content: AdminPanel {
                 content: Content {
                     q: q,
+                    t: t,
                     post: &(q.post).as_ref().unwrap(),
                     error: error,
                     form: form,
                 },
                 current_page: "edit_post",
                 data: &q.data,
+                t: t,
             },
         }
     }
 
     Content<'a>(
         q: &'a EditPostAResponse,
+        t: &'a TranslateI18N,
         post: &'a PostDB,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                {&t(
-                    "Edit post: '{title}'",
-                    &q.data.lang.code
-                ).replace("{title}", &post.id.to_string())}
+                @t.edit_post_w_title
+                    .replace("{title}", &post.id.to_string())
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -80,7 +82,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Title", &q.data.lang.code)}
+                        @t.title
                     }
                     div[class = "control"] {
                         input[
@@ -104,7 +106,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Permalink", &q.data.lang.code)}
+                        @t.permalink
                     }
                     div[class = "control"] {
                         input[
@@ -128,7 +130,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Description", &q.data.lang.code)}
+                        @t.description
                     }
                     div[class = "control"] {
                         textarea[
@@ -153,7 +155,7 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        {&t("Post's body", &q.data.lang.code)}
+                        @t.post_s_body
                     }
                     div[class = "control"] {
                         textarea[
@@ -191,7 +193,7 @@ markup::define! {
                                 } else { post.draft },
                             ];
                             " "
-                            {&t("Draft", &q.data.lang.code)}
+                            @t.draft
                         }
                     }
                 }
@@ -212,7 +214,7 @@ markup::define! {
                                 } else { post.deleted },
                             ];
                             " "
-                            {&t("Deleted [post]", &q.data.lang.code)}
+                            @t.deleted_k_post
                         }
                     }
                 }
@@ -220,7 +222,7 @@ markup::define! {
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
-                            {&t("Submit", &q.data.lang.code)}
+                            @t.submit
                         }
                     }
                     div[class = "control"] {
@@ -230,7 +232,7 @@ markup::define! {
                             ,
                             class = "button is-link is-light",
                         ] {
-                            {&t("Cancel", &q.data.lang.code)}
+                            @t.cancel
                         }
                     }
 
@@ -242,14 +244,11 @@ markup::define! {
                             class = "button is-danger \
                                      has-text-weight-normal mr-4",
                         ] {
-                            {&t(
-                                if post.deleted {
-                                    "Delete (permanent)"
-                                } else {
-                                    "Delete"
-                                },
-                                &q.data.lang.code,
-                            )}
+                            @if post.deleted {
+                                @t.delete_permanent
+                            } else {
+                                @t.delete
+                            }
                         }
                     }
                 }

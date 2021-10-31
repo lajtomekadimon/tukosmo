@@ -52,14 +52,16 @@ pub async fn languages(
             Ok(row) => {
 
                 let q: LanguagesAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Languages {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Languages", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code)
+                        a = t.languages,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     success: match param.success {
                         Some(_) => &true,
                         None => &false,

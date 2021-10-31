@@ -1,6 +1,6 @@
 use markup;
 
-use crate::i18n::t::t;
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
 use crate::database::types::{WebsiteDataDB, PostDB};
@@ -9,6 +9,7 @@ use crate::database::types::{WebsiteDataDB, PostDB};
 markup::define! {
     Post<'a>(
         data: &'a WebsiteDataDB,
+        t: &'a TranslateI18N,
         post: &'a PostDB,
     ) {
         article[
@@ -97,7 +98,7 @@ markup::define! {
 
                                     " "
 
-                                    {&t("Edit", &data.lang.code)}
+                                    @t.edit
                                 }
                             }
                         }

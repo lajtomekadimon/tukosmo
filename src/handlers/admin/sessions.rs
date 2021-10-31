@@ -44,14 +44,16 @@ pub async fn sessions(
             Ok(row) => {
 
                 let q: SessionsAResponse = row.get(0);
+                let t = &t(&q.data.lang.code);
 
                 let html = Sessions {
                     title: &format!(
                         "{a} - {b}",
-                        a = &t("Sessions", &q.data.lang.code),
-                        b = &t("Tukosmo Admin Panel", &q.data.lang.code),
+                        a = t.sessions,
+                        b = t.tukosmo_admin_panel,
                     ),
                     q: &q,
+                    t: t,
                     success: &false,
                     error: &None,
                 };
