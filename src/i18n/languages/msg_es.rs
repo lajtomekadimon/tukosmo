@@ -137,6 +137,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ayuda",
     i_hope_you_are_having_a_great_day:
         "¡Espero que tengas un buen día!",
+    lang_code:
+        "es",
     lang_en:
         "Inglés",
     lang_es:

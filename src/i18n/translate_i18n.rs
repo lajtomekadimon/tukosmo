@@ -67,6 +67,7 @@ pub struct TranslateI18N {
     pub hello_user: &'static str,
     pub help: &'static str,
     pub i_hope_you_are_having_a_great_day: &'static str,
+    pub lang_code: &'static str,
     pub lang_en: &'static str,
     pub lang_es: &'static str,
     pub lang_ja: &'static str,
