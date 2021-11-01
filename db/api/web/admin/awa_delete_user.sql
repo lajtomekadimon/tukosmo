@@ -43,7 +43,10 @@ BEGIN
         language_of_user
     );
 
-    -- TODO: Check user ID
+    -- Check user ID is correct
+    IF user_data IS NULL THEN
+        PERFORM err_wrong_user_id();
+    END IF;
 
     -- User is logged in
     RETURN ROW(

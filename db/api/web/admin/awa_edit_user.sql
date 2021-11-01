@@ -43,7 +43,10 @@ BEGIN
 
     user_data := s_user_by_id(r.id);
 
-    -- TODO: Check user ID is correct
+    -- Check user ID is correct
+    IF user_data IS NULL THEN
+        PERFORM err_wrong_user_id();
+    END IF;
 
     i18n_names := s_user_names_by_id(
         r.id,

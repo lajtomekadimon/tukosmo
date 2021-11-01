@@ -43,6 +43,8 @@ pub const WRONG_TITLE: &'static str = "7B744BC3C936";
 
 pub const WRONG_USER_EMAIL: &'static str = "9CF674E24CDC";
 
+pub const WRONG_USER_ID: &'static str = "E033B16A421B";
+
 pub const WRONG_USER_NAME: &'static str = "FD49B0AEB03A";
 
 pub const WRONG_USER_PASSWORD: &'static str = "C37F7C062377";

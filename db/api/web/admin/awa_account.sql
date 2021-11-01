@@ -42,8 +42,6 @@ BEGIN
 
     user_data := s_user_by_id((d.userd).id);
 
-    -- TODO: Check user ID is correct
-
     i18n_names := s_user_names_by_id(
         (d.userd).id,
         language_of_user

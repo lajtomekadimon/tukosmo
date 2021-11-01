@@ -34,7 +34,13 @@ BEGIN
     -- Check request
     d := s_admin_handler_data(r.req);
 
-    -- TODO: Check user ID is correct
+    -- Check user ID is correct
+    IF s_user_by_id_lang(
+        r.id,
+        language_of_user
+    ) IS NULL THEN
+        PERFORM err_wrong_user_id();
+    END IF;
 
     -- Check user name
     IF NOT e_is_user_name(r.name) THEN

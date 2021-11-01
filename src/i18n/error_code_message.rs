@@ -32,6 +32,7 @@ pub fn error_code_message(
         ec::WRONG_POST_PERMALINK => t.err_wrong_post_permalink,
         ec::WRONG_TITLE => t.err_wrong_title,
         ec::WRONG_USER_EMAIL => t.err_wrong_user_email,
+        ec::WRONG_USER_ID => t.err_wrong_user_id,
         ec::WRONG_USER_NAME => t.err_wrong_user_name,
         ec::WRONG_USER_PASSWORD => t.err_wrong_user_password,
 

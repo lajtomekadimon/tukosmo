@@ -105,6 +105,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The title is not valid.",
     err_wrong_user_email:
         "No user has that email.",
+    err_wrong_user_id:
+        "The user ID is not correct.",
     err_wrong_user_name:
         "That user name is not valid.",
     err_wrong_user_password:
