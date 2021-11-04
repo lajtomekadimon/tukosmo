@@ -39,6 +39,11 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
+    -- Check post ID is correct
+    IF NOT c_post_by_id(r.post) THEN
+        PERFORM err_wrong_post_id();
+    END IF;
+
     post := s_post_by_id_lang(
         r.post,
         language_of_user
