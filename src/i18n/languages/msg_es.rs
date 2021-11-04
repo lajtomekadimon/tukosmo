@@ -80,6 +80,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Algunos de los nombres (en el nuevo idioma) no son válidos.",
     err_unknown_error:
         "Error desconocido.",
+    err_user_cant_delete_itself:
+        "Un usuario no puede eliminarse a sí mismo.",
     err_user_not_logged_in:
         "Debes estar conectado con tu usuario.",
     err_wrong_body_text:

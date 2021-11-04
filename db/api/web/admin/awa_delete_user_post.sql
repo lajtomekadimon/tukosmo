@@ -48,6 +48,11 @@ BEGIN
         PERFORM err_wrong_user_id();
     END IF;
 
+    -- Check user is not deleting itself
+    IF r.id = (d.userd).id THEN
+        PERFORM err_user_cant_delete_itself();
+    END IF;
+
     PERFORM d_user(r.id);
 
 END;

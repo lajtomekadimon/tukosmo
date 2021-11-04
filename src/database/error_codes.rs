@@ -19,6 +19,8 @@ pub const SOME_WRONG_NAME_FOR_LANG: &'static str = "55FF47829756";
 
 pub const UNKNOWN_ERROR: &'static str = "BCDD2EA230A5";
 
+pub const USER_CANT_DELETE_ITSELF: &'static str = "BFD51452BC4A";
+
 pub const USER_NOT_LOGGED_IN: &'static str = "D994FEF2356A";
 
 pub const WRONG_BODY_TEXT: &'static str = "F24F7F99E78D";

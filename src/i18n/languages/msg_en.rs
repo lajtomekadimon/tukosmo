@@ -80,6 +80,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Some of the names (in the new language) are not valid.",
     err_unknown_error:
         "Unknown error.",
+    err_user_cant_delete_itself:
+        "A user can't delete itself.",
     err_user_not_logged_in:
         "You must be logged in.",
     err_wrong_body_text:
