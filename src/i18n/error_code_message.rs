@@ -10,6 +10,8 @@ pub fn error_code_message(
     let t = &t(lang_code);
 
     match error_code {
+        ec::CSRF_TOKEN_IS_NOT_A_VALID_UUID =>
+            t.err_csrf_token_is_not_a_valid_uuid,
         ec::EMAIL_ALREADY_EXISTS => t.err_email_already_exists,
         ec::FIELD_IS_NOT_LANG_CODE => t.err_field_is_not_lang_code,
         ec::LANG_CODE_ALREADY_EXISTS => t.err_lang_code_already_exists,
@@ -21,6 +23,7 @@ pub fn error_code_message(
         ec::UNKNOWN_ERROR => t.err_unknown_error,
         ec::USER_NOT_LOGGED_IN => t.err_user_not_logged_in,
         ec::WRONG_BODY_TEXT => t.err_wrong_body_text,
+        ec::WRONG_CSRF_TOKEN => t.err_wrong_csrf_token,
         ec::WRONG_DESCRIPTION => t.err_wrong_description,
         ec::WRONG_EMAIL => t.err_wrong_email,
         ec::WRONG_LANG_CODE => t.err_wrong_lang_code,

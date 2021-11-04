@@ -5,6 +5,7 @@ CREATE TYPE "SessionsARequest" AS (
 
 CREATE TYPE "SessionsAResponse" AS (
     data "AdminDataDB",
+    csrf_token TEXT,
     sessions "SessionDB"[]
 );
 
@@ -42,6 +43,11 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT,
 
         -- sessions
         sessions

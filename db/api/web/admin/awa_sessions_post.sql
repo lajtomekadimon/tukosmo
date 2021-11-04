@@ -1,6 +1,7 @@
 
 CREATE TYPE "SessionsPostARequest" AS (
     req "AdminRequest",
+    csrf_token UUID,
     user_agent TEXT,
     date TEXT
 );
@@ -27,6 +28,14 @@ BEGIN
 
     -- Check request
     d := s_admin_handler_data(r.req);
+
+    -- Check CSRF token
+    IF NOT c_csrf_token_by_token_session(
+        r.csrf_token,
+        (r.req).session
+    ) THEN
+        PERFORM err_wrong_csrf_token();
+    END IF;
 
     PERFORM d_session_by_user_agent_date(
         (d.userd).id,

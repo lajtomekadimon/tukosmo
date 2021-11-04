@@ -32,6 +32,7 @@ impl QueryFunction for DeleteLanguageARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct DeleteLanguageAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
     pub lang: types::LanguageDB,
 }
 

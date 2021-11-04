@@ -60,6 +60,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Borradores de entradas",
     drafts:
         "Borradores",
+    err_csrf_token_is_not_a_valid_uuid:
+        "El token CSRF no es una UUID válida.",
     err_email_already_exists:
         "Ese correo electrónico ya está en uso.",
     err_field_is_not_lang_code:
@@ -82,6 +84,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Debes estar conectado con tu usuario.",
     err_wrong_body_text:
         "El texto del cuerpo no puede estar vacío.",
+    err_wrong_csrf_token:
+        "El token CSRF no es correcto.",
     err_wrong_description:
         "La descripción no puede empezar o terminar en espacios; \
         tampoco puede exceder los 600 caracteres.",

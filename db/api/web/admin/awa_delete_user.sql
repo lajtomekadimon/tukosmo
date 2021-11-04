@@ -6,6 +6,7 @@ CREATE TYPE "DeleteUserARequest" AS (
 
 CREATE TYPE "DeleteUserAResponse" AS (
     data "AdminDataDB",
+    csrf_token TEXT,
     user_data "UserDB"
 );
 
@@ -52,6 +53,11 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT,
 
         -- user_data
         user_data

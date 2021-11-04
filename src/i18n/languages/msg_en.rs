@@ -60,6 +60,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Draft posts",
     drafts:
         "Drafts",
+    err_csrf_token_is_not_a_valid_uuid:
+        "The CSRF token is not a valid UUID.",
     err_email_already_exists:
         "That email is already in use.",
     err_field_is_not_lang_code:
@@ -82,6 +84,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "You must be logged in.",
     err_wrong_body_text:
         "Body text can't be empty.",
+    err_wrong_csrf_token:
+        "The CSRF token is not correct.",
     err_wrong_description:
         "Description can't start or begin with empty space; \
         it can't have more than 600 characters either.",

@@ -81,6 +81,12 @@ markup::define! {
                 action = "/{lang}/admin/account"
                     .replace("{lang}", &q.data.lang.code),
             ] {
+                input[
+                    type = "hidden",
+                    name = "csrf_token",
+                    value = &q.csrf_token,
+                ];
+
                 div[class = "field"] {
                     label[class = "label"] {
                         @t.email

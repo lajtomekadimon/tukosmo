@@ -4,7 +4,8 @@ CREATE TYPE "NewUserARequest" AS (
 );
 
 CREATE TYPE "NewUserAResponse" AS (
-    data "AdminDataDB"
+    data "AdminDataDB",
+    csrf_token TEXT
 );
 
 
@@ -36,7 +37,12 @@ BEGIN
 
     RETURN ROW(
         -- data
-        d
+        d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT
     );
 
 END;

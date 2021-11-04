@@ -115,6 +115,12 @@ markup::define! {
                                 ] {
                                     input[
                                         type = "hidden",
+                                        name = "csrf_token",
+                                        value = &q.csrf_token,
+                                    ];
+
+                                    input[
+                                        type = "hidden",
                                         name = "user_agent",
                                         value = &sessiond.user_agent,
                                     ];

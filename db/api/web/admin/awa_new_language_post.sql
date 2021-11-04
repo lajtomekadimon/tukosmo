@@ -1,6 +1,7 @@
 
 CREATE TYPE "NewLanguagePostARequest" AS (
     req "AdminRequest",
+    csrf_token UUID,
     lang_code TEXT,
     own_lang_name TEXT,
     lang_ids BIGINT[],
@@ -35,6 +36,14 @@ BEGIN
 
     -- Check request
     PERFORM s_admin_handler_data(r.req);
+
+    -- Check CSRF token
+    IF NOT c_csrf_token_by_token_session(
+        r.csrf_token,
+        (r.req).session
+    ) THEN
+        PERFORM err_wrong_csrf_token();
+    END IF;
 
     -- Check language code is correct
     IF NOT e_is_lang_code(r.lang_code) THEN

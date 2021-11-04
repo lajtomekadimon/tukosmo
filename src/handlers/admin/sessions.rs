@@ -24,6 +24,7 @@ impl QueryFunction for SessionsARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct SessionsAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
     pub sessions: Vec<types::SessionDB>,
 }
 

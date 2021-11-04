@@ -6,6 +6,7 @@ CREATE TYPE "EditLanguageARequest" AS (
 
 CREATE TYPE "EditLanguageAResponse" AS (
     data "AdminDataDB",
+    csrf_token TEXT,
     lang "LanguageDB",
     names "NameDB"[]
 );
@@ -59,6 +60,11 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT,
 
         -- lang
         lang,

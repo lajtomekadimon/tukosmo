@@ -24,6 +24,7 @@ impl QueryFunction for NewUserARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct NewUserAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
 }
 
 

@@ -95,6 +95,12 @@ markup::define! {
                 action = "/{lang}/admin/new_language"
                     .replace("{lang}", &q.data.lang.code),
             ] {
+                input[
+                    type = "hidden",
+                    name = "csrf_token",
+                    value = &q.csrf_token,
+                ];
+
                 div[class = "field"] {
                     label[class = "label"] {
                         @t.name_in_the_new_language

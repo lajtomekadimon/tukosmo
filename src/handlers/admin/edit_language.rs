@@ -32,6 +32,7 @@ impl QueryFunction for EditLanguageARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct EditLanguageAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
     pub lang: types::LanguageDB,
     pub names: Vec<types::NameDB>,
 }

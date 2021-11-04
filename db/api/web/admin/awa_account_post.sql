@@ -1,6 +1,7 @@
 
 CREATE TYPE "AccountPostARequest" AS (
     req "AdminRequest",
+    csrf_token UUID,
     email TEXT,
     name TEXT,
     password TEXT,
@@ -37,6 +38,14 @@ BEGIN
 
     -- Check request
     d := s_admin_handler_data(r.req);
+
+    -- Check CSRF token
+    IF NOT c_csrf_token_by_token_session(
+        r.csrf_token,
+        (r.req).session
+    ) THEN
+        PERFORM err_wrong_csrf_token();
+    END IF;
 
     -- Check user name
     IF NOT e_is_user_name(r.name) THEN

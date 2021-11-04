@@ -32,6 +32,7 @@ impl QueryFunction for NewLanguageARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct NewLanguageAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
 }
 
 

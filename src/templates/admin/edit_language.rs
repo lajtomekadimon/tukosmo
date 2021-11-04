@@ -71,6 +71,12 @@ markup::define! {
                     .replace("{lang}", &q.data.lang.code)
                     .replace("{id}", &q.lang.id.to_string()),
             ] {
+                input[
+                    type = "hidden",
+                    name = "csrf_token",
+                    value = &q.csrf_token,
+                ];
+
                 div[class = "field"] {
                     label[class = "label"] {
                         @t.code

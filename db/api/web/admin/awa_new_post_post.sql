@@ -1,6 +1,7 @@
 
 CREATE TYPE "NewPostPostARequest" AS (
     req "AdminRequest",
+    csrf_token UUID,
     post "PostDB"
 );
 
@@ -28,6 +29,14 @@ BEGIN
 
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
+
+    -- Check CSRF token
+    IF NOT c_csrf_token_by_token_session(
+        r.csrf_token,
+        (r.req).session
+    ) THEN
+        PERFORM err_wrong_csrf_token();
+    END IF;
 
     -- Check post title
     IF NOT e_is_title((r.post).title) THEN

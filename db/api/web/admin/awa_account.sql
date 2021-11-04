@@ -5,6 +5,7 @@ CREATE TYPE "AccountARequest" AS (
 
 CREATE TYPE "AccountAResponse" AS (
     data "AdminDataDB",
+    csrf_token TEXT,
     user_data "UserDB",
     i18n_names "NameDB"[]
 );
@@ -51,6 +52,11 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT,
 
         -- user_data
         user_data,

@@ -6,6 +6,7 @@ CREATE TYPE "EditPostARequest" AS (
 
 CREATE TYPE "EditPostAResponse" AS (
     data "AdminDataDB",
+    csrf_token TEXT,
     post "PostDB"
 );
 
@@ -52,6 +53,11 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT,
 
         -- post
         post

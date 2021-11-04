@@ -32,6 +32,7 @@ impl QueryFunction for EditUserARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct EditUserAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
     pub user_data: types::UserDB,
     pub i18n_names: Vec<types::NameDB>,
 }

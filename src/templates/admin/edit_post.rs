@@ -76,6 +76,12 @@ markup::define! {
             ] {
                 input[
                     type = "hidden",
+                    name = "csrf_token",
+                    value = &q.csrf_token,
+                ];
+
+                input[
+                    type = "hidden",
                     name = "id",
                     value = &post.id,
                 ];

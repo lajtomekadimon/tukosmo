@@ -32,6 +32,7 @@ impl QueryFunction for EditPostARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct EditPostAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
     pub post: Option<types::PostDB>,
 }
 
@@ -83,6 +84,7 @@ pub async fn edit_post(
                         ),
                         q: &EditPostAResponse {
                             data: q.data.clone(),
+                            csrf_token: q.csrf_token.clone(),
                             post: Some(
                                 types::PostDB{
                                     id: post_id,

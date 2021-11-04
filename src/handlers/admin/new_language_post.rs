@@ -3,10 +3,12 @@ use actix_identity::Identity;
 use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
 use postgres_types::{ToSql, FromSql};
+use uuid::Uuid;
 
 use crate::handlers::admin::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::database::error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID;
 use crate::i18n::t::t;
 use crate::i18n::t_error::t_error;
 use crate::i18n::error_admin_route::error_admin_route;
@@ -41,6 +43,7 @@ impl<'de> Deserialize<'de> for FormData {
             ) -> Result<FormData, V::Error>
             where V: MapAccess<'de>
             {
+                let mut csrf_token_value: String = "".to_string();
                 let mut lang_code: String = "".to_string();
                 let mut own_lang_name: String = "".to_string();
                 let mut lang_ids: Vec<i64> = Vec::default();
@@ -49,6 +52,9 @@ impl<'de> Deserialize<'de> for FormData {
 
                 while let Some(key) = map.next_key()? {
                     match key {
+                        "csrf_token" => {
+                            csrf_token_value = map.next_value::<String>()?;
+                        }
                         "lang_code" => {
                             lang_code = map.next_value::<String>()?;
                         }
@@ -71,6 +77,7 @@ impl<'de> Deserialize<'de> for FormData {
                 // TODO: unreachable!() if empty Vec or different lengths
 
                 Ok(FormData {
+                    csrf_token: csrf_token_value,
                     lang_code: lang_code,
                     own_lang_name: own_lang_name,
                     lang_ids: lang_ids,
@@ -85,6 +92,7 @@ impl<'de> Deserialize<'de> for FormData {
 }
 
 pub struct FormData {
+    pub csrf_token: String,
     pub lang_code: String,
     pub own_lang_name: String,
     pub lang_ids: Vec<i64>,
@@ -96,6 +104,7 @@ pub struct FormData {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct NewLanguagePostARequest {
     pub req: types::AdminRequest,
+    pub csrf_token: Uuid,
     pub lang_code: String,
     pub own_lang_name: String,
     pub lang_ids: Vec<i64>,
@@ -118,68 +127,81 @@ pub async fn new_language_post(
 
     match user_request(req, id) {
 
-        Ok(user_req) => {
+        Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
 
-            let lang_code = (form.lang_code).clone();
-            let own_lang_name = (form.own_lang_name).clone();
-            let lang_ids = (form.lang_ids).clone();
-            let lang_names = (form.lang_names).clone();
-            let names_for_langs = (form.names_for_langs).clone();
+            Ok(csrf_token_value) => {
 
-            match query_db(
-                NewLanguagePostARequest {
-                    req: user_req.clone(),
-                    lang_code: lang_code,
-                    own_lang_name: own_lang_name,
-                    lang_ids: lang_ids,
-                    lang_names: lang_names,
-                    names_for_langs: names_for_langs,
-                },
-            ) {
+                let lang_code = (form.lang_code).clone();
+                let own_lang_name = (form.own_lang_name).clone();
+                let lang_ids = (form.lang_ids).clone();
+                let lang_names = (form.lang_names).clone();
+                let names_for_langs = (form.names_for_langs).clone();
 
-                Ok(_row) => {
-
-                    let redirect_route = "/{lang}/admin/languages?success=yes"
-                        .replace("{lang}", &user_req.lang_code);
-
-                    HttpResponse::Found()
-                        .header("Location", redirect_route)
-                        .finish()
-                },
-
-                Err(e) => match query_db(
-                    NewLanguageARequest {
+                match query_db(
+                    NewLanguagePostARequest {
                         req: user_req.clone(),
+                        csrf_token: csrf_token_value,
+                        lang_code: lang_code,
+                        own_lang_name: own_lang_name,
+                        lang_ids: lang_ids,
+                        lang_names: lang_names,
+                        names_for_langs: names_for_langs,
                     },
                 ) {
 
-                    Ok(row) => {
+                    Ok(_row) => {
 
-                        let q: NewLanguageAResponse = row.get(0);
-                        let t = &t(&q.data.lang.code);
+                        let redirect_route =
+                            "/{lang}/admin/languages?success=yes"
+                                .replace("{lang}", &user_req.lang_code);
 
-                        let html = NewLanguage {
-                            title: &format!(
-                                "{a} - {b}",
-                                a = t.add_language,
-                                b = t.tukosmo_admin_panel,
-                            ),
-                            q: &q,
-                            t: t,
-                            auto: &None,
-                            error: &Some(t_error(e, &q.data.lang.code)),
-                            form: &Some(form),
-                        };
+                        HttpResponse::Found()
+                            .header("Location", redirect_route)
+                            .finish()
+                    },
 
-                        HttpResponse::Ok().body(html.to_string())
+                    Err(e) => match query_db(
+                        NewLanguageARequest {
+                            req: user_req.clone(),
+                        },
+                    ) {
 
-                    }
+                        Ok(row) => {
 
-                    Err(e2) => error_admin_route(e2, &user_req.lang_code),
+                            let q: NewLanguageAResponse = row.get(0);
+                            let t = &t(&q.data.lang.code);
 
-                },
+                            let html = NewLanguage {
+                                title: &format!(
+                                    "{a} - {b}",
+                                    a = t.add_language,
+                                    b = t.tukosmo_admin_panel,
+                                ),
+                                q: &q,
+                                t: t,
+                                auto: &None,
+                                error: &Some(t_error(e, &q.data.lang.code)),
+                                form: &Some(form),
+                            };
 
-            }
+                            HttpResponse::Ok().body(html.to_string())
+
+                        }
+
+                        Err(e2) => error_admin_route(e2, &user_req.lang_code),
+
+                    },
+
+                }
+
+            },
+
+            Err(_) => HttpResponse::Found()
+                .header("Location", "/{lang}/admin/error?code={code}"
+                    .replace("{lang}", &user_req.lang_code)
+                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                )
+                .finish(),
 
         },
 
