@@ -7,6 +7,7 @@ pub mod get_lang_name;
 pub mod get_name_from_names;
 pub mod error_code_message;
 pub mod error_admin_route;
+pub mod error_website_route;
 
 pub mod get_os_from_user_agent;
 pub mod get_browser_from_user_agent;

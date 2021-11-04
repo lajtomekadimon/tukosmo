@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
 use crate::i18n::t::t;
+use crate::i18n::error_website_route::error_website_route;
 use crate::handlers::website::user_request::user_request;
 use crate::templates::website::blog_post::BlogPost;
 use crate::database::types;
@@ -64,15 +65,7 @@ pub async fn blog_post(
 
         },
 
-        Err(e) => {
-            println!("{}", e);
-            // TODO
-            HttpResponse::Found()
-                .header("Location", "/{lang}/error"
-                    .replace("{lang}", &user_req.lang_code)
-                )
-                .finish()
-        },
+        Err(e) => error_website_route(e, &user_req.lang_code),
 
     }
 

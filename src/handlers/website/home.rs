@@ -5,6 +5,7 @@ use serde::Deserialize;
 use crate::handlers::website::blog::{BlogWRequest, BlogWResponse};
 use crate::handlers::website::user_request::user_request;
 use crate::i18n::t::t;
+use crate::i18n::error_website_route::error_website_route;
 use crate::templates::website::blog::Blog;
 use crate::database::query_db::query_db;
 
@@ -54,15 +55,7 @@ pub async fn home(
 
         }
 
-        Err(e) => {
-            println!("{}", e);
-            // TODO
-            HttpResponse::Found()
-                .header("Location", "/{lang}/error"
-                    .replace("{lang}", &user_req.lang_code)
-                )
-                .finish()
-        },
+        Err(e) => error_website_route(e, &user_req.lang_code),
 
     }
 
