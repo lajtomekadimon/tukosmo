@@ -99,6 +99,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "La ID del idioma no es correcta.",
     err_wrong_own_lang_name:
         "El nombre del idioma (en el nuevo idioma) no es válido.",
+    err_wrong_page_number:
+        "El número de página no es correcto.",
     err_wrong_password: 
         "Esa contraseña no es válida; debe tener 8 o más caracteres.",
     err_wrong_permalink:

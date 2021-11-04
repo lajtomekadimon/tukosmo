@@ -30,6 +30,7 @@ pub fn error_code_message(
         ec::WRONG_LANG_CODE => t.err_wrong_lang_code,
         ec::WRONG_LANG_ID => t.err_wrong_lang_id,
         ec::WRONG_OWN_LANG_NAME => t.err_wrong_own_lang_name,
+        ec::WRONG_PAGE_NUMBER => t.err_wrong_page_number,
         ec::WRONG_PASSWORD => t.err_wrong_password,
         ec::WRONG_PERMALINK => t.err_wrong_permalink,
         ec::WRONG_POST_ID => t.err_wrong_post_id,

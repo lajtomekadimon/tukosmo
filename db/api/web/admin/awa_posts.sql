@@ -113,7 +113,15 @@ BEGIN
 
     END IF;
 
-    total_pages := CEIL(total_results / r.results_per_page::NUMERIC);
+    total_pages := CASE total_results
+        WHEN 0 THEN 1
+        ELSE CEIL(total_results / r.results_per_page::NUMERIC)
+    END;
+
+    -- Check the number page is correct
+    IF (r.page < 1) OR (r.page > total_pages) THEN
+        PERFORM err_wrong_page_number();
+    END IF;
 
     RETURN ROW(
         -- data

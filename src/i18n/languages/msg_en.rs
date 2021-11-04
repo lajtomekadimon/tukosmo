@@ -99,6 +99,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The language ID is not correct.",
     err_wrong_own_lang_name:
         "The language name (in the new language) is not valid.",
+    err_wrong_page_number:
+        "The page number is not correct.",
     err_wrong_password: 
         "That password is not valid; it should have 8 or more characters.",
     err_wrong_permalink:

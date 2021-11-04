@@ -48,6 +48,7 @@ pub struct TranslateI18N {
     pub err_wrong_lang_code: &'static str,
     pub err_wrong_lang_id: &'static str,
     pub err_wrong_own_lang_name: &'static str,
+    pub err_wrong_page_number: &'static str,
     pub err_wrong_password: &'static str,
     pub err_wrong_permalink: &'static str,
     pub err_wrong_post_id: &'static str,

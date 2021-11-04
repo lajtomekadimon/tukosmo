@@ -37,6 +37,8 @@ pub const WRONG_LANG_ID: &'static str = "92165E44AFE4";
 
 pub const WRONG_OWN_LANG_NAME: &'static str = "4FDBD7CA47CE";
 
+pub const WRONG_PAGE_NUMBER: &'static str = "58CC6F302A91";
+
 pub const WRONG_PASSWORD: &'static str = "F31B31FCCF18";
 
 pub const WRONG_PERMALINK: &'static str = "7D637808B8AA";
