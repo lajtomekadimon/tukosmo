@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION c_post_by_id(
+    post_id BIGINT
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT EXISTS(
+    SELECT 1
+    FROM t_posts
+    WHERE tp_id = post_id
+    LIMIT 1
+)
+
+$$;

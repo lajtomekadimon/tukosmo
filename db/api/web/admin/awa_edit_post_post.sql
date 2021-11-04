@@ -36,7 +36,10 @@ BEGIN
         PERFORM err_wrong_csrf_token();
     END IF;
 
-    -- TODO: Check post ID is correct
+    -- Check post ID is correct
+    IF NOT c_post_by_id((r.post).id) THEN
+        PERFORM err_wrong_post_id();
+    END IF;
 
     -- Check post title
     IF NOT e_is_title((r.post).title) THEN
