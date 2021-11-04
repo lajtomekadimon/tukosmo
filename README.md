@@ -19,6 +19,7 @@ don't expect high quality code (yet).
 
 Technical features:
 
+- [x] Works on FreeBSD and GNU/Linux (full list of distros on GNUmakefile).
 - [x] Blazingly fast web server using [Actix Web](
 https://github.com/actix/actix-web).
 - [x] No ORM! Pure SQL code called by native [PostgreSQL driver](
@@ -83,13 +84,18 @@ Roadmap:
 
 Dependencies:
 
-- PostgreSQL +13
+- PostgreSQL >= 13
 - Rust 2018
 
-Install dependencies (only on FreeBSD for now):
+Install dependencies (only on FreeBSD and GNU/Linux for now; if you are using
+a GNU/Linux distribution, change the `OS_NAME` parameter on GNUmakefile file):
+
+**(skip this if you already have PostgreSQL and Rust on your system!)**
 
 ```sh
 make -s dep
+# Install just PostgreSQL: make -s postgresql
+# Install just Rust: make -s rust
 # The shell must be restarted after installing Rust
 # It's important to add postgresql_enable="yes" to /etc/rc.conf in FreeBSD
 ```
