@@ -80,7 +80,7 @@ Roadmap:
     - [ ] Shop
     - [ ] Forum
 
-## Instalation
+## Installation
 
 Dependencies:
 
