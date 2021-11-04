@@ -47,6 +47,8 @@ pub const WRONG_POST_ID: &'static str = "E4E9108D630B";
 
 pub const WRONG_POST_PERMALINK: &'static str = "C90EAC6F8E2E";
 
+pub const WRONG_RPP_NUMBER: &'static str = "1632986F3CB9";
+
 pub const WRONG_TITLE: &'static str = "7B744BC3C936";
 
 pub const WRONG_USER_EMAIL: &'static str = "9CF674E24CDC";

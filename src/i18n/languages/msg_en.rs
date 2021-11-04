@@ -109,6 +109,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The post ID is not correct.",
     err_wrong_post_permalink:
         "That post doesn't exist.",
+    err_wrong_rpp_number:
+        "The number of results per page is not correct.",
     err_wrong_title:
         "The title is not valid.",
     err_wrong_user_email:

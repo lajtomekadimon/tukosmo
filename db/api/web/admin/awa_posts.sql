@@ -51,6 +51,11 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
+    -- Check the number of results per page is correct
+    IF r.results_per_page < 1 THEN
+        PERFORM err_wrong_rpp_number();
+    END IF;
+
     IF r.filter = 'drafts' THEN
 
         posts := s_posts_f_drafts(

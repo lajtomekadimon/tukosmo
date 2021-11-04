@@ -53,6 +53,7 @@ pub struct TranslateI18N {
     pub err_wrong_permalink: &'static str,
     pub err_wrong_post_id: &'static str,
     pub err_wrong_post_permalink: &'static str,
+    pub err_wrong_rpp_number: &'static str,
     pub err_wrong_title: &'static str,
     pub err_wrong_user_email: &'static str,
     pub err_wrong_user_id: &'static str,
