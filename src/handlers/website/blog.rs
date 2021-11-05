@@ -70,7 +70,7 @@ pub async fn blog(
                 title: &format!(
                     "{a} - {b}",
                     a = t.blog,
-                    b = "MyExample"
+                    b = q.data.website_title,
                 ),
                 q: &q,
                 t: t,

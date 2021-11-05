@@ -35,15 +35,11 @@ markup::define! {
                             href = "/{lang}/"
                                 .replace("{lang}", &data.lang.code),
                             target = "_blank",
+                            title = t.visit_website,
                         ] {
-                            @t.visit_website
-                        }
-                        a[
-                            class = "navbar-item",
-                            href = "/",  // link to official Tukosmo's docs
-                            target = "_blank",
-                        ] {
-                            @t.documentation
+                            i[class = "eos-icons mr-1"] { "home" }
+                            " "
+                            @data.website_title
                         }
                         a[
                             class = "navbar-item",

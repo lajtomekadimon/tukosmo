@@ -1,8 +1,12 @@
 use markup;
 
+use crate::database::types::WebsiteDataDB;
+
 
 markup::define! {
-    Header() {
+    Header<'a>(
+        data: &'a WebsiteDataDB,
+    ) {
         header[
             class = "site-header",
         ] {
@@ -16,16 +20,17 @@ markup::define! {
                         class = "site-title",
                     ] {
                         a[
-                            href = "/",
+                            href = "/{lang}/"
+                                .replace("{lang}", &data.lang.code),
                         ] {
-                            "Lajto"
+                            @data.website_title
                         }
                     }
 
                     p[
                         class = "site-description",
                     ] {
-                        "Science as a light in the dark"
+                        @data.website_subtitle
                     }
                 }
             }

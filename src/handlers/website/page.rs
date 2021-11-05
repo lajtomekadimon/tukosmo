@@ -49,7 +49,7 @@ pub async fn page(
                 title: &format!(
                     "{a} - {b}",
                     a = "[page title]",
-                    b = "MyExample"
+                    b = q.data.website_title,
                 ),
                 q: &q,
                 t: t,

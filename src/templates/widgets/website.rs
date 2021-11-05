@@ -21,7 +21,9 @@ markup::define! {
             div[
                 class = "site-top",
             ] {
-                @Header {}
+                @Header {
+                    data: data,
+                }
 
                 @Navigation {}
             }

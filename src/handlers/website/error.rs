@@ -69,7 +69,7 @@ pub async fn error(
                 title: &format!(
                     "{a} - {b}",
                     a = t.error,
-                    b = "MyExample"
+                    b = q.data.website_title,
                 ),
                 q: &q,
                 t: t,

@@ -44,8 +44,8 @@ pub async fn home(
             let html = Blog {
                 title: &format!(
                     "{a} - {b}",
-                    a = t.blog,
-                    b = "MyExample"
+                    a = q.data.website_title,
+                    b = q.data.website_subtitle,
                 ),
                 q: &q,
                 t: t,
