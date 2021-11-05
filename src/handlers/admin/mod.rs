@@ -8,7 +8,6 @@ pub mod languages;
 pub mod posts;
 pub mod pages;
 pub mod files;
-pub mod website;
 pub mod tukosmo;
 
 pub mod new_user;
@@ -41,5 +40,8 @@ pub mod account_post;
 
 pub mod sessions;
 pub mod sessions_post;
+
+pub mod website;
+pub mod website_post;
 
 pub mod error;

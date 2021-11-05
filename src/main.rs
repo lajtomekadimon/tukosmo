@@ -329,6 +329,9 @@ async fn main() -> std::io::Result<()> {
                         .route(web::get()
                             .to(admin::website::website)
                         )
+                        .route(web::post()
+                            .to(admin::website_post::website_post)
+                        )
                     )
 
                     // Tukosmo

@@ -147,6 +147,7 @@ pub struct TranslateI18N {
     pub your_email: &'static str,
     pub your_password: &'static str,
     pub your_sessions_have_been_successfully_updated: &'static str,
+    pub your_website_info_has_been_successfully_updated: &'static str,
     pub your_website_languages_were_successfully_updated: &'static str,
     pub your_website_posts_were_successfully_updated: &'static str,
     pub your_website_users_were_successfully_updated: &'static str,

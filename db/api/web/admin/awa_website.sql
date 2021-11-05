@@ -4,7 +4,10 @@ CREATE TYPE "WebsiteARequest" AS (
 );
 
 CREATE TYPE "WebsiteAResponse" AS (
-    data "AdminDataDB"
+    data "AdminDataDB",
+    csrf_token TEXT,
+    website_title TEXT,
+    website_subtitle TEXT
 );
 
 
@@ -27,6 +30,9 @@ DECLARE
 
     language_of_user BIGINT;
 
+    website_title_value TEXT;
+    website_subtitle_value TEXT;
+
 BEGIN
 
     -- Check request and select common data
@@ -34,9 +40,23 @@ BEGIN
 
     language_of_user := (d.lang).id;
 
+    website_title_value := s_website_title_by_lang(language_of_user);
+    website_subtitle_value := s_website_subtitle_by_lang(language_of_user);
+
     RETURN ROW(
         -- data
-        d
+        d,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT,
+
+        -- website_title
+        website_title_value,
+
+        -- website_subtitle
+        website_subtitle_value
     );
 
 END;

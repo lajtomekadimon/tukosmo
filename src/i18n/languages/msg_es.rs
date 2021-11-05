@@ -297,6 +297,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Tu contraseña",
     your_sessions_have_been_successfully_updated:
         "Tus sesiones han sido actualizadas con éxito.",
+    your_website_info_has_been_successfully_updated:
+        "La información de tu página web ha sido actualizada correctamente.",
     your_website_languages_were_successfully_updated:
         "Los idiomas de tu página web se actualizaron con éxito.",
     your_website_posts_were_successfully_updated:

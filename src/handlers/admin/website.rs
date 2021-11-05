@@ -24,6 +24,9 @@ impl QueryFunction for WebsiteARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WebsiteAResponse {
     pub data: types::AdminDataDB,
+    pub csrf_token: String,
+    pub website_title: String,
+    pub website_subtitle: String,
 }
 
 
@@ -53,6 +56,9 @@ pub async fn website(
                     ),
                     q: &q,
                     t: t,
+                    success: &false,
+                    error: &None,
+                    form: &None,
                 };
 
                 HttpResponse::Ok().body(html.to_string())
