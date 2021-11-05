@@ -58,3 +58,8 @@ pub const WRONG_USER_ID: &'static str = "E033B16A421B";
 pub const WRONG_USER_NAME: &'static str = "FD49B0AEB03A";
 
 pub const WRONG_USER_PASSWORD: &'static str = "C37F7C062377";
+
+pub const WRONG_WEBSITE_SUBTITLE: &'static str = "CF625B956EBD";
+
+pub const WRONG_WEBSITE_TITLE: &'static str = "55323AFD7FD3";
+

@@ -81,6 +81,8 @@ pub struct AdminDataDB {
     pub userd: UserDB,
     pub lang: LanguageDB,
     pub languages: Vec<LanguageDB>,
+    pub website_title: String,
+    pub website_subtitle: String,
 }
 
 #[derive(Clone, Debug, ToSql, FromSql)]
@@ -88,4 +90,6 @@ pub struct WebsiteDataDB {
     pub userd: Option<UserDB>,
     pub lang: LanguageDB,
     pub languages: Vec<LanguageDB>,
+    pub website_title: String,
+    pub website_subtitle: String,
 }

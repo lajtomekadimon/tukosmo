@@ -18,7 +18,11 @@ BEGIN
         'TukosmoAdmin'
     );
 
-    lang_en := i_language('en');
+    lang_en := i_language(
+        'en',
+        'Example',
+        'Website built with Tukosmo'
+    );
 
     PERFORM i_language_name(
         lang_en,
@@ -26,7 +30,11 @@ BEGIN
         lang_en
     );
 
-    lang_es := i_language('es');
+    lang_es := i_language(
+        'es',
+        'Ejemplo',
+        'Página web construida con Tukosmo'
+    );
 
     PERFORM i_language_name(
         lang_es,

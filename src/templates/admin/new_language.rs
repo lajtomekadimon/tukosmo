@@ -268,6 +268,56 @@ markup::define! {
                     }
                 }
 
+                hr;
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        @t.website_title_in_the_new_language
+                    }
+                    div[class = "control"] {
+                        input[
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_WEBSITE_TITLE {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
+                            type = "text",
+                            name = "website_title",
+                            value = if let Some(f) = form {
+                                &f.website_title
+                            } else { "" },
+                        ];
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        @t.website_subtitle_in_the_new_language
+                    }
+                    div[class = "control"] {
+                        input[
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_WEBSITE_SUBTITLE {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
+                            type = "text",
+                            name = "website_subtitle",
+                            value = if let Some(f) = form {
+                                &f.website_subtitle
+                            } else { "" },
+                        ];
+                    }
+                }
+
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {

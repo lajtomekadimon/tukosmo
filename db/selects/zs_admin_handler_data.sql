@@ -22,6 +22,9 @@ DECLARE
 
     languages "LanguageDB"[];
 
+    website_title_value TEXT;
+    website_subtitle_value TEXT;
+
 BEGIN
 
     lang := s_current_language_by_code((req).lang_code);
@@ -45,10 +48,15 @@ BEGIN
 
     languages := s_languages(language_of_user);
 
+    website_title_value := s_website_title_by_lang(language_of_user);
+    website_subtitle_value := s_website_subtitle_by_lang(language_of_user);
+
     RETURN (
         userd,
         lang,
-        languages
+        languages,
+        website_title_value,
+        website_subtitle_value
     )::"AdminDataDB";
 
 END;

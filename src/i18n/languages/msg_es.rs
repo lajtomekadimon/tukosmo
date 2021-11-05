@@ -121,6 +121,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ese nombre de usuario no es válido.",
     err_wrong_user_password:
         "La contraseña no es correcta.",
+    err_wrong_website_subtitle:
+        "El subtítulo de la página web no es válido.",
+    err_wrong_website_title:
+        "El título de la página web no es válido.",
     edit:
         "Editar",
     edit_language_w_name:
@@ -277,6 +281,14 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Visitar página web",
     website:
         "Página web",
+    website_subtitle:
+        "Subtítulo de la página web",
+    website_subtitle_in_the_new_language:
+        "Subtítulo de la página web (en el nuevo idioma)",
+    website_title:
+        "Título de la página web",
+    website_title_in_the_new_language:
+        "Título de la página web (en el nuevo idioma)",
     your_account_has_been_successfully_updated:
         "Tu cuenta ha sido actualizada con éxito.",
     your_email:

@@ -49,6 +49,8 @@ impl<'de> Deserialize<'de> for FormData {
                 let mut lang_ids: Vec<i64> = Vec::default();
                 let mut lang_names: Vec<String> = Vec::default();
                 let mut names_for_langs: Vec<String> = Vec::default();
+                let mut website_title_value: String = "".to_string();
+                let mut website_subtitle_value: String = "".to_string();
 
                 while let Some(key) = map.next_key()? {
                     match key {
@@ -70,6 +72,13 @@ impl<'de> Deserialize<'de> for FormData {
                         "name_for_lang" => {
                             names_for_langs.push(map.next_value::<String>()?);
                         }
+                        "website_title" => {
+                            website_title_value = map.next_value::<String>()?;
+                        }
+                        "website_subtitle" => {
+                            website_subtitle_value =
+                                map.next_value::<String>()?;
+                        }
                         _ => unreachable!()
                     }
                 }
@@ -83,6 +92,8 @@ impl<'de> Deserialize<'de> for FormData {
                     lang_ids: lang_ids,
                     lang_names: lang_names,
                     names_for_langs: names_for_langs,
+                    website_title: website_title_value,
+                    website_subtitle: website_subtitle_value,
                 })
             }
         }
@@ -98,6 +109,8 @@ pub struct FormData {
     pub lang_ids: Vec<i64>,
     pub lang_names: Vec<String>,
     pub names_for_langs: Vec<String>,
+    pub website_title: String,
+    pub website_subtitle: String,
 }
 
 
@@ -110,6 +123,8 @@ pub struct NewLanguagePostARequest {
     pub lang_ids: Vec<i64>,
     pub lang_names: Vec<String>,
     pub names_for_langs: Vec<String>,
+    pub website_title: String,
+    pub website_subtitle: String,
 }
 
 impl QueryFunction for NewLanguagePostARequest {
@@ -136,6 +151,8 @@ pub async fn new_language_post(
                 let lang_ids = (form.lang_ids).clone();
                 let lang_names = (form.lang_names).clone();
                 let names_for_langs = (form.names_for_langs).clone();
+                let website_title = (form.website_title).clone();
+                let website_subtitle = (form.website_subtitle).clone();
 
                 match query_db(
                     NewLanguagePostARequest {
@@ -146,6 +163,8 @@ pub async fn new_language_post(
                         lang_ids: lang_ids,
                         lang_names: lang_names,
                         names_for_langs: names_for_langs,
+                        website_title: website_title,
+                        website_subtitle: website_subtitle,
                     },
                 ) {
 

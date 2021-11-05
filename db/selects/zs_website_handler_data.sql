@@ -14,18 +14,18 @@ AS $$
 
 DECLARE
 
+    language_of_user BIGINT;
+
     userd "UserDB";
 
     lang "LanguageDB";
 
     languages "LanguageDB"[];
 
-BEGIN
+    website_title_value TEXT;
+    website_subtitle_value TEXT;
 
-    userd := s_user_by_session_lang(
-        (req).session,
-        s_language_id_by_code((req).lang_code)
-    );
+BEGIN
 
     lang := s_current_language_by_code((req).lang_code);
 
@@ -34,14 +34,24 @@ BEGIN
         PERFORM err_wrong_lang_code();
     END IF;
 
-    languages := s_languages(
-        s_language_id_by_code((req).lang_code)
+    language_of_user := lang.id;
+
+    userd := s_user_by_session_lang(
+        (req).session,
+        language_of_user
     );
+
+    languages := s_languages(language_of_user);
+
+    website_title_value := s_website_title_by_lang(language_of_user);
+    website_subtitle_value := s_website_subtitle_by_lang(language_of_user);
 
     RETURN (
         userd,
         lang,
-        languages
+        languages,
+        website_title_value,
+        website_subtitle_value
     )::"AdminDataDB";
 
 END;

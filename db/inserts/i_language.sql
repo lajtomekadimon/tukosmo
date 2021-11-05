@@ -1,6 +1,8 @@
 
 CREATE OR REPLACE FUNCTION i_language(
-    code_value TEXT
+    code_value TEXT,
+    title_value TEXT,
+    subtitle_value TEXT
 )
 
 RETURNS BIGINT
@@ -20,12 +22,16 @@ BEGIN
 
     INSERT INTO t_languages (
         --tl_id,
-        tl_code
-        --tl_date
+        tl_code,
+        --tl_date,
+        tl_website_title,
+        tl_website_subtitle
     ) VALUES (
         -- BIGSERIAL (autoincrement)
-        code_value
-        --NOW()
+        code_value,
+        --NOW(),
+        title_value,
+        subtitle_value
     ) RETURNING tl_id INTO lang_id;
 
     RETURN lang_id;

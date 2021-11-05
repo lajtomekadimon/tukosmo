@@ -68,12 +68,16 @@ CREATE TYPE "PostDB" AS (
 CREATE TYPE "AdminDataDB" AS (
     userd "UserDB",
     lang "LanguageDB",
-    languages "LanguageDB"[]
+    languages "LanguageDB"[],
+    website_title TEXT,
+    website_subtitle TEXT
 );
 
 CREATE TYPE "WebsiteDataDB" AS (
     userd "UserDB",
     lang "LanguageDB",
-    languages "LanguageDB"[]
+    languages "LanguageDB"[],
+    website_title TEXT,
+    website_subtitle TEXT
 );
 

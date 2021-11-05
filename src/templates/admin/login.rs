@@ -30,6 +30,8 @@ markup::define! {
                 },
                 lang: q.data.lang.clone(),
                 languages: q.data.languages.clone(),
+                website_title: q.data.website_title.clone(),
+                website_subtitle: q.data.website_subtitle.clone(),
             },
             content: Content {
                 q: q,
@@ -97,6 +99,10 @@ markup::define! {
                                     },
                                     lang: q.data.lang.clone(),
                                     languages: q.data.languages.clone(),
+                                    website_title:
+                                        q.data.website_title.clone(),
+                                    website_subtitle:
+                                        q.data.website_subtitle.clone(),
                                 },
                             }
                         }

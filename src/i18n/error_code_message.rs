@@ -41,6 +41,8 @@ pub fn error_code_message(
         ec::WRONG_USER_ID => t.err_wrong_user_id,
         ec::WRONG_USER_NAME => t.err_wrong_user_name,
         ec::WRONG_USER_PASSWORD => t.err_wrong_user_password,
+        ec::WRONG_WEBSITE_SUBTITLE => t.err_wrong_website_subtitle,
+        ec::WRONG_WEBSITE_TITLE => t.err_wrong_website_title,
 
         // ---- //
 

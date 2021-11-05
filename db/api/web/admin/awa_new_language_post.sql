@@ -6,7 +6,9 @@ CREATE TYPE "NewLanguagePostARequest" AS (
     own_lang_name TEXT,
     lang_ids BIGINT[],
     lang_names TEXT[],
-    names_for_langs TEXT[]
+    names_for_langs TEXT[],
+    website_title TEXT,
+    website_subtitle TEXT
 );
 
 
@@ -61,7 +63,21 @@ BEGIN
         PERFORM err_lang_code_already_exists();
     END IF;
 
-    language_id := i_language(r.lang_code);
+    -- Check website's title in the new language
+    IF NOT e_is_website_title(r.website_title) THEN
+        PERFORM err_wrong_website_title();
+    END IF;
+
+    -- Check website's subtitle in the new language
+    IF NOT e_is_website_subtitle(r.website_subtitle) THEN
+        PERFORM err_wrong_website_subtitle();
+    END IF;
+
+    language_id := i_language(
+        r.lang_code,
+        r.website_title,
+        r.website_subtitle
+    );
 
     PERFORM i_language_name(
         language_id,
