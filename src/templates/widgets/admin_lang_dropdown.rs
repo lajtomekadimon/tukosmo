@@ -8,12 +8,16 @@ markup::define! {
         route: &'a str,
         data: &'a AdminDataDB,
     ) {
-        div[class = "dropdown is-hoverable"] {
+        div[
+            class = "dropdown",
+            id = "dropdown-lang",
+        ] {
             div[class = "dropdown-trigger"] {
                 button[
                     class = "button",
+                    id = "dropdown-lang-button",
                     "aria-haspopup" = "true",
-                    "aria-controls" = "dropdown-menu",
+                    "aria-controls" = "dropdown-menu-lang",
                 ] {
                     span {
                         @data.lang.name
@@ -27,7 +31,7 @@ markup::define! {
             }
             div[
                 class = "dropdown-menu",
-                id = "dropdown-menu",
+                id = "dropdown-menu-lang",
                 role = "menu",
             ] {
                 div[class = "dropdown-content"] {
