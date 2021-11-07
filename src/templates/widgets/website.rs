@@ -11,9 +11,39 @@ use crate::database::types::WebsiteDataDB;
 markup::define! {
     Website<'a, BodyContent: markup::Render>(
         content: BodyContent,
+        route: &'a str,
         data: &'a WebsiteDataDB,
         t: &'a TranslateI18N,
     ) {
+        div[
+            id = "site-languages",
+            class = "site-languages",
+        ] {
+            div[class = "site-languages-content"] {
+                h3 {
+                    @t.select_a_language
+                }
+
+                ul {
+                    @for lang in &data.languages {
+                        li {
+                            a[
+                                href = "/{lang}{route}"
+                                    .replace("{lang}", &lang.code)
+                                    .replace("{route}", route),
+                            ] {
+                                @lang.name
+                                @if data.lang.code != lang.code {
+                                    " ("
+                                    @lang.original_name
+                                    ")"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         div[
             id = "page",
             class = "site",

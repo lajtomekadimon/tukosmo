@@ -50,7 +50,7 @@ markup::define! {
                         class = "site-navigation-li",
                     ] {
                         button[
-                            onclick = "",
+                            id = "button-select-language",
                         ] {
                             i[class = "eos-icons eos-icons-l"] { "language" }
                             {data.lang.code.to_uppercase()}

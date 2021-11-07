@@ -115,6 +115,7 @@ pub struct TranslateI18N {
     pub repeat_new_password: &'static str,
     pub repeat_password: &'static str,
     pub scheduled_k_posts: &'static str,
+    pub select_a_language: &'static str,
     pub server: &'static str,
     pub sessions: &'static str,
     pub settings: &'static str,

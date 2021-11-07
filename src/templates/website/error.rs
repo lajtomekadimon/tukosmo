@@ -21,6 +21,7 @@ markup::define! {
                 content: Content {
                     e: e,
                 },
+                route: &"/error?code={code}".replace("{code}", &e.code),
                 data: &q.data,
                 t: t,
             },

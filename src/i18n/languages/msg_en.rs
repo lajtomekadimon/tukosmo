@@ -233,6 +233,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Repeat password",
     scheduled_k_posts:
         "Scheduled",
+    select_a_language:
+        "Select a language",
     server:
         "Server",
     sessions:

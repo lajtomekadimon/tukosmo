@@ -22,6 +22,7 @@ markup::define! {
                     q: q,
                     t: t,
                 },
+                route: &"/blog/{title}".replace("{title}", &q.post.permalink),
                 data: &q.data,
                 t: t,
             },
