@@ -23,13 +23,15 @@ mod markdown;
 
 mod minifiers;
 use crate::minifiers::minify_css::minify_css;
+use crate::minifiers::minify_js::minify_js;
 
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    // Here I could do some prerendering, like CSS compression
     println!("Minifying CSS code...");
     minify_css();
+    println!("Minifying JS code...");
+    minify_js();
 
     println!("Done!");
     

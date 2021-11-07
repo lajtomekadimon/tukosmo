@@ -29,8 +29,7 @@ https://github.com/sfackler/rust-postgres).
 https://github.com/utkarshkukreti/markup.rs).
 - [ ] Minimum of allocation and copying in Rust (efficiency!).
 - [x] Automatic CSS minifying to one single file.
-- [x] Everything works without JavaScript, which is optional.
-- [ ] Automatic JavaScript minifying to one single file.
+- [x] Automatic JavaScript minifying to one single file.
 - [ ] Zero external resources (CSS, JavaScript, images, ...).
 - [x] Themes are just CSS code; all themes share the same HTML.
 - [ ] Responsive design.
@@ -86,6 +85,7 @@ Dependencies:
 
 - PostgreSQL >= 13
 - Rust 2018
+- Go >= 1.13
 
 Install dependencies (only on FreeBSD and GNU/Linux for now; if you are using
 a GNU/Linux distribution, change the `OS_NAME` parameter on GNUmakefile file):

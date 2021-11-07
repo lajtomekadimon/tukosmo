@@ -72,11 +72,9 @@ markup::define! {
             body {
                 @content
 
-                /*
                 script[
-                    src = "",
+                    src = "/static/bundle.js",
                 ] {}
-                */
             }
         }
     }

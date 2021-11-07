@@ -3,3 +3,5 @@ Cargo.lock
 *.swp
 /static/bundle.admin.css
 /static/bundle.css
+/static/bundle.admin.js
+/static/bundle.js
