@@ -78,6 +78,7 @@
     position: relative;
     word-wrap: break-word;
     white-space: normal;
+    line-height: 1.5;
 }
 
 .site-navigation-li a,
@@ -93,6 +94,39 @@
 
 .site-navigation-li a:hover {
     text-decoration: underline;
+}
+
+.site-navigation-li button {
+    display: block;
+    position: relative;
+    padding: 0 1.0625rem;
+    color: #020202;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    line-height: 1.5;
+}
+
+.site-navigation-li button:hover {
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.site-navigation-li button .eos-icons {
+    font-size: 18px;
+}
+
+.site-navigation-li button .eos-icons-l {
+    margin-right: 4px;
+}
+
+.site-navigation-li button .eos-icons-r {
+    margin-left: 4px;
 }
 
 .site-content {

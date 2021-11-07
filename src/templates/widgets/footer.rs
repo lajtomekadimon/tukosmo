@@ -1,13 +1,11 @@
 use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::database::types::WebsiteDataDB;
 use chrono::Datelike;
 
 
 markup::define! {
     Footer<'a>(
-        data: &'a WebsiteDataDB,
         t: &'a TranslateI18N,
     ) {
         div[
@@ -25,9 +23,6 @@ markup::define! {
                                                  // the company/author/owner's
                     .replace("{year}", &chrono::Utc::now().year().to_string())
                 }
-
-                "Future lang changer: "
-                @data.lang.code
             }
         }
     }

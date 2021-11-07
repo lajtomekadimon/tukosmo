@@ -1,8 +1,12 @@
 use markup;
 
+use crate::database::types::WebsiteDataDB;
+
 
 markup::define! {
-    Navigation() {
+    Navigation<'a>(
+        data: &'a WebsiteDataDB,
+    ) {
         nav[
             class = "site-navigation",
         ] {
@@ -39,6 +43,18 @@ markup::define! {
                             href = "/",
                         ] {
                             "Contact"
+                        }
+                    }
+
+                    li[
+                        class = "site-navigation-li",
+                    ] {
+                        button[
+                            onclick = "",
+                        ] {
+                            i[class = "eos-icons eos-icons-l"] { "language" }
+                            {data.lang.code.to_uppercase()}
+                            i[class = "eos-icons eos-icons-r"] { "arrow_drop_down" }
                         }
                     }
                 }

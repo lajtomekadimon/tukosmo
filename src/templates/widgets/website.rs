@@ -25,7 +25,9 @@ markup::define! {
                     data: data,
                 }
 
-                @Navigation {}
+                @Navigation {
+                    data: data,
+                }
             }
 
             div[
@@ -49,7 +51,6 @@ markup::define! {
             }
 
             @Footer {
-                data: data,
                 t: t,
             }
         }
