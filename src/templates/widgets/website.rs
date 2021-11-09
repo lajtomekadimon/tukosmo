@@ -19,6 +19,10 @@ markup::define! {
             id = "site-languages",
             class = "site-languages",
         ] {
+            div[
+                id = "site-languages-bg",
+                class = "site-languages-bg",
+            ] {}
             div[class = "site-languages-content"] {
                 h3 {
                     @t.select_a_language
