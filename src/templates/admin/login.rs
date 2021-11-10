@@ -33,6 +33,7 @@ markup::define! {
                 website_title: q.data.website_title.clone(),
                 website_subtitle: q.data.website_subtitle.clone(),
             },
+            routes: &q.routes,
             content: Content {
                 q: q,
                 t: t,

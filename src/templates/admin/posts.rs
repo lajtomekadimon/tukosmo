@@ -19,6 +19,7 @@ markup::define! {
         @AdminLayout {
             title: title,
             data: &q.data,
+            routes: &q.routes,
             content: AdminPanel {
                 content: Content {
                     q: q,

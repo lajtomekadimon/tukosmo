@@ -1,12 +1,13 @@
 use markup;
 
-use crate::database::types::AdminDataDB;
+use crate::database::types::{AdminDataDB, RouteDB};
 
 
 markup::define! {
     AdminLayout<'a, BodyContent: markup::Render>(
         title: &'a str,
         data: &'a AdminDataDB,
+        routes: &'a Vec<RouteDB>,
         content: BodyContent,
     ) {
         @markup::doctype()
@@ -100,6 +101,16 @@ markup::define! {
                     rel = "manifest",
                     href = "/static/faviconadmin/manifest.json",
                 ];
+
+                // i18n routes
+                @for route in routes.iter() {
+                    link[
+                        rel = "alternate",
+                        hreflang = &route.lang.code,
+                        href = "https://tukosmo.org{route}"  // TODO: Domain!!
+                            .replace("{route}", &route.route),
+                    ];
+                }
 
                 link[
                     rel = "stylesheet",

@@ -1,12 +1,13 @@
 use markup;
 
-use crate::database::types::WebsiteDataDB;
+use crate::database::types::{WebsiteDataDB, RouteDB};
 
 
 markup::define! {
     WebsiteLayout<'a, BodyContent: markup::Render>(
         title: &'a str,
         data: &'a WebsiteDataDB,
+        routes: &'a Vec<RouteDB>,
         content: BodyContent,
     ) {
         @markup::doctype()
@@ -50,6 +51,16 @@ markup::define! {
                     rel = "manifest",
                     href = "",
                 ];*/
+
+                // i18n routes
+                @for route in routes.iter() {
+                    link[
+                        rel = "alternate",
+                        hreflang = &route.lang.code,
+                        href = "https://tukosmo.org{route}"  // TODO: Domain!!
+                            .replace("{route}", &route.route),
+                    ];
+                }
 
                 // Styles
                 /*link[

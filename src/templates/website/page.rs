@@ -15,6 +15,7 @@ markup::define! {
         @WebsiteLayout {
             title: title,
             data: &q.data,
+            routes: &q.routes,
             content: Website {
                 content: Content {},
                 routes: &q.routes,
