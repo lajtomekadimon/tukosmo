@@ -37,9 +37,7 @@ markup::define! {
                 div[class = "dropdown-content"] {
                     @for route in routes.iter() {
                         a[
-                            href = "/{lang}{route}"
-                                .replace("{lang}", &route.lang.code)
-                                .replace("{route}", &route.route),
+                            href = &route.route,
                             class = if &route.lang.code != &data.lang.code {
                                 "dropdown-item"
                             } else {

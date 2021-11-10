@@ -32,9 +32,7 @@ markup::define! {
                     @for route in routes.iter() {
                         li {
                             a[
-                                href = "/{lang}{route}"
-                                    .replace("{lang}", &route.lang.code)
-                                    .replace("{route}", &route.route),
+                                href = &route.route,
                             ] {
                                 @route.lang.name
                                 @if data.lang.code != route.lang.code {

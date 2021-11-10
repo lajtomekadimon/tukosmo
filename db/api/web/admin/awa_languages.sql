@@ -28,7 +28,6 @@ DECLARE
     d "AdminDataDB";
 
     routes "RouteDB"[];
-    langg "LanguageDB";
 
     language_of_user BIGINT;
 
@@ -39,16 +38,13 @@ BEGIN
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
-    -- Routes
-    routes := ARRAY[]::"RouteDB"[];
-    FOREACH langg IN ARRAY d.languages LOOP
-        routes := ARRAY_APPEND(
-            routes,
-            (langg, '/admin/languages')::"RouteDB"
-        );
-    END LOOP;
-
     language_of_user := (d.lang).id;
+
+    -- Routes
+    routes := s_common_routes_by_route_lang(
+        '/admin/languages',
+        language_of_user
+    );
 
     some_lang_without_names := EXISTS(
         SELECT 1

@@ -36,7 +36,6 @@ DECLARE
     d "AdminDataDB";
 
     routes "RouteDB"[];
-    langg "LanguageDB";
 
     language_of_user BIGINT;
 
@@ -53,29 +52,22 @@ BEGIN
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
-    -- Routes
-    -- TODO: Results can be different when untranslated, etc.
-    routes := ARRAY[]::"RouteDB"[];
-    FOREACH langg IN ARRAY d.languages LOOP
-        routes := ARRAY_APPEND(
-            routes,
-            (
-                langg,
-                -- TODO: Hide p and rpp when first page and default rpp
-                '/admin/posts?p=' || (r.page)::TEXT
-                    || '&rpp=' || (r.results_per_page)::TEXT
-                    || CASE r.filter
-                        WHEN 'drafts' THEN '&f=drafts'
-                        WHEN 'published' THEN '&f=published'
-                        WHEN 'untranslated' THEN '&f=untranslated'
-                        WHEN 'deleted' THEN '&f=deleted'
-                        ELSE ''
-                    END
-            )::"RouteDB"
-        );
-    END LOOP;
-
     language_of_user := (d.lang).id;
+
+    -- Routes
+    routes := s_common_routes_by_route_lang(
+        -- TODO: Results can be different when untranslated, etc.
+        '/admin/posts?p=' || (r.page)::TEXT
+            || '&rpp=' || (r.results_per_page)::TEXT
+            || CASE r.filter
+                WHEN 'drafts' THEN '&f=drafts'
+                WHEN 'published' THEN '&f=published'
+                WHEN 'untranslated' THEN '&f=untranslated'
+                WHEN 'deleted' THEN '&f=deleted'
+                ELSE ''
+            END,
+        language_of_user
+    );
 
     -- Check the number of results per page is correct
     IF r.results_per_page < 1 THEN

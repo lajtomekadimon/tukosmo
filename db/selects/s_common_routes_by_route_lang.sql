@@ -1,6 +1,6 @@
 
-CREATE OR REPLACE FUNCTION s_post_routes_by_id_lang(
-    post_id BIGINT,
+CREATE OR REPLACE FUNCTION s_common_routes_by_route_lang(
+    route_value TEXT,
     language_of_user BIGINT
 )
 
@@ -47,18 +47,13 @@ SELECT ARRAY(
             c_language_has_all_names(tl_id)
         )::"LanguageDB",
 
-        '/' || tl_code || '/blog/' || tpt_permalink
+        '/' || tl_code || route_value
     )::"RouteDB"
-    FROM t_post_translations
-
-    INNER JOIN t_languages
-    ON tl_id = tpt_lang
+    FROM t_languages
 
     LEFT JOIN t_language_names
     ON tl_id = tln_lang
         AND tln_name_lang = language_of_user
-
-    WHERE tpt_post = post_id
 
     ORDER BY tln_name
 )

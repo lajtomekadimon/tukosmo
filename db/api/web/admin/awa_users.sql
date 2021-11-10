@@ -34,7 +34,6 @@ DECLARE
     d "AdminDataDB";
 
     routes "RouteDB"[];
-    langg "LanguageDB";
 
     language_of_user BIGINT;
 
@@ -49,21 +48,15 @@ BEGIN
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
-    -- Routes
-    routes := ARRAY[]::"RouteDB"[];
-    FOREACH langg IN ARRAY d.languages LOOP
-        routes := ARRAY_APPEND(
-            routes,
-            (
-                langg,
-                -- TODO: Hide p and rpp when first page and default rpp
-                '/admin/users?p=' || (r.page)::TEXT
-                    || '&rpp=' || (r.results_per_page)::TEXT
-            )::"RouteDB"
-        );
-    END LOOP;
-
     language_of_user := (d.lang).id;
+
+    -- Routes
+    routes := s_common_routes_by_route_lang(
+        -- TODO: Hide p and rpp when first page and default rpp
+        '/admin/users?p=' || (r.page)::TEXT
+            || '&rpp=' || (r.results_per_page)::TEXT,
+        language_of_user
+    );
 
     -- Check the number of results per page is correct
     IF r.results_per_page < 1 THEN
