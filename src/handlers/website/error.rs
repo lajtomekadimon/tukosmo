@@ -22,6 +22,7 @@ pub struct GetParamData {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ErrorWRequest {
     pub req: types::WebsiteRequest,
+    pub code: String,
 }
 
 impl QueryFunction for ErrorWRequest {
@@ -33,6 +34,7 @@ impl QueryFunction for ErrorWRequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ErrorWResponse {
     pub data: types::WebsiteDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 
@@ -49,6 +51,7 @@ pub async fn error(
     match query_db(
         ErrorWRequest {
             req: user_req,
+            code: error_code.clone(),
         },
     ) {
 

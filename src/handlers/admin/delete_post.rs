@@ -32,6 +32,7 @@ impl QueryFunction for DeletePostARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct DeletePostAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
     pub post: types::PostDB,
 }

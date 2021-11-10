@@ -22,7 +22,7 @@ markup::define! {
                     q: q,
                     t: t,
                 },
-                route: "/blog",
+                routes: &q.routes,
                 data: &q.data,
                 t: t,
             },

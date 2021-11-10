@@ -24,6 +24,7 @@ impl QueryFunction for TukosmoARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct TukosmoAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

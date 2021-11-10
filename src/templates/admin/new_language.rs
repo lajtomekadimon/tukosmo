@@ -53,7 +53,7 @@ markup::define! {
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        route: "/admin/new_language",
+                        routes: &q.routes,
                         data: &q.data,
                     }
                 }

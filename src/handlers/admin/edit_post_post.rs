@@ -155,6 +155,7 @@ pub async fn edit_post_post(
                                     ),
                                     q: &EditPostAResponse {
                                         data: q.data.clone(),
+                                        routes: q.routes.clone(),
                                         csrf_token: q.csrf_token.clone(),
                                         post: Some(
                                             types::PostDB{

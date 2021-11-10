@@ -24,6 +24,7 @@ impl QueryFunction for PageWRequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PageWResponse {
     pub data: types::WebsiteDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

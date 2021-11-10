@@ -4,7 +4,8 @@ CREATE TYPE "TukosmoARequest" AS (
 );
 
 CREATE TYPE "TukosmoAResponse" AS (
-    data "AdminDataDB"
+    data "AdminDataDB",
+    routes "RouteDB"[]
 );
 
 
@@ -25,6 +26,9 @@ DECLARE
 
     d "AdminDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
 BEGIN
@@ -32,11 +36,23 @@ BEGIN
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
+    -- Routes
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (langg, '/admin/tukosmo')::"RouteDB"
+        );
+    END LOOP;
+
     language_of_user := (d.lang).id;
 
     RETURN ROW(
         -- data
-        d
+        d,
+
+        -- routes
+        routes
     );
 
 END;

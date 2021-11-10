@@ -63,17 +63,7 @@ markup::define! {
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        route: if q.filter == "drafts" {
-                            "/admin/posts?f=drafts"
-                        } else if q.filter == "published" {
-                            "/admin/posts?f=published"
-                        } else if q.filter == "untranslated" {
-                            "/admin/posts?f=untranslated"
-                        } else if q.filter == "deleted" {
-                            "/admin/posts?f=deleted"
-                        } else {
-                            "/admin/posts"
-                        },
+                        routes: &q.routes,
                         data: &q.data,
                     }
                 }

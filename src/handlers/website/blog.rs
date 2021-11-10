@@ -34,6 +34,7 @@ impl QueryFunction for BlogWRequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct BlogWResponse {
     pub data: types::WebsiteDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub posts: Vec<types::PostDB>,
     pub results_per_page: i64,
     pub page: i64,

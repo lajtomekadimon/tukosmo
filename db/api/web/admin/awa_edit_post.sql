@@ -6,6 +6,7 @@ CREATE TYPE "EditPostARequest" AS (
 
 CREATE TYPE "EditPostAResponse" AS (
     data "AdminDataDB",
+    routes "RouteDB"[],
     csrf_token TEXT,
     post "PostDB"
 );
@@ -28,6 +29,9 @@ DECLARE
 
     d "AdminDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
     post "PostDB";
@@ -36,6 +40,15 @@ BEGIN
 
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
+
+    -- Routes
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (langg, '/admin/edit_post?id=' || (r.post)::TEXT)::"RouteDB"
+        );
+    END LOOP;
 
     language_of_user := (d.lang).id;
 
@@ -58,6 +71,9 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- csrf_token
         s_csrf_token_by_session(

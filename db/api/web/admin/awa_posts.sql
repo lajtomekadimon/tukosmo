@@ -8,6 +8,7 @@ CREATE TYPE "PostsARequest" AS (
 
 CREATE TYPE "PostsAResponse" AS (
     data "AdminDataDB",
+    routes "RouteDB"[],
     posts "PostDB"[],
     filter TEXT,
     results_per_page BIGINT,
@@ -34,6 +35,9 @@ DECLARE
 
     d "AdminDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
     posts "PostDB"[];
@@ -48,6 +52,28 @@ BEGIN
 
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
+
+    -- Routes
+    -- TODO: Results can be different when untranslated, etc.
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (
+                langg,
+                -- TODO: Hide p and rpp when first page and default rpp
+                '/admin/posts?p=' || (r.page)::TEXT
+                    || '&rpp=' || (r.results_per_page)::TEXT
+                    || CASE r.filter
+                        WHEN 'drafts' THEN '&f=drafts'
+                        WHEN 'published' THEN '&f=published'
+                        WHEN 'untranslated' THEN '&f=untranslated'
+                        WHEN 'deleted' THEN '&f=deleted'
+                        ELSE ''
+                    END
+            )::"RouteDB"
+        );
+    END LOOP;
 
     language_of_user := (d.lang).id;
 
@@ -131,6 +157,9 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- posts
         posts,

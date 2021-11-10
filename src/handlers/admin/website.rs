@@ -31,6 +31,7 @@ impl QueryFunction for WebsiteARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WebsiteAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
     pub website_title: String,
     pub website_subtitle: String,

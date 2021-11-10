@@ -5,6 +5,7 @@ CREATE TYPE "AccountARequest" AS (
 
 CREATE TYPE "AccountAResponse" AS (
     data "AdminDataDB",
+    routes "RouteDB"[],
     csrf_token TEXT,
     user_data "UserDB",
     i18n_names "NameDB"[]
@@ -28,6 +29,9 @@ DECLARE
 
     d "AdminDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
     user_data "UserDB";
@@ -38,6 +42,15 @@ BEGIN
 
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
+
+    -- Routes
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (langg, '/admin/account')::"RouteDB"
+        );
+    END LOOP;
 
     language_of_user := (d.lang).id;
 
@@ -52,6 +65,9 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- csrf_token
         s_csrf_token_by_session(

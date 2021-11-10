@@ -40,8 +40,7 @@ markup::define! {
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
-                        route: &"/admin/error?code={code}"
-                            .replace("{code}", &e.code),
+                        routes: &q.routes,
                         data: &q.data,
                     }
                 }

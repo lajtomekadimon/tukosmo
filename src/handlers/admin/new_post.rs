@@ -24,6 +24,7 @@ impl QueryFunction for NewPostARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct NewPostAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
 }
 

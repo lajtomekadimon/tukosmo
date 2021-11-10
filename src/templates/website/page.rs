@@ -17,7 +17,7 @@ markup::define! {
             data: &q.data,
             content: Website {
                 content: Content {},
-                route: "/page/{title}",
+                routes: &q.routes,
                 data: &q.data,
                 t: t,
             },

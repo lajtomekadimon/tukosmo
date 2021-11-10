@@ -25,6 +25,7 @@ impl QueryFunction for BlogPostWRequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct BlogPostWResponse {
     pub data: types::WebsiteDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub post: types::PostDB,
 }
 

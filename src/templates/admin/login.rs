@@ -89,7 +89,7 @@ markup::define! {
 
                         div[class = "mt-3"] {
                             @AdminLangDropdown {
-                                route: "/admin/login",
+                                routes: &q.routes,
                                 data: &AdminDataDB {
                                     userd: UserDB {
                                         id: 0,

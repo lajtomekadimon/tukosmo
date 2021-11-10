@@ -5,13 +5,13 @@ use crate::templates::widgets::header::Header;
 use crate::templates::widgets::navigation::Navigation;
 use crate::templates::widgets::sidebar::Sidebar;
 use crate::templates::widgets::footer::Footer;
-use crate::database::types::WebsiteDataDB;
+use crate::database::types::{WebsiteDataDB, RouteDB};
 
 
 markup::define! {
     Website<'a, BodyContent: markup::Render>(
         content: BodyContent,
-        route: &'a str,
+        routes: &'a Vec<RouteDB>,
         data: &'a WebsiteDataDB,
         t: &'a TranslateI18N,
     ) {
@@ -29,17 +29,17 @@ markup::define! {
                 }
 
                 ul {
-                    @for lang in &data.languages {
+                    @for route in routes.iter() {
                         li {
                             a[
                                 href = "/{lang}{route}"
-                                    .replace("{lang}", &lang.code)
-                                    .replace("{route}", route),
+                                    .replace("{lang}", &route.lang.code)
+                                    .replace("{route}", &route.route),
                             ] {
-                                @lang.name
-                                @if data.lang.code != lang.code {
+                                @route.lang.name
+                                @if data.lang.code != route.lang.code {
                                     " ("
-                                    @lang.original_name
+                                    @route.lang.original_name
                                     ")"
                                 }
                             }

@@ -35,6 +35,7 @@ impl QueryFunction for UsersARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct UsersAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub users: Vec<types::UserDB>,
     pub results_per_page: i64,
     pub page: i64,

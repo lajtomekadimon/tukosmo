@@ -24,6 +24,7 @@ impl QueryFunction for FilesARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct FilesAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

@@ -6,6 +6,7 @@ CREATE TYPE "BlogPostWRequest" AS (
 
 CREATE TYPE "BlogPostWResponse" AS (
     data "WebsiteDataDB",
+    routes "RouteDB"[],
     post "PostDB"
 );
 
@@ -26,6 +27,8 @@ AS $$
 DECLARE
 
     d "WebsiteDataDB";
+
+    routes "RouteDB"[];
 
     language_of_user BIGINT;
 
@@ -48,10 +51,19 @@ BEGIN
         PERFORM err_wrong_post_permalink();
     END IF;
 
+    -- Routes
+    routes := s_post_routes_by_id_lang(
+        post.id,
+        language_of_user
+    );
+
     -- User is logged in
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- post
         post

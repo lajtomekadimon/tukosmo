@@ -37,6 +37,7 @@ impl QueryFunction for PostsARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PostsAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
     pub posts: Vec<types::PostDB>,
     pub filter: String,
     pub results_per_page: i64,

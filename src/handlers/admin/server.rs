@@ -24,6 +24,7 @@ impl QueryFunction for ServerARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ServerAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

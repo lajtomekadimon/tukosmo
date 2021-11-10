@@ -23,6 +23,7 @@ impl QueryFunction for LoginARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LoginAResponse {
     pub data: types::WebsiteDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

@@ -24,6 +24,7 @@ impl QueryFunction for StatisticsARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct StatisticsAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

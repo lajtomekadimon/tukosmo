@@ -7,6 +7,7 @@ CREATE TYPE "BlogWRequest" AS (
 
 CREATE TYPE "BlogWResponse" AS (
     data "WebsiteDataDB",
+    routes "RouteDB"[],
     posts "PostDB"[],
     results_per_page BIGINT,
     page BIGINT,
@@ -32,6 +33,9 @@ DECLARE
 
     d "WebsiteDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
     posts "PostDB"[];
@@ -44,6 +48,20 @@ BEGIN
 
     -- Check request and select common data
     d := s_website_handler_data(r.req);
+
+    -- Routes
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (
+                langg,
+                -- TODO: Hide p and rpp when first page and default rpp
+                '/blog?p=' || (r.page)::TEXT
+                    || '&rpp=' || (r.results_per_page)::TEXT
+            )::"RouteDB"
+        );
+    END LOOP;
 
     language_of_user := (d.lang).id;
 
@@ -73,6 +91,9 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- posts
         posts,

@@ -24,6 +24,7 @@ impl QueryFunction for DashboardARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct DashboardAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 

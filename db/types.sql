@@ -65,6 +65,11 @@ CREATE TYPE "PostDB" AS (
     deleted BOOL
 );
 
+CREATE TYPE "RouteDB" AS (
+    lang "LanguageDB",
+    route TEXT
+);
+
 CREATE TYPE "AdminDataDB" AS (
     userd "UserDB",
     lang "LanguageDB",

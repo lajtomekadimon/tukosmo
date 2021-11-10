@@ -77,6 +77,12 @@ pub struct PostDB {
 }
 
 #[derive(Clone, Debug, ToSql, FromSql)]
+pub struct RouteDB {
+    pub lang: LanguageDB,
+    pub route: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql)]
 pub struct AdminDataDB {
     pub userd: UserDB,
     pub lang: LanguageDB,

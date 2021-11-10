@@ -5,6 +5,7 @@ CREATE TYPE "LanguagesARequest" AS (
 
 CREATE TYPE "LanguagesAResponse" AS (
     data "AdminDataDB",
+    routes "RouteDB"[],
     some_lang_without_names BOOL
 );
 
@@ -26,6 +27,9 @@ DECLARE
 
     d "AdminDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
     some_lang_without_names BOOL := FALSE;
@@ -34,6 +38,15 @@ BEGIN
 
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
+
+    -- Routes
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (langg, '/admin/languages')::"RouteDB"
+        );
+    END LOOP;
 
     language_of_user := (d.lang).id;
 
@@ -47,6 +60,9 @@ BEGIN
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- some_lang_without_names
         some_lang_without_names

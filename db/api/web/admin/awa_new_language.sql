@@ -5,6 +5,7 @@ CREATE TYPE "NewLanguageARequest" AS (
 
 CREATE TYPE "NewLanguageAResponse" AS (
     data "AdminDataDB",
+    routes "RouteDB"[],
     csrf_token TEXT
 );
 
@@ -26,6 +27,9 @@ DECLARE
 
     d "AdminDataDB";
 
+    routes "RouteDB"[];
+    langg "LanguageDB";
+
     language_of_user BIGINT;
 
 BEGIN
@@ -33,11 +37,23 @@ BEGIN
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
 
+    -- Routes
+    routes := ARRAY[]::"RouteDB"[];
+    FOREACH langg IN ARRAY d.languages LOOP
+        routes := ARRAY_APPEND(
+            routes,
+            (langg, '/admin/new_language')::"RouteDB"
+        );
+    END LOOP;
+
     language_of_user := (d.lang).id;
 
     RETURN ROW(
         -- data
         d,
+
+        -- routes
+        routes,
 
         -- csrf_token
         s_csrf_token_by_session(

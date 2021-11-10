@@ -22,6 +22,7 @@ pub struct GetParamData {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ErrorARequest {
     pub req: types::AdminRequest,
+    pub code: String,
 }
 
 impl QueryFunction for ErrorARequest {
@@ -33,6 +34,7 @@ impl QueryFunction for ErrorARequest {
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ErrorAResponse {
     pub data: types::AdminDataDB,
+    pub routes: Vec<types::RouteDB>,
 }
 
 
@@ -49,6 +51,7 @@ pub async fn error(
         Ok(user_req) => match query_db(
             ErrorARequest {
                 req: user_req.clone(),
+                code: error_code.clone(),
             },
         ) {
 
