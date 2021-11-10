@@ -7,10 +7,6 @@ markup::define! {
             class = "site-sidebar",
         ] {
             @Widget {}
-            @Widget {}
-            @Widget {}
-            @Widget {}
-            @Widget {}
         }
     }
 
@@ -18,7 +14,7 @@ markup::define! {
         section[
             class = "widget widget-html",
         ] {
-            "Bla"
+            "Made with Tukosmo"
         }
     }
 }

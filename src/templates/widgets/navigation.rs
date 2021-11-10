@@ -16,6 +16,7 @@ markup::define! {
                 ul[
                     class = "site-navigation-ul",
                 ] {
+                    /*
                     li[
                         class = "site-navigation-li",
                     ] {
@@ -45,6 +46,7 @@ markup::define! {
                             "Contact"
                         }
                     }
+                    */
 
                     li[
                         class = "site-navigation-li",
