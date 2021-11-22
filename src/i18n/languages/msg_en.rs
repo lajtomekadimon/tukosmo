@@ -277,6 +277,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Untranslated",
     untranslated_posts:
         "Untranslated posts",
+    update:
+        "Update",
     users:
         "Users",
     visit_website:

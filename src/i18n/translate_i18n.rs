@@ -137,6 +137,7 @@ pub struct TranslateI18N {
     pub untranslated_k_lower: &'static str,
     pub untranslated_k_posts: &'static str,
     pub untranslated_posts: &'static str,
+    pub update: &'static str,
     pub users: &'static str,
     pub visit_website: &'static str,
     pub website: &'static str,
