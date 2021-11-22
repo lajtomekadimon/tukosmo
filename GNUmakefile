@@ -4,7 +4,7 @@
 ## - fedora
 ## - suse
 ## - arch
-OS_NAME=debian
+OS_NAME=fedora
 
 PROJECT=tukosmo
 

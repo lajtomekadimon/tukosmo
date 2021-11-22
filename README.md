@@ -104,6 +104,11 @@ Create (or reset) database:
 
 ```sh
 make -s resetdb
+
+# If you're using Fedora, you should also do:
+sudo systemctl stop postgresql
+sudo vi /var/lib/pgsql/data/pg_hba.conf  # change all 'ident' to 'trust'
+sudo systemctl start postgresql
 ```
 
 Install web server:
