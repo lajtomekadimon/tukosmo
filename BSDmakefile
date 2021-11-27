@@ -24,6 +24,7 @@ rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
 	pkg install lang/go  # needed for JS minifying
+	pkg install security/openssl
 
 dep: postgresql rust
 

@@ -58,24 +58,28 @@ rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
 	sudo apt install -y golang  # needed for JS minifying
+	sudo apt install -y openssl
 else ifeq ($(OS_NAME), fedora)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
 	sudo dnf install -y golang  # needed for JS minifying
+	sudo dnf install -y openssl
 else ifeq ($(OS_NAME), suse)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
 	sudo zypper -n install go  # needed for JS minifying
+	sudo zypper -n install openssl
 else ifeq ($(OS_NAME), arch)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	# The shell must be restarted
 	sudo pacman -S --noconfirm go  # needed for JS minifying
+	sudo pacman -S --noconfirm openssl
 endif
 
 dep: postgresql rust

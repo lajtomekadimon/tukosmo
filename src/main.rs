@@ -4,6 +4,7 @@ use actix_web::{web, App, HttpServer};
 use actix_files::Files;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use rand::Rng;
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 mod config;
 
@@ -39,6 +40,22 @@ async fn main() -> std::io::Result<()> {
     if let Err(e) = query_db_noparam("SELECT as_clean_sessions()") {
         panic!("Database couldn't delete all sessions. Error: {}", e);
     }
+
+
+    // SSL (HTTPS)
+    // -----------
+    // Load ssl keys.
+    // To create a self-signed temporary cert for testing:
+    // openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
+    // cert.pem -days 365 -subj '/CN=localhost'
+    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
+        .unwrap();
+    builder
+        .set_private_key_file("key.pem", SslFiletype::PEM)
+        .unwrap();
+    builder.set_certificate_chain_file("cert.pem").unwrap();
+
+
 
     // AUTH COOKIE
     // -----------
@@ -345,7 +362,7 @@ async fn main() -> std::io::Result<()> {
                 )
             )
     })
-    .bind("127.0.0.1:8080")?
+    .bind_openssl("127.0.0.1:8080", builder)?
     .run()
     .await
 }
