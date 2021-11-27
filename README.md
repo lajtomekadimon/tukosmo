@@ -22,6 +22,7 @@ Technical features:
 - [x] Works on FreeBSD and GNU/Linux (full list of distros on GNUmakefile).
 - [x] Blazingly fast web server using [Actix Web](
 https://github.com/actix/actix-web).
+- [x] Always using HTTPS.
 - [x] No ORM! Pure SQL code called by native [PostgreSQL driver](
 https://github.com/sfackler/rust-postgres).
 - [x] "One request, one query" policy.

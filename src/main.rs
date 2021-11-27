@@ -3,6 +3,7 @@ use actix_web::{web, App, HttpServer};
 //use actix_cors::Cors;
 use actix_files::Files;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
+use actix_web_middleware_redirect_https::RedirectHTTPS;
 use rand::Rng;
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
@@ -64,12 +65,15 @@ async fn main() -> std::io::Result<()> {
     // key can generate authentication cookies for any user!
     let private_key = rand::thread_rng().gen::<[u8; 32]>();
 
-    println!("Server ready. Visit at: http://localhost:8080");
+    println!("Server ready. Visit at: https://localhost:8443");
 
     // --------- //
 
     HttpServer::new(move || {
         App::new()
+            .wrap(RedirectHTTPS::with_replacements(
+                &[(":8080".to_owned(), ":8443".to_owned())]
+            ))
             /*.wrap(Cors::default()
                 // TODO: This has to work with "*" instead of localhost!
                 .allowed_origin("http://localhost:8080")
@@ -362,7 +366,8 @@ async fn main() -> std::io::Result<()> {
                 )
             )
     })
-    .bind_openssl("127.0.0.1:8080", builder)?
+    .bind("127.0.0.1:8080")?
+    .bind_openssl("127.0.0.1:8443", builder)?
     .run()
     .await
 }
