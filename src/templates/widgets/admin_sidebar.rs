@@ -31,6 +31,7 @@ markup::define! {
 
             /* General
              * * * * * */
+            /*
             p[class = "menu-label"] {
                 @t.general
             }
@@ -63,6 +64,7 @@ markup::define! {
                     }
                 }
             }
+            */
 
             /* Data
              * * * * */
@@ -171,6 +173,7 @@ markup::define! {
                         }
                     }
                 }
+                /*
                 li {
                     a[
                         href = "/{lang}/admin/pages"
@@ -184,6 +187,7 @@ markup::define! {
                         @t.pages
                     }
                 }
+                */
                 li {
                     a[
                         href = "/{lang}/admin/files"

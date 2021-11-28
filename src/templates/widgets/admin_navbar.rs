@@ -41,6 +41,7 @@ markup::define! {
                             " "
                             @data.website_title
                         }
+                        /*
                         a[
                             class = "navbar-item",
                             href = "/",  // link to official Tukosmo's help
@@ -48,6 +49,7 @@ markup::define! {
                         ] {
                             @t.help
                         }
+                        */
                     }
 
                     div[class = "navbar-end"] {
