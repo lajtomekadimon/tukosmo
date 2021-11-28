@@ -33,7 +33,6 @@ markup::define! {
         }
     }
 
-
     Content<'a>(
         q: &'a UsersAResponse,
         t: &'a TranslateI18N,

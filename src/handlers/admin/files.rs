@@ -54,6 +54,7 @@ pub async fn files(
                     ),
                     q: &q,
                     t: t,
+                    success: &false,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

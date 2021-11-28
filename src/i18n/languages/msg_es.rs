@@ -279,6 +279,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Entradas sin traducir",
     update:
         "Actualizar",
+    upload_file:
+        "Subir archivo",
     users:
         "Usuarios",
     visit_website:
@@ -301,6 +303,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Tu contraseña",
     your_sessions_have_been_successfully_updated:
         "Tus sesiones han sido actualizadas con éxito.",
+    your_website_files_were_successfully_updated:
+        "Los archivos de tu página web se actualizaron con éxito.",
     your_website_info_has_been_successfully_updated:
         "La información de tu página web ha sido actualizada correctamente.",
     your_website_languages_were_successfully_updated:
