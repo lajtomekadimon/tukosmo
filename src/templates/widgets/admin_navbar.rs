@@ -18,7 +18,10 @@ markup::define! {
                             .replace("{lang}", &data.lang.code),
                         title = t.tukosmo_admin_panel,
                     ] {}
-                    div[class = "navbar-burger burger"] {
+                    div[
+                        id = "navbar-burger",
+                        class = "navbar-burger burger",
+                    ] {
                         span {}
                         span {}
                         span {}
