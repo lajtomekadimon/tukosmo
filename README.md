@@ -120,6 +120,14 @@ make -s install
 
 ## Run server
 
+Before running the web server, you need an SSL certificate. In localhost, you
+can generate it like this:
+
+```sh
+openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
+cert.pem -days 365 -subj '/CN=localhost'
+```
+
 Run web server:
 
 ```sh

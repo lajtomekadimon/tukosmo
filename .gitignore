@@ -1,5 +1,7 @@
 /target
 Cargo.lock
+key.pem
+cert.pem
 *.swp
 /static/bundle.admin.css
 /static/bundle.css
