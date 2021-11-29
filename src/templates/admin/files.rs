@@ -1,12 +1,46 @@
 use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
-//use crate::i18n::t_date::t_date;
+use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-//use crate::templates::widgets::admin_pagination::AdminPagination;
+use crate::templates::widgets::admin_pagination::AdminPagination;
 use crate::handlers::admin::files::FilesAResponse;
+
+
+// List of image extensions
+const IMG_EXTS: [&'static str; 16] = [
+    // Raster formats
+    //----------------------------------------------
+    // JPEG
+    "jpg", "jpeg", "jfi", "jpe", "jif", "jfif",
+    // JPEG 2000
+    //"jp2", "j2k", "jpf", "jpx", "jpm", "mj2",
+    // HEIF
+    "heif", "heic",
+    // PNG
+    "png",
+    // GIF
+    "gif",
+    // WebP
+    "webp",
+    // TIFF
+    "tiff", "tif",
+    // Bitmap
+    "bmp",
+    // RAW
+    //"raw", "arw", "cr", "cr2", "rw2", "nrw", "k25", "nef",
+    //"orf", "sr2",
+    // Vector formats / Other
+    //----------------------------------------------
+    // SVG
+    "svg", "svgz",
+    // EPS
+    //"eps",
+    // AI
+    //"ai",
+];
 
 
 markup::define! {
@@ -41,7 +75,6 @@ markup::define! {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
                 @t.files
-                " (WORK IN PROGRESS!)"
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -60,22 +93,20 @@ markup::define! {
                 }
             }
 
-            /*
             h2[class = "subtitle"] {
                 {t.page_n
                     .replace("{n}", &q.page.to_string())}
 
                 " ("
-                {(match q.users.iter().len() {
+                {(match q.files.iter().len() {
                     1 => t.one_result_of_m,
                     _ => t.n_results_of_m,
                 })
-                    .replace("{n}", &(q.users.iter().len()).to_string())
+                    .replace("{n}", &(q.files.iter().len()).to_string())
                     .replace("{m}", &q.total_results.to_string())
                 }
                 ")"
             }
-            */
 
             @if **success {
                 div[
@@ -87,77 +118,43 @@ markup::define! {
             }
 
             div[class = "columns is-multiline"] {
-                div[class = "column is-one-quarter-desktop is-half-tablet"] {
-                    div[class = "card"] {
-                        div[class = "card-image"] {
-                            figure[class = "image is-3by2"] {
-                                img[
-                                    src = "https://unsplash.it/300/200/?random&pic=1",
-                                    alt = "",
-                                ];
-                            }
-                            div[class = "card-content is-overlay is-clipped"] {
-                                span[class = "tag is-info"] {
-                                    "Title"
+                @for file in q.files.iter() {
+                    div[
+                        class = "column is-one-quarter-desktop is-half-tablet",
+                        title = t_date(&file.date, &q.data.lang.code),
+                    ] {
+                        div[class = "card"] {
+                            div[class = "card-image"] {
+                                figure[class = "image is-3by2"] {
+                                    @if IMG_EXTS.contains(&file.ext.as_str()) {
+                                        img[
+                                            src = "/files/{filename}".replace(
+                                                "{filename}",
+                                                &file.name,
+                                            ),
+                                            alt = &file.name,
+                                        ];
+                                    }
                                 }
                             }
-                        }
-                        footer[class = "card-footer"] {
-                            a[class = "card-footer-item"] {
-                                "file_name.txt"
-                            }
-                        }
-                    }
-                }
-
-                div[class = "column is-one-quarter-desktop is-half-tablet"] {
-                    div[class = "card"] {
-                        div[class = "card-image"] {
-                            figure[class = "image is-3by2"] {
-                                img[
-                                    src = "https://unsplash.it/300/200/?random&pic=2",
-                                    alt = "",
-                                ];
-                            }
-                            div[class = "card-content is-overlay is-clipped"] {
-                                span[class = "tag is-info"] {
-                                    "Title"
+                            footer[class = "card-footer"] {
+                                a[
+                                    class = "card-footer-item",
+                                    href = "/{lang}/admin/edit_file?id={id}"
+                                        .replace("{lang}", &q.data.lang.code)
+                                        .replace(
+                                            "{id}",
+                                            &(file.id).to_string(),
+                                        ),
+                                ] {
+                                    @file.name
                                 }
-                            }
-                        }
-                        footer[class = "card-footer"] {
-                            a[class = "card-footer-item"] {
-                                "file_name.txt"
-                            }
-                        }
-                    }
-                }
-
-                div[class = "column is-one-quarter-desktop is-half-tablet"] {
-                    div[class = "card"] {
-                        div[class = "card-image"] {
-                            figure[class = "image is-3by2"] {
-                                img[
-                                    src = "https://unsplash.it/300/200/?random&pic=3",
-                                    alt = "",
-                                ];
-                            }
-                            div[class = "card-content is-overlay is-clipped"] {
-                                span[class = "tag is-info"] {
-                                    "Title"
-                                }
-                            }
-                        }
-                        footer[class = "card-footer"] {
-                            a[class = "card-footer-item"] {
-                                "file_name.txt"
                             }
                         }
                     }
                 }
             }
 
-            /*
             @AdminPagination {
                 data: &q.data,
                 t: t,
@@ -166,7 +163,6 @@ markup::define! {
                 total_pages: &q.total_pages,
                 results_per_page: &q.results_per_page,
             }
-            */
         }
     }
 }

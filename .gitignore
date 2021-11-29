@@ -7,3 +7,4 @@ cert.pem
 /static/bundle.css
 /static/bundle.admin.js
 /static/bundle.js
+/files/*

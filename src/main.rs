@@ -107,6 +107,14 @@ async fn main() -> std::io::Result<()> {
                 "static",
             ).show_files_listing())
 
+            // Uploaded files: /files/...
+            .service(Files::new(
+                // Website route
+                "/files",
+                // System dir
+                "files",
+            ).show_files_listing())
+
 
             // Homepage (/{lang})
             .service(web::resource("/{lang}")
@@ -344,6 +352,32 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::files::files)
                         )
                     )
+                    .service(web::resource("/upload_file")
+                        .route(web::get()
+                            .to(admin::upload_file::upload_file)
+                        )
+                        .route(web::post()
+                            .to(admin::upload_file_post::upload_file_post)
+                        )
+                    )
+                    .service(web::resource("/edit_file")
+                        .route(web::get()
+                            .to(admin::edit_file::edit_file)
+                        )
+                        .route(web::post()
+                            .to(admin::edit_file_post::edit_file_post)
+                        )
+                    )
+                    /*
+                    .service(web::resource("/delete_file")
+                        .route(web::get()
+                            .to(admin::delete_file::delete_file)
+                        )
+                        .route(web::post()
+                            .to(admin::delete_file_post::delete_file_post)
+                        )
+                    )
+                    */
 
                     //-- Settings --//
 

@@ -23,6 +23,14 @@ CREATE TYPE "SessionDB" AS (
     date TEXT
 );
 
+CREATE TYPE "FileDB" AS (
+    id BIGINT,
+    name TEXT,
+    ext TEXT,
+    author BIGINT,
+    date TEXT
+);
+
 CREATE TYPE "LanguageDB" AS (
     id BIGINT,
     code TEXT,

@@ -213,3 +213,14 @@ nav.navbar {
 .dropdown-content:hover {
     border: 1px solid #b5b5b5;
 }
+
+
+
+
+
+
+
+
+.card-footer {
+    word-wrap: break-word;
+}

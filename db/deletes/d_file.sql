@@ -1,0 +1,24 @@
+
+CREATE OR REPLACE FUNCTION d_file(
+    file_id BIGINT
+)
+
+RETURNS BIGINT
+
+LANGUAGE PLPGSQL
+VOLATILE
+CALLED ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+BEGIN
+
+    DELETE FROM t_files
+    WHERE tf_id = file_id;
+
+    RETURN file_id;
+
+END;
+
+$$;

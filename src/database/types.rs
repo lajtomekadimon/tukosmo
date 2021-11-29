@@ -29,6 +29,15 @@ pub struct SessionDB {
     pub user_agent: String,
     pub date: String,
 }
+
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct FileDB {
+    pub id: i64,
+    pub name: String,
+    pub ext: String,
+    pub author: i64,
+    pub date: String,
+}
  
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LanguageDB {

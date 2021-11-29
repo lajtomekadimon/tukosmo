@@ -31,6 +31,13 @@ pub mod edit_post_post;
 pub mod delete_post;
 pub mod delete_post_post;
 
+pub mod upload_file;
+pub mod upload_file_post;
+pub mod edit_file;
+pub mod edit_file_post;
+//pub mod delete_file;
+//pub mod delete_file_post;
+
 pub mod login;
 pub mod login_post;
 pub mod logout;

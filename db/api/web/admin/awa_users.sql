@@ -69,7 +69,7 @@ BEGIN
         r.page
     );
 
-    total_results := sc_users(language_of_user);
+    total_results := sc_users();
 
     total_pages := CASE total_results
         WHEN 0 THEN 1

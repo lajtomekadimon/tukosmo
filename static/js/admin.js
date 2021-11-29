@@ -16,3 +16,14 @@ if (navbar_burger_button !== null) {
     });
 }
 
+
+let fileInput = document.querySelector('#file-js input[type=file]');
+
+if (fileInput !== null) {
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+}

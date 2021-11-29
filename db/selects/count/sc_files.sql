@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION sc_users()
+CREATE OR REPLACE FUNCTION sc_files()
 
 RETURNS BIGINT
 
@@ -11,6 +11,6 @@ PARALLEL UNSAFE
 AS $$
 
 SELECT COUNT(*)
-FROM t_users
+FROM t_files
 
 $$;

@@ -5,6 +5,8 @@ pub const EMAIL_ALREADY_EXISTS: &'static str = "143EB60B303E";
 
 pub const FIELD_IS_NOT_LANG_CODE: &'static str = "C3BA3FC81BB9";
 
+pub const FILENAME_ALREADY_EXISTS: &'static str = "6500FAFC5C8B";
+
 pub const LANG_CODE_ALREADY_EXISTS: &'static str = "4C66AB9F871B";
 
 pub const PASSWORDS_DO_NOT_MATCH: &'static str = "51FE0497F895";
@@ -30,6 +32,10 @@ pub const WRONG_CSRF_TOKEN: &'static str = "D6088ED0B20B";
 pub const WRONG_DESCRIPTION: &'static str = "4E576E6BB1EE";
 
 pub const WRONG_EMAIL: &'static str = "1A2387FF4723";
+
+pub const WRONG_FILE_ID: &'static str = "74CCCAC9B0DC";
+
+pub const WRONG_FILENAME: &'static str = "DCF6E03D613D";
 
 pub const WRONG_LANG_CODE: &'static str = "9F4297D0460F";
 

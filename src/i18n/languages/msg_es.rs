@@ -66,6 +66,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ese correo electrónico ya está en uso.",
     err_field_is_not_lang_code:
         "El código del idioma no es válido.",
+    err_filename_already_exists:
+        "Ese nombre de archivo ya está en uso.",
     err_lang_code_already_exists:
         "Ese código de idioma ya existe.",
     err_passwords_do_not_match:
@@ -93,6 +95,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         tampoco puede exceder los 600 caracteres.",
     err_wrong_email:
         "Ese correo electrónico no es válido.",
+    err_wrong_file_id:
+        "La ID del archivo no es correcta.",
+    err_wrong_filename:
+        "Ese nombre de archivo no es válido.",
     err_wrong_lang_code:
         "El código del idioma no es correcto.",
     err_wrong_lang_id:
@@ -127,6 +133,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "El título de la página web no es válido.",
     edit:
         "Editar",
+    edit_file_w_name:
+        "Editar archivo: {name}",
     edit_language_w_name:
         "Editar idioma: {name}",
     edit_post_w_title:
@@ -141,6 +149,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ejemplos: es, es-es...",
     examples_of_lang_names:
         "Ejemplos: English, Español...",
+    file:
+        "Archivo",
+    filename:
+        "Nombre del archivo",
     files:
         "Archivos",
     forgotten_password:
