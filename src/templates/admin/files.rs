@@ -7,40 +7,7 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::templates::widgets::admin_pagination::AdminPagination;
 use crate::handlers::admin::files::FilesAResponse;
-
-
-// List of image extensions
-const IMG_EXTS: [&'static str; 16] = [
-    // Raster formats
-    //----------------------------------------------
-    // JPEG
-    "jpg", "jpeg", "jfi", "jpe", "jif", "jfif",
-    // JPEG 2000
-    //"jp2", "j2k", "jpf", "jpx", "jpm", "mj2",
-    // HEIF
-    "heif", "heic",
-    // PNG
-    "png",
-    // GIF
-    "gif",
-    // WebP
-    "webp",
-    // TIFF
-    "tiff", "tif",
-    // Bitmap
-    "bmp",
-    // RAW
-    //"raw", "arw", "cr", "cr2", "rw2", "nrw", "k25", "nef",
-    //"orf", "sr2",
-    // Vector formats / Other
-    //----------------------------------------------
-    // SVG
-    "svg", "svgz",
-    // EPS
-    //"eps",
-    // AI
-    //"ai",
-];
+use crate::files::extensions::IMG_EXTS;
 
 
 markup::define! {

@@ -14,6 +14,8 @@ use crate::database::query_db_noparam::query_db_noparam;
 
 mod i18n;
 
+mod files;
+
 mod templates;
 
 mod handlers;

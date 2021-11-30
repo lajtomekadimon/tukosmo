@@ -54,6 +54,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Device",
     documentation:
         "Documentation",
+    download:
+        "Download",
     draft:
         "Draft",
     draft_posts:
@@ -133,6 +135,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The website's title is not valid.",
     edit:
         "Edit",
+    edit_file:
+        "Edit file",
     edit_file_w_name:
         "Edit file: {name}",
     edit_language_w_name:
@@ -293,6 +297,10 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Update",
     upload_file:
         "Upload file",
+    uploaded_by:
+        "Uploaded by",
+    uploaded_on:
+        "Uploaded on",
     users:
         "Users",
     visit_website:

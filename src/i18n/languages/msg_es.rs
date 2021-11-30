@@ -54,6 +54,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Dispositivo",
     documentation:
         "Documentación",
+    download:
+        "Descargar",
     draft:
         "Borrador",
     draft_posts:
@@ -133,6 +135,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "El título de la página web no es válido.",
     edit:
         "Editar",
+    edit_file:
+        "Editar archivo",
     edit_file_w_name:
         "Editar archivo: {name}",
     edit_language_w_name:
@@ -293,6 +297,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Actualizar",
     upload_file:
         "Subir archivo",
+    uploaded_by:
+        "Subido por",
+    uploaded_on:
+        "Subido en",
     users:
         "Usuarios",
     visit_website:
