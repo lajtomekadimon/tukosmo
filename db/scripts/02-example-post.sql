@@ -10,6 +10,10 @@ DECLARE
     lang_en BIGINT;
     lang_es BIGINT;
 
+    user_id BIGINT;
+
+    file_id BIGINT;
+
     post_id BIGINT;
     post_title TEXT;
     post_description TEXT;
@@ -18,9 +22,14 @@ DECLARE
 
 BEGIN
 
-    post_id := i_post(
-        1  -- user ID
+    user_id := 1;
+
+    file_id := i_file(
+        'featured-image-default-post.jpg',
+        user_id
     );
+
+    post_id := i_post(user_id);
 
     post_title := 'Example post';
     post_description :=

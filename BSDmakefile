@@ -34,10 +34,15 @@ dep: postgresql rust
 #                                 DATABASE                                   #
 ##############################################################################
 
+deletedb:
+	@echo "Dropping database..."
+	sudo -i -u postgres dropdb $(PG_DB) ||:
+	sudo -i -u postgres dropuser $(PG_USER) ||:
+	@echo "Deleting files..."
+	rm files/*
+	cp static/img/featured-image-default-post.jpg files/
+
 createdb:
-	@echo "Dropping database (if exists)..."
-	su -m postgres -c 'dropdb $(PG_DB) ||:'
-	su -m postgres -c 'dropuser $(PG_USER) ||:'
 	@echo "Creating database..."
 	su -m postgres -c 'createdb $(PG_DB) -E UTF8'
 	su -m postgres -c "psql -q -d $(PG_DB) \
@@ -92,9 +97,11 @@ dscriptsdb:
 installdb: createdb gfunctionsdb structuredb dfunctionsdb dscriptsdb
 	@echo "The database is updated and ready!"
 
-resetdb:
-	su -m root -c 'make installdb'
+resetdball: deletedb installdb
 	@echo "The database is reset and ready!"
+
+resetdb:
+	su -m root -c 'make resetdball'
 
 ## To improve
 updatedb: gfunctionsdb dfunctionsdb
