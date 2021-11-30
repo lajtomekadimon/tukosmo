@@ -6,6 +6,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Account",
     add_language:
         "Add language",
+    are_you_sure_that_you_want_to_delete_this_file:
+        "Are you sure that you want to delete this file?",
     are_you_sure_that_you_want_to_delete_this_language:
         "Are you sure that you want to delete this language?",
     are_you_sure_that_you_want_to_delete_this_post:
@@ -36,18 +38,22 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Date",
     delete:
         "Delete",
-    delete_permanent:
-        "Delete (permanent)",
-    deleted_k_post:
-        "Deleted",
-    deleted_posts:
-        "Deleted posts",
+    delete_file:
+        "Delete file",
+    delete_file_w_name:
+        "Delete file: {name}",
     delete_language_w_name:
         "Delete language: {name}",
+    delete_permanent:
+        "Delete (permanent)",
     delete_post_w_title:
         "Delete post: '{title}'",
     delete_user_w_name:
         "Delete user: {name}",
+    deleted_k_post:
+        "Deleted",
+    deleted_posts:
+        "Deleted posts",
     description:
         "Description",
     device:

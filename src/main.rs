@@ -370,7 +370,6 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::edit_file_post::edit_file_post)
                         )
                     )
-                    /*
                     .service(web::resource("/delete_file")
                         .route(web::get()
                             .to(admin::delete_file::delete_file)
@@ -379,7 +378,6 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::delete_file_post::delete_file_post)
                         )
                     )
-                    */
 
                     //-- Settings --//
 

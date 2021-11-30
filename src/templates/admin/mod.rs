@@ -24,7 +24,7 @@ pub mod delete_post;
 
 pub mod upload_file;
 pub mod edit_file;
-//pub mod delete_file;
+pub mod delete_file;
 
 pub mod account;
 pub mod sessions;
