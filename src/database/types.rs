@@ -36,6 +36,7 @@ pub struct FileDB {
     pub name: String,
     pub ext: String,
     pub author: i64,
+    pub author_name: String,
     pub date: String,
 }
  

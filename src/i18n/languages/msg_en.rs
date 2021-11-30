@@ -299,6 +299,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Upload file",
     uploaded_by:
         "Uploaded by",
+    uploaded_by_name_on_date:
+        "Uploaded by {name} ({date})",
     uploaded_on:
         "Uploaded on",
     users:

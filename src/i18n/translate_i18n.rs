@@ -148,6 +148,7 @@ pub struct TranslateI18N {
     pub update: &'static str,
     pub upload_file: &'static str,
     pub uploaded_by: &'static str,
+    pub uploaded_by_name_on_date: &'static str,
     pub uploaded_on: &'static str,
     pub users: &'static str,
     pub visit_website: &'static str,

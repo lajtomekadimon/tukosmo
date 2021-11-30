@@ -118,9 +118,18 @@ markup::define! {
                                     }
 
                                     a[
-                                        href = "",
+                                        href = "/{lang}/admin/edit_user\
+                                                ?id={id}"
+                                            .replace(
+                                                "{lang}",
+                                                &q.data.lang.code,
+                                            )
+                                            .replace(
+                                                "{id}",
+                                                &q.file_data.author.to_string()
+                                            ),
                                     ] {
-                                        "User name"
+                                        @q.file_data.author_name
                                     }
                                 }
                             }

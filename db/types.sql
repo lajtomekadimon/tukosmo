@@ -28,6 +28,7 @@ CREATE TYPE "FileDB" AS (
     name TEXT,
     ext TEXT,
     author BIGINT,
+    author_name TEXT,
     date TEXT
 );
 

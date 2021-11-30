@@ -88,7 +88,12 @@ markup::define! {
                 @for file in q.files.iter() {
                     div[
                         class = "column is-one-quarter-desktop is-half-tablet",
-                        title = t_date(&file.date, &q.data.lang.code),
+                        title = &t.uploaded_by_name_on_date
+                            .replace("{name}", &file.author_name)
+                            .replace(
+                                "{date}",
+                                &t_date(&file.date, &q.data.lang.code),
+                            ),
                     ] {
                         div[class = "card"] {
                             div[class = "card-image"] {

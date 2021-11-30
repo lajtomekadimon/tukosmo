@@ -48,7 +48,10 @@ BEGIN
         language_of_user
     );
 
-    file_data := s_file_by_id(r.id);
+    file_data := s_file_by_id(
+        r.id,
+        language_of_user
+    );
 
     -- Check file ID is correct
     IF file_data IS NULL THEN

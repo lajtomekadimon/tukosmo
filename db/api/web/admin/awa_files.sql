@@ -65,7 +65,8 @@ BEGIN
 
     files := s_files(
         r.results_per_page,
-        r.page
+        r.page,
+        language_of_user
     );
 
     total_results := sc_files();

@@ -15,7 +15,7 @@ BEGIN
     PERFORM i_user(
         'test@test.com',
         CRYPT('12345', GEN_SALT('bf')),
-        'TukosmoAdmin'
+        'Admin'
     );
 
     lang_en := i_language(
