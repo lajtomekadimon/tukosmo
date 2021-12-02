@@ -21,7 +21,10 @@ SELECT (
     tf_name,
 
     -- ext
-    tf_ext,
+    COALESCE(
+        tf_ext,
+        ''
+    ),
 
     -- author
     tf_author,
