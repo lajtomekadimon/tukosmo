@@ -49,7 +49,7 @@ Roadmap:
     - [x] Users system
     - [x] Custom languages
     - [x] Blog
-    - [ ] Files
+    - [x] Files
     - [x] Admin Panel
 - [ ] 0.2
     - [ ] Improved user experience with JavaScript
