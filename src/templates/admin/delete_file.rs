@@ -4,6 +4,7 @@ use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
+use crate::templates::widgets::admin_file_card::AdminFileCard;
 use crate::handlers::admin::delete_file::DeleteFileAResponse;
 use crate::i18n::t_error::ErrorDB;
 
@@ -58,12 +59,6 @@ markup::define! {
                 }
             }
 
-            div[class = "content"] {
-                p {
-                    @t.are_you_sure_that_you_want_to_delete_this_file
-                }
-            }
-
             form[
                 method = "post",
                 action = "/{lang}/admin/delete_file?id={id}"
@@ -82,22 +77,43 @@ markup::define! {
                     value = &q.file_data.id,
                 ];
 
-                div[class = "field is-grouped"] {
-                    div[class = "control"] {
-                        button[class = "button is-danger"] {
-                            @t.delete
+                div[class = "columns"] {
+
+                    // File
+                    div[class = "column"] {
+                        @AdminFileCard {
+                            data: &q.data,
+                            file_data: &q.file_data,
+                            t: t,
                         }
                     }
-                    div[class = "control"] {
-                        a[
-                            href = "/{lang}/admin/files"
-                                .replace("{lang}", &q.data.lang.code)
-                            ,
-                            class = "button is-link is-light",
-                        ] {
-                            @t.cancel
+
+                    // Delete file
+                    div[class = "column"] {
+                        div[class = "content"] {
+                            p {
+                                @t.are_you_sure_that_you_want_to_delete_this_file
+                            }
+                        }
+                        div[class = "field is-grouped"] {
+                            div[class = "control"] {
+                                button[class = "button is-danger"] {
+                                    @t.delete
+                                }
+                            }
+                            div[class = "control"] {
+                                a[
+                                    href = "/{lang}/admin/files"
+                                        .replace("{lang}", &q.data.lang.code)
+                                    ,
+                                    class = "button is-link is-light",
+                                ] {
+                                    @t.cancel
+                                }
+                            }
                         }
                     }
+
                 }
             }
         }

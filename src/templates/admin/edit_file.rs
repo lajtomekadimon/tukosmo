@@ -2,15 +2,14 @@ use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
+use crate::templates::widgets::admin_file_card::AdminFileCard;
 use crate::handlers::admin::edit_file::EditFileAResponse;
 use crate::handlers::admin::edit_file_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
-use crate::files::extensions::IMG_EXTS;
 
 
 markup::define! {
@@ -86,83 +85,12 @@ markup::define! {
 
                 div[class = "columns"] {
 
-                    // File card
+                    // File
                     div[class = "column"] {
-                        div[class = "card"] {
-                            div[class = "card-content"] {
-                                @if IMG_EXTS.contains(
-                                    &q.file_data.ext.as_str(),
-                                ) {
-                                    img[
-                                        src = "/files/{name}".replace(
-                                            "{name}",
-                                            &q.file_data.name,
-                                        ),
-                                    ];
-                                }
-
-                                // TODO: File size
-
-                                div {
-                                    strong {
-                                        @t.uploaded_on
-                                        ": "
-                                    }
-                                    {&t_date(&q.file_data.date, &q.data.lang.code)}
-                                }
-
-                                div {
-                                    strong {
-                                        @t.uploaded_by
-                                        ": "
-                                    }
-
-                                    a[
-                                        href = "/{lang}/admin/edit_user\
-                                                ?id={id}"
-                                            .replace(
-                                                "{lang}",
-                                                &q.data.lang.code,
-                                            )
-                                            .replace(
-                                                "{id}",
-                                                &q.file_data.author.to_string()
-                                            ),
-                                    ] {
-                                        @q.file_data.author_name
-                                    }
-                                }
-                            }
-                            div[class = "card-footer"] {
-                                div[class = "card-footer-item"] {
-                                    span {
-                                        a[
-                                            href = "/files/{name}".replace(
-                                                "{name}",
-                                                &q.file_data.name,
-                                            ),
-                                            target = "_blank",
-                                        ] {
-                                            "/files/"
-                                            @q.file_data.name
-                                        }
-                                    }
-                                }
-                                div[class = "card-footer-item"] {
-                                    span {
-                                        a[
-                                            class = "button is-link is-light",
-                                            href = "/files/{name}".replace(
-                                                "{name}",
-                                                &q.file_data.name,
-                                            ),
-                                            download = true,
-                                        ] {
-                                            @t.download
-                                        }
-                                    }
-                                }
-                            }
+                        @AdminFileCard {
+                            data: &q.data,
+                            file_data: &q.file_data,
+                            t: t,
                         }
                     }
 
