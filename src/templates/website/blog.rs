@@ -41,28 +41,34 @@ markup::define! {
                 section[
                     class = "post-wrapper"
                 ] {
-                    div[
-                        class = "post-wrapper-image"
-                    ] {
-                        a[
-                            href = "/{lang}/blog/{permalink}"
-                                .replace("{lang}", &post.lang.code)
-                                .replace(
-                                    "{permalink}",
-                                    &post.permalink.to_string()
-                                ),
-                        ] {
-                            figure[
-                                style = "background-image: url(https://www.\
-                                         azamara.com/sites/default/files/\
-                                         heros/reykjavik-iceland-\
-                                         1800x1000.jpg);",
-                            ] {}
+                    @if let Some(fimage) = &post.featured_image {
+                        div[class = "post-wrapper-image"] {
+                            a[
+                                href = "/{lang}/blog/{permalink}"
+                                    .replace("{lang}", &post.lang.code)
+                                    .replace(
+                                        "{permalink}",
+                                        &post.permalink.to_string()
+                                    ),
+                            ] {
+                                figure[
+                                    style =
+                                        "background-image: url(/files/{img});"
+                                            .replace(
+                                                "{img}",
+                                                &fimage.name,
+                                            ),
+                                ] {}
+                            }
                         }
                     }
 
                     div[
-                        class = "post-wrapper-data",
+                        class = if let Some(_fimage) = &post.featured_image {
+                            "post-wrapper-data"
+                        } else {
+                            "post-wrapper-data post-wrapper-data-noimg"
+                        }
                     ] {
                         div[
                             class = "post-wrapper-data-meta",

@@ -23,6 +23,7 @@ pub struct FormData {
     pub csrf_token: String,
     pub id: i64,
     pub title: String,
+    pub featured_image: i64,
     pub description: String,
     pub body: String,
     pub permalink: String,
@@ -36,6 +37,7 @@ pub struct EditPostPostARequest {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub post: types::PostDB,
+    pub featured_image: i64,
 }
 
 impl QueryFunction for EditPostPostARequest {
@@ -59,6 +61,7 @@ pub async fn edit_post_post(
 
                 let post_id = (form.id).clone();
                 let title_value = (form.title).clone();
+                let featured_image_id = (form.featured_image).clone();
                 let description_value = (form.description).clone();
                 let body_value = (form.body).clone();
                 let permalink_value = (form.permalink).clone();
@@ -77,6 +80,7 @@ pub async fn edit_post_post(
                         csrf_token: csrf_token_value,
                         post: types::PostDB {
                             id: post_id,
+                            featured_image: None,
                             trans_id: 0,
                             lang: types::LanguageDB {
                                 id: 0,
@@ -99,6 +103,7 @@ pub async fn edit_post_post(
                             draft: is_draft,
                             deleted: is_deleted,
                         },
+                        featured_image: featured_image_id,
                     },
                 ) {
 
@@ -160,6 +165,7 @@ pub async fn edit_post_post(
                                         post: Some(
                                             types::PostDB{
                                                 id: post_id,
+                                                featured_image: None,
                                                 trans_id: 0,
                                                 lang: types::LanguageDB {
                                                     id: 0,
@@ -185,6 +191,8 @@ pub async fn edit_post_post(
                                                 deleted: false,
                                             }
                                         ),
+                                        featured_image: q.featured_image
+                                            .clone(),
                                     },
                                     t: t,
                                     error: &Some(

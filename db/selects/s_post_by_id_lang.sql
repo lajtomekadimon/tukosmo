@@ -16,6 +16,11 @@ AS $$
 SELECT (
     -- id
     tp_id,
+    -- featured_image
+    s_file_by_id(
+        tp_featured_image,
+        post_lang
+    ),
     -- trans_id
     tpt_id,
     -- lang

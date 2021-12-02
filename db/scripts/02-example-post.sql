@@ -29,7 +29,10 @@ BEGIN
         user_id
     );
 
-    post_id := i_post(user_id);
+    post_id := i_post(
+        file_id,
+        user_id
+    );
 
     post_title := 'Example post';
     post_description :=

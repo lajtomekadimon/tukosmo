@@ -35,6 +35,7 @@ pub struct EditPostAResponse {
     pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
     pub post: Option<types::PostDB>,
+    pub featured_image: Option<types::FileDB>,
 }
 
 
@@ -90,6 +91,7 @@ pub async fn edit_post(
                             post: Some(
                                 types::PostDB{
                                     id: post_id,
+                                    featured_image: None,
                                     trans_id: 0,
                                     lang: q.data.lang.clone(),
                                     title: "".to_string(),
@@ -106,6 +108,7 @@ pub async fn edit_post(
                                     deleted: false,
                                 }
                             ),
+                            featured_image: q.featured_image.clone(),
                         },
                         t: t,
                         error: &None,

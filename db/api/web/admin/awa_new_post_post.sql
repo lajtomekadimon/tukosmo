@@ -2,7 +2,8 @@
 CREATE TYPE "NewPostPostARequest" AS (
     req "AdminRequest",
     csrf_token UUID,
-    post "PostDB"
+    post "PostDB",
+    featured_image BIGINT
 );
 
 
@@ -23,12 +24,18 @@ DECLARE
 
     d "AdminDataDB";
 
+    language_of_user BIGINT;
+
+    featured_image_id BIGINT;
+
     post_id BIGINT;
 
 BEGIN
 
     -- Check request and select common data
     d := s_admin_handler_data(r.req);
+
+    language_of_user := (d.lang).id;
 
     -- Check CSRF token
     IF NOT c_csrf_token_by_token_session(
@@ -58,7 +65,25 @@ BEGIN
         PERFORM err_wrong_permalink();
     END IF;
 
-    post_id := i_post((d.userd).id);
+    -- Check featured image ID
+    featured_image_id := NULL;
+    IF r.featured_image IS NOT NULL THEN
+        IF r.featured_image <> 0 THEN
+            IF s_file_by_id(
+                r.featured_image,
+                language_of_user
+            ) IS NULL THEN
+                PERFORM err_wrong_file_id();
+            ELSE
+                featured_image_id := r.featured_image;
+            END IF;
+        END IF;
+    END IF;
+
+    post_id := i_post(
+        featured_image_id,
+        (d.userd).id
+    );
 
     PERFORM i_post_translation(
         post_id,

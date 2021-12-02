@@ -22,6 +22,7 @@ use crate::templates::admin::new_post::NewPost;
 pub struct FormData {
     pub csrf_token: String,
     pub title: String,
+    pub featured_image: i64,
     pub description: String,
     pub body: String,
     pub permalink: String,
@@ -34,6 +35,7 @@ pub struct NewPostPostARequest {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub post: types::PostDB,
+    pub featured_image: i64,
 }
 
 impl QueryFunction for NewPostPostARequest {
@@ -56,6 +58,7 @@ pub async fn new_post_post(
             Ok(csrf_token_value) => {
 
                 let title_value = (form.title).clone();
+                let featured_image_id = (form.featured_image).clone();
                 let description_value = (form.description).clone();
                 let body_value = (form.body).clone();
                 let permalink_value = (form.permalink).clone();
@@ -70,6 +73,7 @@ pub async fn new_post_post(
                         csrf_token: csrf_token_value,
                         post: types::PostDB {
                             id: 0,
+                            featured_image: None,
                             trans_id: 0,
                             lang: types::LanguageDB {
                                 id: 0,
@@ -92,6 +96,7 @@ pub async fn new_post_post(
                             draft: is_draft,
                             deleted: false,
                         },
+                        featured_image: featured_image_id,
                     },
                 ) {
 

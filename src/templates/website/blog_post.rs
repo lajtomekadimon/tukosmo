@@ -37,15 +37,19 @@ markup::define! {
         article[
             class = "post",
         ] {
-            div[
-                class = "post-image",
-            ] {
-                figure {
-                    img[
-                        src = "https://www.azamara.com/sites/default/\
-                               files/heros/reykjavik-iceland-1800x1000.jpg",
-                        alt = "reykjavik",
-                    ];
+            @if let Some(fimage) = &q.post.featured_image {
+                div[
+                    class = "post-image",
+                ] {
+                    figure {
+                        img[
+                            src = "/files/{filename}".replace(
+                                "{filename}",
+                                &fimage.name,
+                            ),
+                            alt = &fimage.name,
+                        ];
+                    }
                 }
             }
 

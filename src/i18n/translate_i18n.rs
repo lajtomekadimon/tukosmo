@@ -78,6 +78,7 @@ pub struct TranslateI18N {
     pub error: &'static str,
     pub examples_of_lang_codes: &'static str,
     pub examples_of_lang_names: &'static str,
+    pub featured_image: &'static str,
     pub file: &'static str,
     pub filename: &'static str,
     pub files: &'static str,

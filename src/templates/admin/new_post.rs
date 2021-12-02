@@ -102,6 +102,30 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
+                        @t.featured_image
+                    }
+                    div[class = "control"] {
+                        input[
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_FILE_ID {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
+                            type = "text",
+                            name = "featured_image",
+                            value = if let Some(f) = form {
+                                &f.featured_image
+                            } else { &0 },
+                        ];
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
                         @t.permalink
                     }
                     div[class = "control"] {

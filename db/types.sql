@@ -58,6 +58,7 @@ CREATE TYPE "LanguageWithNamesDB" AS (
 
 CREATE TYPE "PostDB" AS (
     id BIGINT,
+    featured_image "FileDB",
     trans_id BIGINT,
     lang "LanguageDB",
     title TEXT,

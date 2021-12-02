@@ -19,6 +19,12 @@ SELECT ARRAY(
         -- id
         tp_id,
 
+        -- featured_image
+        s_file_by_id(
+            tp_featured_image,
+            language_of_user
+        ),
+
         -- trans_id
         tpt_id,
 

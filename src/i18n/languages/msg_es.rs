@@ -159,6 +159,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ejemplos: es, es-es...",
     examples_of_lang_names:
         "Ejemplos: English, Español...",
+    featured_image:
+        "Imagen de presentación",
     file:
         "Archivo",
     filename:

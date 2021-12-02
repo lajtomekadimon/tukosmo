@@ -52,6 +52,10 @@
     padding: 2.8125rem;
 }
 
+.post-wrapper-data-noimg {
+    width: 100%;
+}
+
 .post-wrapper-data-meta {
     width: 100%;
     margin: 0 0 10px 0;

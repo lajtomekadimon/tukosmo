@@ -8,7 +8,8 @@ CREATE TYPE "EditPostAResponse" AS (
     data "AdminDataDB",
     routes "RouteDB"[],
     csrf_token TEXT,
-    post "PostDB"
+    post "PostDB",
+    featured_image "FileDB"
 );
 
 
@@ -34,6 +35,8 @@ DECLARE
     language_of_user BIGINT;
 
     post "PostDB";
+
+    featured_image "FileDB";
 
 BEGIN
 
@@ -63,6 +66,11 @@ BEGIN
         RAISE EXCEPTION '';
     END IF;*/
 
+    featured_image := s_post_fimage_by_id_lang(
+        r.post,
+        language_of_user
+    );
+
     -- User is logged in
     RETURN ROW(
         -- data
@@ -77,7 +85,10 @@ BEGIN
         )::TEXT,
 
         -- post
-        post
+        post,
+
+        -- featured_image
+        featured_image
     );
 
 END;

@@ -2,7 +2,8 @@
 CREATE TYPE "EditPostPostARequest" AS (
     req "AdminRequest",
     csrf_token UUID,
-    post "PostDB"
+    post "PostDB",
+    featured_image BIGINT
 );
 
 
@@ -22,6 +23,10 @@ AS $$
 DECLARE
 
     d "AdminDataDB";
+
+    language_of_user BIGINT;
+
+    featured_image_id BIGINT;
 
 BEGIN
 
@@ -61,11 +66,31 @@ BEGIN
         PERFORM err_wrong_permalink();
     END IF;
 
+    -- Check featured image ID
+    featured_image_id := NULL;
+    IF r.featured_image IS NOT NULL THEN
+        IF r.featured_image <> 0 THEN
+            IF s_file_by_id(
+                r.featured_image,
+                language_of_user
+            ) IS NULL THEN
+                PERFORM err_wrong_file_id();
+            ELSE
+                featured_image_id := r.featured_image;
+            END IF;
+        END IF;
+    END IF;
+
     -- Update existing post
     IF c_post_has_trans(
         (r.post).id,
         (d.lang).id
     ) THEN
+
+        PERFORM u_post(
+            (r.post).id,
+            featured_image_id
+        );
 
         PERFORM u_post_translation(
             (r.post).id,
@@ -80,6 +105,11 @@ BEGIN
 
     -- Create new translation of the post
     ELSE
+
+        PERFORM u_post(
+            (r.post).id,
+            featured_image_id
+        );
 
         PERFORM i_post_translation(
             (r.post).id,
