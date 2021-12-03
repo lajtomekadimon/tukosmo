@@ -18,20 +18,20 @@ markup::define! {
             t: t,
         }
 
-        div[class = "container"] {
+        //div[class = "container"] {
             div[class = "columns"] {
-                div[class = "column is-3"] {
+                div[class = "column is-2"] {
                     @AdminSidebar {
                         current_page: current_page,
                         data: data,
                         t: t,
                     }
                 }
-                div[class = "column is-9"] {
+                div[class = "column is-10"] {
                     @content
                 }
             }
-        }
+        //}
     }
 }
 

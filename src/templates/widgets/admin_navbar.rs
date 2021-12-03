@@ -10,7 +10,7 @@ markup::define! {
         t: &'a TranslateI18N,
     ) {
         nav[class = "navbar is-white"] {
-            div[class = "container"] {
+            //div[class = "container"] {
                 div[class = "navbar-brand"] {
                     a[
                         class = "navbar-item brand-text tap-logo",
@@ -97,7 +97,7 @@ markup::define! {
                         }
                     }
                 }
-            }
+            //}
         }
     }
 }
