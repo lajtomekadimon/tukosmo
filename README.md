@@ -54,6 +54,8 @@ Roadmap:
 - [ ] 0.2
     - [ ] Improved user experience with JavaScript
         - [ ] WYSIWYG CommonMark editor for posts
+        - [ ] Upload files using Ajax when writing posts
+        - [ ] Import images from Tukosmo when writing posts
         - [ ] Real-time form validation
         - [ ] Change pages loading just the new content using Ajax
 - [ ] 0.3

@@ -52,6 +52,8 @@ BEGIN
         PERFORM err_wrong_file_id();
     END IF;
 
+    PERFORM u_posts_del_images(r.id);
+
     PERFORM d_file(r.id);
 
     RETURN file_data.name;
