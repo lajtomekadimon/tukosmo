@@ -19,6 +19,16 @@ if (navbar_burger_button !== null) {
 }
 
 
+let navbar_dropdown_button = document.getElementById("navbar-link");
+
+if (navbar_dropdown_button !== null) {
+    navbar_dropdown_button.addEventListener('click', function() {
+        let navbar_dropdown = document.getElementById("navbar-dropdown");
+        navbar_dropdown.classList.toggle('is-active');
+    });
+}
+
+
 let fileInput = document.querySelector('#file-js input[type=file]');
 
 if (fileInput !== null) {
