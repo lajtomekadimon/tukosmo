@@ -14,6 +14,7 @@ if (navbar_burger_button !== null) {
     navbar_burger_button.addEventListener('click', function() {
         document.getElementById("navMenu").classList.toggle('is-active');
         document.getElementById("smenu").classList.toggle('is-hidden-mobile');
+        document.getElementById("navbar-burger").classList.toggle('is-active');
     });
 }
 
