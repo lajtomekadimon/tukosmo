@@ -10,8 +10,10 @@ markup::define! {
         data: &'a AdminDataDB,
         t: &'a TranslateI18N,
     ) {
-        // TODO: Remove is-hidden-mobile when clicking the burger
-        aside[class = "menu is-hidden-mobile"] {
+        aside[
+            id = "smenu",
+            class = "menu is-hidden-mobile",
+        ] {
             /* Dashboard
              * * * * * * */
             ul[class = "menu-list"] {
