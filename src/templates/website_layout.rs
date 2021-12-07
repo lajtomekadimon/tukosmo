@@ -1,6 +1,7 @@
 use markup;
 
 use crate::database::types::{WebsiteDataDB, RouteDB};
+use crate::templates::widgets::open_graph_meta::{OpenGraphMeta, ArticleOG};
 
 
 markup::define! {
@@ -8,6 +9,10 @@ markup::define! {
         title: &'a str,
         data: &'a WebsiteDataDB,
         routes: &'a Vec<RouteDB>,
+        og_title: &'a str,
+        og_description: &'a str,
+        og_image: &'a str,
+        og_article: &'a Option<ArticleOG>,
         content: BodyContent,
     ) {
         @markup::doctype()
@@ -25,12 +30,14 @@ markup::define! {
 
                 meta[
                     name = "description",
-                    content = "",
+                    content = og_description,
                 ];
+                /*
                 meta[
                     name = "author",
                     content = "",
                 ];
+                */
 
                 link[
                     rel = "apple-touch-icon",
@@ -101,6 +108,16 @@ markup::define! {
                     rel = "manifest",
                     href = "/static/favicon/manifest.json",
                 ];
+
+                // Open Graph
+                @OpenGraphMeta {
+                    data: data,
+                    routes: routes,
+                    title: og_title,
+                    description: og_description,
+                    image: og_image,
+                    article: og_article,
+                }
 
                 // i18n routes
                 @for route in routes.iter() {

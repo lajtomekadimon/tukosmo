@@ -12,3 +12,5 @@ pub mod sidebar;
 pub mod post;
 pub mod website;
 pub mod blog_pagination;
+
+pub mod open_graph_meta;

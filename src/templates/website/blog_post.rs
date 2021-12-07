@@ -6,6 +6,7 @@ use crate::handlers::website::blog_post::BlogPostWResponse;
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
+use crate::templates::widgets::open_graph_meta::ArticleOG;
 
 
 markup::define! {
@@ -18,6 +19,20 @@ markup::define! {
             title: title,
             data: &q.data,
             routes: &q.routes,
+            og_title: &q.post.title,
+            og_description: &q.post.description,
+            og_image: &(
+                if let Some(fimage) = &q.post.featured_image {
+                    "https://tukosmo.org/files/{filename}"  // TODO: domain
+                        .replace("{filename}", &fimage.name)
+                } else { "".to_string() }
+            ),
+            og_article: &Some(
+                ArticleOG {
+                    published_time: q.post.date.clone(),
+                    modified_time: q.post.date.clone(),
+                }
+            ),
             content: Website {
                 content: Content {
                     q: q,

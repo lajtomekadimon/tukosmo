@@ -18,6 +18,10 @@ markup::define! {
             title: title,
             data: &q.data,
             routes: &q.routes,
+            og_title: &"ERROR {code}".replace("{code}", &e.code),
+            og_description: "",
+            og_image: "",
+            og_article: &None,
             content: Website {
                 content: Content {
                     e: e,
