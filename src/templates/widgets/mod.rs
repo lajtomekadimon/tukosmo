@@ -13,4 +13,6 @@ pub mod post;
 pub mod website;
 pub mod blog_pagination;
 
+pub mod favicon_meta;
+pub mod faviconadmin_meta;
 pub mod open_graph_meta;
