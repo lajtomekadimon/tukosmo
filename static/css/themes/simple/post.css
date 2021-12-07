@@ -98,8 +98,16 @@
     word-wrap: break-word;
 }
 
+.post-body a {
+    color: #020202;
+}
+
 .post-body a:hover {
     color: #555;
+}
+
+.post-body a:visited {
+    color: #020202;
 }
 
 .footnote-reference {
