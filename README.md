@@ -39,7 +39,7 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] Custom languages.
 - [x] Cookie-based auth.
 - [x] CommonMark-based posts and pages.
-- [ ] Open Graph cards.
+- [x] Open Graph cards.
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
 
