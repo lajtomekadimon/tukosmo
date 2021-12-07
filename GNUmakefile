@@ -169,18 +169,16 @@ psql:
 #                                WEB SERVER                                  #
 ##############################################################################
 
-install: clean frontend
+clean:
+	rm -f Cargo.lock
+	rm -Rf target
+
+install: clean
 	cargo build
+
+release: clean
+	cargo build --release
 
 run:
 	cargo run
 
-
-
-##############################################################################
-#                                   EXTRA                                    #
-##############################################################################
-
-clean:
-	rm -f Cargo.lock
-	rm -Rf target

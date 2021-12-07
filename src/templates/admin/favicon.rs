@@ -103,17 +103,18 @@ markup::define! {
                                 class = "file-input",
                                 type = "file",
                                 name = "resume",
+                                accept = "image/png",
                             ];
                             span[class = "file-cta"] {
                                 span[class = "file-icon"] {
                                     i[class = "eos-icons"] { "cloud_upload" }
                                 }
                                 span[class = "file-label"] {
-                                    "Choose a file..."
+                                    @t.choose_a_file
                                 }
                             }
                             span[class = "file-name"] {
-                                "No file uploaded"
+                                @t.no_file_uploaded
                             }
                         }
                     }

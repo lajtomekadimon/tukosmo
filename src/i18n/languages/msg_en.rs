@@ -26,6 +26,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Browser",
     cancel:
         "Cancel",
+    choose_a_file:
+        "Choose a file...",
     close_k_session:
         "Close",
     code:
@@ -231,6 +233,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "New user",
     next:
         "Next",
+    no_file_uploaded:
+        "No file uploaded",
     one_result_of_m:
         "1 result of {m}",
     optional:
