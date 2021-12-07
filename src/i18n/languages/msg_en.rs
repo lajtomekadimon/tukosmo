@@ -6,6 +6,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Account",
     add_language:
         "Add language",
+    appearance:
+        "Appearance",
     are_you_sure_that_you_want_to_delete_this_file:
         "Are you sure that you want to delete this file?",
     are_you_sure_that_you_want_to_delete_this_language:
@@ -28,6 +30,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Close",
     code:
         "Code",
+    current_favicon:
+        "Current favicon",
     current_password:
         "Current password",
     dashboard:
@@ -159,6 +163,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Examples: en, en-us...",
     examples_of_lang_names:
         "Examples: English, Español...",
+    favicon:
+        "Favicon",
     featured_image:
         "Featured image",
     file:
@@ -201,6 +207,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Login",
     logout_k_verb:
         "Logout",
+    menus:
+        "Menus",
     n_posts:
         "{n} posts",
     n_results_of_m:
@@ -237,6 +245,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Password",
     permalink:
         "Permalink",
+    png_image:
+        "PNG image",
     posts:
         "Posts",
     post_s_body:
@@ -281,6 +291,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The post will be permanent deleted.",
     the_post_will_be_sent_to_trash:
         "The post will be sent to trash.",
+    theme:
+        "Theme",
     there_are_languages_without_names:
         "There are languages without names.",
     title:
@@ -305,6 +317,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Update",
     upload_file:
         "Upload file",
+    upload_new_favicon:
+        "Upload new favicon",
     uploaded_by:
         "Uploaded by",
     uploaded_by_name_on_date:
@@ -325,6 +339,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Website title",
     website_title_in_the_new_language:
         "Website title (in the new language)",
+    widgets:
+        "Widgets",
     your_account_has_been_successfully_updated:
         "Your account has been successfully updated.",
     your_email:
@@ -333,6 +349,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Your password",
     your_sessions_have_been_successfully_updated:
         "Your sessions have been successfully updated.",
+    your_website_favicon_was_successfully_updated:
+        "Your website favicon was successfully updated.",
     your_website_files_were_successfully_updated:
         "Your website files were successfully updated.",
     your_website_info_has_been_successfully_updated:

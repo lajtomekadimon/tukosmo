@@ -7,6 +7,7 @@ pub mod languages;
 pub mod posts;
 pub mod pages;
 pub mod files;
+pub mod favicon;
 pub mod website;
 pub mod tukosmo;
 

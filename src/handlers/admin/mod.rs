@@ -48,6 +48,9 @@ pub mod account_post;
 pub mod sessions;
 pub mod sessions_post;
 
+pub mod favicon;
+pub mod favicon_post;
+
 pub mod website;
 pub mod website_post;
 

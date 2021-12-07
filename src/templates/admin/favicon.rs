@@ -4,16 +4,17 @@ use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::upload_file::UploadFileAResponse;
+use crate::handlers::admin::favicon::FaviconAResponse;
 use crate::i18n::t_error::ErrorDB;
 
 
 markup::define! {
-    UploadFile<'a>(
+    Favicon<'a>(
         title: &'a str,
-        q: &'a UploadFileAResponse,
+        q: &'a FaviconAResponse,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
+        success: &'a bool,
     ) {
         @AdminLayout {
             title: title,
@@ -24,8 +25,9 @@ markup::define! {
                     q: q,
                     t: t,
                     error: error,
+                    success: success,
                 },
-                current_page: "upload_file",
+                current_page: "favicon",
                 data: &q.data,
                 t: t,
             },
@@ -33,13 +35,14 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a UploadFileAResponse,
+        q: &'a FaviconAResponse,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
+        success: &'a bool,
     ) {
         div[class = "box is-marginless"] {
             h1[class = "title"] {
-                @t.upload_file
+                @t.favicon
 
                 div[class = "is-pulled-right"] {
                     @AdminLangDropdown {
@@ -58,9 +61,18 @@ markup::define! {
                 }
             }
 
+            @if **success {
+                div[
+                    class = "notification is-success",
+                ] {
+                    button[class = "delete"] {}
+                    @t.your_website_favicon_was_successfully_updated
+                }
+            }
+
             form[
                 method = "post",
-                action = "/{lang}/admin/upload_file"
+                action = "/{lang}/admin/favicon"
                     .replace("{lang}", &q.data.lang.code)
                 ,
                 enctype = "multipart/form-data",
@@ -76,7 +88,11 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        @t.file
+                        @t.upload_new_favicon
+
+                        " ("
+                        @t.png_image
+                        ")"
                     }
                     div[
                         id = "file-js",
@@ -109,17 +125,20 @@ markup::define! {
                             @t.submit
                         }
                     }
-                    div[class = "control"] {
-                        a[
-                            href = "/{lang}/admin/files"
-                                .replace("{lang}", &q.data.lang.code)
-                            ,
-                            class = "button is-link is-light",
-                        ] {
-                            @t.cancel
-                        }
-                    }
                 }
+            }
+
+            hr;
+
+            h2[class="title is-4"] {
+                @t.current_favicon
+            }
+
+            p {
+                img[
+                    src = "/static/favicon/favicon-96x96.png",
+                    alt = "favicon-96x96.png",
+                ];
             }
         }
     }

@@ -6,6 +6,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Cuenta",
     add_language:
         "Añadir idioma",
+    appearance:
+        "Apariencia",
     are_you_sure_that_you_want_to_delete_this_file:
         "¿Estás seguro de que quieres eliminar este archivo?",
     are_you_sure_that_you_want_to_delete_this_language:
@@ -28,6 +30,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Cerrar",
     code:
         "Código",
+    current_favicon:
+        "Favicon actual",
     current_password:
         "Contraseña actual",
     dashboard:
@@ -159,6 +163,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ejemplos: es, es-es...",
     examples_of_lang_names:
         "Ejemplos: English, Español...",
+    favicon:
+        "Favicon",
     featured_image:
         "Imagen de presentación",
     file:
@@ -201,6 +207,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Iniciar sesión",
     logout_k_verb:
         "Cerrar sesión",
+    menus:
+        "Menús",
     n_posts:
         "{n} entradas",
     n_results_of_m:
@@ -237,6 +245,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Contraseña",
     permalink:
         "Permalink",
+    png_image:
+        "Imagen PNG",
     posts:
         "Entradas",
     post_s_body:
@@ -281,6 +291,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "La entrada será eliminada de forma permanente.",
     the_post_will_be_sent_to_trash:
         "La entrada será enviada a la papelera.",
+    theme:
+        "Tema",
     there_are_languages_without_names:
         "Hay idiomas sin nombres.",
     title:
@@ -305,6 +317,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Actualizar",
     upload_file:
         "Subir archivo",
+    upload_new_favicon:
+        "Subir nuevo favicon",
     uploaded_by:
         "Subido por",
     uploaded_by_name_on_date:
@@ -325,6 +339,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Título de la página web",
     website_title_in_the_new_language:
         "Título de la página web (en el nuevo idioma)",
+    widgets:
+        "Widgets",
     your_account_has_been_successfully_updated:
         "Tu cuenta ha sido actualizada con éxito.",
     your_email:
@@ -333,6 +349,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Tu contraseña",
     your_sessions_have_been_successfully_updated:
         "Tus sesiones han sido actualizadas con éxito.",
+    your_website_favicon_was_successfully_updated:
+        "El favicon de tu página web se actualizó con éxito.",
     your_website_files_were_successfully_updated:
         "Los archivos de tu página web se actualizaron con éxito.",
     your_website_info_has_been_successfully_updated:

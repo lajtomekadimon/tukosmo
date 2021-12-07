@@ -8,3 +8,4 @@ cert.pem
 /static/bundle.admin.js
 /static/bundle.js
 /files/*
+/static/favicon/temp/*

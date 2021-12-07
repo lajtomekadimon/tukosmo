@@ -379,6 +379,18 @@ async fn main() -> std::io::Result<()> {
                         )
                     )
 
+                    //-- Appearance --//
+
+                    // Favicon
+                    .service(web::resource("/favicon")
+                        .route(web::get()
+                            .to(admin::favicon::favicon)
+                        )
+                        .route(web::post()
+                            .to(admin::favicon_post::favicon_post)
+                        )
+                    )
+
                     //-- Settings --//
 
                     // Website

@@ -206,6 +206,71 @@ markup::define! {
                 }
             }
 
+            /* Appearance
+             * * * * * */
+            p[class = "menu-label"] {
+                @t.appearance
+            }
+            ul[class = "menu-list"] {
+                li {
+                    a[
+                        href = "/{lang}/admin/favicon"
+                            .replace("{lang}", &data.lang.code),
+                        class = if current_page == &"favicon" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[class = "eos-icons"] { "photo" }
+                        " "
+                        @t.favicon
+                    }
+                }
+
+                /*
+                li {
+                    a[
+                        href = "/{lang}/admin/theme"
+                            .replace("{lang}", &data.lang.code),
+                        class = if current_page == &"theme" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[class = "eos-icons"] { "devices" }
+                        " "
+                        @t.theme
+                    }
+                }
+
+                li {
+                    a[
+                        href = "/{lang}/admin/menus"
+                            .replace("{lang}", &data.lang.code),
+                        class = if current_page == &"menus" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[class = "eos-icons"] { "list" }
+                        " "
+                        @t.menus
+                    }
+                }
+
+                li {
+                    a[
+                        href = "/{lang}/admin/widgets"
+                            .replace("{lang}", &data.lang.code),
+                        class = if current_page == &"widgets" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[class = "eos-icons"] { "view_sidebar" }
+                        " "
+                        @t.widgets
+                    }
+                }
+                */
+            }
+
             /* Settings
              * * * * * * */
             p[class = "menu-label"] {
