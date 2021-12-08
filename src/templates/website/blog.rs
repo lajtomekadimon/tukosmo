@@ -80,6 +80,7 @@ markup::define! {
                             div[
                                 class = "post-wrapper-data-meta-date",
                             ] {
+                                /*
                                 a[
                                     href = "/{lang}/blog/{permalink}"
                                         .replace("{lang}", &post.lang.code)
@@ -88,28 +89,31 @@ markup::define! {
                                             &post.permalink.to_string()
                                         ),
                                 ] {
-                                    i[class = "eos-icons"] {
-                                        "calendar_today"
-                                    }
+                                */
+                                i[class = "eos-icons"] {
+                                    "calendar_today"
+                                }
 
+                                " "
+
+                                time[
+                                    datetime = "2021-08-11T20:37:29+00:00",
+                                ] {
+                                    {t_date(&post.date, &q.data.lang.code)}
+                                }
+
+                                @if post.lang.id != q.data.lang.id {
                                     " "
 
-                                    time[
-                                        datetime = "2021-08-11T20:37:29+00:00",
-                                    ] {
-                                        {t_date(&post.date, &q.data.lang.code)}
-                                    }
-
-                                    @if post.lang.id != q.data.lang.id {
-                                        " "
-
-                                        b {
-                                            "("
-                                            @t.untranslated_k_lower
-                                            ")"
-                                        }
+                                    b {
+                                        "("
+                                        @t.untranslated_k_lower
+                                        ")"
                                     }
                                 }
+                                /*
+                                }
+                                */
                             }
                         }
 

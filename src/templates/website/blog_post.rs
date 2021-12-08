@@ -90,37 +90,45 @@ markup::define! {
                         span[
                             class = "post-meta-author",
                         ] {
+                            /*
                             a[
                                 href = "/{lang}/blog"
                                     .replace("{lang}", &q.data.lang.code)
                                 ,
                             ] {
-                                i[class = "eos-icons"] {
-                                    "person"
-                                }
-
-                                " "
-
-                                @q.post.author_name
+                            */
+                            i[class = "eos-icons"] {
+                                "person"
                             }
+
+                            " "
+
+                            @q.post.author_name
+                            /*
+                            }
+                            */
                         }
                         
                         span[
                             class = "post-meta-date",
                         ] {
+                            /*
                             a[
                                 href = "/{lang}/blog"
                                     .replace("{lang}", &q.data.lang.code)
                                 ,
                             ] {
-                                i[class = "eos-icons"] {
-                                    "calendar_today"
-                                }
-
-                                " "
-
-                                {t_date(&q.post.date, &q.data.lang.code)}
+                            */
+                            i[class = "eos-icons"] {
+                                "calendar_today"
                             }
+
+                            " "
+
+                            {t_date(&q.post.date, &q.data.lang.code)}
+                            /*
+                            }
+                            */
                         }
                         
                         @if let Some(_user) = &q.data.userd {

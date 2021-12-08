@@ -80,7 +80,7 @@
 }
 
 .post-wrapper-data-meta-date a:hover,
-.post-wrapper-data-meta-date time:hover {
+.post-wrapper-data-meta-date a time:hover {
     color: #666;
     text-decoration: none;
 }
