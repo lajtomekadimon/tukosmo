@@ -81,6 +81,7 @@ markup::define! {
                             }
                         }
 
+                        /*
                         p[class = "has-text-grey"] {
                             a[href = "/"] {
                                 @t.sign_up_k_verb
@@ -92,6 +93,7 @@ markup::define! {
                                 @t.forgotten_password
                             }
                         }
+                        */
 
                         div[class = "mt-3"] {
                             @AdminLangDropdown {
