@@ -56,7 +56,12 @@ markup::define! {
                     div[class = "column is-4 is-offset-4"] {
                         div[class = "box"] {
                             figure[class = "avatar"] {
-                                img[src = "/static/img/tukosmo-logo-128.png"];
+                                div[class = "avatar-container"] {
+                                    img[
+                                        src = "/static/favicon/\
+                                               favicon-96x96.png",
+                                    ];
+                                }
                             }
 
                             @if let Some(e) = error {

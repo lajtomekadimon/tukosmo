@@ -166,14 +166,19 @@ nav.navbar {
     padding-bottom: 20px;
 }
 
-.avatar img {
-    padding: 5px;
-    background: #fff;
+.avatar-container {
+    display: inline-block;
     border-radius: 50%;
+    padding: 20px;
+    background: #fff;
     -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
                         0 0 0 1px rgba(10, 10, 10, .1);
     box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
                 0 0 0 1px rgba(10, 10, 10, .1);
+}
+
+.avatar img {
+    background: #fff;
 }
 
 .hero input {

@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpServer};
+//use actix_web::middleware;
 //use actix_web::http;
 //use actix_cors::Cors;
 use actix_files::Files;
@@ -95,6 +96,8 @@ async fn main() -> std::io::Result<()> {
                         .max_age(604800)  // 1 week
                 )
             )
+            // Firefox's view source code doesn't work with this
+            //.wrap(middleware::Compress::default())
 
             // Website root URL: /
             .service(web::resource("/")
