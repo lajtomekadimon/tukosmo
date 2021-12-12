@@ -127,13 +127,15 @@ markup::define! {
                 }
             }
 
-            @AdminPagination {
-                data: &q.data,
-                t: t,
-                route: "/{lang}/admin/files?p={page}&rpp={rpp}",
-                current_page: &q.page,
-                total_pages: &q.total_pages,
-                results_per_page: &q.results_per_page,
+            @if &q.total_pages > &1 {
+                @AdminPagination {
+                    data: &q.data,
+                    t: t,
+                    route: "/{lang}/admin/files?p={page}&rpp={rpp}",
+                    current_page: &q.page,
+                    total_pages: &q.total_pages,
+                    results_per_page: &q.results_per_page,
+                }
             }
         }
     }

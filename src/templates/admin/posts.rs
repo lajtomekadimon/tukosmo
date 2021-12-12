@@ -232,23 +232,25 @@ markup::define! {
                 }
             }
 
-            @AdminPagination {
-                data: &q.data,
-                t: t,
-                route: if q.filter == "drafts" {
-                    "/{lang}/admin/posts?f=drafts&p={page}&rpp={rpp}"
-                } else if q.filter == "published" {
-                    "/{lang}/admin/posts?f=published&p={page}&rpp={rpp}"
-                } else if q.filter == "untranslated" {
-                    "/{lang}/admin/posts?f=untranslated&p={page}&rpp={rpp}"
-                } else if q.filter == "deleted" {
-                    "/{lang}/admin/posts?f=deleted&p={page}&rpp={rpp}"
-                } else {
-                    "/{lang}/admin/posts?p={page}&rpp={rpp}"
-                },
-                current_page: &q.page,
-                total_pages: &q.total_pages,
-                results_per_page: &q.results_per_page,
+            @if &q.total_pages > &1 {
+                @AdminPagination {
+                    data: &q.data,
+                    t: t,
+                    route: if q.filter == "drafts" {
+                        "/{lang}/admin/posts?f=drafts&p={page}&rpp={rpp}"
+                    } else if q.filter == "published" {
+                        "/{lang}/admin/posts?f=published&p={page}&rpp={rpp}"
+                    } else if q.filter == "untranslated" {
+                        "/{lang}/admin/posts?f=untranslated&p={page}&rpp={rpp}"
+                    } else if q.filter == "deleted" {
+                        "/{lang}/admin/posts?f=deleted&p={page}&rpp={rpp}"
+                    } else {
+                        "/{lang}/admin/posts?p={page}&rpp={rpp}"
+                    },
+                    current_page: &q.page,
+                    total_pages: &q.total_pages,
+                    results_per_page: &q.results_per_page,
+                }
             }
         }
     }
