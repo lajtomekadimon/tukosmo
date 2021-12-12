@@ -48,15 +48,21 @@ markup::define! {
                     }
                     */
 
-                    li[
-                        class = "site-navigation-li",
-                    ] {
-                        button[
-                            id = "button-select-language",
+                    @if data.languages.iter().len() > 1 {
+                        li[
+                            class = "site-navigation-li",
                         ] {
-                            i[class = "eos-icons eos-icons-l"] { "language" }
-                            {data.lang.code.to_uppercase()}
-                            i[class = "eos-icons eos-icons-r"] { "arrow_drop_down" }
+                            button[
+                                id = "button-select-language",
+                            ] {
+                                i[class = "eos-icons eos-icons-l"] {
+                                    "language"
+                                }
+                                {data.lang.code.to_uppercase()}
+                                i[class = "eos-icons eos-icons-r"] {
+                                    "arrow_drop_down"
+                                }
+                            }
                         }
                     }
                 }

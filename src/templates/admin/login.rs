@@ -95,23 +95,25 @@ markup::define! {
                         }
                         */
 
-                        div[class = "mt-3"] {
-                            @AdminLangDropdown {
-                                routes: &q.routes,
-                                data: &AdminDataDB {
-                                    userd: UserDB {
-                                        id: 0,
-                                        email: "".to_string(),
-                                        name: "".to_string(),
-                                        date: "".to_string(),
+                        @if q.data.languages.iter().len() > 1 {
+                            div[class = "mt-3"] {
+                                @AdminLangDropdown {
+                                    routes: &q.routes,
+                                    data: &AdminDataDB {
+                                        userd: UserDB {
+                                            id: 0,
+                                            email: "".to_string(),
+                                            name: "".to_string(),
+                                            date: "".to_string(),
+                                        },
+                                        lang: q.data.lang.clone(),
+                                        languages: q.data.languages.clone(),
+                                        website_title:
+                                            q.data.website_title.clone(),
+                                        website_subtitle:
+                                            q.data.website_subtitle.clone(),
                                     },
-                                    lang: q.data.lang.clone(),
-                                    languages: q.data.languages.clone(),
-                                    website_title:
-                                        q.data.website_title.clone(),
-                                    website_subtitle:
-                                        q.data.website_subtitle.clone(),
-                                },
+                                }
                             }
                         }
                     }

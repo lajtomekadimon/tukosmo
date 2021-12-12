@@ -42,10 +42,12 @@ markup::define! {
                 @t.delete_user_w_name
                     .replace("{name}", &q.user_data.name)
 
-                div[class = "is-pulled-right"] {
-                    @AdminLangDropdown {
-                        routes: &q.routes,
-                        data: &q.data,
+                @if q.data.languages.iter().len() > 1 {
+                    div[class = "is-pulled-right"] {
+                        @AdminLangDropdown {
+                            routes: &q.routes,
+                            data: &q.data,
+                        }
                     }
                 }
             }

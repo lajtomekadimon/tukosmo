@@ -51,10 +51,12 @@ markup::define! {
                 @t.edit_post_w_title
                     .replace("{title}", &post.id.to_string())
 
-                div[class = "is-pulled-right"] {
-                    @AdminLangDropdown {
-                        routes: &q.routes,
-                        data: &q.data,
+                @if q.data.languages.iter().len() > 1 {
+                    div[class = "is-pulled-right"] {
+                        @AdminLangDropdown {
+                            routes: &q.routes,
+                            data: &q.data,
+                        }
                     }
                 }
             }

@@ -41,10 +41,12 @@ markup::define! {
             h1[class = "title"] {
                 @t.languages
 
-                div[class = "is-pulled-right"] {
-                    @AdminLangDropdown {
-                        routes: &q.routes,
-                        data: &q.data,
+                @if q.data.languages.iter().len() > 1 {
+                    div[class = "is-pulled-right"] {
+                        @AdminLangDropdown {
+                            routes: &q.routes,
+                            data: &q.data,
+                        }
                     }
                 }
 
