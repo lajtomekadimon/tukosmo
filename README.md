@@ -39,6 +39,7 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] Custom languages.
 - [x] Cookie-based auth.
 - [x] CommonMark-based posts and pages.
+- [ ] WYSIWYG CommonMark editor for posts and pages.
 - [x] Open Graph cards.
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
@@ -47,33 +48,18 @@ Roadmap:
 
 - [ ] 0.1
     - [ ] Foundations of Tukosmo
-    - [x] Users system
-    - [x] Custom languages
-    - [x] Blog
+    - [ ] Statistics
+    - [ ] Server
+    - [x] Users
+    - [x] Languages
+    - [x] Posts
+    - [ ] Pages
     - [x] Files
     - [x] Favicon
-    - [x] Admin Panel
-- [ ] 0.2
-    - [ ] Self-update server
-    - [ ] Self-update Tukosmo
-    - [ ] WYSIWYG CommonMark editor for posts
-    - [ ] Upload files using Ajax when writing posts
-    - [ ] Import images from Tukosmo when writing posts
-    - [ ] Real-time form validation
-    - [ ] Change pages loading just the new content using Ajax
-- [ ] 0.3
-    - [ ] Custom menus and widgets
-    - [ ] Pages
-    - [ ] Special pages (contact, team, cv, homepage?, etc.)
-    - [ ] Custom homepage
-- [ ] 0.4
-    - [ ] FAQ
-    - [ ] RSS
-    - [ ] Searcher
+    - [ ] Theme
+    - [ ] Menus
     - [ ] Social links
-- [ ] 0.5
-    - [ ] Statistics
-    - [ ] Server info
+    - [ ] Widgets
 - [ ] ?.?
     - [ ] Download any post as PDF
     - [ ] Safe payments between users
