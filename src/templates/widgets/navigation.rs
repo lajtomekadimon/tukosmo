@@ -37,9 +37,6 @@ markup::define! {
                                     "language"
                                 }
                                 {data.lang.code.to_uppercase()}
-                                i[class = "eos-icons eos-icons-r"] {
-                                    "arrow_drop_down"
-                                }
                             }
                         }
                     }

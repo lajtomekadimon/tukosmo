@@ -1,12 +1,27 @@
 
-let button_select_language = document.getElementById("button-select-language");
+let site_languages = document.getElementById("site-languages");
 
-button_select_language.addEventListener('click', function() {
-    document.getElementById("site-languages").style.display = "block";
-});
+document.getElementById("button-select-language").addEventListener(
+    'click',
+    function() {
+        site_languages.style.display = "block";
+        site_languages.style.opacity = '1';
+    }
+);
 
-let site_languages_bg = document.getElementById("site-languages-bg");
+document.getElementById("site-languages-bg").addEventListener(
+    'click',
+    function() {
+        site_languages.style.opacity = '0';
+    }
+);
 
-site_languages_bg.addEventListener('click', function() {
-    document.getElementById("site-languages").style.display = "none";
-});
+site_languages.addEventListener(
+    'transitionend',
+    function() {
+        if (site_languages.style.display === "block") {
+            site_languages.style.display = "none";
+        }
+    }
+);
+
