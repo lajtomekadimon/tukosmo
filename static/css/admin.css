@@ -240,3 +240,7 @@ nav.navbar {
 .card-footer {
     word-wrap: break-word;
 }
+
+.notification {
+    transition: opacity 0.5s;
+}

@@ -69,7 +69,7 @@ pub const CSS_ADMIN: &'static str =
 
 // JavaScript files
 pub const JS_WEBSITE: &'static str =
-    "/static/js/website.js";
+    "/static/bundle.js";
 pub const JS_ADMIN: &'static str =
-    "/static/js/admin.js";
+    "/static/bundle.admin.js";
 

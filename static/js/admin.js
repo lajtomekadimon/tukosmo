@@ -41,9 +41,20 @@ if (fileInput !== null) {
 }
 
 
-const delete_notifs = document.querySelectorAll('.delete');
+document.querySelectorAll('.delete').forEach(
+    el => el.addEventListener(
+        'click',
+        event => {
+            event.target.parentNode.style.opacity = '0';
+        }
+    )
+);
 
-delete_notifs.forEach(el => el.addEventListener('click', event => {
-    event.target.parentNode.style.display = 'none';
-}));
-
+document.querySelectorAll('.notification').forEach(
+    el => el.addEventListener(
+        'transitionend',
+        event => {
+            event.target.remove();
+        }
+    )
+);
