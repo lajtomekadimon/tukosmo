@@ -17,6 +17,8 @@ use crate::handlers::admin::new_user::{
     NewUserAResponse,
 };
 use crate::templates::admin::new_user::NewUser;
+use crate::handlers::admin::error::ra_error_w_code;
+use crate::handlers::admin::users::ra_users_success;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -161,11 +163,11 @@ pub async fn new_user_post(
 
                     Ok(_) => {
 
-                        let redirect_route = "/{lang}/admin/users?success=yes"
-                            .replace("{lang}", &user_req.lang_code);
-
                         HttpResponse::Found()
-                            .header("Location", redirect_route)
+                            .header(
+                                "Location",
+                                ra_users_success(&user_req.lang_code),
+                            )
                             .finish()
 
                     },
@@ -206,9 +208,12 @@ pub async fn new_user_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
 

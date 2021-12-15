@@ -7,6 +7,10 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::templates::widgets::admin_pagination::AdminPagination;
 use crate::handlers::admin::posts::PostsAResponse;
+use crate::handlers::admin::new_post::ra_new_post;
+use crate::handlers::admin::edit_post::ra_edit_post_w_id;
+use crate::handlers::admin::edit_user::ra_edit_user_w_id;
+use crate::handlers::admin::posts::ra_posts_w_f_wu_rpp_p;
 
 
 markup::define! {
@@ -72,8 +76,7 @@ markup::define! {
                 }
 
                 a[
-                    href = "/{lang}/admin/new_post"
-                        .replace("{lang}", &q.data.lang.code),
+                    href = ra_new_post(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -145,16 +148,10 @@ markup::define! {
                             ] {
                                 td {
                                     a[
-                                        href = "/{lang}/admin/edit_post\
-                                                ?id={id}"
-                                            .replace(
-                                                "{lang}",
-                                                &q.data.lang.code,
-                                            )
-                                            .replace(
-                                                "{id}",
-                                                &post.id.to_string()
-                                            ),
+                                        href = ra_edit_post_w_id(
+                                            &q.data.lang.code,
+                                            &post.id,
+                                        ),
                                         class = if post.translator == 0 {
                                             "has-text-danger"
                                         } else if post.draft {
@@ -194,16 +191,10 @@ markup::define! {
                                 }
                                 td {
                                     a[
-                                        href = "/{lang}/admin/edit_user\
-                                                ?id={id}"
-                                            .replace(
-                                                "{lang}",
-                                                &q.data.lang.code,
-                                            )
-                                            .replace(
-                                                "{id}",
-                                                &post.author.to_string()
-                                            ),
+                                        href = ra_edit_user_w_id(
+                                            &q.data.lang.code,
+                                            &post.author,
+                                        ),
                                         class = if post.translator == 0 {
                                             "has-text-danger"
                                         } else if post.draft {
@@ -238,17 +229,20 @@ markup::define! {
                 @AdminPagination {
                     data: &q.data,
                     t: t,
-                    route: if q.filter == "drafts" {
-                        "/{lang}/admin/posts?f=drafts&p={page}&rpp={rpp}"
-                    } else if q.filter == "published" {
-                        "/{lang}/admin/posts?f=published&p={page}&rpp={rpp}"
-                    } else if q.filter == "untranslated" {
-                        "/{lang}/admin/posts?f=untranslated&p={page}&rpp={rpp}"
-                    } else if q.filter == "deleted" {
-                        "/{lang}/admin/posts?f=deleted&p={page}&rpp={rpp}"
-                    } else {
-                        "/{lang}/admin/posts?p={page}&rpp={rpp}"
-                    },
+                    route: &ra_posts_w_f_wu_rpp_p(
+                        &q.data.lang.code,
+                        if q.filter == "drafts" {
+                            "drafts"
+                        } else if q.filter == "published" {
+                            "published"
+                        } else if q.filter == "untranslated" {
+                            "untranslated"
+                        } else if q.filter == "deleted" {
+                            "deleted"
+                        } else {
+                            "all"
+                        },
+                    ),
                     current_page: &q.page,
                     total_pages: &q.total_pages,
                     results_per_page: &q.results_per_page,

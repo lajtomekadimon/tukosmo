@@ -16,6 +16,7 @@ use crate::handlers::admin::favicon::{
 };
 use crate::templates::admin::favicon::Favicon;
 use crate::files::generate_favicon::generate_favicon;
+use crate::handlers::admin::favicon::ra_favicon_success;
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
@@ -50,11 +51,11 @@ pub async fn favicon_post(
 
                 Ok(_row) => {
 
-                    let redirect_route = "/{lang}/admin/favicon?success=true"
-                        .replace("{lang}", &user_req.lang_code);
-
                     HttpResponse::Found()
-                        .header("Location", redirect_route)
+                        .header(
+                            "Location",
+                            ra_favicon_success(&user_req.lang_code),
+                        )
                         .finish()
 
                 },

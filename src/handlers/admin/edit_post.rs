@@ -17,6 +17,15 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_edit_post_w_id(
+    lang_code: &str,
+    id: &i64,
+) -> String {
+    "/{lang}/admin/edit_post?id={id}"
+        .replace("{lang}", lang_code)
+        .replace("{id}", &id.to_string())
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct EditPostARequest {
     pub req: types::AdminRequest,

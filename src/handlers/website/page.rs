@@ -10,6 +10,14 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 
 
+/*
+pub fn rw_page(
+    lang_code: &str,
+) -> String {
+    "/{lang}/page".replace("{lang}", lang_code)
+}
+*/
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PageWRequest {
     pub req: types::WebsiteRequest,

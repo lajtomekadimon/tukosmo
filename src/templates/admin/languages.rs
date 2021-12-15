@@ -6,6 +6,8 @@ use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::languages::LanguagesAResponse;
+use crate::handlers::admin::new_language::ra_new_language;
+use crate::handlers::admin::edit_language::ra_edit_language_w_id;
 
 
 markup::define! {
@@ -51,8 +53,7 @@ markup::define! {
                 }
 
                 a[
-                    href = "/{lang}/admin/new_language"
-                        .replace("{lang}", &q.data.lang.code),
+                    href = ra_new_language(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -105,13 +106,10 @@ markup::define! {
                         ] {
                             td {
                                 a[
-                                    href = "/{lang}/admin/edit_language\
-                                            ?id={id}"
-                                        .replace("{lang}", &q.data.lang.code)
-                                        .replace(
-                                            "{id}",
-                                            &lang.id.to_string()
-                                        ),
+                                    href = ra_edit_language_w_id(
+                                        &q.data.lang.code,
+                                        &lang.id,
+                                    ),
                                     class = if !lang.has_all_names {
                                         "has-text-danger"
                                     } else {

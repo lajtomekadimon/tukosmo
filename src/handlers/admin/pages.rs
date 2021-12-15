@@ -10,6 +10,21 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 
 
+pub fn ra_pages(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/pages".replace("{lang}", lang_code)
+}
+
+/*
+pub fn ra_pages_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/pages?success=true"
+        .replace("{lang}", lang_code)
+}
+*/
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PagesARequest {
     pub req: types::AdminRequest,

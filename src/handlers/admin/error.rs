@@ -11,6 +11,7 @@ use crate::templates::admin::error::Error;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 use crate::database::error_codes as ec;
+use crate::handlers::admin::login::ra_login;
 
 
 #[derive(Deserialize)]
@@ -18,6 +19,15 @@ pub struct GetParamData {
     code: String,
 }
 
+
+pub fn ra_error_w_code(
+    lang_code: &str,
+    code: &str,
+) -> String {
+    "/{lang}/admin/error?code={code}"
+        .replace("{lang}", lang_code)
+        .replace("{code}", code)
+}
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ErrorARequest {
@@ -102,11 +112,11 @@ pub async fn error(
 
                         } else if error_code == ec::USER_NOT_LOGGED_IN {
 
-                            let login_route = "/{lang}/admin/login"
-                                .replace("{lang}", &user_req.lang_code);
-
                             HttpResponse::Found()
-                                .header("Location", login_route)
+                                .header(
+                                    "Location",
+                                    ra_login(&user_req.lang_code),
+                                )
                                 .finish()
 
                         } else {

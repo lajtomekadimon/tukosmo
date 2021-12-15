@@ -2,6 +2,7 @@ use actix_web::HttpResponse;
 use postgres::Error;
 
 use crate::i18n::t_error::t_error;
+use crate::handlers::admin::error::ra_error_w_code;
 
 
 pub fn error_admin_route(
@@ -14,9 +15,12 @@ pub fn error_admin_route(
     let e = t_error(pg_error, lang_code);
 
     HttpResponse::Found()
-        .header("Location", "/{lang}/admin/error?code={code}"
-            .replace("{lang}", lang_code)
-            .replace("{code}", &e.code)
+        .header(
+            "Location",
+            ra_error_w_code(
+                lang_code,
+                &e.code,
+            ),
         )
         .finish()
 

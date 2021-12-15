@@ -17,6 +17,19 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_website(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/website".replace("{lang}", lang_code)
+}
+
+pub fn ra_website_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/website?success=true"
+        .replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WebsiteARequest {
     pub req: types::AdminRequest,

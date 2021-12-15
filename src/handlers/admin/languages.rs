@@ -17,6 +17,19 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_languages(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/languages".replace("{lang}", lang_code)
+}
+
+pub fn ra_languages_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/languages?success=true"
+        .replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LanguagesARequest {
     pub req: types::AdminRequest,

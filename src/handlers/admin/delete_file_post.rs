@@ -16,6 +16,8 @@ use crate::handlers::admin::delete_file::{
     DeleteFileAResponse,
 };
 use crate::templates::admin::delete_file::DeleteFile;
+use crate::handlers::admin::files::ra_files_success;
+use crate::handlers::admin::error::ra_error_w_code;
 
 
 #[derive(Deserialize)]
@@ -70,20 +72,20 @@ pub async fn delete_file_post(
                         // Delete file when database operation fails
                         match std::fs::remove_file(filepath) {
                             Ok(_) => {
-                                let redirect_route = "/{lang}/admin/files?success=yes"
-                                    .replace("{lang}", &user_req.lang_code);
-
                                 HttpResponse::Found()
-                                    .header("Location", redirect_route)
+                                    .header(
+                                        "Location",
+                                        ra_files_success(&user_req.lang_code),
+                                    )
                                     .finish()
                             },
                             // TODO: (?)
                             Err(_) => {
-                                let redirect_route = "/{lang}/admin/files?success=yes"
-                                    .replace("{lang}", &user_req.lang_code);
-
                                 HttpResponse::Found()
-                                    .header("Location", redirect_route)
+                                    .header(
+                                        "Location",
+                                        ra_files_success(&user_req.lang_code),
+                                    )
                                     .finish()
                             },
                         }
@@ -127,9 +129,12 @@ pub async fn delete_file_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
 

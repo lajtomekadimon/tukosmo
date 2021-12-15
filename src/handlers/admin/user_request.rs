@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use uuid::Uuid;
 
 use crate::database::types::AdminRequest;
+use crate::handlers::admin::login::ra_login;
 
 
 pub fn user_request(
@@ -12,9 +13,6 @@ pub fn user_request(
 
     let lang_code: String = req.match_info()
         .get("lang").unwrap().parse().unwrap();
-
-    let login_route = "/{lang}/admin/login"
-        .replace("{lang}", &lang_code);
 
     // Cookie has a session
     if let Some(session_uuid) = id.identity() {
@@ -40,7 +38,7 @@ pub fn user_request(
             // Redirect to login page
             Err(
                 HttpResponse::Found()
-                    .header("Location", login_route)
+                    .header("Location", ra_login(&lang_code))
                     .finish()
             )
 
@@ -53,7 +51,7 @@ pub fn user_request(
         // Redirect to login page
         Err(
             HttpResponse::Found()
-                .header("Location", login_route)
+                .header("Location", ra_login(&lang_code))
                 .finish()
         )
 

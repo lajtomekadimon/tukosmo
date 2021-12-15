@@ -10,6 +10,12 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 
 
+pub fn ra_statistics(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/statistics".replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct StatisticsARequest {
     pub req: types::AdminRequest,

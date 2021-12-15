@@ -7,6 +7,8 @@ use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::templates::widgets::admin_file_card::AdminFileCard;
 use crate::handlers::admin::delete_file::DeleteFileAResponse;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::delete_file::ra_delete_file_w_id;
+use crate::handlers::admin::files::ra_files;
 
 
 markup::define! {
@@ -63,9 +65,10 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/delete_file?id={id}"
-                    .replace("{lang}", &q.data.lang.code)
-                    .replace("{id}", &q.file_data.id.to_string()),
+                action = ra_delete_file_w_id(
+                    &q.data.lang.code,
+                    &q.file_data.id,
+                ),
             ] {
                 input[
                     type = "hidden",
@@ -105,9 +108,7 @@ markup::define! {
                             }
                             div[class = "control"] {
                                 a[
-                                    href = "/{lang}/admin/files"
-                                        .replace("{lang}", &q.data.lang.code)
-                                    ,
+                                    href = ra_files(&q.data.lang.code),
                                     class = "button is-link is-light",
                                 ] {
                                     @t.cancel

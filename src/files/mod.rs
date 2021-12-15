@@ -2,3 +2,5 @@ pub mod extensions;
 pub mod generate_favicon;
 pub mod save_file;
 pub mod resize_image;
+pub mod file_route;
+pub mod static_files;

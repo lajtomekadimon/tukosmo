@@ -6,6 +6,8 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::delete_post::DeletePostAResponse;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::delete_post::ra_delete_post_w_id;
+use crate::handlers::admin::posts::ra_posts;
 
 
 markup::define! {
@@ -84,9 +86,10 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/delete_post?id={id}"
-                    .replace("{lang}", &q.data.lang.code)
-                    .replace("{id}", &q.post.id.to_string()),
+                action = ra_delete_post_w_id(
+                    &q.data.lang.code,
+                    &q.post.id,
+                ),
             ] {
                 input[
                     type = "hidden",
@@ -108,9 +111,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/posts"
-                                .replace("{lang}", &q.data.lang.code)
-                            ,
+                            href = ra_posts(&q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             @t.cancel

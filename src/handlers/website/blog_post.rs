@@ -10,6 +10,15 @@ use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
 
 
+pub fn rw_blog_post(
+    lang_code: &str,
+    permalink: &str,
+) -> String {
+    "/{lang}/blog/{permalink}"
+        .replace("{lang}", lang_code)
+        .replace("{permalink}", permalink)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct BlogPostWRequest {
     pub req: types::WebsiteRequest,

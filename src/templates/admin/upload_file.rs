@@ -6,6 +6,8 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::upload_file::UploadFileAResponse;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::upload_file::ra_upload_file;
+use crate::handlers::admin::files::ra_files;
 
 
 markup::define! {
@@ -62,9 +64,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/upload_file"
-                    .replace("{lang}", &q.data.lang.code)
-                ,
+                action = ra_upload_file(&q.data.lang.code),
                 enctype = "multipart/form-data",
             ] {
                 // Sadly, Actix doesn't support this in multipart yet
@@ -113,9 +113,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/files"
-                                .replace("{lang}", &q.data.lang.code)
-                            ,
+                            href = ra_files(&q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             @t.cancel

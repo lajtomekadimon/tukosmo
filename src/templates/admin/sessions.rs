@@ -9,6 +9,7 @@ use crate::handlers::admin::sessions::SessionsAResponse;
 use crate::i18n::t_error::ErrorDB;
 use crate::i18n::get_browser_from_user_agent::get_browser_from_user_agent;
 use crate::i18n::get_os_from_user_agent::get_os_from_user_agent;
+use crate::handlers::admin::sessions::ra_sessions;
 
 
 markup::define! {
@@ -112,8 +113,7 @@ markup::define! {
                             }
                             td {
                                 form[
-                                    action = "/{lang}/admin/sessions"
-                                        .replace("{lang}", &q.data.lang.code),
+                                    action = ra_sessions(&q.data.lang.code),
                                     method = "post",
                                 ] {
                                     input[

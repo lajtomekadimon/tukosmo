@@ -14,6 +14,7 @@ use crate::handlers::admin::login::{
     LoginAResponse,
 };
 use crate::templates::admin::login::Login;
+use crate::handlers::admin::dashboard::ra_dashboard;
 
 
 #[derive(Deserialize)]
@@ -99,7 +100,7 @@ pub async fn login_post(
             HttpResponse::Found()
                 .header(
                     "Location",
-                    "/{lang}/admin/".replace("{lang}", &q.data.lang.code),
+                    ra_dashboard(&q.data.lang.code),
                 )
                 .finish()
         },
@@ -117,11 +118,11 @@ pub async fn login_post(
 
                 if let Some(_user) = q.data.userd {
 
-                    let dashboard_route = "/{lang}/admin/"
-                        .replace("{lang}", &q.data.lang.code);
-
                     HttpResponse::Found()
-                        .header("Location", dashboard_route)
+                        .header(
+                            "Location",
+                            ra_dashboard(&q.data.lang.code),
+                        )
                         .finish()
 
                 } else {

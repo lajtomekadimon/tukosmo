@@ -17,6 +17,8 @@ use crate::handlers::admin::edit_language::{
     EditLanguageAResponse,
 };
 use crate::templates::admin::edit_language::EditLanguage;
+use crate::handlers::admin::error::ra_error_w_code;
+use crate::handlers::admin::languages::ra_languages_success;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -143,12 +145,11 @@ pub async fn edit_language_post(
 
                     Ok(_row) => {
 
-                        let redirect_route =
-                            "/{lang}/admin/languages?success=yes"
-                                .replace("{lang}", &user_req.lang_code);
-
                         HttpResponse::Found()
-                            .header("Location", redirect_route)
+                            .header(
+                                "Location",
+                                ra_languages_success(&user_req.lang_code),
+                            )
                             .finish()
                     },
 
@@ -190,9 +191,12 @@ pub async fn edit_language_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
 

@@ -17,6 +17,15 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_delete_language_w_id(
+    lang_code: &str,
+    id: &i64,
+) -> String {
+    "/{lang}/admin/delete_language?id={id}"
+        .replace("{lang}", lang_code)
+        .replace("{id}", &id.to_string())
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct DeleteLanguageARequest {
     pub req: types::AdminRequest,

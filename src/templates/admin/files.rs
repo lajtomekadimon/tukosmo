@@ -8,6 +8,10 @@ use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::templates::widgets::admin_pagination::AdminPagination;
 use crate::handlers::admin::files::FilesAResponse;
 use crate::files::extensions::IMG_EXTS;
+use crate::handlers::admin::upload_file::ra_upload_file;
+use crate::handlers::admin::edit_file::ra_edit_file_w_id;
+use crate::handlers::admin::files::ra_files_wu_rpp_p;
+use crate::files::file_route::file_route;
 
 
 markup::define! {
@@ -53,8 +57,7 @@ markup::define! {
                 }
 
                 a[
-                    href = "/{lang}/admin/upload_file"
-                        .replace("{lang}", &q.data.lang.code),
+                    href = ra_upload_file(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -102,10 +105,7 @@ markup::define! {
                                 figure[class = "image is-3by2"] {
                                     @if IMG_EXTS.contains(&file.ext.as_str()) {
                                         img[
-                                            src = "/files/{filename}".replace(
-                                                "{filename}",
-                                                &file.name,
-                                            ),
+                                            src = file_route(&file.name),
                                             alt = &file.name,
                                         ];
                                     }
@@ -114,12 +114,10 @@ markup::define! {
                             footer[class = "card-footer"] {
                                 a[
                                     class = "card-footer-item",
-                                    href = "/{lang}/admin/edit_file?id={id}"
-                                        .replace("{lang}", &q.data.lang.code)
-                                        .replace(
-                                            "{id}",
-                                            &(file.id).to_string(),
-                                        ),
+                                    href = ra_edit_file_w_id(
+                                        &q.data.lang.code,
+                                        &file.id,
+                                    ),
                                 ] {
                                     @file.name
                                 }
@@ -133,7 +131,7 @@ markup::define! {
                 @AdminPagination {
                     data: &q.data,
                     t: t,
-                    route: "/{lang}/admin/files?p={page}&rpp={rpp}",
+                    route: &ra_files_wu_rpp_p(&q.data.lang.code),
                     current_page: &q.page,
                     total_pages: &q.total_pages,
                     results_per_page: &q.results_per_page,

@@ -9,6 +9,8 @@ use crate::handlers::admin::new_user::NewUserAResponse;
 use crate::handlers::admin::new_user_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::new_user::ra_new_user;
+use crate::handlers::admin::users::ra_users;
 
 
 markup::define! {
@@ -68,9 +70,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/new_user"
-                    .replace("{lang}", &q.data.lang.code)
-                ,
+                action = ra_new_user(&q.data.lang.code),
             ] {
                 input[
                     type = "hidden",
@@ -253,9 +253,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/users"
-                                .replace("{lang}", &q.data.lang.code)
-                            ,
+                            href = ra_users(&q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             @t.cancel

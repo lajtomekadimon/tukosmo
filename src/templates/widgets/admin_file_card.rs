@@ -4,6 +4,8 @@ use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::{AdminDataDB, FileDB};
 use crate::i18n::t_date::t_date;
 use crate::files::extensions::IMG_EXTS;
+use crate::files::file_route::file_route;
+use crate::handlers::admin::edit_user::ra_edit_user_w_id;
 
 
 markup::define! {
@@ -18,12 +20,7 @@ markup::define! {
                 @if IMG_EXTS.contains(
                     &file_data.ext.as_str(),
                 ) {
-                    img[
-                        src = "/files/{name}".replace(
-                            "{name}",
-                            &file_data.name,
-                        ),
-                    ];
+                    img[src = &file_route(&file_data.name)];
                 }
 
                 // TODO: File size
@@ -43,16 +40,10 @@ markup::define! {
                     }
 
                     a[
-                        href = "/{lang}/admin/edit_user\
-                                ?id={id}"
-                            .replace(
-                                "{lang}",
-                                &data.lang.code,
-                            )
-                            .replace(
-                                "{id}",
-                                &file_data.author.to_string()
-                            ),
+                        href = &ra_edit_user_w_id(
+                            &data.lang.code,
+                            &file_data.author,
+                        ),
                     ] {
                         @file_data.author_name
                     }
@@ -62,10 +53,7 @@ markup::define! {
                 div[class = "card-footer-item"] {
                     span {
                         a[
-                            href = "/files/{name}".replace(
-                                "{name}",
-                                &file_data.name,
-                            ),
+                            href = &file_route(&file_data.name),
                             target = "_blank",
                         ] {
                             "/files/"
@@ -77,10 +65,7 @@ markup::define! {
                     span {
                         a[
                             class = "button is-link is-light",
-                            href = "/files/{name}".replace(
-                                "{name}",
-                                &file_data.name,
-                            ),
+                            href = &file_route(&file_data.name),
                             download = true,
                         ] {
                             @t.download

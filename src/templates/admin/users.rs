@@ -7,6 +7,9 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::templates::widgets::admin_pagination::AdminPagination;
 use crate::handlers::admin::users::UsersAResponse;
+use crate::handlers::admin::new_user::ra_new_user;
+use crate::handlers::admin::edit_user::ra_edit_user_w_id;
+use crate::handlers::admin::users::ra_users_wu_rpp_p;
 
 
 markup::define! {
@@ -52,8 +55,7 @@ markup::define! {
                 }
 
                 a[
-                    href = "/{lang}/admin/new_user"
-                        .replace("{lang}", &q.data.lang.code),
+                    href = ra_new_user(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -113,16 +115,10 @@ markup::define! {
                             tr {
                                 td {
                                     a[
-                                        href = "/{lang}/admin/edit_user\
-                                                ?id={id}"
-                                            .replace(
-                                                "{lang}",
-                                                &q.data.lang.code,
-                                            )
-                                            .replace(
-                                                "{id}",
-                                                &user.id.to_string()
-                                            ),
+                                        href = ra_edit_user_w_id(
+                                            &q.data.lang.code,
+                                            &user.id,
+                                        ),
                                     ] {
                                         @user.name
                                     }
@@ -143,7 +139,7 @@ markup::define! {
                 @AdminPagination {
                     data: &q.data,
                     t: t,
-                    route: "/{lang}/admin/users?p={page}&rpp={rpp}",
+                    route: &ra_users_wu_rpp_p(&q.data.lang.code),
                     current_page: &q.page,
                     total_pages: &q.total_pages,
                     results_per_page: &q.results_per_page,

@@ -18,6 +18,7 @@ use crate::handlers::admin::upload_file::{
 use crate::templates::admin::upload_file::UploadFile;
 use crate::database::types::AdminRequest;
 use crate::files::save_file::save_file;
+use crate::handlers::admin::edit_file::ra_edit_file_w_id;
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
@@ -99,12 +100,14 @@ pub async fn upload_file_post(
 
                     let file_id: i64 = row.get(0);
 
-                    let redirect_route = "/{lang}/admin/edit_file?id={id}"
-                        .replace("{lang}", &user_req.lang_code)
-                        .replace("{id}", &file_id.to_string());
-
                     HttpResponse::Found()
-                        .header("Location", redirect_route)
+                        .header(
+                            "Location",
+                            ra_edit_file_w_id(
+                                &user_req.lang_code,
+                                &file_id,
+                            ),
+                        )
                         .finish()
 
                 },

@@ -16,6 +16,7 @@ use crate::handlers::admin::sessions::{
     SessionsAResponse,
 };
 use crate::templates::admin::sessions::Sessions;
+use crate::handlers::admin::error::ra_error_w_code;
 
 
 #[derive(Deserialize)]
@@ -132,9 +133,12 @@ pub async fn sessions_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
 

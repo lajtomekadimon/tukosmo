@@ -1,76 +1,79 @@
 use markup;
 
+use crate::files::static_files;
+
 
 markup::define! {
     FaviconAdminMeta() {
         link[
             rel = "apple-touch-icon",
             sizes = "57x57",
-            href = "/static/faviconadmin/apple-icon-57x57.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_57X57,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "60x60",
-            href = "/static/faviconadmin/apple-icon-60x60.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_60X60,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "72x72",
-            href = "/static/faviconadmin/apple-icon-72x72.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_72X72,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "76x76",
-            href = "/static/faviconadmin/apple-icon-76x76.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_76X76,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "114x114",
-            href = "/static/faviconadmin/apple-icon-114x114.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_114X114,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "120x120",
-            href = "/static/faviconadmin/apple-icon-120x120.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_120X120,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "144x144",
-            href = "/static/faviconadmin/apple-icon-144x144.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_144X144,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "152x152",
-            href = "/static/faviconadmin/apple-icon-152x152.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_152X152,
         ];
         link[
             rel = "apple-touch-icon",
             sizes = "180x180",
-            href = "/static/faviconadmin/apple-icon-180x180.png",
+            href = static_files::FAVICONADMIN_APPLE_ICON_180X180,
         ];
 
         link[
             rel = "icon",
             type = "image/png",
             sizes = "32x32",
-            href = "/static/faviconadmin/favicon-32x32.png",
+            href = static_files::FAVICONADMIN_32X32,
         ];
         link[
             rel = "icon",
             type = "image/png",
             sizes = "96x96",
-            href = "/static/faviconadmin/favicon-96x96.png",
+            href = static_files::FAVICONADMIN_96X96,
         ];
         link[
             rel = "icon",
             type = "image/png",
             sizes = "16x16",
-            href = "/static/faviconadmin/favicon-16x16.png",
+            href = static_files::FAVICONADMIN_16X16,
         ];
 
+        // Android Icon favicons
         link[
             rel = "manifest",
-            href = "/static/faviconadmin/manifest.json",
+            href = static_files::FAVICONADMIN_MANIFEST,
         ];
     }
 }

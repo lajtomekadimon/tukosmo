@@ -11,6 +11,7 @@ use crate::templates::website::error::Error;
 use crate::database::types;
 use crate::database::error_codes as ec;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::config::global::DEFAULT_LANG;
 
 
 #[derive(Deserialize)]
@@ -18,6 +19,15 @@ pub struct GetParamData {
     code: String,
 }
 
+
+pub fn rw_error_w_code(
+    lang_code: &str,
+    code: &str,
+) -> String {
+    "/{lang}/error?code={code}"
+        .replace("{lang}", lang_code)
+        .replace("{code}", code)
+}
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct ErrorWRequest {
@@ -97,8 +107,16 @@ pub async fn error(
 
                     if error_code == ec::WRONG_LANG_CODE {
 
-                        HttpResponse::Ok().body("WRONG URL LANGUAGE CODE")
-                        // TODO: Redirect to same URL using default language
+                        // Redirect to same URL using default language
+                        HttpResponse::Found()
+                            .header(
+                                "Location",
+                                rw_error_w_code(
+                                    DEFAULT_LANG,
+                                    error_code,
+                                ),
+                            )
+                            .finish()
 
                     } else {
 

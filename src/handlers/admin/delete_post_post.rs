@@ -16,6 +16,8 @@ use crate::handlers::admin::delete_post::{
     DeletePostAResponse,
 };
 use crate::templates::admin::delete_post::DeletePost;
+use crate::handlers::admin::error::ra_error_w_code;
+use crate::handlers::admin::posts::ra_posts_success;
 
 
 #[derive(Deserialize)]
@@ -63,11 +65,11 @@ pub async fn delete_post_post(
 
                     Ok(_row) => {
 
-                        let redirect_route = "/{lang}/admin/posts?success=yes"
-                            .replace("{lang}", &user_req.lang_code);
-
                         HttpResponse::Found()
-                            .header("Location", redirect_route)
+                            .header(
+                                "Location",
+                                ra_posts_success(&user_req.lang_code),
+                            )
                             .finish()
 
                     },
@@ -109,9 +111,12 @@ pub async fn delete_post_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
 

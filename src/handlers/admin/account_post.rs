@@ -17,6 +17,7 @@ use crate::handlers::admin::account::{
     AccountAResponse,
 };
 use crate::templates::admin::account::Account;
+use crate::handlers::admin::error::ra_error_w_code;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -246,9 +247,12 @@ pub async fn account_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
         },

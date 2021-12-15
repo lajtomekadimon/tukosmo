@@ -11,6 +11,11 @@ use crate::handlers::admin::new_language::NewLanguageAResponse;
 use crate::handlers::admin::new_language_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::new_language::{
+    ra_new_language,
+    ra_new_language_w_auto,
+};
+use crate::handlers::admin::languages::ra_languages;
 
 
 markup::define! {
@@ -75,9 +80,10 @@ markup::define! {
                     }
 
                     a[
-                        href = "/{lang}/admin/new_language?auto={code}"
-                            .replace("{lang}", &q.data.lang.code)
-                            .replace("{code}", lang),
+                        href = ra_new_language_w_auto(
+                            &q.data.lang.code,
+                            lang,
+                        ),
                     ] {
                         {&get_lang_name(lang, &q.data.lang.code)}
                     }
@@ -95,8 +101,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/new_language"
-                    .replace("{lang}", &q.data.lang.code),
+                action = ra_new_language(&q.data.lang.code),
             ] {
                 input[
                     type = "hidden",
@@ -329,8 +334,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/languages"
-                                .replace("{lang}", &q.data.lang.code),
+                            href = ra_languages(&q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             @t.cancel

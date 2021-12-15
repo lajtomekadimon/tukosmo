@@ -17,6 +17,12 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_sessions(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/sessions".replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct SessionsARequest {
     pub req: types::AdminRequest,

@@ -2,6 +2,7 @@ use markup;
 
 use crate::database::types::{AdminDataDB, RouteDB};
 use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
+use crate::files::static_files;
 
 
 markup::define! {
@@ -56,15 +57,14 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
-                    href = "/static/bundle.admin.css",
+                    href = static_files::CSS_ADMIN,
                 ];
             }
             body {
                 @content
 
-                script[
-                    src = "/static/bundle.admin.js",
-                ] {}
+                // JavaScript
+                script[src = static_files::JS_ADMIN] {}
             }
         }
     }

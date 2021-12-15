@@ -6,6 +6,9 @@ use crate::templates::website_layout::WebsiteLayout;
 use crate::templates::widgets::website::Website;
 use crate::templates::widgets::blog_pagination::BlogPagination;
 use crate::handlers::website::blog::BlogWResponse;
+use crate::handlers::website::blog_post::rw_blog_post;
+use crate::files::file_route::file_route;
+use crate::handlers::website::blog::rw_blog_wu_rpp_p;
 
 
 markup::define! {
@@ -48,19 +51,17 @@ markup::define! {
                     @if let Some(fimage) = &post.featured_image {
                         div[class = "post-wrapper-image"] {
                             a[
-                                href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &post.lang.code)
-                                    .replace(
-                                        "{permalink}",
-                                        &post.permalink.to_string()
-                                    ),
+                                href = rw_blog_post(
+                                    &post.lang.code,
+                                    &post.permalink,
+                                ),
                             ] {
                                 figure[
                                     style =
-                                        "background-image: url(/files/{img});"
+                                        "background-image: url({url});"
                                             .replace(
-                                                "{img}",
-                                                &fimage.name,
+                                                "{url}",
+                                                &file_route(&fimage.name),
                                             ),
                                 ] {}
                             }
@@ -82,12 +83,10 @@ markup::define! {
                             ] {
                                 /*
                                 a[
-                                    href = "/{lang}/blog/{permalink}"
-                                        .replace("{lang}", &post.lang.code)
-                                        .replace(
-                                            "{permalink}",
-                                            &post.permalink.to_string()
-                                        ),
+                                    href = rw_blog_post(
+                                        &post.lang.code,
+                                        &post.permalink,
+                                    ),
                                 ] {
                                 */
                                 i[class = "eos-icons"] {
@@ -119,12 +118,10 @@ markup::define! {
 
                         h2 {
                             a[
-                                href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &post.lang.code)
-                                    .replace(
-                                        "{permalink}",
-                                        &post.permalink.to_string()
-                                    ),
+                                href = rw_blog_post(
+                                    &post.lang.code,
+                                    &post.permalink,
+                                ),
                             ] {
                                 @post.title
                             }
@@ -138,12 +135,10 @@ markup::define! {
                             class = "post-wrapper-data-more",
                         ] {
                             a[
-                                href = "/{lang}/blog/{permalink}"
-                                    .replace("{lang}", &post.lang.code)
-                                    .replace(
-                                        "{permalink}",
-                                        &post.permalink.to_string()
-                                    ),
+                                href = rw_blog_post(
+                                    &post.lang.code,
+                                    &post.permalink,
+                                ),
                             ] {
                                 @t.read_more
                             }
@@ -157,7 +152,7 @@ markup::define! {
             @BlogPagination {
                 data: &q.data,
                 t: t,
-                route: "/{lang}/blog?p={page}&rpp={rpp}",
+                route: &rw_blog_wu_rpp_p(&q.data.lang.code),
                 current_page: &q.page,
                 total_pages: &q.total_pages,
                 results_per_page: &q.results_per_page,

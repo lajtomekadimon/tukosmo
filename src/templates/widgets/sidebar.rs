@@ -3,17 +3,13 @@ use markup;
 
 markup::define! {
     Sidebar() {
-        aside[
-            class = "site-sidebar",
-        ] {
+        aside[class = "site-sidebar"] {
             @Widget {}
         }
     }
 
     Widget() {
-        section[
-            class = "widget widget-html",
-        ] {
+        section[class = "widget widget-html"] {
             "Made with Tukosmo"
         }
     }

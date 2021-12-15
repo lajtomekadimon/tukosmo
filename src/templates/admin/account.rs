@@ -5,7 +5,7 @@ use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::admin_layout::AdminLayout;
 use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::account::AccountAResponse;
+use crate::handlers::admin::account::{ra_account, AccountAResponse};
 use crate::handlers::admin::account_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
@@ -81,8 +81,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/account"
-                    .replace("{lang}", &q.data.lang.code),
+                action = ra_account(&q.data.lang.code),
             ] {
                 input[
                     type = "hidden",

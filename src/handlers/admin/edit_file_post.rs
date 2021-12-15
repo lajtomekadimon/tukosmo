@@ -16,6 +16,8 @@ use crate::handlers::admin::edit_file::{
     EditFileAResponse,
 };
 use crate::templates::admin::edit_file::EditFile;
+use crate::handlers::admin::error::ra_error_w_code;
+use crate::handlers::admin::files::ra_files_success;
 
 
 #[derive(Deserialize)]
@@ -67,9 +69,6 @@ pub async fn edit_file_post(
 
                     Ok(row) => {
 
-                        let redirect_route = "/{lang}/admin/files?success=yes"
-                            .replace("{lang}", &user_req.lang_code);
-
                         let ofilename: String = row.get(0);
 
                         let filepath = format!("./files/{}", ofilename);
@@ -78,10 +77,16 @@ pub async fn edit_file_post(
                         // TODO: What if file couldn't be renamed?
                         match std::fs::rename(filepath, nfilepath) {
                             Ok(_) => HttpResponse::Found()
-                                .header("Location", redirect_route)
+                                .header(
+                                    "Location",
+                                    ra_files_success(&user_req.lang_code),
+                                )
                                 .finish(),
                             Err(_) => HttpResponse::Found()
-                                .header("Location", redirect_route)
+                                .header(
+                                    "Location",
+                                    ra_files_success(&user_req.lang_code),
+                                )
                                 .finish(),
                         }
 
@@ -127,9 +132,12 @@ pub async fn edit_file_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header("Location", "/{lang}/admin/error?code={code}"
-                    .replace("{lang}", &user_req.lang_code)
-                    .replace("{code}", CSRF_TOKEN_IS_NOT_A_VALID_UUID)
+                .header(
+                    "Location",
+                    ra_error_w_code(
+                        &user_req.lang_code,
+                        CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+                    ),
                 )
                 .finish(),
 

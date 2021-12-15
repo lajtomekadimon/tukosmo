@@ -19,6 +19,26 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_files(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/files".replace("{lang}", lang_code)
+}
+
+pub fn ra_files_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/files?success=true"
+        .replace("{lang}", lang_code)
+}
+
+pub fn ra_files_wu_rpp_p(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/files?rpp={rpp}&p={p}"
+        .replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct FilesARequest {
     pub req: types::AdminRequest,

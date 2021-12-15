@@ -10,6 +10,9 @@ use crate::handlers::admin::edit_file::EditFileAResponse;
 use crate::handlers::admin::edit_file_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::edit_file::ra_edit_file_w_id;
+use crate::handlers::admin::files::ra_files;
+use crate::handlers::admin::delete_file::ra_delete_file_w_id;
 
 
 markup::define! {
@@ -69,9 +72,10 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/edit_file?id={id}"
-                    .replace("{lang}", &q.data.lang.code)
-                    .replace("{id}", &q.file_data.id.to_string()),
+                action = ra_edit_file_w_id(
+                    &q.data.lang.code,
+                    &q.file_data.id,
+                ),
             ] {
                 input[
                     type = "hidden",
@@ -130,9 +134,7 @@ markup::define! {
                             }
                             div[class = "control"] {
                                 a[
-                                    href = "/{lang}/admin/files"
-                                        .replace("{lang}", &q.data.lang.code)
-                                    ,
+                                    href = ra_files(&q.data.lang.code),
                                     class = "button is-link is-light",
                                 ] {
                                     @t.cancel
@@ -141,12 +143,10 @@ markup::define! {
 
                             div[class = "control"] {
                                 a[
-                                    href = "/{lang}/admin/delete_file?id={id}"
-                                        .replace("{lang}", &q.data.lang.code)
-                                        .replace(
-                                            "{id}",
-                                            &q.file_data.id.to_string(),
-                                        ),
+                                    href = ra_delete_file_w_id(
+                                        &q.data.lang.code,
+                                        &q.file_data.id,
+                                    ),
                                     class = "button is-danger \
                                              has-text-weight-normal mr-4",
                                 ] {

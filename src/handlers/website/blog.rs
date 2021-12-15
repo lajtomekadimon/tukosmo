@@ -18,6 +18,21 @@ pub struct GetParamData {
 }
 
 
+/*
+pub fn rw_blog(
+    lang_code: &str,
+) -> String {
+    "/{lang}/blog".replace("{lang}", lang_code)
+}
+*/
+
+pub fn rw_blog_wu_rpp_p(
+    lang_code: &str,
+) -> String {
+    "/{lang}/blog?rpp={rpp}&p={p}"
+        .replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct BlogWRequest {
     pub req: types::WebsiteRequest,

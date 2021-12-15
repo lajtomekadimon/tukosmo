@@ -6,6 +6,7 @@ use crate::templates::widgets::admin_panel::AdminPanel;
 use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
 use crate::handlers::admin::favicon::FaviconAResponse;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::favicon::ra_favicon;
 
 
 markup::define! {
@@ -74,9 +75,7 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/favicon"
-                    .replace("{lang}", &q.data.lang.code)
-                ,
+                action = ra_favicon(&q.data.lang.code),
                 enctype = "multipart/form-data",
             ] {
                 // Sadly, Actix doesn't support this in multipart yet

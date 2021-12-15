@@ -20,6 +20,37 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_posts(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/posts".replace("{lang}", lang_code)
+}
+
+pub fn ra_posts_w_f(
+    lang_code: &str,
+    f: &str,
+) -> String {
+    "/{lang}/admin/posts?f={f}"
+        .replace("{lang}", lang_code)
+        .replace("{f}", f)
+}
+
+pub fn ra_posts_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/posts?success=true"
+        .replace("{lang}", lang_code)
+}
+
+pub fn ra_posts_w_f_wu_rpp_p(
+    lang_code: &str,
+    f: &str,
+) -> String {
+    "/{lang}/admin/posts?rpp={rpp}&p={p}&f={f}"
+        .replace("{lang}", lang_code)
+        .replace("{f}", f)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct PostsARequest {
     pub req: types::AdminRequest,

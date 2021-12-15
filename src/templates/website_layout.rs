@@ -3,6 +3,7 @@ use markup;
 use crate::database::types::{WebsiteDataDB, RouteDB};
 use crate::templates::widgets::favicon_meta::FaviconMeta;
 use crate::templates::widgets::open_graph_meta::{OpenGraphMeta, ArticleOG};
+use crate::files::static_files;
 
 
 markup::define! {
@@ -79,14 +80,14 @@ markup::define! {
                 link[
                     rel = "stylesheet",
                     href = "/static/bundle.css",
+                    href = static_files::CSS_WEBSITE,
                 ];
             }
             body {
                 @content
 
-                script[
-                    src = "/static/bundle.js",
-                ] {}
+                // JavaScript
+                script[src = static_files::JS_WEBSITE] {}
             }
         }
     }

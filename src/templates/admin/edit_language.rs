@@ -9,6 +9,9 @@ use crate::handlers::admin::edit_language::EditLanguageAResponse;
 use crate::handlers::admin::edit_language_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::edit_language::ra_edit_language_w_id;
+use crate::handlers::admin::languages::ra_languages;
+use crate::handlers::admin::delete_language::ra_delete_language_w_id;
 
 
 markup::define! {
@@ -69,9 +72,10 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/edit_language?id={id}"
-                    .replace("{lang}", &q.data.lang.code)
-                    .replace("{id}", &q.lang.id.to_string()),
+                action = ra_edit_language_w_id(
+                    &q.data.lang.code,
+                    &q.lang.id,
+                ),
             ] {
                 input[
                     type = "hidden",
@@ -161,8 +165,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/languages"
-                                .replace("{lang}", &q.data.lang.code),
+                            href = ra_languages(&q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             @t.cancel
@@ -171,9 +174,10 @@ markup::define! {
 
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/delete_language?id={id}"
-                                .replace("{lang}", &q.data.lang.code)
-                                .replace("{id}", &q.lang.id.to_string()),
+                            href = ra_delete_language_w_id(
+                                &q.data.lang.code,
+                                &q.lang.id,
+                            ),
                             class = "button is-danger \
                                      has-text-weight-normal mr-4",
                         ] {

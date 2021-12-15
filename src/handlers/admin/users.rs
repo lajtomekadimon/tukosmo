@@ -19,6 +19,26 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_users(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/users".replace("{lang}", lang_code)
+}
+
+pub fn ra_users_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/users?success=true"
+        .replace("{lang}", lang_code)
+}
+
+pub fn ra_users_wu_rpp_p(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/users?rpp={rpp}&p={p}"
+        .replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct UsersARequest {
     pub req: types::AdminRequest,

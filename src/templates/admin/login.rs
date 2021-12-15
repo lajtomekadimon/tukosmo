@@ -9,6 +9,8 @@ use crate::handlers::admin::login_post::FormData;
 use crate::database::types::{AdminDataDB, UserDB};
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
+use crate::handlers::admin::login::ra_login;
+use crate::files::static_files::FAVICON_96X96;
 
 
 markup::define! {
@@ -57,10 +59,7 @@ markup::define! {
                         div[class = "box"] {
                             figure[class = "avatar"] {
                                 div[class = "avatar-container"] {
-                                    img[
-                                        src = "/static/favicon/\
-                                               favicon-96x96.png",
-                                    ];
+                                    img[src = FAVICON_96X96];
                                 }
                             }
 
@@ -130,8 +129,7 @@ markup::define! {
         form: &'a Option<ActixForm<FormData>>,
     ) {
         form[
-            action = "/{lang}/admin/login"
-                .replace("{lang}", &q.data.lang.code),
+            action = ra_login(&q.data.lang.code),
             method = "post",
         ] {
             div[class = "field"] {

@@ -1,6 +1,7 @@
 use actix_web::{HttpRequest, HttpResponse, Responder};
 
 use crate::i18n::http_accept_language::http_accept_language;
+use crate::handlers::website::home::rw_home;
 
 
 pub async fn root(
@@ -10,7 +11,7 @@ pub async fn root(
 
     HttpResponse::Found().header(
         "Location",
-        "/{lang}/".replace("{lang}", &lang_code)
+        rw_home(&lang_code),
     ).finish()
 }
 

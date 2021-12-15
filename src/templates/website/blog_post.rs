@@ -7,6 +7,8 @@ use crate::i18n::translate_i18n::TranslateI18N;
 use crate::i18n::t_date::t_date;
 use crate::markdown::render_html::render_html;
 use crate::templates::widgets::open_graph_meta::ArticleOG;
+use crate::files::file_route::file_route;
+use crate::handlers::admin::edit_post::ra_edit_post_w_id;
 
 
 markup::define! {
@@ -23,8 +25,12 @@ markup::define! {
             og_description: &q.post.description,
             og_image: &(
                 if let Some(fimage) = &q.post.featured_image {
-                    "https://tukosmo.org/files/{filename}"  // TODO: domain
-                        .replace("{filename}", &fimage.name)
+                    "https://tukosmo.org{dir}"  // TODO: domain
+                        .replace(
+                            "{dir}",
+                            &file_route(&fimage.name)
+                        )
+
                 } else { "".to_string() }
             ),
             og_article: &Some(
@@ -58,10 +64,7 @@ markup::define! {
                 ] {
                     figure {
                         img[
-                            src = "/files/{filename}".replace(
-                                "{filename}",
-                                &fimage.name,
-                            ),
+                            src = &file_route(&fimage.name),
                             alt = &fimage.name,
                         ];
                     }
@@ -92,9 +95,7 @@ markup::define! {
                         ] {
                             /*
                             a[
-                                href = "/{lang}/blog"
-                                    .replace("{lang}", &q.data.lang.code)
-                                ,
+                                href = rw_blog(&q.data.lang.code),
                             ] {
                             */
                             i[class = "eos-icons"] {
@@ -114,9 +115,7 @@ markup::define! {
                         ] {
                             /*
                             a[
-                                href = "/{lang}/blog"
-                                    .replace("{lang}", &q.data.lang.code)
-                                ,
+                                href = rw_blog(&q.data.lang.code),
                             ] {
                             */
                             i[class = "eos-icons"] {
@@ -136,13 +135,10 @@ markup::define! {
                                 class = "post-meta-edit",
                             ] {
                                 a[
-                                    href = "/{lang}/admin/edit_post?id={id}"
-                                        .replace("{lang}", &q.data.lang.code)
-                                        .replace(
-                                            "{id}",
-                                            &q.post.id.to_string()
-                                        )
-                                    ,
+                                    href = ra_edit_post_w_id(
+                                        &q.data.lang.code,
+                                        &q.post.id,
+                                    ),
                                 ] {
                                     i[class = "eos-icons"] {
                                         "mode_edit"

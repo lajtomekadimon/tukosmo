@@ -10,6 +10,9 @@ use crate::handlers::admin::edit_user_post::FormData;
 use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 use crate::i18n::get_name_from_names::get_name_from_names;
+use crate::handlers::admin::edit_user::ra_edit_user_w_id;
+use crate::handlers::admin::users::ra_users;
+use crate::handlers::admin::delete_user::ra_delete_user_w_id;
 
 
 markup::define! {
@@ -70,9 +73,10 @@ markup::define! {
 
             form[
                 method = "post",
-                action = "/{lang}/admin/edit_user?id={id}"
-                    .replace("{lang}", &q.data.lang.code)
-                    .replace("{id}", &q.user_data.id.to_string()),
+                action = ra_edit_user_w_id(
+                    &q.data.lang.code,
+                    &q.user_data.id,
+                ),
             ] {
                 input[
                     type = "hidden",
@@ -235,9 +239,7 @@ markup::define! {
                     }
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/users"
-                                .replace("{lang}", &q.data.lang.code)
-                            ,
+                            href = ra_users(&q.data.lang.code),
                             class = "button is-link is-light",
                         ] {
                             @t.cancel
@@ -246,9 +248,10 @@ markup::define! {
 
                     div[class = "control"] {
                         a[
-                            href = "/{lang}/admin/delete_user?id={id}"
-                                .replace("{lang}", &q.data.lang.code)
-                                .replace("{id}", &q.user_data.id.to_string()),
+                            href = ra_delete_user_w_id(
+                                &q.data.lang.code,
+                                &q.user_data.id,
+                            ),
                             class = "button is-danger \
                                      has-text-weight-normal mr-4",
                         ] {

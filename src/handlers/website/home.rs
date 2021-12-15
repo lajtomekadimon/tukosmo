@@ -17,6 +17,12 @@ pub struct GetParamData {
 }
 
 
+pub fn rw_home(
+    lang_code: &str,
+) -> String {
+    "/{lang}".replace("{lang}", lang_code)
+}
+
 pub async fn home(
     req: HttpRequest,
     id: Identity,

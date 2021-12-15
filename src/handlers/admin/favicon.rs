@@ -17,6 +17,19 @@ pub struct GetParamData {
 }
 
 
+pub fn ra_favicon(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/favicon".replace("{lang}", lang_code)
+}
+
+pub fn ra_favicon_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/favicon?success=true"
+        .replace("{lang}", lang_code)
+}
+
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct FaviconARequest {
     pub req: types::AdminRequest,

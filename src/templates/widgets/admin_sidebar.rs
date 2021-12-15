@@ -2,6 +2,17 @@ use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
+use crate::handlers::admin::dashboard::ra_dashboard;
+use crate::handlers::admin::statistics::ra_statistics;
+use crate::handlers::admin::server::ra_server;
+use crate::handlers::admin::users::ra_users;
+use crate::handlers::admin::languages::ra_languages;
+use crate::handlers::admin::posts::{ra_posts, ra_posts_w_f};
+use crate::handlers::admin::pages::ra_pages;
+use crate::handlers::admin::files::ra_files;
+use crate::handlers::admin::favicon::ra_favicon;
+use crate::handlers::admin::website::ra_website;
+use crate::handlers::admin::tukosmo::ra_tukosmo;
 
 
 markup::define! {
@@ -19,8 +30,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_dashboard(&data.lang.code),
                         class = if current_page == &"dashboard" {
                             "is-active"
                         } else { "" },
@@ -34,7 +44,6 @@ markup::define! {
 
             /* General
              * * * * * */
-            /*
             p[class = "menu-label"] {
                 @t.general
             }
@@ -42,8 +51,7 @@ markup::define! {
 
                 li {
                     a[
-                        href = "/{lang}/admin/statistics"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_statistics(&data.lang.code),
                         class = if current_page == &"statistics" {
                             "is-active"
                         } else { "" },
@@ -55,8 +63,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/server"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_server(&data.lang.code),
                         class = if current_page == &"server" {
                             "is-active"
                         } else { "" },
@@ -67,7 +74,6 @@ markup::define! {
                     }
                 }
             }
-            */
 
             /* Data
              * * * * */
@@ -77,8 +83,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/users"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_users(&data.lang.code),
                         class = if current_page == &"users" {
                             "is-active"
                         } else { "" },
@@ -90,8 +95,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/languages"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_languages(&data.lang.code),
                         class = if current_page == &"languages" {
                             "is-active"
                         } else { "" },
@@ -103,8 +107,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/posts"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_posts(&data.lang.code),
                         class = if current_page == &"posts" {
                             "is-active"
                         } else { "" },
@@ -123,8 +126,10 @@ markup::define! {
                         ul {
                             li {
                                 a[
-                                    href = "/{lang}/admin/posts?f=drafts"
-                                        .replace("{lang}", &data.lang.code),
+                                    href = &ra_posts_w_f(
+                                        &data.lang.code,
+                                        "drafts",
+                                    ),
                                     class = if
                                         current_page == &"posts-drafts"
                                     {
@@ -136,8 +141,10 @@ markup::define! {
                             }
                             li {
                                 a[
-                                    href = "/{lang}/admin/posts?f=published"
-                                        .replace("{lang}", &data.lang.code),
+                                    href = &ra_posts_w_f(
+                                        &data.lang.code,
+                                        "published",
+                                    ),
                                     class = if
                                         current_page == &"posts-published"
                                     {
@@ -149,8 +156,10 @@ markup::define! {
                             }
                             li {
                                 a[
-                                    href = "/{lang}/admin/posts?f=untranslated"
-                                        .replace("{lang}", &data.lang.code),
+                                    href = &ra_posts_w_f(
+                                        &data.lang.code,
+                                        "untranslated",
+                                    ),
                                     class = if
                                         current_page == &"posts-untranslated"
                                     {
@@ -162,8 +171,10 @@ markup::define! {
                             }
                             li {
                                 a[
-                                    href = "/{lang}/admin/posts?f=deleted"
-                                        .replace("{lang}", &data.lang.code),
+                                    href = &ra_posts_w_f(
+                                        &data.lang.code,
+                                        "deleted",
+                                    ),
                                     class = if
                                         current_page == &"posts-deleted"
                                     {
@@ -176,11 +187,9 @@ markup::define! {
                         }
                     }
                 }
-                /*
                 li {
                     a[
-                        href = "/{lang}/admin/pages"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_pages(&data.lang.code),
                         class = if current_page == &"pages" {
                             "is-active"
                         } else { "" },
@@ -190,11 +199,9 @@ markup::define! {
                         @t.pages
                     }
                 }
-                */
                 li {
                     a[
-                        href = "/{lang}/admin/files"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_files(&data.lang.code),
                         class = if current_page == &"files" {
                             "is-active"
                         } else { "" },
@@ -214,8 +221,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/favicon"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_favicon(&data.lang.code),
                         class = if current_page == &"favicon" {
                             "is-active"
                         } else { "" },
@@ -229,8 +235,7 @@ markup::define! {
                 /*
                 li {
                     a[
-                        href = "/{lang}/admin/theme"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_theme(&data.lang.code),
                         class = if current_page == &"theme" {
                             "is-active"
                         } else { "" },
@@ -243,8 +248,7 @@ markup::define! {
 
                 li {
                     a[
-                        href = "/{lang}/admin/menus"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_menus(&data.lang.code),
                         class = if current_page == &"menus" {
                             "is-active"
                         } else { "" },
@@ -257,8 +261,7 @@ markup::define! {
 
                 li {
                     a[
-                        href = "/{lang}/admin/widgets"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_widgets(&data.lang.code),
                         class = if current_page == &"widgets" {
                             "is-active"
                         } else { "" },
@@ -279,8 +282,7 @@ markup::define! {
             ul[class = "menu-list"] {
                 li {
                     a[
-                        href = "/{lang}/admin/website"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_website(&data.lang.code),
                         class = if current_page == &"website" {
                             "is-active"
                         } else { "" },
@@ -292,8 +294,7 @@ markup::define! {
                 }
                 li {
                     a[
-                        href = "/{lang}/admin/tukosmo"
-                            .replace("{lang}", &data.lang.code),
+                        href = &ra_tukosmo(&data.lang.code),
                         class = if current_page == &"tukosmo" {
                             "is-active"
                         } else { "" },

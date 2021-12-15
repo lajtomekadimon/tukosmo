@@ -7,7 +7,14 @@ use crate::i18n::t::t;
 use crate::templates::admin::login::Login;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::handlers::admin::dashboard::ra_dashboard;
 
+
+pub fn ra_login(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/login".replace("{lang}", lang_code)
+}
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LoginARequest {
@@ -47,11 +54,11 @@ pub async fn login(
 
             if let Some(_user) = q.data.userd {
 
-                let dashboard_route = "/{lang}/admin/"
-                    .replace("{lang}", &q.data.lang.code);
-
                 HttpResponse::Found()
-                    .header("Location", dashboard_route)
+                    .header(
+                        "Location",
+                        ra_dashboard(&q.data.lang.code),
+                    )
                     .finish()
 
             } else {

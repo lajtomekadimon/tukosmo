@@ -5,7 +5,14 @@ use postgres_types::{ToSql, FromSql};
 use crate::handlers::admin::user_request::user_request;
 use crate::database::types;
 use crate::database::query_db::{QueryFunction, query_db};
+use crate::handlers::admin::login::ra_login;
 
+
+pub fn ra_logout(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/logout".replace("{lang}", lang_code)
+}
 
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct LogoutARequest {
@@ -28,12 +35,9 @@ pub async fn logout(
 
         Ok(user_req) => {
 
-            let login_route = "/{lang}/admin/login"
-                .replace("{lang}", &user_req.lang_code);
-
             match query_db(
                 LogoutARequest {
-                    req: user_req,
+                    req: user_req.clone(),
                 }
             ) {
 
@@ -44,7 +48,7 @@ pub async fn logout(
 
                     // Redirect to login page
                     HttpResponse::Found()
-                        .header("Location", login_route)
+                        .header("Location", ra_login(&user_req.lang_code))
                         .finish()
 
                 },
@@ -53,7 +57,7 @@ pub async fn logout(
                     println!("{}", e);
 
                     HttpResponse::Found()
-                        .header("Location", login_route)
+                        .header("Location", ra_login(&user_req.lang_code))
                         .finish()
                 },
 
