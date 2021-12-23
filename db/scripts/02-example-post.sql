@@ -53,10 +53,7 @@ BEGIN
 
 ## Paragraphs
 
-This is a paragraph. You can use bold text like
-**this** or __this__. You can also use italic text
-like *this* or _this_. You can even use automatic
-quotations[^a]. It''s so cool!
+This is a paragraph. You can use bold text like **this** or __this__. You can also use italic text like *this* or _this_. You can even use automatic quotations[^a]. It''s so cool!
 
 [^a]: Random text.
 
@@ -93,14 +90,6 @@ Ordered:
 1. Lorem ipsum dolor sit amet
 2. Consectetur adipiscing elit
 3. Integer molestie lorem at massa
-
-1. You can use sequential numbers...
-1. ...or keep all the numbers as `1.`
-
-Start numbering with offset:
-
-57. foo
-1. bar
 
 Task list:
 
@@ -158,27 +147,18 @@ var foo = function (bar) {
 console.log(foo(5));
 ```
 
+
 ## Links
 
 [link text](https://wikipedia.org)
 
 [link with title](https://wikipedia.org "title text!")
 
-Autoconverted link: https://wikipedia.org
-
 
 ## Images
 
 ![Tukosmo](/static/img/tukosmo-logo-128.png)
 ![Tukosmo](/static/img/tukosmo-logo-128.png "Title")
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: /static/img/tukosmo-logo-128.png  "Tukosmo"
 ';
 
 

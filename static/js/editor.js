@@ -3,6 +3,9 @@ const Editor = toastui.Editor;
 
 const body_text_value = document.getElementById("body-text").value;
 
+const language_of_user = document.getElementsByTagName('html')[0]
+    .getAttribute('lang');
+
 // Full list of options:
 // https://nhn.github.io/tui.editor/latest/ToastUIEditorCore
 const editor = new Editor({
@@ -10,7 +13,7 @@ const editor = new Editor({
     el: document.querySelector('#editor'),
 
     // Language
-    language: 'en-US',
+    language: language_of_user,
 
     // Editor's height style value. Height is applied as border-box
     // (examples: '300px', '100%', 'auto', ...)
