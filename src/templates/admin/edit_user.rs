@@ -47,7 +47,7 @@ markup::define! {
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.edit_user_w_name
                     .replace("{name}", &q.user_data.name)

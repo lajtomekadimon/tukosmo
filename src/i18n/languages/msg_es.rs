@@ -169,6 +169,9 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ejemplos: English, Español...",
     favicon:
         "Favicon",
+    favicon_note:
+        "NOTA: Si tu navegador web no carga el favicon nuevo, \
+         puedes forzar una recarga con Ctrl+Shift+R.",
     featured_image:
         "Imagen de presentación",
     file:
@@ -335,6 +338,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Usuarios",
     visit_website:
         "Visitar página web",
+    web_browsers_preview:
+        "Previsualización en navegadores web",
     website:
         "Página web",
     website_subtitle:

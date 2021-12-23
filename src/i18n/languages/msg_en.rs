@@ -169,6 +169,9 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Examples: English, Español...",
     favicon:
         "Favicon",
+    favicon_note:
+        "NOTE: If your web browser doesn't load the new favicon, \
+         you can force a reload with Ctrl+Shift+R.",
     featured_image:
         "Featured image",
     file:
@@ -335,6 +338,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Users",
     visit_website:
         "Visit website",
+    web_browsers_preview:
+        "Web browsers preview",
     website:
         "Website",
     website_subtitle:

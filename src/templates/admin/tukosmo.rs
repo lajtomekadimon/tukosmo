@@ -33,7 +33,7 @@ markup::define! {
         q: &'a TukosmoAResponse,
         t: &'a TranslateI18N,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.tukosmo
 

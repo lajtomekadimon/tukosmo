@@ -244,3 +244,84 @@ nav.navbar {
 .notification {
     transition: opacity 0.3s;
 }
+
+
+
+
+
+
+
+.favicon-firefox-light-preview,
+.favicon-firefox-dark-preview,
+.favicon-chrome-light-preview,
+.favicon-chrome-dark-preview {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.favicon-firefox-light-preview {
+    width: 454px;
+    height: 117px;
+    background-image: url(/static/img/firefox-tabs-light.png);
+}
+
+.favicon-firefox-dark-preview {
+    width: 454px;
+    height: 117px;
+    background-image: url(/static/img/firefox-tabs-dark.png);
+}
+
+.favicon-chrome-light-preview {
+    width: 492px;
+    height: 107px;
+    background-image: url(/static/img/chrome-tabs-light.png);
+}
+
+.favicon-chrome-dark-preview {
+    width: 492px;
+    height: 107px;
+    background-image: url(/static/img/chrome-tabs-dark.png);
+}
+
+.favicon-firefox-tab1,
+.favicon-firefox-tab2,
+.favicon-chrome-tab1,
+.favicon-chrome-tab2 {
+    position: absolute;
+}
+
+.favicon-firefox-tab1 {
+    width: 26px;
+    height: 62px;
+    padding: 46px 0 0 10px;
+}
+
+.favicon-firefox-tab2 {
+    width: 251px;
+    height: 62px;
+    padding: 46px 0 0 235px;
+}
+
+.favicon-chrome-tab1 {
+    width: 36px;
+    height: 57px;
+    padding: 41px 0 0 20px;
+}
+
+.favicon-chrome-tab2 {
+    width: 275px;
+    height: 57px;
+    padding: 41px 0 0 259px;
+}
+
+.favicon-firefox-tab1 img,
+.favicon-firefox-tab2 img,
+.favicon-chrome-tab1 img,
+.favicon-chrome-tab2 img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+}
+

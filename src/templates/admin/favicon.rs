@@ -41,7 +41,7 @@ markup::define! {
         error: &'a Option<ErrorDB>,
         success: &'a bool,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.favicon
 
@@ -132,7 +132,7 @@ markup::define! {
 
             hr;
 
-            h2[class="title is-4"] {
+            h2[class = "title is-4"] {
                 @t.current_favicon
             }
 
@@ -141,6 +141,76 @@ markup::define! {
                     src = "/static/favicon/favicon-96x96.png",
                     alt = "favicon-96x96.png",
                 ];
+            }
+
+            p[class = "mt-3 mb-3"] {
+                @t.favicon_note
+            }
+
+            hr;
+
+            h3[class = "title is-5 mt-5"] {
+                @t.web_browsers_preview
+            }
+
+            div[class = "favicon-firefox-light-preview"] {
+                div[class = "favicon-firefox-tab1"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+                div[class = "favicon-firefox-tab2"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+            }
+
+            div[class = "favicon-firefox-dark-preview"] {
+                div[class = "favicon-firefox-tab1"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+                div[class = "favicon-firefox-tab2"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+            }
+
+            div[class = "favicon-chrome-light-preview"] {
+                div[class = "favicon-chrome-tab1"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+                div[class = "favicon-chrome-tab2"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+            }
+
+            div[class = "favicon-chrome-dark-preview"] {
+                div[class = "favicon-chrome-tab1"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
+                div[class = "favicon-chrome-tab2"] {
+                    img[
+                        src = "/static/favicon/favicon-16x16.png",
+                        alt = "favicon-16x16.png",
+                    ];
+                }
             }
         }
     }

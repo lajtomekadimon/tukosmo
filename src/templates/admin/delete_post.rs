@@ -39,7 +39,7 @@ markup::define! {
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.delete_post_w_title
                     .replace("{title}", &q.post.id.to_string())

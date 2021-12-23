@@ -35,7 +35,7 @@ markup::define! {
         q: &'a ErrorAResponse,
         e: &'a ErrorDB,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 {"ERROR {code}".replace("{code}", &e.code)}
 

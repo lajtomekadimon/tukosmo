@@ -52,7 +52,7 @@ markup::define! {
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @if q.filter == "drafts" {
                     @t.draft_posts

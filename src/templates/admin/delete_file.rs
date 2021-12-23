@@ -40,7 +40,7 @@ markup::define! {
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
-        div[class = "box is-marginless"] {
+        div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.delete_file
 
