@@ -100,6 +100,33 @@ markup::define! {
                                 &t_date(&file.date, &q.data.lang.code),
                             ),
                     ] {
+                        a[
+                            href = ra_edit_file_w_id(
+                                &q.data.lang.code,
+                                &file.id,
+                            ),
+                        ] {
+                            div[class = "card"] {
+                                div[class = "card-image"] {
+                                    figure[class = "image is-3by2"] {
+                                        @if IMG_EXTS.contains(
+                                            &file.ext.as_str()
+                                        ) {
+                                            img[
+                                                src = file_route(&file.name),
+                                                alt = &file.name,
+                                            ];
+                                        }
+                                    }
+                                }
+                                footer[class = "card-footer"] {
+                                    span[class = "card-footer-item"] {
+                                        @file.name
+                                    }
+                                }
+                            }
+                        }
+                        /*
                         div[class = "card"] {
                             div[class = "card-image"] {
                                 figure[class = "image is-3by2"] {
@@ -123,6 +150,7 @@ markup::define! {
                                 }
                             }
                         }
+                        */
                     }
                 }
             }

@@ -117,10 +117,12 @@ nav.navbar {
 .card-footer-item {
     font-size: 14px;
     font-weight: 700;
-    color: #8F99A3;
+    color: #63696f;
 }
 
-.card-footer-item:hover {}
+.card-footer-item:hover {
+    color: #303030;
+}
 
 .card-table .table {
     margin-bottom: 0;
