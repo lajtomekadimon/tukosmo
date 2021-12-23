@@ -213,6 +213,7 @@ markup::define! {
                         @t.post_s_body
                     }
                     div[class = "control"] {
+                        /*
                         textarea[
                             class = if let Some(e) = error {
                                 if e.code == ec::WRONG_BODY_TEXT {
@@ -230,6 +231,42 @@ markup::define! {
                                 {&f.body}
                             } else { @post.body }
                         }
+                        */
+
+                        link[
+                            rel = "stylesheet",
+                            href = "https://uicdn.toast.com/editor/latest/toastui-editor.min.css",
+                        ];
+                        input[
+                            id = "body-text",
+                            type = "hidden",
+                            name = "body",
+                            value = if let Some(f) = form {
+                                &f.body
+                            } else {
+                                &post.body
+                            },
+                        ];
+                        /*
+                        input[
+                            id = "body-html",
+                            type = "hidden",
+                            name = "body_html",
+                            value = if let Some(f) = form {
+                                &f.body_html
+                            } else {
+                                &post.body_html
+                            },
+                        ];
+                        */
+                        div[id = "editor"] {}
+                        script[
+                            src = "https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js",
+                        ] {}
+                        script[
+                            src = "/static/js/editor.js",
+                            //src = static_files::JS_EDITOR,
+                        ] {}
                     }
                 }
 
