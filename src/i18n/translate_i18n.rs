@@ -14,6 +14,7 @@ pub struct TranslateI18N {
     pub cancel: &'static str,
     pub choose_a_file: &'static str,
     pub close_k_session: &'static str,
+    pub close_k_verb: &'static str,
     pub code: &'static str,
     pub current_favicon: &'static str,
     pub current_password: &'static str,

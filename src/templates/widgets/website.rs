@@ -24,6 +24,11 @@ markup::define! {
                 class = "site-languages-bg",
             ] {}
             div[class = "site-languages-content"] {
+                button [
+                    id = "close-site-languages",
+                    class = "close-site-languages",
+                    title = &t.close_k_verb,
+                ] {}
                 h3 {
                     @t.select_a_language
                 }

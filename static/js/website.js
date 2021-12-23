@@ -9,6 +9,13 @@ document.getElementById("button-select-language").addEventListener(
     }
 );
 
+document.getElementById("close-site-languages").addEventListener(
+    'click',
+    function() {
+        site_languages.style.opacity = '0';
+    }
+);
+
 document.getElementById("site-languages-bg").addEventListener(
     'click',
     function() {

@@ -30,6 +30,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Elige un archivo...",
     close_k_session:
         "Cerrar",
+    close_k_verb:
+        "Cerrar",
     code:
         "Código",
     current_favicon:
