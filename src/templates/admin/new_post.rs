@@ -11,6 +11,7 @@ use crate::database::error_codes as ec;
 use crate::i18n::t_error::ErrorDB;
 use crate::handlers::admin::new_post::ra_new_post;
 use crate::handlers::admin::posts::ra_posts;
+use crate::templates::widgets::admin_post_editor::AdminPostEditor;
 
 
 markup::define! {
@@ -180,22 +181,11 @@ markup::define! {
                         @t.post_s_body
                     }
                     div[class = "control"] {
-                        textarea[
-                            class = if let Some(e) = error {
-                                if e.code == ec::WRONG_BODY_TEXT {
-                                    "textarea is-family-monospace is-danger"
-                                } else {
-                                    "textarea is-family-monospace"
-                                }
-                            } else {
-                                "textarea is-family-monospace"
-                            },
-                            name = "body",
-                            rows = "12",
-                        ] {
-                            @if let Some(f) = form {
-                                {&f.body}
-                            } else { "" }
+                        @AdminPostEditor {
+                            name: "body",
+                            init_value: if let Some(f) = form {
+                                &f.body
+                            } else { "" },
                         }
                     }
                 }

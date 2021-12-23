@@ -4,6 +4,7 @@ pub mod admin_navbar;
 pub mod admin_panel;
 pub mod admin_pagination;
 pub mod admin_file_card;
+pub mod admin_post_editor;
 
 pub mod footer;
 pub mod header;
