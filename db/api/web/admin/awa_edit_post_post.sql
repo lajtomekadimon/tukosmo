@@ -33,6 +33,8 @@ BEGIN
     -- Check request
     d := s_admin_handler_data(r.req);
 
+    language_of_user := (d.lang).id;
+
     -- Check CSRF token
     IF NOT c_csrf_token_by_token_session(
         r.csrf_token,
