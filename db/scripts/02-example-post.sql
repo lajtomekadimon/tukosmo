@@ -106,17 +106,17 @@ Left aligned columns:
 
 | Option | Description |
 | ------ | ----------- |
-| data   | bla bla bla |
-| data   | bla bla bla |
-| data   | bla bla bla |
+| data   | bla bla     |
+| data   | bla bla     |
+| data   | bla bla     |
 
 Right aligned columns:
 
 | Option | Description |
 | ------:| -----------:|
-| data   | bla bla bla |
-| data   | bla bla bla |
-| data   | bla bla bla |
+| data   | bla bla     |
+| data   | bla bla     |
+| data   | bla bla     |
 
 
 ## Code
