@@ -38,8 +38,11 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] Website's language set by URL (good for SEO).
 - [x] Custom languages.
 - [x] Cookie-based auth.
-- [x] CommonMark-based posts and pages.
-- [x] WYSIWYG CommonMark editor for posts and pages.
+- [x] CommonMark written posts rendered by [pulldown-cmark](
+https://github.com/raphlinus/pulldown-cmark).
+- [x] WYSIWYG CommonMark post editor using [TOAST UI Editor](
+https://github.com/nhn/tui.editor).
+- [x] Admin Panel; styles using [Bulma](https://bulma.io/).
 - [x] Open Graph cards.
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
