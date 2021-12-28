@@ -48,7 +48,7 @@ markup::define! {
                         class = "button is-danger is-light is-pulled-right \
                                  has-text-weight-normal mr-4",
                     ] {
-                        @t.cancel
+                        @t.remove_featured_image
                     }
                 }
 

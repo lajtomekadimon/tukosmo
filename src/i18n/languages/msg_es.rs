@@ -270,6 +270,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Entradas publicadas",
     read_more:
         "Leer más",
+    remove_featured_image:
+        "Quitar imagen de presentación",
     repeat_new_password:
         "Repetir contraseña nueva",
     repeat_password:

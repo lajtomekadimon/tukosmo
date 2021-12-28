@@ -133,6 +133,7 @@ pub struct TranslateI18N {
     pub published_k_posts: &'static str,
     pub published_posts: &'static str,
     pub read_more: &'static str,
+    pub remove_featured_image: &'static str,
     pub repeat_new_password: &'static str,
     pub repeat_password: &'static str,
     pub scheduled_k_posts: &'static str,
