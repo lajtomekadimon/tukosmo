@@ -124,6 +124,10 @@ pub async fn edit_post_post(
                         EditPostARequest {
                             req: user_req.clone(),
                             post: post_id.clone(),
+                            featured_image: if featured_image_id == 0 {
+                                None
+                            } else { Some(featured_image_id) },
+                            first_request: false,
                         },
                     ) {
 

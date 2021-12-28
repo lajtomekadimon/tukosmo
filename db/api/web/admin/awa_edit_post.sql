@@ -1,7 +1,9 @@
 
 CREATE TYPE "EditPostARequest" AS (
     req "AdminRequest",
-    post BIGINT
+    post BIGINT,
+    featured_image BIGINT,
+    first_request BOOL
 );
 
 CREATE TYPE "EditPostAResponse" AS (
@@ -66,10 +68,22 @@ BEGIN
         RAISE EXCEPTION '';
     END IF;*/
 
-    featured_image := s_post_fimage_by_id_lang(
-        r.post,
-        language_of_user
-    );
+    IF r.first_request THEN
+        featured_image := s_post_fimage_by_id_lang(
+            r.post,
+            language_of_user
+        );
+    ELSIF r.featured_image IS NOT NULL THEN
+        featured_image := s_file_by_id(
+            r.featured_image,
+            language_of_user
+        );
+
+        -- Check file ID is correct
+        IF featured_image IS NULL THEN
+            PERFORM err_wrong_file_id();
+        END IF;
+    END IF;
 
     -- User is logged in
     RETURN ROW(

@@ -12,6 +12,7 @@ use crate::i18n::t_error::ErrorDB;
 use crate::handlers::admin::new_post::ra_new_post;
 use crate::handlers::admin::posts::ra_posts;
 use crate::templates::widgets::admin_post_editor::AdminPostEditor;
+use crate::templates::widgets::admin_file_selector::AdminFileSelector;
 
 
 markup::define! {
@@ -69,6 +70,12 @@ markup::define! {
                 }
             }
 
+            // File selector!!!
+            div[
+                id = "file-selector-panel",
+                class = "modal",
+            ] {}
+
             form[
                 method = "post",
                 action = ra_new_post(&q.data.lang.code),
@@ -108,22 +115,13 @@ markup::define! {
                         @t.featured_image
                     }
                     div[class = "control"] {
-                        input[
-                            class = if let Some(e) = error {
-                                if e.code == ec::WRONG_FILE_ID {
-                                    "input is-danger"
-                                } else {
-                                    "input"
-                                }
-                            } else {
-                                "input"
-                            },
-                            type = "text",
-                            name = "featured_image",
-                            value = if let Some(f) = form {
-                                &f.featured_image
-                            } else { &0 },
-                        ];
+                        @AdminFileSelector {
+                            t: t,
+                            name: "featured_image",
+                            current_file: if let Some(_f) = form {
+                                &q.featured_image
+                            } else { &None },
+                        }
                     }
                 }
 

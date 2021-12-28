@@ -1,14 +1,15 @@
 use postgres_types::{ToSql, FromSql};
+use serde::Serialize;
 use uuid::Uuid;
 
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct AdminRequest {
     pub session: Uuid,
     pub lang_code: String,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct WebsiteRequest {
     pub session: Option<Uuid>,
     pub lang_code: String,
@@ -16,7 +17,7 @@ pub struct WebsiteRequest {
 
 /*---*/
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct UserDB {
     pub id: i64,
     pub email: String,
@@ -24,23 +25,24 @@ pub struct UserDB {
     pub date: String,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct SessionDB {
     pub user_agent: String,
     pub date: String,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct FileDB {
     pub id: i64,
     pub name: String,
     pub ext: String,
+    pub route: String,
     pub author: i64,
     pub author_name: String,
     pub date: String,
 }
  
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct LanguageDB {
     pub id: i64,
     pub code: String,
@@ -50,13 +52,13 @@ pub struct LanguageDB {
     pub has_all_names: bool,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct NameDB {
     pub name: String,
     pub lang: LanguageDB,
 }
  
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct LanguageWithNamesDB {
     pub id: i64,
     pub code: String,
@@ -67,7 +69,7 @@ pub struct LanguageWithNamesDB {
     pub names: Vec<NameDB>,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct PostDB {
     pub id: i64,
     pub featured_image: Option<FileDB>,
@@ -87,13 +89,13 @@ pub struct PostDB {
     pub deleted: bool,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct RouteDB {
     pub lang: LanguageDB,
     pub route: String,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct AdminDataDB {
     pub userd: UserDB,
     pub lang: LanguageDB,
@@ -102,7 +104,7 @@ pub struct AdminDataDB {
     pub website_subtitle: String,
 }
 
-#[derive(Clone, Debug, ToSql, FromSql)]
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct WebsiteDataDB {
     pub userd: Option<UserDB>,
     pub lang: LanguageDB,

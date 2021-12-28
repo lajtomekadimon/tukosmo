@@ -412,6 +412,16 @@ async fn main() -> std::io::Result<()> {
                             .to(admin::tukosmo::tukosmo)
                         )
                     )
+
+                    // JSON API
+                    .service(web::scope("/json")
+                        // Files selector
+                        .service(web::resource("/files_selector")
+                            .route(web::get()
+                                .to(admin::json::files_selector::files_selector)
+                            )
+                        )
+                    )
                 )
             )
     })

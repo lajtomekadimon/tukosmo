@@ -30,6 +30,8 @@ pub fn ra_edit_post_w_id(
 pub struct EditPostARequest {
     pub req: types::AdminRequest,
     pub post: i64,
+    pub featured_image: Option<i64>,
+    pub first_request: bool,
 }
 
 impl QueryFunction for EditPostARequest {
@@ -62,6 +64,8 @@ pub async fn edit_post(
             EditPostARequest {
                 req: user_req.clone(),
                 post: post_id.clone(),
+                featured_image: None,
+                first_request: true,
             },
         ) {
 

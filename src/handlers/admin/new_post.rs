@@ -19,6 +19,7 @@ pub fn ra_new_post(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct NewPostARequest {
     pub req: types::AdminRequest,
+    pub featured_image: Option<i64>,
 }
 
 impl QueryFunction for NewPostARequest {
@@ -32,6 +33,7 @@ pub struct NewPostAResponse {
     pub data: types::AdminDataDB,
     pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
+    pub featured_image: Option<types::FileDB>,
 }
 
 
@@ -45,6 +47,7 @@ pub async fn new_post(
         Ok(user_req) => match query_db(
             NewPostARequest {
                 req: user_req.clone(),
+                featured_image: None,
             },
         ) {
 

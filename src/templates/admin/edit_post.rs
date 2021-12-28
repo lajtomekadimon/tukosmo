@@ -14,6 +14,7 @@ use crate::handlers::admin::edit_post::ra_edit_post_w_id;
 use crate::handlers::admin::posts::ra_posts;
 use crate::handlers::admin::delete_post::ra_delete_post_w_id;
 use crate::templates::widgets::admin_post_editor::AdminPostEditor;
+use crate::templates::widgets::admin_file_selector::AdminFileSelector;
 
 
 markup::define! {
@@ -74,6 +75,12 @@ markup::define! {
                 }
             }
 
+            // File selector!!!
+            div[
+                id = "file-selector-panel",
+                class = "modal",
+            ] {}
+
             form[
                 method = "post",
                 action = ra_edit_post_w_id(
@@ -122,40 +129,10 @@ markup::define! {
                         @t.featured_image
                     }
                     div[class = "control"] {
-                        @if let Some(fimage) = &q.featured_image {
-                            input[
-                                class = if let Some(e) = error {
-                                    if e.code == ec::WRONG_FILE_ID {
-                                        "input is-danger"
-                                    } else {
-                                        "input"
-                                    }
-                                } else {
-                                    "input"
-                                },
-                                type = "text",
-                                name = "featured_image",
-                                value = if let Some(f) = form {
-                                    &f.featured_image
-                                } else { &fimage.id },
-                            ];
-                        } else {
-                            input[
-                                class = if let Some(e) = error {
-                                    if e.code == ec::WRONG_FILE_ID {
-                                        "input is-danger"
-                                    } else {
-                                        "input"
-                                    }
-                                } else {
-                                    "input"
-                                },
-                                type = "text",
-                                name = "featured_image",
-                                value = if let Some(f) = form {
-                                    &f.featured_image
-                                } else { &0 },
-                            ];
+                        @AdminFileSelector {
+                            t: t,
+                            name: "featured_image",
+                            current_file: &q.featured_image,
                         }
                     }
                 }

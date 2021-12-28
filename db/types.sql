@@ -27,6 +27,7 @@ CREATE TYPE "FileDB" AS (
     id BIGINT,
     name TEXT,
     ext TEXT,
+    route TEXT,
     author BIGINT,
     author_name TEXT,
     date TEXT

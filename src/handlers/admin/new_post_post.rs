@@ -116,6 +116,9 @@ pub async fn new_post_post(
                     Err(e) => match query_db(
                         NewPostARequest {
                             req: user_req.clone(),
+                            featured_image: if featured_image_id == 0 {
+                                None
+                            } else { Some(featured_image_id) },
                         },
                     ) {
 

@@ -12,9 +12,10 @@ markup::define! {
         current_page: &'a i64,
         total_pages: &'a i64,
         results_per_page: &'a i64,
+        buttons: &'a bool,
     ) {
         nav[
-            class = "pagination is-centered pt-5",
+            class = "pagination is-centered",
             role = "navigation",
             "aria-label" = "pagination",
         ] {
@@ -25,13 +26,25 @@ markup::define! {
                 ] {
                     @t.previous
                 }
+            } else if **buttons {
+                button[
+                    class = "file_selector_page button pagination-previous",
+                    "data-route" = route
+                        .replace("{lang}", &data.lang.code)
+                        .replace("{rpp}", &results_per_page.to_string())
+                        .replace("{p}", &(**current_page - 1).to_string()),
+                    "data-rpp" = &results_per_page.to_string(),
+                    "data-p" = &(**current_page - 1).to_string(),
+                ] {
+                    @t.previous
+                }
             } else {
                 a[
                     class = "pagination-previous",
                     href = route
                         .replace("{lang}", &data.lang.code)
                         .replace("{rpp}", &results_per_page.to_string())
-                        .replace("{page}", &(**current_page - 1).to_string()),
+                        .replace("{p}", &(**current_page - 1).to_string()),
                 ] {
                     @t.previous
                 }
@@ -44,13 +57,25 @@ markup::define! {
                 ] {
                     @t.next
                 }
+            } else if **buttons {
+                button[
+                    class = "file_selector_page button pagination-next",
+                    "data-route" = route
+                        .replace("{lang}", &data.lang.code)
+                        .replace("{rpp}", &results_per_page.to_string())
+                        .replace("{p}", &(**current_page + 1).to_string()),
+                    "data-rpp" = &results_per_page.to_string(),
+                    "data-p" = &(**current_page + 1).to_string(),
+                ] {
+                    @t.next
+                }
             } else {
                 a[
                     class = "pagination-next",
                     href = route
                         .replace("{lang}", &data.lang.code)
                         .replace("{rpp}", &results_per_page.to_string())
-                        .replace("{page}", &(**current_page + 1).to_string()),
+                        .replace("{p}", &(**current_page + 1).to_string()),
                 ] {
                     @t.next
                 }
@@ -78,25 +103,42 @@ markup::define! {
                         }
 
                         li {
-                            a[
-                                class = if p == **current_page {
-                                    "pagination-link is-current"
-                                } else {
-                                    "pagination-link"
-                                },
-                                href = route
-                                    .replace("{lang}", &data.lang.code)
-                                    .replace(
-                                        "{rpp}",
-                                        &results_per_page.to_string(),
-                                    )
-                                    .replace("{page}", &p.to_string())
-                                    .replace(
-                                        "{rpp}",
-                                        &results_per_page.to_string()
-                                    ),
-                            ] {
-                                @p.to_string()
+                            @if **buttons {
+                                button[
+                                    class = if p == **current_page {
+                                        "file_selector_page button pagination-link is-current"
+                                    } else {
+                                        "file_selector_page button pagination-link"
+                                    },
+                                    "data-route" = route
+                                        .replace("{lang}", &data.lang.code)
+                                        .replace(
+                                            "{rpp}",
+                                            &results_per_page.to_string(),
+                                        )
+                                        .replace("{p}", &p.to_string()),
+                                    "data-rpp" = &results_per_page.to_string(),
+                                    "data-p" = &p.to_string(),
+                                ] {
+                                    @p.to_string()
+                                }
+                            } else {
+                                a[
+                                    class = if p == **current_page {
+                                        "pagination-link is-current"
+                                    } else {
+                                        "pagination-link"
+                                    },
+                                    href = route
+                                        .replace("{lang}", &data.lang.code)
+                                        .replace(
+                                            "{rpp}",
+                                            &results_per_page.to_string(),
+                                        )
+                                        .replace("{p}", &p.to_string()),
+                                ] {
+                                    @p.to_string()
+                                }
                             }
                         }
                         

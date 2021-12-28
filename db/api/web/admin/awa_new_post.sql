@@ -1,12 +1,14 @@
 
 CREATE TYPE "NewPostARequest" AS (
-    req "AdminRequest"
+    req "AdminRequest",
+    featured_image BIGINT
 );
 
 CREATE TYPE "NewPostAResponse" AS (
     data "AdminDataDB",
     routes "RouteDB"[],
-    csrf_token TEXT
+    csrf_token TEXT,
+    featured_image "FileDB"
 );
 
 
@@ -31,6 +33,8 @@ DECLARE
 
     language_of_user BIGINT;
 
+    featured_image "FileDB";
+
 BEGIN
 
     -- Check request and select common data
@@ -44,6 +48,18 @@ BEGIN
         language_of_user
     );
 
+    IF r.featured_image IS NOT NULL THEN
+        featured_image := s_file_by_id(
+            r.featured_image,
+            language_of_user
+        );
+
+        -- Check file ID is correct
+        IF featured_image IS NULL THEN
+            PERFORM err_wrong_file_id();
+        END IF;
+    END IF;
+
     RETURN ROW(
         -- data
         d,
@@ -54,7 +70,10 @@ BEGIN
         -- csrf_token
         s_csrf_token_by_session(
             (r.req).session
-        )::TEXT
+        )::TEXT,
+
+        -- featured_image
+        featured_image
     );
 
 END;

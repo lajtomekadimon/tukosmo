@@ -92,7 +92,7 @@ markup::define! {
             div[class = "columns is-multiline"] {
                 @for file in q.files.iter() {
                     div[
-                        class = "column is-one-quarter-desktop is-half-tablet",
+                        class = "column is-one-fifth-desktop is-half-tablet",
                         title = &t.uploaded_by_name_on_date
                             .replace("{name}", &file.author_name)
                             .replace(
@@ -118,6 +118,11 @@ markup::define! {
                                             ];
                                         }
                                     }
+                                    div[class = "card-content is-overlay is-clipped"] {
+                                        span[class = "tag is-link"] {
+                                            @file.ext.to_uppercase()
+                                        }
+                                    }
                                 }
                                 footer[class = "card-footer"] {
                                     span[class = "card-footer-item"] {
@@ -126,31 +131,6 @@ markup::define! {
                                 }
                             }
                         }
-                        /*
-                        div[class = "card"] {
-                            div[class = "card-image"] {
-                                figure[class = "image is-3by2"] {
-                                    @if IMG_EXTS.contains(&file.ext.as_str()) {
-                                        img[
-                                            src = file_route(&file.name),
-                                            alt = &file.name,
-                                        ];
-                                    }
-                                }
-                            }
-                            footer[class = "card-footer"] {
-                                a[
-                                    class = "card-footer-item",
-                                    href = ra_edit_file_w_id(
-                                        &q.data.lang.code,
-                                        &file.id,
-                                    ),
-                                ] {
-                                    @file.name
-                                }
-                            }
-                        }
-                        */
                     }
                 }
             }
@@ -163,6 +143,7 @@ markup::define! {
                     current_page: &q.page,
                     total_pages: &q.total_pages,
                     results_per_page: &q.results_per_page,
+                    buttons: &false,
                 }
             }
         }

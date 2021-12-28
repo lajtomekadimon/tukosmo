@@ -8,6 +8,14 @@ body {
     background: #ECF0F3;
 }
 
+.nostyle-button {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 nav.navbar {
     border-top: 4px solid #276cda;
     margin-bottom: 1rem;
@@ -239,12 +247,17 @@ nav.navbar {
 
 
 
-.card-footer {
-    word-wrap: break-word;
+
+.card-footer-item {
+    word-wrap: anywhere;
 }
 
 .notification {
     transition: opacity 0.3s;
+}
+
+.pagination {
+    width: 100%;
 }
 
 

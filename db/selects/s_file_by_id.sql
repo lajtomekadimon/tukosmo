@@ -26,6 +26,9 @@ SELECT (
         ''
     ),
 
+    -- route
+    '/files/' || tf_name,
+
     -- author
     tf_author,
 

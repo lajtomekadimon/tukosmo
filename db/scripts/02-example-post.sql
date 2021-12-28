@@ -42,8 +42,7 @@ BEGIN
 
 
     post_body :=
-'
-# h1 Heading
+'# h1 Heading
 ## h2 Heading
 ### h3 Heading
 #### h4 Heading
@@ -106,17 +105,17 @@ Left aligned columns:
 
 | Option | Description |
 | ------ | ----------- |
-| data   | bla bla     |
-| data   | bla bla     |
-| data   | bla bla     |
+| bla    | bla bla     |
+| bla    | bla bla     |
+| bla    | bla bla     |
 
 Right aligned columns:
 
 | Option | Description |
 | ------:| -----------:|
-| data   | bla bla     |
-| data   | bla bla     |
-| data   | bla bla     |
+| bla    | bla bla     |
+| bla    | bla bla     |
+| bla    | bla bla     |
 
 
 ## Code
@@ -152,14 +151,10 @@ console.log(foo(5));
 
 [link text](https://wikipedia.org)
 
-[link with title](https://wikipedia.org "title text!")
-
 
 ## Images
 
-![Tukosmo](/static/img/tukosmo-logo-128.png)
-![Tukosmo](/static/img/tukosmo-logo-128.png "Title")
-';
+![Tukosmo](/static/img/tukosmo-logo-128.png)';
 
 
 

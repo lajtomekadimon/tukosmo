@@ -246,6 +246,7 @@ markup::define! {
                     current_page: &q.page,
                     total_pages: &q.total_pages,
                     results_per_page: &q.results_per_page,
+                    buttons: &false,
                 }
             }
         }

@@ -84,7 +84,8 @@ DFUNDB=db/checks/*.sql \
        db/updates/*.sql \
        db/api/server/*.sql \
        db/api/web/website/*.sql \
-       db/api/web/admin/*.sql
+       db/api/web/admin/*.sql \
+       db/api/web/admin/json/*.sql
 
 dfunctionsdb:
 	@echo "Creating query and mutation functions..."
