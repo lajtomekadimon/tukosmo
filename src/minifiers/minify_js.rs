@@ -5,13 +5,10 @@ use esbuild_rs::{TransformOptionsBuilder, transform_direct, TransformResult};
 
 
 fn minify_js_file(
-    input_file: &'static str,
+    input_code: String,
     output_file: &'static str,
 ) {
-    let website_js = fs::read_to_string(input_file)
-        .expect("Something went wrong reading the JS file!");
-
-    let src = Arc::new(website_js.as_bytes().to_vec());
+    let src = Arc::new(input_code.as_bytes().to_vec());
 
     let mut options_builder = TransformOptionsBuilder::new();
     options_builder.minify_whitespace = true;
@@ -37,12 +34,35 @@ fn minify_js_file(
 
 
 pub fn minify_js() {
+    let website_js = fs::read_to_string("static/js/website.js")
+        .expect("Something went wrong reading the JS file!");
+
     minify_js_file(
-        "static/js/website.js",
+        website_js,
         "static/bundle.js",
     );
+
+    /*---*/
+
+    let file_paths = fs::read_dir("static/js/admin/").unwrap();
+    let mut admin_js = String::new();
+
+    for path in file_paths {
+        let file_path = path.unwrap().path();
+
+        if let Some(extension) = file_path.extension() {
+            if extension == "js" {
+                let file_code = fs::read_to_string(file_path)
+                    .expect("Something went wrong reading the JS file!");
+
+                admin_js.push_str(&file_code);
+            }
+        }
+    }
+
     minify_js_file(
-        "static/js/admin.js",
+        admin_js,
         "static/bundle.admin.js",
     );
 }
+
