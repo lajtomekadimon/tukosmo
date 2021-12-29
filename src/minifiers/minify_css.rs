@@ -21,7 +21,7 @@ fn theme_file_dir(
 pub fn minify_css() {
     // WEBSITE
     ////////////
-    let normalize_css = fs::read_to_string("static/css/normalize.css")
+    let normalize_css = fs::read_to_string("static/css/extra/normalize.css")
         .expect("Something went wrong reading normalize.css!");
 
     let mut css_to_minify = String::new();
@@ -45,7 +45,7 @@ pub fn minify_css() {
     // ADMIN
     //////////
     // TODO: Use bulma.css instead
-    let bulma_css = fs::read_to_string("static/css/bulma.min.css")
+    let bulma_css = fs::read_to_string("static/css/extra/bulma.min.css")
         .expect("Something went wrong reading bulma.css!");
     let admin_css = fs::read_to_string("static/css/admin.css")
         .expect("Something went wrong reading CSS admin file!");
@@ -53,12 +53,19 @@ pub fn minify_css() {
     let mut css_to_minify2 = String::new();
     css_to_minify2.push_str(&bulma_css);
     css_to_minify2.push_str(&admin_css);
-    // TODO: Add license,etc comment like GNU Project proposes
 
-    let minified_css2 = Minifier::default().minify(
+    let mut minified_css2 = Minifier::default().minify(
         &css_to_minify2,
         Level::One  // Note: Levels Two and Three are dangerous
     ).expect("CSS couldn't be minified!");
+
+    let toastui_editor_css = fs::read_to_string(
+        "static/css/extra/toastui-editor.min.css",
+    ).expect("Something went wrong reading toastui-editor.min.css!");
+    minified_css2.push_str(&toastui_editor_css);
+    // TODO: Toast UI Editor can't be minified!?
+
+    // TODO: Add license, etc. of everything in a comment like GNU proposes
 
     fs::write("static/bundle.admin.css", &minified_css2)
         .expect("Error writing to bundle.admin.css");

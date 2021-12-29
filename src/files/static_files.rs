@@ -72,6 +72,4 @@ pub const JS_WEBSITE: &'static str =
     "/static/bundle.js";
 pub const JS_ADMIN: &'static str =
     "/static/bundle.admin.js";
-pub const JS_EDITOR: &'static str =
-    "/static/js/editor.js";
 
