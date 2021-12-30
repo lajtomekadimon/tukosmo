@@ -11,13 +11,13 @@ function loadFileSelector(url) {
                     document.getElementById("file-selector-panel");
                 id_fileSelectorPanel.innerHTML = http.response.html;
 
-                const id_fileInput = document.getElementById("file_input");
-                const id_fileName = document.getElementById("file_name");
-                const id_fileImg = document.getElementById("file_img");
-                const id_fileImgcard = document.getElementById("file_imgcard");
+                const id_fileInput = document.getElementById("file-input");
+                const id_fileName = document.getElementById("file-name");
+                const id_fileImg = document.getElementById("file-img");
+                const id_fileImgcard = document.getElementById("file-imgcard");
 
                 const classes_fileSelectorPage =
-                    document.querySelectorAll('.file_selector_page');
+                    document.querySelectorAll('.file-selector-page');
                 classes_fileSelectorPage.forEach(
                     el => el.addEventListener(
                         'click',
@@ -30,7 +30,7 @@ function loadFileSelector(url) {
                 );
 
                 const classes_selectFile =
-                    document.querySelectorAll('.select_file');
+                    document.querySelectorAll('.select-file');
                 classes_selectFile.forEach(
                     el => el.addEventListener(
                         'click',
@@ -66,7 +66,7 @@ function loadFileSelector(url) {
                 );
 
                 const id_fileSelectorCancel =
-                    document.getElementById("file_selector_cancel");
+                    document.getElementById("file-selector-cancel");
                 id_fileSelectorCancel.addEventListener(
                     'click',
                     function() {

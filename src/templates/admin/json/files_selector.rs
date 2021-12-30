@@ -44,7 +44,7 @@ markup::define! {
                     ")"
 
                     button[
-                        id = "file_selector_cancel",
+                        id = "file-selector-cancel",
                         class = "button is-danger is-light is-pulled-right \
                                  has-text-weight-normal mr-4",
                     ] {
@@ -64,8 +64,8 @@ markup::define! {
                                 ),
                         ] {
                             button[
-                                id = "select_file_{id}".replace("{id}", &file.id.to_string()),
-                                class = "nostyle-button select_file mb-4",
+                                id = "select-file-{id}".replace("{id}", &file.id.to_string()),
+                                class = "select-file nostyle-button mb-4",
                                 "data-id" = &file.id,
                                 "data-name" = &file.name,
                                 "data-route" = &file.route,

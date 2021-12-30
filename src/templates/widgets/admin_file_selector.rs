@@ -23,7 +23,7 @@ markup::define! {
                 ),
             ] {
                 input[
-                    id = "file_input",
+                    id = "file-input",
                     type = "hidden",
                     name = name,
                     value = if let Some(f) = current_file {
@@ -41,7 +41,7 @@ markup::define! {
                     }
                 }
                 span[
-                    id = "file_name",
+                    id = "file-name",
                     class = "file-name",
                     style = if let Some(_f) = current_file {
                         "display: none;"
@@ -52,7 +52,7 @@ markup::define! {
                     @t.no_file_uploaded
                 }
                 span[
-                    id = "file_imgcard",
+                    id = "file-imgcard",
                     class = "file-name",
                     style = if let Some(_f) = current_file {
                         "height: auto;"
@@ -61,7 +61,7 @@ markup::define! {
                     },
                 ] {
                     img[
-                        id = "file_img",
+                        id = "file-img",
                         src = if let Some(f) = current_file {
                             &f.route
                         } else {

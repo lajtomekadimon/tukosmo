@@ -28,7 +28,7 @@ markup::define! {
                 }
             } else if **buttons {
                 button[
-                    class = "file_selector_page button pagination-previous",
+                    class = "file-selector-page button pagination-previous",
                     "data-route" = route
                         .replace("{lang}", &data.lang.code)
                         .replace("{rpp}", &results_per_page.to_string())
@@ -59,7 +59,7 @@ markup::define! {
                 }
             } else if **buttons {
                 button[
-                    class = "file_selector_page button pagination-next",
+                    class = "file-selector-page button pagination-next",
                     "data-route" = route
                         .replace("{lang}", &data.lang.code)
                         .replace("{rpp}", &results_per_page.to_string())
@@ -106,9 +106,9 @@ markup::define! {
                             @if **buttons {
                                 button[
                                     class = if p == **current_page {
-                                        "file_selector_page button pagination-link is-current"
+                                        "file-selector-page button pagination-link is-current"
                                     } else {
-                                        "file_selector_page button pagination-link"
+                                        "file-selector-page button pagination-link"
                                     },
                                     "data-route" = route
                                         .replace("{lang}", &data.lang.code)
