@@ -1,7 +1,7 @@
 use markup;
 
 use crate::handlers::admin::{
-    scope_json::files_selector::raj_files_selector_w_rpp_p,
+    scope_json::files_selector_get::ra_json_files_selector_w_rpp_p,
 };
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::FileDB;
@@ -18,7 +18,7 @@ markup::define! {
             label[
                 id = "file-selector-js",
                 class = "file-label",
-                "data-url" = raj_files_selector_w_rpp_p(
+                "data-url" = ra_json_files_selector_w_rpp_p(
                     &t.lang_code,
                     &12,
                     &1

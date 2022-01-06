@@ -20,14 +20,14 @@ pub struct GetParamData {
 }
 
 
-pub fn raj_files_selector_wu_rpp_p(
+pub fn ra_json_files_selector_wu_rpp_p(
     lang_code: &str,
 ) -> String {
     "/{lang}/admin/json/files_selector?rpp={rpp}&p={p}"
         .replace("{lang}", lang_code)
 }
 
-pub fn raj_files_selector_w_rpp_p(
+pub fn ra_json_files_selector_w_rpp_p(
     lang_code: &str,
     rpp: &i64,
     p: &i64,
@@ -63,7 +63,7 @@ pub struct AgoJsonFilesSelector {
 }
 
 
-pub async fn files_selector(
+pub async fn files_selector_get(
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,

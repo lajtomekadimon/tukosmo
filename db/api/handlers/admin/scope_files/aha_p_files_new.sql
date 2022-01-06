@@ -1,7 +1,8 @@
 
 CREATE TYPE "ApiFilesNew" AS (
     req "AdminRequest",
-    --csrf_token UUID,
+    csrf_token UUID,
+    id BIGINT,
     filename TEXT
 );
 
@@ -10,7 +11,7 @@ CREATE OR REPLACE FUNCTION aha_p_files_new(
     r "ApiFilesNew"
 )
 
-RETURNS BIGINT
+RETURNS TEXT
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -23,22 +24,38 @@ DECLARE
 
     d "AdminDataDB";
 
-    file_id BIGINT;
+    language_of_user BIGINT;
+
+    file_data "FileDB";
+
+    ofilename TEXT;
 
 BEGIN
 
-    -- Check request and select common data
+    -- Check request
     d := s_admin_handler_data(r.req);
 
+    language_of_user := (d.lang).id;
+
     -- Check CSRF token
-    /*
     IF NOT c_csrf_token_by_token_session(
         r.csrf_token,
         (r.req).session
     ) THEN
         PERFORM err_wrong_csrf_token();
     END IF;
-    */
+
+    file_data := s_file_by_id(
+        r.id,
+        language_of_user
+    );
+
+    -- Check file ID is correct
+    IF file_data IS NULL THEN
+        PERFORM err_wrong_file_id();
+    END IF;
+
+    ofilename := file_data.name;
 
     -- Check file name
     IF NOT e_is_filename(r.filename) THEN
@@ -50,12 +67,12 @@ BEGIN
         PERFORM err_filename_already_exists();
     END IF;
 
-    file_id := i_file(
-        r.filename,
-        (d.userd).id
+    PERFORM u_file(
+        r.id,
+        r.filename
     );
 
-    RETURN file_id;
+    RETURN ofilename;
 
 END;
 

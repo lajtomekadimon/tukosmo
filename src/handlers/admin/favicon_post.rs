@@ -46,64 +46,60 @@ pub async fn favicon_post(
 
     match user_request(req, id) {
 
-        Ok(user_req) => {if generate_favicon(payload).await {
+        Ok(user_req) => match query_db(
+            ApiFavicon {
+                req: user_req.clone(),
+                //csrf_token: csrf_token_value,
+            },
+        ) {
 
-            match query_db(
-                ApiFavicon {
+            Ok(_row) => {if generate_favicon(payload).await {
+
+                HttpResponse::Found()
+                    .header(
+                        "Location",
+                        ra_favicon_success(&user_req.lang_code),
+                    )
+                    .finish()
+
+            } else {
+
+                // TODO
+                HttpResponse::Ok().body("Error!!!")
+
+            }},
+
+            Err(e) => match query_db(
+                AgiFavicon {
                     req: user_req.clone(),
-                    //csrf_token: csrf_token_value,
                 },
             ) {
 
-                Ok(_row) => {
+                Ok(row) => {
+                    let q: AgoFavicon = row.get(0);
+                    let t = &t(&q.data.lang.code);
 
-                    HttpResponse::Found()
-                        .header(
-                            "Location",
-                            ra_favicon_success(&user_req.lang_code),
-                        )
-                        .finish()
+                    let html = Favicon {
+                        title: &format!(
+                            "{a} - {b}",
+                            a = t.favicon,
+                            b = t.tukosmo_admin_panel,
+                        ),
+                        q: &q,
+                        t: t,
+                        error: &Some(t_error(e, &q.data.lang.code)),
+                        success: &false,
+                    };
 
-                },
-
-                Err(e) => match query_db(
-                    AgiFavicon {
-                        req: user_req.clone(),
-                    },
-                ) {
-
-                    Ok(row) => {
-                        let q: AgoFavicon = row.get(0);
-                        let t = &t(&q.data.lang.code);
-
-                        let html = Favicon {
-                            title: &format!(
-                                "{a} - {b}",
-                                a = t.favicon,
-                                b = t.tukosmo_admin_panel,
-                            ),
-                            q: &q,
-                            t: t,
-                            error: &Some(t_error(e, &q.data.lang.code)),
-                            success: &false,
-                        };
-
-                        HttpResponse::Ok().body(html.to_string())
-
-                    },
-
-                    Err(e2) => error_admin_route(e2, &user_req.lang_code),
+                    HttpResponse::Ok().body(html.to_string())
 
                 },
 
-            }
+                Err(e2) => error_admin_route(e2, &user_req.lang_code),
 
-        } else {
+            },
 
-            // TODO
-            HttpResponse::Ok().body("Error!!!")
-
-        }},
+        },
 
         Err(redirect_url) => redirect_url,
 

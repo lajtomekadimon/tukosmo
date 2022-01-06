@@ -57,7 +57,7 @@ pub async fn edit_post(
 
     match user_request(req, id) {
 
-            Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
+        Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
 
             Ok(csrf_token_value) => {
 

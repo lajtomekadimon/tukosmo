@@ -4,9 +4,9 @@ use crate::files::{
     extensions::IMG_EXTS,
     file_route::file_route,
 };
-use crate::handlers::admin::scope_json::files_selector::{
+use crate::handlers::admin::scope_json::files_selector_get::{
     AgoJsonFilesSelector,
-    raj_files_selector_wu_rpp_p,
+    ra_json_files_selector_wu_rpp_p,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -109,7 +109,7 @@ markup::define! {
                     @AdminPagination {
                         data: &q.data,
                         t: t,
-                        route: &raj_files_selector_wu_rpp_p(&q.data.lang.code),
+                        route: &ra_json_files_selector_wu_rpp_p(&q.data.lang.code),
                         current_page: &q.page,
                         total_pages: &q.total_pages,
                         results_per_page: &q.results_per_page,

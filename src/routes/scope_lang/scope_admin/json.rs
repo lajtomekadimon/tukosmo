@@ -9,4 +9,7 @@ pub fn subroutes() -> Scope {
     scope("/json")
         // Files selector: /{lang}/admin/json/files_selector
         .service(scope_json::files_selector::route())
+
+        // Upload file: /{lang}/admin/json/upload_file
+        .service(scope_json::upload_file::route())
 }

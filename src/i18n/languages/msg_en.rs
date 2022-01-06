@@ -26,6 +26,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Browser",
     cancel:
         "Cancel",
+    change_filename_question:
+        "Change file name?",
     choose_a_file:
         "Choose a file...",
     close_k_session:
@@ -358,6 +360,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Your account has been successfully updated.",
     your_email:
         "Your email",
+    your_file_has_been_successfully_uploaded:
+        "Your file has been uploaded.",
     your_password:
         "Your password",
     your_sessions_have_been_successfully_updated:
