@@ -5,19 +5,25 @@ use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
-use crate::handlers::admin::user_request::user_request;
-use crate::database::types;
-use crate::database::query_db::{QueryFunction, query_db};
-use crate::database::error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID;
-use crate::i18n::t::t;
-use crate::i18n::t_error::t_error;
-use crate::i18n::error_admin_route::error_admin_route;
-use crate::handlers::admin::account::{
-    AccountARequest,
-    AccountAResponse,
+use crate::handlers::admin::{
+    user_request::user_request,
+    account_get::{
+        AgiAccount,
+        AgoAccount,
+    },
+    error_get::ra_error_w_code,
+};
+use crate::database::{
+    types,
+    query_db::{QueryFunction, query_db},
+    error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+};
+use crate::i18n::{
+    t::t,
+    t_error::t_error,
+    error_admin_route::error_admin_route,
 };
 use crate::templates::admin::account::Account;
-use crate::handlers::admin::error::ra_error_w_code;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -117,7 +123,7 @@ pub struct FormData {
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct AccountPostARequest {
+pub struct ApiAccount {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub email: String,
@@ -129,9 +135,9 @@ pub struct AccountPostARequest {
     pub i18n_names: Vec<String>,
 }
 
-impl QueryFunction for AccountPostARequest {
+impl QueryFunction for ApiAccount {
     fn query(&self) -> &str {
-        "SELECT awa_account_post($1)"
+        "SELECT aha_p_account($1)"
     }
 }
 
@@ -157,7 +163,7 @@ pub async fn account_post(
                 let i18n_names = (form.i18n_names).clone();
 
                 match query_db(
-                    AccountPostARequest {
+                    ApiAccount {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
                         email: email_value,
@@ -171,14 +177,14 @@ pub async fn account_post(
                 ) {
 
                     Ok(_row) => match query_db(
-                        AccountARequest {
+                        AgiAccount {
                             req: user_req.clone(),
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: AccountAResponse = row.get(0);
+                            let q: AgoAccount = row.get(0);
                             let t = &t(&q.data.lang.code);
 
                             let html = Account {
@@ -206,14 +212,14 @@ pub async fn account_post(
                     },
 
                     Err(e) => match query_db(
-                        AccountARequest {
+                        AgiAccount {
                             req: user_req.clone(),
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: AccountAResponse = row.get(0);
+                            let q: AgoAccount = row.get(0);
                             let t = &t(&q.data.lang.code);
 
                             let html = Account {

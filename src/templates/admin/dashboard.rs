@@ -1,16 +1,18 @@
 use markup;
 
+use crate::handlers::admin::dashboard_get::AgoDashboard;
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::handlers::admin::dashboard::DashboardAResponse;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+};
 
 
 markup::define! {
     Dashboard<'a>(
         title: &'a str,
         t: &'a TranslateI18N,
-        q: &'a DashboardAResponse,
+        q: &'a AgoDashboard,
     ) {
         @AdminLayout {
             title: title,
@@ -29,9 +31,13 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a DashboardAResponse,
+        q: &'a AgoDashboard,
         t: &'a TranslateI18N,
     ) {
+        /* TODO:
+         * - Show Tukosmo version and available update
+         * - Show server info and available update
+         */
         section[class = "hero is-info welcome is-small"] {
             div[class = "hero-body"] {
                 div[class = "container"] {

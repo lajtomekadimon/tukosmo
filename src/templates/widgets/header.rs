@@ -1,7 +1,7 @@
 use markup;
 
+use crate::handlers::website::home_get::rw_home;
 use crate::database::types::WebsiteDataDB;
-use crate::handlers::website::home::rw_home;
 
 
 markup::define! {

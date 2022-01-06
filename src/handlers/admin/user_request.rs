@@ -2,8 +2,8 @@ use actix_web::{HttpRequest, HttpResponse};
 use actix_identity::Identity;
 use uuid::Uuid;
 
+use crate::handlers::admin::login_get::ra_login;
 use crate::database::types::AdminRequest;
-use crate::handlers::admin::login::ra_login;
 
 
 pub fn user_request(

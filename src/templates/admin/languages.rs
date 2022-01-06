@@ -1,19 +1,25 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::languages::LanguagesAResponse;
-use crate::handlers::admin::new_language::ra_new_language;
-use crate::handlers::admin::edit_language::ra_edit_language_w_id;
+use crate::handlers::admin::{
+    languages_get::AgoLanguages,
+    scope_languages::new_get::ra_languages_new,
+    scope_languages::edit_get::ra_languages_edit_w_id,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Languages<'a>(
         title: &'a str,
-        q: &'a LanguagesAResponse,
+        q: &'a AgoLanguages,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -35,7 +41,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a LanguagesAResponse,
+        q: &'a AgoLanguages,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -53,7 +59,7 @@ markup::define! {
                 }
 
                 a[
-                    href = ra_new_language(&q.data.lang.code),
+                    href = ra_languages_new(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -106,7 +112,7 @@ markup::define! {
                         ] {
                             td {
                                 a[
-                                    href = ra_edit_language_w_id(
+                                    href = ra_languages_edit_w_id(
                                         &q.data.lang.code,
                                         &lang.id,
                                     ),

@@ -1,20 +1,28 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
-use crate::templates::website_layout::WebsiteLayout;
-use crate::templates::widgets::website::Website;
-use crate::templates::widgets::blog_pagination::BlogPagination;
-use crate::handlers::website::blog::BlogWResponse;
-use crate::handlers::website::blog_post::rw_blog_post;
 use crate::files::file_route::file_route;
-use crate::handlers::website::blog::rw_blog_wu_rpp_p;
+use crate::handlers::website::{
+    blog_get::{
+        WgoBlog,
+        rw_blog_wu_rpp_p,
+    },
+    scope_blog::post_get::rw_blog_post,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+};
+use crate::templates::{
+    website_layout::WebsiteLayout,
+    widgets::website::Website,
+    widgets::blog_pagination::BlogPagination,
+};
 
 
 markup::define! {
     Blog<'a>(
         title: &'a str,
-        q: &'a BlogWResponse,
+        q: &'a WgoBlog,
         t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {
@@ -38,7 +46,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a BlogWResponse,
+        q: &'a WgoBlog,
         t: &'a TranslateI18N,
     ) {
         div[

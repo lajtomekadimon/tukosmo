@@ -1,15 +1,17 @@
 use markup;
 
+use crate::handlers::admin::pages_get::AgoPages;
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::handlers::admin::pages::PagesAResponse;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+};
 
 
 markup::define! {
     Pages<'a>(
         title: &'a str,
-        q: &'a PagesAResponse,
+        q: &'a AgoPages,
         t: &'a TranslateI18N,
     ) {
         @AdminLayout {

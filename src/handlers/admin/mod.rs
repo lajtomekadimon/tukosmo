@@ -1,61 +1,44 @@
-pub mod json;
+pub mod user_request;
 
 /*---*/
 
-pub mod user_request;
+pub mod dashboard_get;
 
-pub mod dashboard;
-pub mod statistics;
-pub mod server;
-pub mod users;
-pub mod languages;
-pub mod posts;
-pub mod pages;
-pub mod files;
-pub mod tukosmo;
-
-pub mod new_user;
-pub mod new_user_post;
-pub mod edit_user;
-pub mod edit_user_post;
-pub mod delete_user;
-pub mod delete_user_post;
-
-pub mod new_language;
-pub mod new_language_post;
-pub mod edit_language;
-pub mod edit_language_post;
-pub mod delete_language;
-pub mod delete_language_post;
-
-pub mod new_post;
-pub mod new_post_post;
-pub mod edit_post;
-pub mod edit_post_post;
-pub mod delete_post;
-pub mod delete_post_post;
-
-pub mod upload_file;
-pub mod upload_file_post;
-pub mod edit_file;
-pub mod edit_file_post;
-pub mod delete_file;
-pub mod delete_file_post;
-
-pub mod login;
+pub mod login_get;
 pub mod login_post;
-pub mod logout;
+pub mod logout_get;
 
-pub mod account;
+pub mod account_get;
 pub mod account_post;
 
-pub mod sessions;
+pub mod sessions_get;
 pub mod sessions_post;
 
-pub mod favicon;
+pub mod statistics_get;
+pub mod server_get;
+
+pub mod users_get;
+pub mod scope_users;
+
+pub mod languages_get;
+pub mod scope_languages;
+
+pub mod posts_get;
+pub mod scope_posts;
+
+pub mod pages_get;
+
+pub mod files_get;
+pub mod scope_files;
+
+pub mod favicon_get;
 pub mod favicon_post;
 
-pub mod website;
+pub mod tukosmo_get;
+
+pub mod website_get;
 pub mod website_post;
 
-pub mod error;
+pub mod error_get;
+
+pub mod scope_json;

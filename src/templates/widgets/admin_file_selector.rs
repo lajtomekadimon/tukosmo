@@ -1,8 +1,10 @@
 use markup;
 
+use crate::handlers::admin::{
+    scope_json::files_selector::raj_files_selector_w_rpp_p,
+};
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::FileDB;
-use crate::handlers::admin::json::files_selector::raj_files_selector_w_rpp_p;
 
 
 markup::define! {

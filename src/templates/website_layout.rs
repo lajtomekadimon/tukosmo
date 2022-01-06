@@ -1,9 +1,11 @@
 use markup;
 
-use crate::database::types::{WebsiteDataDB, RouteDB};
-use crate::templates::widgets::favicon_meta::FaviconMeta;
-use crate::templates::widgets::open_graph_meta::{OpenGraphMeta, ArticleOG};
 use crate::files::static_files;
+use crate::database::types::{WebsiteDataDB, RouteDB};
+use crate::templates::widgets::{
+    favicon_meta::FaviconMeta,
+    open_graph_meta::{OpenGraphMeta, ArticleOG},
+};
 
 
 markup::define! {

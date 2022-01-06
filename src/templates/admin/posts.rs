@@ -1,22 +1,30 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::templates::widgets::admin_pagination::AdminPagination;
-use crate::handlers::admin::posts::PostsAResponse;
-use crate::handlers::admin::new_post::ra_new_post;
-use crate::handlers::admin::edit_post::ra_edit_post_w_id;
-use crate::handlers::admin::edit_user::ra_edit_user_w_id;
-use crate::handlers::admin::posts::ra_posts_w_f_wu_rpp_p;
+use crate::handlers::admin::{
+    posts_get::{
+        AgoPosts,
+        ra_posts_w_f_wu_rpp_p,
+    },
+    scope_posts::new_get::ra_posts_new,
+    scope_posts::edit_get::ra_posts_edit_w_id,
+    scope_users::edit_get::ra_users_edit_w_id,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+    widgets::admin_pagination::AdminPagination,
+};
 
 
 markup::define! {
     Posts<'a>(
         title: &'a str,
-        q: &'a PostsAResponse,
+        q: &'a AgoPosts,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -48,7 +56,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a PostsAResponse,
+        q: &'a AgoPosts,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -76,7 +84,7 @@ markup::define! {
                 }
 
                 a[
-                    href = ra_new_post(&q.data.lang.code),
+                    href = ra_posts_new(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -148,7 +156,7 @@ markup::define! {
                             ] {
                                 td {
                                     a[
-                                        href = ra_edit_post_w_id(
+                                        href = ra_posts_edit_w_id(
                                             &q.data.lang.code,
                                             &post.id,
                                         ),
@@ -191,7 +199,7 @@ markup::define! {
                                 }
                                 td {
                                     a[
-                                        href = ra_edit_user_w_id(
+                                        href = ra_users_edit_w_id(
                                             &q.data.lang.code,
                                             &post.author,
                                         ),

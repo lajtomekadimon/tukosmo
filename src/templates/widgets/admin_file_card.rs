@@ -1,11 +1,15 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
+use crate::files::{
+    extensions::IMG_EXTS,
+    file_route::file_route,
+};
+use crate::handlers::admin::scope_users::edit_get::ra_users_edit_w_id;
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+};
 use crate::database::types::{AdminDataDB, FileDB};
-use crate::i18n::t_date::t_date;
-use crate::files::extensions::IMG_EXTS;
-use crate::files::file_route::file_route;
-use crate::handlers::admin::edit_user::ra_edit_user_w_id;
 
 
 markup::define! {
@@ -40,7 +44,7 @@ markup::define! {
                     }
 
                     a[
-                        href = &ra_edit_user_w_id(
+                        href = &ra_users_edit_w_id(
                             &data.lang.code,
                             &file_data.author,
                         ),

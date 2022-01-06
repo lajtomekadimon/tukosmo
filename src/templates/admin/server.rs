@@ -1,15 +1,17 @@
 use markup;
 
+use crate::handlers::admin::server_get::AgoServer;
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::handlers::admin::server::ServerAResponse;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+};
 
 
 markup::define! {
     Server<'a>(
         title: &'a str,
-        q: &'a ServerAResponse,
+        q: &'a AgoServer,
         t: &'a TranslateI18N,
     ) {
         @AdminLayout {

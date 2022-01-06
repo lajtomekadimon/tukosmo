@@ -1,18 +1,20 @@
 use markup;
 
+use crate::handlers::admin::{
+    dashboard_get::ra_dashboard,
+    statistics_get::ra_statistics,
+    server_get::ra_server,
+    users_get::ra_users,
+    languages_get::ra_languages,
+    posts_get::{ra_posts, ra_posts_w_f},
+    pages_get::ra_pages,
+    files_get::ra_files,
+    favicon_get::ra_favicon,
+    website_get::ra_website,
+    tukosmo_get::ra_tukosmo,
+};
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
-use crate::handlers::admin::dashboard::ra_dashboard;
-use crate::handlers::admin::statistics::ra_statistics;
-use crate::handlers::admin::server::ra_server;
-use crate::handlers::admin::users::ra_users;
-use crate::handlers::admin::languages::ra_languages;
-use crate::handlers::admin::posts::{ra_posts, ra_posts_w_f};
-use crate::handlers::admin::pages::ra_pages;
-use crate::handlers::admin::files::ra_files;
-use crate::handlers::admin::favicon::ra_favicon;
-use crate::handlers::admin::website::ra_website;
-use crate::handlers::admin::tukosmo::ra_tukosmo;
 
 
 markup::define! {

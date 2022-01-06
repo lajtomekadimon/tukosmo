@@ -1,18 +1,24 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::favicon::FaviconAResponse;
-use crate::i18n::t_error::ErrorDB;
-use crate::handlers::admin::favicon::ra_favicon;
+use crate::handlers::admin::favicon_get::{
+    AgoFavicon,
+    ra_favicon,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_error::ErrorDB,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Favicon<'a>(
         title: &'a str,
-        q: &'a FaviconAResponse,
+        q: &'a AgoFavicon,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         success: &'a bool,
@@ -36,7 +42,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a FaviconAResponse,
+        q: &'a AgoFavicon,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         success: &'a bool,

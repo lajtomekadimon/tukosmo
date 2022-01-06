@@ -1,8 +1,7 @@
-use actix_web::{web, App, HttpServer};
+use actix_web::{App, HttpServer};
 //use actix_web::middleware;
 //use actix_web::http;
 //use actix_cors::Cors;
-use actix_files::Files;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web_middleware_redirect_https::RedirectHTTPS;
 use rand::Rng;
@@ -17,18 +16,19 @@ mod i18n;
 
 mod files;
 
+mod routes;
+
 mod templates;
 
 mod handlers;
-use crate::handlers::root::root;
-use crate::handlers::website;
-use crate::handlers::admin;
 
 mod markdown;
 
 mod minifiers;
-use crate::minifiers::minify_css::minify_css;
-use crate::minifiers::minify_js::minify_js;
+use crate::minifiers::{
+    minify_css::minify_css,
+    minify_js::minify_js,
+};
 
 
 #[actix_web::main]
@@ -48,7 +48,7 @@ async fn main() -> std::io::Result<()> {
 
     // SSL (HTTPS)
     // -----------
-    // Load ssl keys.
+    // Load SSL keys.
     // To create a self-signed temporary cert for testing:
     // openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
     // cert.pem -days 365 -subj '/CN=localhost'
@@ -77,6 +77,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(RedirectHTTPS::with_replacements(
                 &[(":8080".to_owned(), ":8443".to_owned())]
             ))
+
             /*.wrap(Cors::default()
                 // TODO: This has to work with "*" instead of localhost!
                 .allowed_origin("http://localhost:8080")
@@ -87,6 +88,7 @@ async fn main() -> std::io::Result<()> {
                 )
                 .allowed_header(http::header::CONTENT_TYPE)
             )*/
+
             .wrap(
                 IdentityService::new(
                     CookieIdentityPolicy::new(&private_key)
@@ -96,334 +98,22 @@ async fn main() -> std::io::Result<()> {
                         .max_age(604800)  // 1 week
                 )
             )
-            // Firefox's view source code doesn't work with this
+
+            // Firefox's view source code doesn't work with this (?)
             //.wrap(middleware::Compress::default())
 
-            // Website root URL: /
-            .service(web::resource("/")
-                .route(web::get().to(root))
-            )
+            // Website root: /
+            .service(routes::root::route())
 
             // Static files: /static/.../...
-            .service(Files::new(
-                // Website route
-                "/static",
-                // System dir
-                "static",
-            ).show_files_listing())
+            .service(routes::staticf::routes())
 
             // Uploaded files: /files/...
-            .service(Files::new(
-                // Website route
-                "/files",
-                // System dir
-                "files",
-            ).show_files_listing())
+            .service(routes::files::routes())
 
-
-            // Homepage (/{lang})
-            .service(web::resource("/{lang}")
-                .route(web::get().to(website::home::home))
-            )
-
-            // HTML pages
-            .service(web::scope("/{lang}")
-                // Homepage (/{lang}/)
-                .service(web::resource("/")
-                    .route(web::get()
-                        .to(website::home::home)
-                    )
-                )
-
-                // Blog (/blog)
-                .service(web::resource("/blog")
-                    .route(web::get()
-                        .to(website::blog::blog)
-                    )
-                )
-
-                // Blog
-                .service(web::scope("/blog")
-                    // Blog (/blog/)
-                    .service(web::resource("/")
-                        .route(web::get()
-                            .to(website::blog::blog)
-                        )
-                    )
-
-                    // Blog post
-                    .service(web::resource("/{permalink}")
-                        .route(web::get()
-                            .to(website::blog_post::blog_post)
-                        )
-                    )
-                )
-
-                // Page
-                .service(web::resource("/page/{permalink}")
-                    .route(web::get()
-                        .to(website::page::page)
-                    )
-                )
-
-                // Error
-                .service(web::resource("/error")
-                    .route(web::get()
-                        .to(website::error::error)
-                    )
-                )
-
-                // Admin Panel dashboard (/{lang}/admin)
-                .service(web::resource("/admin")
-                    .route(web::get()
-                        .to(admin::dashboard::dashboard)
-                    )
-                )
-
-                // Admin Panel
-                .service(web::scope("/admin")
-                    // Dashboard (/{lang}/admin/)
-                    .service(web::resource("/")
-                        .route(web::get()
-                            .to(admin::dashboard::dashboard)
-                        )
-                    )
-
-                    // Error
-                    .service(web::resource("/error")
-                        .route(web::get()
-                            .to(admin::error::error)
-                        )
-                    )
-
-                    // Login
-                    .service(web::resource("/login")
-                        .route(web::get()
-                            .to(admin::login::login)
-                        )
-                        .route(web::post()
-                            .to(admin::login_post::login_post)
-                        )
-                    )
-
-                    // Logout
-                    .service(web::resource("/logout")
-                        .route(web::get()
-                            .to(admin::logout::logout)
-                        )
-                    )
-
-                    // Account
-                    .service(web::resource("/account")
-                        .route(web::get()
-                            .to(admin::account::account)
-                        )
-                        .route(web::post()
-                            .to(admin::account_post::account_post)
-                        )
-                    )
-
-                    // Sessions
-                    .service(web::resource("/sessions")
-                        .route(web::get()
-                            .to(admin::sessions::sessions)
-                        )
-                        .route(web::post()
-                            .to(admin::sessions_post::sessions_post)
-                        )
-                    )
-
-                    //-- General --//
-
-                    // Statistics
-                    .service(web::resource("/statistics")
-                        .route(web::get()
-                            .to(admin::statistics::statistics)
-                        )
-                    )
-
-                    // Server
-                    .service(web::resource("/server")
-                        .route(web::get()
-                            .to(admin::server::server)
-                        )
-                    )
-
-                    //-- Data --//
-
-                    // Users
-                    .service(web::resource("/users")
-                        .route(web::get()
-                            .to(admin::users::users)
-                        )
-                    )
-                    .service(web::resource("/new_user")
-                        .route(web::get()
-                            .to(admin::new_user::new_user)
-                        )
-                        .route(web::post()
-                            .to(admin::new_user_post::new_user_post)
-                        )
-                    )
-                    .service(web::resource("/edit_user")
-                        .route(web::get()
-                            .to(admin::edit_user::edit_user)
-                        )
-                        .route(web::post()
-                            .to(admin::edit_user_post::edit_user_post)
-                        )
-                    )
-                    .service(web::resource("/delete_user")
-                        .route(web::get()
-                            .to(admin::delete_user::delete_user)
-                        )
-                        .route(web::post()
-                            .to(admin::delete_user_post::delete_user_post)
-                        )
-                    )
-
-                    // Languages
-                    .service(web::resource("/languages")
-                        .route(web::get()
-                            .to(admin::languages::languages)
-                        )
-                    )
-                    .service(web::resource("/new_language")
-                        .route(web::get()
-                            .to(admin::new_language::new_language)
-                        )
-                        .route(web::post()
-                            .to(admin::new_language_post::new_language_post)
-                        )
-                    )
-                    .service(web::resource("/edit_language")
-                        .route(web::get()
-                            .to(admin::edit_language::edit_language)
-                        )
-                        .route(web::post()
-                            .to(admin::edit_language_post::edit_language_post)
-                        )
-                    )
-                    .service(web::resource("/delete_language")
-                        .route(web::get()
-                            .to(admin::delete_language::delete_language)
-                        )
-                        .route(web::post()
-                            .to(admin::delete_language_post::delete_language_post)
-                        )
-                    )
-
-                    // Posts
-                    .service(web::resource("/posts")
-                        .route(web::get()
-                            .to(admin::posts::posts)
-                        )
-                    )
-                    .service(web::resource("/new_post")
-                        .route(web::get()
-                            .to(admin::new_post::new_post)
-                        )
-                        .route(web::post()
-                            .to(admin::new_post_post::new_post_post)
-                        )
-                    )
-                    .service(web::resource("/edit_post")
-                        .route(web::get()
-                            .to(admin::edit_post::edit_post)
-                        )
-                        .route(web::post()
-                            .to(admin::edit_post_post::edit_post_post)
-                        )
-                    )
-                    .service(web::resource("/delete_post")
-                        .route(web::get()
-                            .to(admin::delete_post::delete_post)
-                        )
-                        .route(web::post()
-                            .to(admin::delete_post_post::delete_post_post)
-                        )
-                    )
-
-                    // Pages
-                    .service(web::resource("/pages")
-                        .route(web::get()
-                            .to(admin::pages::pages)
-                        )
-                    )
-
-                    // Files
-                    .service(web::resource("/files")
-                        .route(web::get()
-                            .to(admin::files::files)
-                        )
-                    )
-                    .service(web::resource("/upload_file")
-                        .route(web::get()
-                            .to(admin::upload_file::upload_file)
-                        )
-                        .route(web::post()
-                            .to(admin::upload_file_post::upload_file_post)
-                        )
-                    )
-                    .service(web::resource("/edit_file")
-                        .route(web::get()
-                            .to(admin::edit_file::edit_file)
-                        )
-                        .route(web::post()
-                            .to(admin::edit_file_post::edit_file_post)
-                        )
-                    )
-                    .service(web::resource("/delete_file")
-                        .route(web::get()
-                            .to(admin::delete_file::delete_file)
-                        )
-                        .route(web::post()
-                            .to(admin::delete_file_post::delete_file_post)
-                        )
-                    )
-
-                    //-- Appearance --//
-
-                    // Favicon
-                    .service(web::resource("/favicon")
-                        .route(web::get()
-                            .to(admin::favicon::favicon)
-                        )
-                        .route(web::post()
-                            .to(admin::favicon_post::favicon_post)
-                        )
-                    )
-
-                    //-- Settings --//
-
-                    // Website
-                    .service(web::resource("/website")
-                        .route(web::get()
-                            .to(admin::website::website)
-                        )
-                        .route(web::post()
-                            .to(admin::website_post::website_post)
-                        )
-                    )
-
-                    // Tukosmo
-                    .service(web::resource("/tukosmo")
-                        .route(web::get()
-                            .to(admin::tukosmo::tukosmo)
-                        )
-                    )
-
-                    // JSON API
-                    .service(web::scope("/json")
-                        // Files selector
-                        .service(web::resource("/files_selector")
-                            .route(web::get()
-                                .to(admin::json::files_selector::files_selector)
-                            )
-                        )
-                    )
-                )
-            )
+            // Homepage: /{lang}
+            .service(routes::lang::route())
+            .service(routes::lang::subroutes())
     })
     .bind("127.0.0.1:8080")?
     .bind_openssl("127.0.0.1:8443", builder)?

@@ -83,9 +83,14 @@ DFUNDB=db/checks/*.sql \
        db/deletes/*.sql \
        db/updates/*.sql \
        db/api/server/*.sql \
-       db/api/web/website/*.sql \
-       db/api/web/admin/*.sql \
-       db/api/web/admin/json/*.sql
+       db/api/handlers/website/*.sql \
+       db/api/handlers/website/scope_blog/*.sql \
+       db/api/handlers/admin/*.sql \
+       db/api/handlers/admin/scope_users/*.sql \
+       db/api/handlers/admin/scope_languages/*.sql \
+       db/api/handlers/admin/scope_posts/*.sql \
+       db/api/handlers/admin/scope_files/*.sql \
+       db/api/handlers/admin/scope_json/*.sql
 
 dfunctionsdb:
 	@echo "Creating query and mutation functions..."

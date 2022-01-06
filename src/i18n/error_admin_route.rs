@@ -2,7 +2,7 @@ use actix_web::HttpResponse;
 use postgres::Error;
 
 use crate::i18n::t_error::t_error;
-use crate::handlers::admin::error::ra_error_w_code;
+use crate::handlers::admin::error_get::ra_error_w_code;
 
 
 pub fn error_admin_route(

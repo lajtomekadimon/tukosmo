@@ -4,17 +4,23 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
-use crate::handlers::website::user_request::user_request;
-use crate::database::types;
-use crate::database::query_db::{QueryFunction, query_db};
-use crate::i18n::t::t;
-use crate::i18n::t_error::t_error;
-use crate::handlers::admin::login::{
-    LoginARequest,
-    LoginAResponse,
+use crate::handlers::{
+    website::user_request::user_request,
+    admin::login_get::{
+        AgiLogin,
+        AgoLogin,
+    },
+    admin::dashboard_get::ra_dashboard,
+};
+use crate::database::{
+    types,
+    query_db::{QueryFunction, query_db},
+};
+use crate::i18n::{
+    t::t,
+    t_error::t_error,
 };
 use crate::templates::admin::login::Login;
-use crate::handlers::admin::dashboard::ra_dashboard;
 
 
 #[derive(Deserialize)]
@@ -25,21 +31,21 @@ pub struct FormData {
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct LoginPostARequest {
+pub struct ApiLogin {
     pub req: types::WebsiteRequest,
     pub email: String,
     pub password: String,
     pub user_agent: String,
 }
 
-impl QueryFunction for LoginPostARequest {
+impl QueryFunction for ApiLogin {
     fn query(&self) -> &str {
-        "SELECT awa_login_post($1)"
+        "SELECT aha_p_login($1)"
     }
 }
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct LoginPostAResponse {
+pub struct ApoLogin {
     pub data: types::WebsiteDataDB,
     pub session: Uuid,
 }
@@ -67,7 +73,7 @@ pub async fn login_post(
     };
 
     match query_db(
-        LoginPostARequest {
+        ApiLogin {
             req: user_req.clone(),
             email: email_value,
             password: password_value, // TODO: This is not encrypted!!!
@@ -86,7 +92,7 @@ pub async fn login_post(
 
         Ok(row) => {
 
-            let q: LoginPostAResponse = row.get(0);
+            let q: ApoLogin = row.get(0);
             //let t = &t(&q.data.lang.code);
 
             let encode_buffer_value = &mut Uuid::encode_buffer();
@@ -106,14 +112,14 @@ pub async fn login_post(
         },
 
         Err(e) => match query_db(
-            LoginARequest {
+            AgiLogin {
                 req: user_req,
             },
         ) {
 
             Ok(row) => {
 
-                let q: LoginAResponse = row.get(0);
+                let q: AgoLogin = row.get(0);
                 let t = &t(&q.data.lang.code);
 
                 if let Some(_user) = q.data.userd {

@@ -1,23 +1,33 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::templates::widgets::admin_pagination::AdminPagination;
-use crate::handlers::admin::files::FilesAResponse;
-use crate::files::extensions::IMG_EXTS;
-use crate::handlers::admin::upload_file::ra_upload_file;
-use crate::handlers::admin::edit_file::ra_edit_file_w_id;
-use crate::handlers::admin::files::ra_files_wu_rpp_p;
-use crate::files::file_route::file_route;
+use crate::files::{
+    extensions::IMG_EXTS,
+    file_route::file_route,
+};
+use crate::handlers::admin::files_get::{
+    AgoFiles,
+    ra_files_wu_rpp_p,
+};
+use crate::handlers::admin::scope_files::{
+    new_get::ra_files_new,
+    edit_get::ra_files_edit_w_id,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+    widgets::admin_pagination::AdminPagination,
+};
 
 
 markup::define! {
     Files<'a>(
         title: &'a str,
-        q: &'a FilesAResponse,
+        q: &'a AgoFiles,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -39,7 +49,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a FilesAResponse,
+        q: &'a AgoFiles,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -57,7 +67,7 @@ markup::define! {
                 }
 
                 a[
-                    href = ra_upload_file(&q.data.lang.code),
+                    href = ra_files_new(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -101,7 +111,7 @@ markup::define! {
                             ),
                     ] {
                         a[
-                            href = ra_edit_file_w_id(
+                            href = ra_files_edit_w_id(
                                 &q.data.lang.code,
                                 &file.id,
                             ),

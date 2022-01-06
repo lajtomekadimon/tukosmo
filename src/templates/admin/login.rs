@@ -1,22 +1,32 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::login::LoginAResponse;
-use crate::handlers::admin::login_post::FormData;
-use crate::database::types::{AdminDataDB, UserDB};
-use crate::database::error_codes as ec;
-use crate::i18n::t_error::ErrorDB;
-use crate::handlers::admin::login::ra_login;
 use crate::files::static_files::FAVICON_96X96;
+use crate::handlers::admin::{
+    login_get::{
+        AgoLogin,
+        ra_login,
+    },
+    login_post::FormData,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_error::ErrorDB,
+};
+use crate::database::{
+    types::{AdminDataDB, UserDB},
+    error_codes as ec,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Login<'a>(
         title: &'a str,
-        q: &'a LoginAResponse,
+        q: &'a AgoLogin,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
@@ -46,7 +56,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a LoginAResponse,
+        q: &'a AgoLogin,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
@@ -123,7 +133,7 @@ markup::define! {
     }
 
     Form<'a>(
-        q: &'a LoginAResponse,
+        q: &'a AgoLogin,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,

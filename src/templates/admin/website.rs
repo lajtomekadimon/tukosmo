@@ -1,20 +1,26 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::website::{ra_website, WebsiteAResponse};
-use crate::handlers::admin::website_post::FormData;
+use crate::handlers::admin::{
+    website_get::{ra_website, AgoWebsite},
+    website_post::FormData,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_error::ErrorDB,
+};
 use crate::database::error_codes as ec;
-use crate::i18n::t_error::ErrorDB;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Website<'a>(
         title: &'a str,
-        q: &'a WebsiteAResponse,
+        q: &'a AgoWebsite,
         t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
@@ -40,7 +46,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a WebsiteAResponse,
+        q: &'a AgoWebsite,
         t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,

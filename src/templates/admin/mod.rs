@@ -1,37 +1,34 @@
-pub mod json;
+pub mod scope_json;
 
 /*---*/
 
 pub mod dashboard;
+
 pub mod login;
-pub mod statistics;
-pub mod server;
-pub mod users;
-pub mod languages;
-pub mod posts;
-pub mod pages;
-pub mod files;
-pub mod favicon;
-pub mod website;
-pub mod tukosmo;
-
-pub mod new_user;
-pub mod edit_user;
-pub mod delete_user;
-
-pub mod new_language;
-pub mod edit_language;
-pub mod delete_language;
-
-pub mod new_post;
-pub mod edit_post;
-pub mod delete_post;
-
-pub mod upload_file;
-pub mod edit_file;
-pub mod delete_file;
 
 pub mod account;
 pub mod sessions;
+
+pub mod statistics;
+pub mod server;
+
+pub mod users;
+pub mod scope_users;
+
+pub mod languages;
+pub mod scope_languages;
+
+pub mod posts;
+pub mod scope_posts;
+
+pub mod pages;
+
+pub mod files;
+pub mod scope_files;
+
+pub mod favicon;
+
+pub mod website;
+pub mod tukosmo;
 
 pub mod error;

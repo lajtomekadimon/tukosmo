@@ -1,15 +1,17 @@
 use markup;
 
+use crate::handlers::website::page_get::WgoPage;
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::website_layout::WebsiteLayout;
-use crate::templates::widgets::website::Website;
-use crate::handlers::website::page::PageWResponse;
+use crate::templates::{
+    website_layout::WebsiteLayout,
+    widgets::website::Website,
+};
 
 
 markup::define! {
     Page<'a>(
         title: &'a str,
-        q: &'a PageWResponse,
+        q: &'a WgoPage,
         t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {

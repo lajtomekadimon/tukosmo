@@ -4,19 +4,25 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
-use crate::handlers::admin::user_request::user_request;
-use crate::database::types;
-use crate::database::query_db::{QueryFunction, query_db};
-use crate::database::error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID;
-use crate::i18n::t::t;
-use crate::i18n::t_error::t_error;
-use crate::i18n::error_admin_route::error_admin_route;
-use crate::handlers::admin::sessions::{
-    SessionsARequest,
-    SessionsAResponse,
+use crate::handlers::admin::{
+    user_request::user_request,
+    sessions_get::{
+        AgiSessions,
+        AgoSessions,
+    },
+    error_get::ra_error_w_code,
+};
+use crate::database::{
+    types,
+    query_db::{QueryFunction, query_db},
+    error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+};
+use crate::i18n::{
+    t::t,
+    t_error::t_error,
+    error_admin_route::error_admin_route,
 };
 use crate::templates::admin::sessions::Sessions;
-use crate::handlers::admin::error::ra_error_w_code;
 
 
 #[derive(Deserialize)]
@@ -28,16 +34,16 @@ pub struct FormData {
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct SessionsPostARequest {
+pub struct ApiSessions {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub user_agent: String,
     pub date: String,
 }
 
-impl QueryFunction for SessionsPostARequest {
+impl QueryFunction for ApiSessions {
     fn query(&self) -> &str {
-        "SELECT awa_sessions_post($1)"
+        "SELECT aha_p_sessions($1)"
     }
 }
 
@@ -58,7 +64,7 @@ pub async fn sessions_post(
                 let date_value = (form.date).clone();
 
                 match query_db(
-                    SessionsPostARequest {
+                    ApiSessions {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
                         user_agent: user_agent_value,
@@ -67,14 +73,14 @@ pub async fn sessions_post(
                 ) {
 
                     Ok(_row) => match query_db(
-                        SessionsARequest {
+                        AgiSessions {
                             req: user_req.clone(),
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: SessionsAResponse = row.get(0);
+                            let q: AgoSessions = row.get(0);
                             let t = &t(&q.data.lang.code);
 
                             let html = Sessions {
@@ -98,14 +104,14 @@ pub async fn sessions_post(
                     },
 
                     Err(e) => match query_db(
-                        SessionsARequest {
+                        AgiSessions {
                             req: user_req.clone(),
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: SessionsAResponse = row.get(0);
+                            let q: AgoSessions = row.get(0);
                             let t = &t(&q.data.lang.code);
 
                             let html = Sessions {

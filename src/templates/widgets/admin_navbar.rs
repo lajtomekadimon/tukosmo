@@ -1,12 +1,14 @@
 use markup;
 
+use crate::handlers::{
+    admin::dashboard_get::ra_dashboard,
+    admin::account_get::ra_account,
+    admin::sessions_get::ra_sessions,
+    admin::logout_get::ra_logout,
+    website::home_get::rw_home,
+};
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
-use crate::handlers::admin::dashboard::ra_dashboard;
-use crate::handlers::website::home::rw_home;
-use crate::handlers::admin::account::ra_account;
-use crate::handlers::admin::sessions::ra_sessions;
-use crate::handlers::admin::logout::ra_logout;
 
 
 markup::define! {

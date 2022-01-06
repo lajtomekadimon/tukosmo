@@ -3,31 +3,37 @@ use actix_identity::Identity;
 use actix_multipart::Multipart;
 use postgres_types::{ToSql, FromSql};
 
-use crate::handlers::admin::user_request::user_request;
-use crate::database::types;
-use crate::database::query_db::{QueryFunction, query_db};
-//use crate::database::error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID;
-use crate::i18n::t::t;
-use crate::i18n::t_error::t_error;
-use crate::i18n::error_admin_route::error_admin_route;
-use crate::handlers::admin::favicon::{
-    FaviconARequest,
-    FaviconAResponse,
+use crate::handlers::admin::{
+    user_request::user_request,
+    favicon_get::{
+        AgiFavicon,
+        AgoFavicon,
+        ra_favicon_success,
+    },
+};
+use crate::files::generate_favicon::generate_favicon;
+use crate::database::{
+    types,
+    query_db::{QueryFunction, query_db},
+    //error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID;
+};
+use crate::i18n::{
+    t::t,
+    t_error::t_error,
+    error_admin_route::error_admin_route,
 };
 use crate::templates::admin::favicon::Favicon;
-use crate::files::generate_favicon::generate_favicon;
-use crate::handlers::admin::favicon::ra_favicon_success;
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct FaviconPostARequest {
+pub struct ApiFavicon {
     pub req: types::AdminRequest,
     //pub csrf_token: Uuid,
 }
 
-impl QueryFunction for FaviconPostARequest {
+impl QueryFunction for ApiFavicon {
     fn query(&self) -> &str {
-        "SELECT awa_favicon_post($1)"
+        "SELECT aha_p_favicon($1)"
     }
 }
 
@@ -43,7 +49,7 @@ pub async fn favicon_post(
         Ok(user_req) => {if generate_favicon(payload).await {
 
             match query_db(
-                FaviconPostARequest {
+                ApiFavicon {
                     req: user_req.clone(),
                     //csrf_token: csrf_token_value,
                 },
@@ -61,13 +67,13 @@ pub async fn favicon_post(
                 },
 
                 Err(e) => match query_db(
-                    FaviconARequest {
+                    AgiFavicon {
                         req: user_req.clone(),
                     },
                 ) {
 
                     Ok(row) => {
-                        let q: FaviconAResponse = row.get(0);
+                        let q: AgoFavicon = row.get(0);
                         let t = &t(&q.data.lang.code);
 
                         let html = Favicon {

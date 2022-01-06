@@ -1,16 +1,20 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_error::ErrorDB;
-use crate::templates::website_layout::WebsiteLayout;
-use crate::templates::widgets::website::Website;
-use crate::handlers::website::error::ErrorWResponse;
+use crate::handlers::website::error_get::WgoError;
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_error::ErrorDB,
+};
+use crate::templates::{
+    website_layout::WebsiteLayout,
+    widgets::website::Website,
+};
 
 
 markup::define! {
     Error<'a>(
         title: &'a str,
-        q: &'a ErrorWResponse,
+        q: &'a WgoError,
         t: &'a TranslateI18N,
         e: &'a ErrorDB,
     ) {

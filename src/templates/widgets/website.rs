@@ -1,11 +1,13 @@
 use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::widgets::header::Header;
-use crate::templates::widgets::navigation::Navigation;
-use crate::templates::widgets::sidebar::Sidebar;
-use crate::templates::widgets::footer::Footer;
 use crate::database::types::{WebsiteDataDB, RouteDB};
+use crate::templates::widgets::{
+    header::Header,
+    navigation::Navigation,
+    sidebar::Sidebar,
+    footer::Footer,
+};
 
 
 markup::define! {

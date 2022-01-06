@@ -1,16 +1,18 @@
 use markup;
 
+use crate::handlers::admin::tukosmo_get::AgoTukosmo;
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::tukosmo::TukosmoAResponse;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Tukosmo<'a>(
         title: &'a str,
-        q: &'a TukosmoAResponse,
+        q: &'a AgoTukosmo,
         t: &'a TranslateI18N,
     ) {
         @AdminLayout {
@@ -30,7 +32,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a TukosmoAResponse,
+        q: &'a AgoTukosmo,
         t: &'a TranslateI18N,
     ) {
         div[class = "box is-marginless mb-6"] {

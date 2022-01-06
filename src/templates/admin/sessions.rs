@@ -1,21 +1,27 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::sessions::SessionsAResponse;
-use crate::i18n::t_error::ErrorDB;
-use crate::i18n::get_browser_from_user_agent::get_browser_from_user_agent;
-use crate::i18n::get_os_from_user_agent::get_os_from_user_agent;
-use crate::handlers::admin::sessions::ra_sessions;
+use crate::handlers::admin::sessions_get::{
+    AgoSessions,
+    ra_sessions,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+    t_error::ErrorDB,
+    get_browser_from_user_agent::get_browser_from_user_agent,
+    get_os_from_user_agent::get_os_from_user_agent,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Sessions<'a>(
         title: &'a str,
-        q: &'a SessionsAResponse,
+        q: &'a AgoSessions,
         t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
@@ -39,7 +45,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a SessionsAResponse,
+        q: &'a AgoSessions,
         t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,

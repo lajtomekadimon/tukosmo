@@ -1,21 +1,30 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::account::{ra_account, AccountAResponse};
-use crate::handlers::admin::account_post::FormData;
+use crate::handlers::admin::{
+    account_get::{
+        ra_account,
+        AgoAccount,
+    },
+    account_post::FormData,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_error::ErrorDB,
+    get_name_from_names::get_name_from_names,
+};
 use crate::database::error_codes as ec;
-use crate::i18n::t_error::ErrorDB;
-use crate::i18n::get_name_from_names::get_name_from_names;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Account<'a>(
         title: &'a str,
-        q: &'a AccountAResponse,
+        q: &'a AgoAccount,
         t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,
@@ -41,7 +50,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a AccountAResponse,
+        q: &'a AgoAccount,
         t: &'a TranslateI18N,
         success: &'a bool,
         error: &'a Option<ErrorDB>,

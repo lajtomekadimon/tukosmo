@@ -4,20 +4,26 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
-use crate::handlers::admin::user_request::user_request;
-use crate::database::types;
-use crate::database::query_db::{QueryFunction, query_db};
-use crate::database::error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID;
-use crate::i18n::t::t;
-use crate::i18n::t_error::t_error;
-use crate::i18n::error_admin_route::error_admin_route;
-use crate::handlers::admin::website::{
-    WebsiteARequest,
-    WebsiteAResponse,
+use crate::handlers::admin::{
+    user_request::user_request,
+    website_get::{
+        AgiWebsite,
+        AgoWebsite,
+    },
+    error_get::ra_error_w_code,
+    website_get::ra_website_success,
+};
+use crate::database::{
+    types,
+    query_db::{QueryFunction, query_db},
+    error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+};
+use crate::i18n::{
+    t::t,
+    t_error::t_error,
+    error_admin_route::error_admin_route,
 };
 use crate::templates::admin::website::Website;
-use crate::handlers::admin::error::ra_error_w_code;
-use crate::handlers::admin::website::ra_website_success;
 
 
 #[derive(Deserialize)]
@@ -29,16 +35,16 @@ pub struct FormData {
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct WebsitePostARequest {
+pub struct ApiWebsite {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub website_title: String,
     pub website_subtitle: String,
 }
 
-impl QueryFunction for WebsitePostARequest {
+impl QueryFunction for ApiWebsite {
     fn query(&self) -> &str {
-        "SELECT awa_website_post($1)"
+        "SELECT aha_p_website($1)"
     }
 }
 
@@ -51,7 +57,7 @@ pub async fn website_post(
 
     match user_request(req, id) {
 
-            Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
+        Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
 
             Ok(csrf_token_value) => {
 
@@ -59,7 +65,7 @@ pub async fn website_post(
                 let website_subtitle = (form.website_subtitle).clone();
 
                 match query_db(
-                    WebsitePostARequest {
+                    ApiWebsite {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
                         website_title: website_title,
@@ -79,14 +85,14 @@ pub async fn website_post(
                     },
 
                     Err(e) => match query_db(
-                        WebsiteARequest {
+                        AgiWebsite {
                             req: user_req.clone(),
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: WebsiteAResponse = row.get(0);
+                            let q: AgoWebsite = row.get(0);
                             let t = &t(&q.data.lang.code);
 
                             let html = Website {

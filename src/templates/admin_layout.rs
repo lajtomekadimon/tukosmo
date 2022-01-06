@@ -1,8 +1,8 @@
 use markup;
 
+use crate::files::static_files;
 use crate::database::types::{AdminDataDB, RouteDB};
 use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
-use crate::files::static_files;
 
 
 markup::define! {

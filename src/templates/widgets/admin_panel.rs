@@ -1,9 +1,11 @@
 use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::templates::widgets::admin_sidebar::AdminSidebar;
-use crate::templates::widgets::admin_navbar::AdminNavbar;
 use crate::database::types::AdminDataDB;
+use crate::templates::widgets::{
+    admin_sidebar::AdminSidebar,
+    admin_navbar::AdminNavbar,
+};
 
 
 markup::define! {

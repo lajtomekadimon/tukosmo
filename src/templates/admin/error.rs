@@ -1,17 +1,21 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_error::ErrorDB;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::handlers::admin::error::ErrorAResponse;
+use crate::handlers::admin::error_get::AgoError;
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_error::ErrorDB,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+};
 
 
 markup::define! {
     Error<'a>(
         title: &'a str,
-        q: &'a ErrorAResponse,
+        q: &'a AgoError,
         t: &'a TranslateI18N,
         e: &'a ErrorDB,
     ) {
@@ -32,7 +36,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a ErrorAResponse,
+        q: &'a AgoError,
         e: &'a ErrorDB,
     ) {
         div[class = "box is-marginless mb-6"] {

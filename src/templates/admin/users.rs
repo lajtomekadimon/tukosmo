@@ -1,21 +1,29 @@
 use markup;
 
-use crate::i18n::translate_i18n::TranslateI18N;
-use crate::i18n::t_date::t_date;
-use crate::templates::admin_layout::AdminLayout;
-use crate::templates::widgets::admin_panel::AdminPanel;
-use crate::templates::widgets::admin_lang_dropdown::AdminLangDropdown;
-use crate::templates::widgets::admin_pagination::AdminPagination;
-use crate::handlers::admin::users::UsersAResponse;
-use crate::handlers::admin::new_user::ra_new_user;
-use crate::handlers::admin::edit_user::ra_edit_user_w_id;
-use crate::handlers::admin::users::ra_users_wu_rpp_p;
+use crate::handlers::admin::{
+    users_get::{
+        AgoUsers,
+        ra_users_wu_rpp_p,
+    },
+    scope_users::new_get::ra_users_new,
+    scope_users::edit_get::ra_users_edit_w_id,
+};
+use crate::i18n::{
+    translate_i18n::TranslateI18N,
+    t_date::t_date,
+};
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_panel::AdminPanel,
+    widgets::admin_lang_dropdown::AdminLangDropdown,
+    widgets::admin_pagination::AdminPagination,
+};
 
 
 markup::define! {
     Users<'a>(
         title: &'a str,
-        q: &'a UsersAResponse,
+        q: &'a AgoUsers,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -37,7 +45,7 @@ markup::define! {
     }
 
     Content<'a>(
-        q: &'a UsersAResponse,
+        q: &'a AgoUsers,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
@@ -55,7 +63,7 @@ markup::define! {
                 }
 
                 a[
-                    href = ra_new_user(&q.data.lang.code),
+                    href = ra_users_new(&q.data.lang.code),
                     class = "button is-link is-pulled-right \
                              has-text-weight-normal mr-4",
                 ] {
@@ -115,7 +123,7 @@ markup::define! {
                             tr {
                                 td {
                                     a[
-                                        href = ra_edit_user_w_id(
+                                        href = ra_users_edit_w_id(
                                             &q.data.lang.code,
                                             &user.id,
                                         ),
