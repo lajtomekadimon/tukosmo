@@ -12,4 +12,7 @@ pub fn subroutes() -> Scope {
 
         // Upload file: /{lang}/admin/json/upload_file
         .service(scope_json::upload_file::route())
+
+        // Edit file: /{lang}/admin/json/edit_file
+        .service(scope_json::edit_file::route())
 }

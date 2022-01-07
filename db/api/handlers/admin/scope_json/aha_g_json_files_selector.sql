@@ -11,7 +11,8 @@ CREATE TYPE "AgoJsonFilesSelector" AS (
     results_per_page BIGINT,
     page BIGINT,
     total_results BIGINT,
-    total_pages BIGINT
+    total_pages BIGINT,
+    csrf_token TEXT
 );
 
 
@@ -87,7 +88,12 @@ BEGIN
         total_results,
 
         -- total_pages
-        total_pages
+        total_pages,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT
     );
 
 END;

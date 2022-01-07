@@ -48,11 +48,27 @@ pub fn minify_js() {
 
     // Toast UI Editor must be first
     let toastui_editor_js = fs::read_to_string(
-        "static/js/extra/toastui-editor-all.min.js",
+        "static/js/external/toastui-editor-all.min.js",
     ).expect("Something went wrong reading the JS file!");
     admin_js.push_str(&toastui_editor_js);
 
-    let file_paths = fs::read_dir("static/js/admin/").unwrap();
+    // TODO: Function that adds an entire directory to some string
+    // Extra
+    let extra_paths = fs::read_dir("static/js/admin/extra/").unwrap();
+    for path in extra_paths {
+        let file_path = path.unwrap().path();
+
+        if let Some(extension) = file_path.extension() {
+            if extension == "js" {
+                let file_code = fs::read_to_string(file_path)
+                    .expect("Something went wrong reading the JS file!");
+
+                admin_js.push_str(&file_code);
+            }
+        }
+    }
+
+    let file_paths = fs::read_dir("static/js/admin/eventlisteners/").unwrap();
     for path in file_paths {
         let file_path = path.unwrap().path();
 

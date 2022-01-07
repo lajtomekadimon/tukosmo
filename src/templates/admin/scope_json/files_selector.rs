@@ -4,9 +4,14 @@ use crate::files::{
     extensions::IMG_EXTS,
     file_route::file_route,
 };
-use crate::handlers::admin::scope_json::files_selector_get::{
-    AgoJsonFilesSelector,
-    ra_json_files_selector_wu_rpp_p,
+use crate::handlers::admin::{
+    scope_json::files_selector_get::{
+        AgoJsonFilesSelector,
+        ra_json_files_selector_w_rpp_p,
+        ra_json_files_selector_wu_rpp_p,
+    },
+    scope_json::upload_file_post::ra_json_upload_file,
+    scope_json::edit_file_post::ra_json_edit_file,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -22,6 +27,7 @@ markup::define! {
     ) {
 
         div[class = "modal-background file-selector-close"] {}
+
         div[class = "modal-card"] {
             header[class = "modal-card-head"] {
                 p[class = "modal-card-title"] {
@@ -32,7 +38,146 @@ markup::define! {
                 ] {}
             }
 
-            section[class = "modal-card-body"] {
+            section[
+                id = "file-selector-uploading",
+                class = "modal-card-body is-hidden",
+            ] {
+                h2[class = "subtitle"] {
+                    @t.upload_file
+
+                    button[
+                        id = "file-selector-select-button",
+                        class = "button is-link is-pulled-right \
+                                 has-text-weight-normal mr-4",
+                        type = "button",
+                        "data-url" = ra_json_files_selector_w_rpp_p(
+                            &t.lang_code,
+                            &12,
+                            &1,
+                        ),
+                    ] {
+                        @t.choose_a_file
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        @t.file
+                    }
+                    div[
+                        id = "file-upload",
+                        class = "file has-name",
+                    ] {
+                        label[class = "file-label"] {
+                            input[
+                                id = "file-upload-file",
+                                "data-url" = ra_json_upload_file(
+                                    &q.data.lang.code,
+                                ),
+                                class = "file-input",
+                                type = "file",
+                                name = "resume",
+                            ];
+                            span[class = "file-cta"] {
+                                span[class = "file-icon"] {
+                                    i[class = "eos-icons"] { "cloud_upload" }
+                                }
+                                span[class = "file-label"] {
+                                    @t.choose_a_file
+                                }
+                            }
+                            span[class = "file-name"] {
+                                @t.no_file_uploaded
+                            }
+                        }
+                    }
+                }
+
+                progress[
+                    id = "file-upload-progress",
+                    class = "progress is-large is-info",
+                    style = "display: none;",
+                ] {}
+
+                div[
+                    id = "file-upload-notif-success",
+                    class = "notification is-success",
+                    style = "display: none;",
+                ] {
+                    button[class = "delete"] {}
+                    @t.your_file_has_been_successfully_uploaded
+                }
+
+                div[
+                    id = "file-upload-form",
+                    style = "display: none;",
+                ] {
+                    input[
+                        type = "hidden",
+                        name = "csrf_token",
+                        value = &q.csrf_token,
+                    ];
+
+                    input[
+                        type = "hidden",
+                        name = "id",
+                        value = "",
+                    ];
+
+                    div[class = "field"] {
+                        label[class = "label"] {
+                            @t.change_filename_question
+                        }
+                        div[class = "control"] {
+                            input[
+                                class = "input",
+                                type = "text",
+                                name = "filename",
+                                value = "",
+                            ];
+                        }
+                    }
+
+                    div[class = "field is-grouped"] {
+                        div[class = "control"] {
+                            button[
+                                id = "file-selector-upload-change",
+                                class = "button is-link",
+                                type = "button",
+                                "data-formurl" = ra_json_edit_file(
+                                    &t.lang_code,
+                                ),
+                                "data-url" = ra_json_files_selector_w_rpp_p(
+                                    &t.lang_code,
+                                    &12,
+                                    &1,
+                                ),
+                            ] {
+                                @t.submit
+                            }
+                        }
+                        div[class = "control"] {
+                            button[
+                                id = "file-selector-upload-nochange",
+                                class = "button is-link is-light",
+                                type = "button",
+                                "data-url" = ra_json_files_selector_w_rpp_p(
+                                    &t.lang_code,
+                                    &12,
+                                    &1,
+                                ),
+                            ] {
+                                @t.cancel
+                            }
+                        }
+                    }
+                }
+            }
+
+            section[
+                id = "file-selector-selection",
+                class = "modal-card-body",
+            ] {
                 h2[class = "subtitle"] {
                     {t.page_n
                         .replace("{n}", &q.page.to_string())}
@@ -48,11 +193,12 @@ markup::define! {
                     ")"
 
                     button[
-                        id = "file-selector-cancel",
-                        class = "button is-danger is-light is-pulled-right \
+                        id = "file-selector-upload-button",
+                        class = "button is-link is-pulled-right \
                                  has-text-weight-normal mr-4",
+                        type = "button",
                     ] {
-                        @t.remove_featured_image
+                        @t.upload_file
                     }
                 }
 
@@ -60,16 +206,19 @@ markup::define! {
                     @for file in q.files.iter() {
                         div[
                             class = "column is-4 is-half-tablet",
-                            title = &t.uploaded_by_name_on_date
-                                .replace("{name}", &file.author_name)
-                                .replace(
-                                    "{date}",
-                                    &t_date(&file.date, &q.data.lang.code),
-                                ),
                         ] {
                             button[
-                                id = "select-file-{id}".replace("{id}", &file.id.to_string()),
-                                class = "select-file nostyle-button mb-4",
+                                id = "select-file-{id}"
+                                    .replace("{id}", &file.id.to_string()),
+                                class =
+                                    "select-file nostyle-button mb-4 width100",
+                                type = "button",
+                                title = &t.uploaded_by_name_on_date
+                                    .replace("{name}", &file.author_name)
+                                    .replace(
+                                        "{date}",
+                                        &t_date(&file.date, &q.data.lang.code),
+                                    ),
                                 "data-id" = &file.id,
                                 "data-name" = &file.name,
                                 "data-route" = &file.route,

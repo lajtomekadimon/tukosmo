@@ -5,7 +5,7 @@ use crate::handlers::admin::scope_json;
 
 
 pub fn route() -> Resource {
-    // Files selector: /{lang}/admin/json/upload_file
+    // Upload file: /{lang}/admin/json/upload_file
     resource("/upload_file").route(
         post().to(scope_json::upload_file_post::upload_file_post)
     )

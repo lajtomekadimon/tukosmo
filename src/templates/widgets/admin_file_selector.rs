@@ -79,6 +79,15 @@ markup::define! {
             }
         }
 
+        button[
+            id = "file-selector-cancel",
+            class = "button is-danger is-light \
+                     has-text-weight-normal is-hidden",
+            type = "button",
+        ] {
+            @t.remove_featured_image
+        }
+
     }
 }
 

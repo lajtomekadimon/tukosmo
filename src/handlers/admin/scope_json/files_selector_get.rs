@@ -60,6 +60,7 @@ pub struct AgoJsonFilesSelector {
     pub page: i64,
     pub total_results: i64,
     pub total_pages: i64,
+    pub csrf_token: String,
 }
 
 
