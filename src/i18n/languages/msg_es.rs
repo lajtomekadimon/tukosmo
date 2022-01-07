@@ -116,7 +116,9 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
     err_wrong_file_id:
         "La ID del archivo no es correcta.",
     err_wrong_filename:
-        "Ese nombre de archivo no es válido.",
+        "Ese nombre de archivo no es válido. Solo se permiten caracteres
+         alfanuméricos (A-Z, a-z, 0-9), puntos (.), guiones (-)
+         y barras bajas (_).",
     err_wrong_lang_code:
         "El código del idioma no es correcto.",
     err_wrong_lang_id:

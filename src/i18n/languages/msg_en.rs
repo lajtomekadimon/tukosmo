@@ -116,7 +116,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
     err_wrong_file_id:
         "That file ID is not correct.",
     err_wrong_filename:
-        "That file name is not valid.",
+        "That file name is not valid. Only alphanumeric (A-Z, a-z, 0-9),
+         dot (.), hyphen (-) and underscore (_) characters are allowed.",
     err_wrong_lang_code:
         "The language code is not correct.",
     err_wrong_lang_id:
