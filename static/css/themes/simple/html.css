@@ -23,6 +23,10 @@ a:visited {
     color: inherit;
 }
 
+p img {
+    max-width: 100%;
+}
+
 code {
     background-color: #eee;
     padding: 3px 5px;
