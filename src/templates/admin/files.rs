@@ -103,18 +103,18 @@ markup::define! {
                 @for file in q.files.iter() {
                     div[
                         class = "column is-one-fifth-desktop is-half-tablet",
-                        title = &t.uploaded_by_name_on_date
-                            .replace("{name}", &file.author_name)
-                            .replace(
-                                "{date}",
-                                &t_date(&file.date, &q.data.lang.code),
-                            ),
                     ] {
                         a[
                             href = ra_files_edit_w_id(
                                 &q.data.lang.code,
                                 &file.id,
                             ),
+                            title = &t.uploaded_by_name_on_date
+                                .replace("{name}", &file.author_name)
+                                .replace(
+                                    "{date}",
+                                    &t_date(&file.date, &q.data.lang.code),
+                                ),
                         ] {
                             div[class = "card"] {
                                 div[class = "card-image"] {
@@ -128,7 +128,10 @@ markup::define! {
                                             ];
                                         }
                                     }
-                                    div[class = "card-content is-overlay is-clipped"] {
+                                    div[
+                                        class = "card-content is-overlay \
+                                                 is-clipped",
+                                    ] {
                                         span[class = "tag is-link"] {
                                             @file.ext.to_uppercase()
                                         }

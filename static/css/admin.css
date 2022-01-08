@@ -344,3 +344,10 @@ nav.navbar {
     padding: 0;
 }
 
+
+
+
+label[for=toastuiAltTextInput],
+#toastuiAltTextInput {
+    display: none !important;
+}
