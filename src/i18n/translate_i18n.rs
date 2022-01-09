@@ -120,6 +120,7 @@ pub struct TranslateI18N {
     pub next: &'static str,
     pub no_file_uploaded: &'static str,
     pub one_result_of_m: &'static str,
+    pub open_in_new_tab: &'static str,
     pub optional: &'static str,
     pub original_author: &'static str,
     pub page_n: &'static str,

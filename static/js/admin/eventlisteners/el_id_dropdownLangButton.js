@@ -6,7 +6,7 @@ function el_id_dropdownLangButton() {
         elem.addEventListener(
             'click',
             function() {
-                const id_dropdownLang = document.getId("dropdown-lang");
+                const id_dropdownLang = getId("dropdown-lang");
                 id_dropdownLang.classList.toggle('is-active');
             }
         );

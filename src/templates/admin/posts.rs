@@ -1,13 +1,16 @@
 use markup;
 
-use crate::handlers::admin::{
-    posts_get::{
-        AgoPosts,
-        ra_posts_w_f_wu_rpp_p,
+use crate::handlers::{
+    admin::{
+        posts_get::{
+            AgoPosts,
+            ra_posts_w_f_wu_rpp_p,
+        },
+        scope_posts::new_get::ra_posts_new,
+        scope_posts::edit_get::ra_posts_edit_w_id,
+        scope_users::edit_get::ra_users_edit_w_id,
     },
-    scope_posts::new_get::ra_posts_new,
-    scope_posts::edit_get::ra_posts_edit_w_id,
-    scope_users::edit_get::ra_users_edit_w_id,
+    website::scope_blog::post_get::rw_blog_post,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -169,6 +172,20 @@ markup::define! {
                                         },
                                     ] {
                                         @post.title
+                                    }
+
+                                    a[
+                                        class = "is-pulled-right",
+                                        href = rw_blog_post(
+                                            &post.lang.code,
+                                            &post.permalink,
+                                        ),
+                                        target = "_blank",
+                                        title = &t.open_in_new_tab,
+                                    ] {
+                                        i[class = "eos-icons"] {
+                                            "open_in_new"
+                                        }
                                     }
                                 }
                                 td {

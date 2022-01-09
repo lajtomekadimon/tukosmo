@@ -245,6 +245,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "No file uploaded",
     one_result_of_m:
         "1 result of {m}",
+    open_in_new_tab:
+        "Open in new tab",
     optional:
         "optional",
     original_author:
