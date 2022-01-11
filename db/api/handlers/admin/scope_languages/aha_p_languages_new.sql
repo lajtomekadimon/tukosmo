@@ -8,7 +8,8 @@ CREATE TYPE "ApiLanguagesNew" AS (
     lang_names TEXT[],
     names_for_langs TEXT[],
     website_title TEXT,
-    website_subtitle TEXT
+    website_subtitle TEXT,
+    copyright_owner TEXT
 );
 
 
@@ -73,10 +74,16 @@ BEGIN
         PERFORM err_wrong_website_subtitle();
     END IF;
 
+    -- Check copyright owner in the new language
+    IF NOT e_is_copyright_owner(r.copyright_owner) THEN
+        PERFORM err_wrong_copyright_owner();
+    END IF;
+
     language_id := i_language(
         r.lang_code,
         r.website_title,
-        r.website_subtitle
+        r.website_subtitle,
+        r.copyright_owner
     );
 
     PERFORM i_language_name(

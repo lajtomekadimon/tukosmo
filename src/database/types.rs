@@ -102,6 +102,7 @@ pub struct AdminDataDB {
     pub languages: Vec<LanguageDB>,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }
 
 #[derive(Clone, Debug, ToSql, FromSql, Serialize)]
@@ -111,4 +112,5 @@ pub struct WebsiteDataDB {
     pub languages: Vec<LanguageDB>,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }

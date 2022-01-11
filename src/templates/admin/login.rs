@@ -44,6 +44,7 @@ markup::define! {
                 languages: q.data.languages.clone(),
                 website_title: q.data.website_title.clone(),
                 website_subtitle: q.data.website_subtitle.clone(),
+                copyright_owner: q.data.copyright_owner.clone(),
             },
             routes: &q.routes,
             content: Content {
@@ -121,6 +122,8 @@ markup::define! {
                                             q.data.website_title.clone(),
                                         website_subtitle:
                                             q.data.website_subtitle.clone(),
+                                        copyright_owner:
+                                            q.data.copyright_owner.clone(),
                                     },
                                 }
                             }

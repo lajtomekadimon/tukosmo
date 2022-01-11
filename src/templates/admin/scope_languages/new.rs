@@ -332,6 +332,30 @@ markup::define! {
                     }
                 }
 
+                div[class = "field"] {
+                    label[class = "label"] {
+                        @t.copyright_owner_in_the_new_language
+                    }
+                    div[class = "control"] {
+                        input[
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_COPYRIGHT_OWNER {
+                                    "input is-danger"
+                                } else {
+                                    "input"
+                                }
+                            } else {
+                                "input"
+                            },
+                            type = "text",
+                            name = "copyright_owner",
+                            value = if let Some(f) = form {
+                                &f.copyright_owner
+                            } else { "" },
+                        ];
+                    }
+                }
+
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {

@@ -86,7 +86,8 @@ CREATE TYPE "AdminDataDB" AS (
     lang "LanguageDB",
     languages "LanguageDB"[],
     website_title TEXT,
-    website_subtitle TEXT
+    website_subtitle TEXT,
+    copyright_owner TEXT
 );
 
 CREATE TYPE "WebsiteDataDB" AS (
@@ -94,6 +95,7 @@ CREATE TYPE "WebsiteDataDB" AS (
     lang "LanguageDB",
     languages "LanguageDB"[],
     website_title TEXT,
-    website_subtitle TEXT
+    website_subtitle TEXT,
+    copyright_owner TEXT
 );
 

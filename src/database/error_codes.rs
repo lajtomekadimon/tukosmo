@@ -27,6 +27,8 @@ pub const USER_NOT_LOGGED_IN: &'static str = "D994FEF2356A";
 
 pub const WRONG_BODY_TEXT: &'static str = "F24F7F99E78D";
 
+pub const WRONG_COPYRIGHT_OWNER: &'static str = "739A895C71A5";
+
 pub const WRONG_CSRF_TOKEN: &'static str = "D6088ED0B20B";
 
 pub const WRONG_DESCRIPTION: &'static str = "4E576E6BB1EE";

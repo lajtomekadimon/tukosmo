@@ -31,6 +31,7 @@ pub struct FormData {
     pub csrf_token: String,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }
 
 
@@ -40,6 +41,7 @@ pub struct ApiWebsite {
     pub csrf_token: Uuid,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }
 
 impl QueryFunction for ApiWebsite {
@@ -63,6 +65,7 @@ pub async fn website_post(
 
                 let website_title = (form.website_title).clone();
                 let website_subtitle = (form.website_subtitle).clone();
+                let copyright_owner = (form.copyright_owner).clone();
 
                 match query_db(
                     ApiWebsite {
@@ -70,6 +73,7 @@ pub async fn website_post(
                         csrf_token: csrf_token_value,
                         website_title: website_title,
                         website_subtitle: website_subtitle,
+                        copyright_owner: copyright_owner,
                     },
                 ) {
 

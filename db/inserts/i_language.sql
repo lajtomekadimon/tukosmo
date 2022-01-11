@@ -2,7 +2,8 @@
 CREATE OR REPLACE FUNCTION i_language(
     code_value TEXT,
     title_value TEXT,
-    subtitle_value TEXT
+    subtitle_value TEXT,
+    copyright_owner_value TEXT
 )
 
 RETURNS BIGINT
@@ -25,13 +26,15 @@ BEGIN
         tl_code,
         --tl_date,
         tl_website_title,
-        tl_website_subtitle
+        tl_website_subtitle,
+        tl_copyright_owner
     ) VALUES (
         -- BIGSERIAL (autoincrement)
         code_value,
         --NOW(),
         title_value,
-        subtitle_value
+        subtitle_value,
+        copyright_owner_value
     ) RETURNING tl_id INTO lang_id;
 
     RETURN lang_id;

@@ -21,7 +21,8 @@ BEGIN
     lang_en := i_language(
         'en',
         'Example',
-        'Website built with Tukosmo'
+        'Website built with Tukosmo',
+        'Example'
     );
 
     PERFORM i_language_name(
@@ -33,7 +34,8 @@ BEGIN
     lang_es := i_language(
         'es',
         'Ejemplo',
-        'Página web construida con Tukosmo'
+        'Página web construida con Tukosmo',
+        'Ejemplo'
     );
 
     PERFORM i_language_name(

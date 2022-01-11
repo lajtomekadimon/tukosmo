@@ -36,6 +36,12 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Close",
     code:
         "Code",
+    copyright_owner:
+        "Copyright owner",
+    copyright_owner_in_the_new_language:
+        "Copyright owner (in the new language)",
+    copyright_year_name:
+        "© {year} {name}",
     current_favicon:
         "Current favicon",
     current_password:
@@ -106,6 +112,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "You must be logged in.",
     err_wrong_body_text:
         "Body text can't be empty.",
+    err_wrong_copyright_owner:
+        "The copyright owner is not valid.",
     err_wrong_csrf_token:
         "The CSRF token is not correct.",
     err_wrong_description:
@@ -227,8 +235,6 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Name",
     name_in_the_new_language:
         "Name (in the new language)",
-    name_year_copyright:
-        "{name} © {year}",
     names_for_each_language:
         "Names for each language",
     names_in_the_new_language_for_each_language:

@@ -52,6 +52,7 @@ pub struct AgoWebsite {
     pub csrf_token: String,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }
 
 

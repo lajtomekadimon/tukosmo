@@ -24,6 +24,7 @@ DECLARE
 
     website_title_value TEXT;
     website_subtitle_value TEXT;
+    copyright_owner_value TEXT;
 
 BEGIN
 
@@ -50,13 +51,15 @@ BEGIN
 
     website_title_value := s_website_title_by_lang(language_of_user);
     website_subtitle_value := s_website_subtitle_by_lang(language_of_user);
+    copyright_owner_value := s_copyright_owner_by_lang(language_of_user);
 
     RETURN (
         userd,
         lang,
         languages,
         website_title_value,
-        website_subtitle_value
+        website_subtitle_value,
+        copyright_owner_value
     )::"AdminDataDB";
 
 END;

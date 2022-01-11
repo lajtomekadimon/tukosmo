@@ -3,7 +3,8 @@ CREATE TYPE "ApiWebsite" AS (
     req "AdminRequest",
     csrf_token UUID,
     website_title TEXT,
-    website_subtitle TEXT
+    website_subtitle TEXT,
+    copyright_owner TEXT
 );
 
 
@@ -47,10 +48,16 @@ BEGIN
         PERFORM err_wrong_website_subtitle();
     END IF;
 
+    -- Check copyright owner in the new language
+    IF NOT e_is_copyright_owner(r.website_subtitle) THEN
+        PERFORM err_wrong_copyright_owner();
+    END IF;
+
     PERFORM u_website_info(
         (d.lang).id,
         r.website_title,
-        r.website_subtitle
+        r.website_subtitle,
+        r.copyright_owner
     );
 
 END;

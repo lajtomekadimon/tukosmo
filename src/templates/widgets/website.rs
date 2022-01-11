@@ -91,6 +91,7 @@ markup::define! {
 
             @Footer {
                 t: t,
+                data: data,
             }
         }
     }

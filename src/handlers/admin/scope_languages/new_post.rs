@@ -59,6 +59,7 @@ impl<'de> Deserialize<'de> for FormData {
                 let mut names_for_langs: Vec<String> = Vec::default();
                 let mut website_title_value: String = "".to_string();
                 let mut website_subtitle_value: String = "".to_string();
+                let mut copyright_owner_value: String = "".to_string();
 
                 while let Some(key) = map.next_key()? {
                     match key {
@@ -87,6 +88,10 @@ impl<'de> Deserialize<'de> for FormData {
                             website_subtitle_value =
                                 map.next_value::<String>()?;
                         }
+                        "copyright_owner" => {
+                            copyright_owner_value =
+                                map.next_value::<String>()?;
+                        }
                         _ => unreachable!()
                     }
                 }
@@ -102,6 +107,7 @@ impl<'de> Deserialize<'de> for FormData {
                     names_for_langs: names_for_langs,
                     website_title: website_title_value,
                     website_subtitle: website_subtitle_value,
+                    copyright_owner: copyright_owner_value,
                 })
             }
         }
@@ -119,6 +125,7 @@ pub struct FormData {
     pub names_for_langs: Vec<String>,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }
 
 
@@ -133,6 +140,7 @@ pub struct ApiLanguagesNew {
     pub names_for_langs: Vec<String>,
     pub website_title: String,
     pub website_subtitle: String,
+    pub copyright_owner: String,
 }
 
 impl QueryFunction for ApiLanguagesNew {
@@ -161,6 +169,7 @@ pub async fn new_post(
                 let names_for_langs = (form.names_for_langs).clone();
                 let website_title = (form.website_title).clone();
                 let website_subtitle = (form.website_subtitle).clone();
+                let copyright_owner = (form.copyright_owner).clone();
 
                 match query_db(
                     ApiLanguagesNew {
@@ -173,6 +182,7 @@ pub async fn new_post(
                         names_for_langs: names_for_langs,
                         website_title: website_title,
                         website_subtitle: website_subtitle,
+                        copyright_owner: copyright_owner,
                     },
                 ) {
 
