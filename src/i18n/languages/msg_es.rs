@@ -40,7 +40,7 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Dueño del copyright",
     copyright_owner_in_the_new_language:
         "Dueño del copyright (en el nuevo idioma)",
-    copyright_year_name:
+    copyright_w_year_name:
         "© {year} {name}",
     current_favicon:
         "Favicon actual",
@@ -196,6 +196,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "¿Contraseña olvidada?",
     general:
         "General",
+    go_back_to_w_website:
+        "Volver a {website}",
     hello_user:
         "Hola, {name}.",
     help:

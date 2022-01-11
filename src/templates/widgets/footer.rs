@@ -19,9 +19,12 @@ markup::define! {
                 div[
                     class = "site-credits",
                 ] {
-                    @t.copyright_year_name
-                    .replace("{year}", &chrono::Utc::now().year().to_string())
-                    .replace("{name}", &data.copyright_owner)
+                    @t.copyright_w_year_name
+                        .replace(
+                            "{year}",
+                            &chrono::Utc::now().year().to_string()
+                        )
+                        .replace("{name}", &data.copyright_owner)
                 }
             }
         }

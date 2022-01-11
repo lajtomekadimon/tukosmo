@@ -2,12 +2,15 @@ use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::files::static_files::FAVICON_96X96;
-use crate::handlers::admin::{
-    login_get::{
-        AgoLogin,
-        ra_login,
+use crate::handlers::{
+    admin::{
+        login_get::{
+            AgoLogin,
+            ra_login,
+        },
+        login_post::FormData,
     },
-    login_post::FormData,
+    website::home_get::rw_home,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -17,10 +20,7 @@ use crate::database::{
     types::{AdminDataDB, UserDB},
     error_codes as ec,
 };
-use crate::templates::{
-    admin_layout::AdminLayout,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
-};
+use crate::templates::admin_layout::AdminLayout;
 
 
 markup::define! {
@@ -91,40 +91,20 @@ markup::define! {
                             }
                         }
 
-                        /*
-                        p[class = "has-text-grey"] {
-                            a[href = "/"] {
-                                @t.sign_up_k_verb
-                            }
-
-                            " · "
-
+                        p[class = "has-text-grey has-text-left ml-3"] {
+                            // TODO
                             a[href = "/"] {
                                 @t.forgotten_password
                             }
                         }
-                        */
 
-                        @if q.data.languages.iter().len() > 1 {
-                            div[class = "mt-3"] {
-                                @AdminLangDropdown {
-                                    routes: &q.routes,
-                                    data: &AdminDataDB {
-                                        userd: UserDB {
-                                            id: 0,
-                                            email: "".to_string(),
-                                            name: "".to_string(),
-                                            date: "".to_string(),
-                                        },
-                                        lang: q.data.lang.clone(),
-                                        languages: q.data.languages.clone(),
-                                        website_title:
-                                            q.data.website_title.clone(),
-                                        website_subtitle:
-                                            q.data.website_subtitle.clone(),
-                                        copyright_owner:
-                                            q.data.copyright_owner.clone(),
-                                    },
+                        p[class = "has-text-grey has-text-left mt-3 ml-3"] {
+                            a[href = rw_home(&q.data.lang.code)] {
+                                {t.go_back_to_w_website
+                                    .replace(
+                                        "{website}",
+                                        &q.data.copyright_owner,
+                                    )
                                 }
                             }
                         }

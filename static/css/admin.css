@@ -171,16 +171,20 @@ nav.navbar {
     box-shadow: none;
 }
 
-.box {
+.hero .box {
     margin-top: 54px;
+    -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
+                        0 0 0 1px rgba(10, 10, 10, .1);
+    box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
+                0 0 0 1px rgba(10, 10, 10, .1);
 }
 
-.avatar {
+.hero .avatar {
     margin-top: -70px;
     padding-bottom: 20px;
 }
 
-.avatar-container {
+.hero .avatar-container {
     display: inline-block;
     border-radius: 50%;
     padding: 20px;
@@ -191,7 +195,7 @@ nav.navbar {
                 0 0 0 1px rgba(10, 10, 10, .1);
 }
 
-.avatar img {
+.hero .avatar img {
     background: #fff;
 }
 
