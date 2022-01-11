@@ -43,6 +43,7 @@ https://github.com/raphlinus/pulldown-cmark).
 - [x] WYSIWYG CommonMark post editor using [TOAST UI Editor](
 https://github.com/nhn/tui.editor).
 - [x] Admin Panel; styles using [Bulma](https://bulma.io/).
+- [x] Icons by [EOS icons](https://eos-icons.com/).
 - [x] Open Graph cards.
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
