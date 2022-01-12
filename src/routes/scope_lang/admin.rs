@@ -32,6 +32,9 @@ pub fn subroutes() -> Scope {
         // Login: /{lang}/admin/login
         .service(scope_admin::login::route())
 
+        // Forgotten password?: /{lang}/admin/forgotten_password
+        .service(scope_admin::forgotten_password::route())
+
         // Logout: /{lang}/admin/logout
         .service(scope_admin::logout::route())
 

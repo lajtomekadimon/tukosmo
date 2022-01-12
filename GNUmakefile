@@ -125,7 +125,8 @@ STRUDB=db/tables/t_users.sql \
 	   db/tables/t_pages.sql \
 	   db/tables/t_page_translations.sql \
 	   db/tables/t_posts.sql \
-	   db/tables/t_post_translations.sql
+	   db/tables/t_post_translations.sql \
+	   db/tables/t_reset_password_codes.sql
 
 structuredb:
 	@echo "Creating structure..."

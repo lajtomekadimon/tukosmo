@@ -4,12 +4,12 @@ use markup;
 use crate::files::static_files::FAVICON_96X96;
 use crate::handlers::{
     admin::{
-        login_get::{
-            AgoLogin,
-            ra_login,
+        forgotten_password_get::{
+            AgoForgottenPassword,
+            ra_forgotten_password,
         },
-        login_post::FormData,
-        forgotten_password_get::ra_forgotten_password,
+        forgotten_password_post::FormData,
+        login_get::ra_login,
     },
     website::home_get::rw_home,
 };
@@ -25,12 +25,13 @@ use crate::templates::admin_layout::AdminLayout;
 
 
 markup::define! {
-    Login<'a>(
+    ForgottenPassword<'a>(
         title: &'a str,
-        q: &'a AgoLogin,
+        q: &'a AgoForgottenPassword,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
+        success: &'a bool,
     ) {
         @AdminLayout {
             title: title,
@@ -53,15 +54,17 @@ markup::define! {
                 t: t,
                 error: error,
                 form: form,
+                success: success,
             },
         }
     }
 
     Content<'a>(
-        q: &'a AgoLogin,
+        q: &'a AgoForgottenPassword,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
+        success: &'a bool,
     ) {
 
         section[class = "hero is-success is-fullheight"] {
@@ -75,6 +78,26 @@ markup::define! {
                                 }
                             }
 
+                            @if **success {
+                                p {
+                                    {&t.reset_password_success_w_email
+                                        .replace(
+                                            "{email}",
+                                            if let Some(f) = form {
+                                                &f.email
+                                            } else { "" },
+                                        )}
+                                }
+                            } else {
+                                div[
+                                    class = "notification is-info",
+                                ] {
+                                    button[class = "delete"] {}
+                                    @t.forgotten_password_message_info
+                                }
+                            }
+
+
                             @if let Some(e) = error {
                                 div[
                                     class = "notification is-danger",
@@ -84,21 +107,21 @@ markup::define! {
                                 }
                             }
 
-                            @Form {
-                                q: q,
-                                t: t,
-                                error: error,
-                                form: form,
+                            @if !(**success) {
+                                @Form {
+                                    q: q,
+                                    t: t,
+                                    error: error,
+                                    form: form,
+                                }
                             }
                         }
 
                         p[class = "has-text-grey has-text-left ml-3"] {
                             a[
-                                href = &ra_forgotten_password(
-                                    &q.data.lang.code,
-                                ),
+                                href = &ra_login(&q.data.lang.code),
                             ] {
-                                @t.forgotten_password
+                                @t.login_k_noun
                             }
                         }
 
@@ -120,13 +143,13 @@ markup::define! {
     }
 
     Form<'a>(
-        q: &'a AgoLogin,
+        q: &'a AgoForgottenPassword,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         form[
-            action = ra_login(&q.data.lang.code),
+            action = ra_forgotten_password(&q.data.lang.code),
             method = "post",
         ] {
             div[class = "field"] {
@@ -156,36 +179,12 @@ markup::define! {
                 }
             }
 
-            div[class = "field"] {
-                div[class = "control"] {
-                    input[
-                        class = if let Some(e) = error {
-                            if e.code == ec::WRONG_USER_PASSWORD {
-                                "input is-large is-danger"
-                            } else {
-                                "input is-large"
-                            }
-                        } else {
-                            "input is-large"
-                        },
-                        name = "password",
-                        type = "password",
-                        placeholder = t.your_password,
-                        autofocus = if let Some(e) = error {
-                            e.code == ec::WRONG_USER_PASSWORD
-                        } else {
-                            false
-                        },
-                    ];
-                }
-            }
-
             button[
                 class = "button is-block is-link is-large is-fullwidth",
             ] {
-                @t.login_k_verb
+                @t.reset_password
                 " "
-                i[class = "eos-icons ml-2"] { "login" }
+                i[class = "eos-icons ml-2"] { "vpn_key" }
             }
         }
     }

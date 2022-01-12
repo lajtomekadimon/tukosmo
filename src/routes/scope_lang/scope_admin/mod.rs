@@ -2,6 +2,7 @@ pub mod error;
 
 pub mod login;
 pub mod logout;
+pub mod forgotten_password;
 
 pub mod account;
 pub mod sessions;

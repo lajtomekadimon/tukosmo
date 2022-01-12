@@ -194,6 +194,9 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Archivos",
     forgotten_password:
         "¿Contraseña olvidada?",
+    forgotten_password_message_info:
+        "Introduce tu dirección de correo electrónico y recibirás un correo
+        con un enlace para resetear tu contraseña.",
     general:
         "General",
     go_back_to_w_website:
@@ -290,6 +293,11 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Repetir contraseña nueva",
     repeat_password:
         "Repetir contraseña",
+    reset_password:
+        "Resetear contraseña",
+    reset_password_success_w_email:
+        "Hemos enviado un correo electrónico a {email} con \
+         un enlace para resetear tu contraseña. Caduca en 20 minutos.",
     scheduled_k_posts:
         "Programadas",
     select_a_language:

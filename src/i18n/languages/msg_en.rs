@@ -193,6 +193,9 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Files",
     forgotten_password:
         "Forgotten password?",
+    forgotten_password_message_info:
+        "Enter your email address and you will receive an email message
+         with a link to reset your password.",
     general:
         "General",
     go_back_to_w_website:
@@ -289,6 +292,11 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Repeat new password",
     repeat_password:
         "Repeat password",
+    reset_password:
+        "Reset password",
+    reset_password_success_w_email:
+        "We have sent an email to {email} with a link to \
+         reset your password. It expires in 20 minutes.",
     scheduled_k_posts:
         "Scheduled",
     select_a_language:

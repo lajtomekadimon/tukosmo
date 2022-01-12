@@ -5,6 +5,7 @@ pub mod scope_json;
 pub mod dashboard;
 
 pub mod login;
+pub mod forgotten_password;
 
 pub mod account;
 pub mod sessions;

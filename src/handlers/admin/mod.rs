@@ -7,6 +7,8 @@ pub mod dashboard_get;
 pub mod login_get;
 pub mod login_post;
 pub mod logout_get;
+pub mod forgotten_password_get;
+pub mod forgotten_password_post;
 
 pub mod account_get;
 pub mod account_post;
