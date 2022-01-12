@@ -13,7 +13,6 @@ use crate::database::{
     query_db::{QueryFunction, query_db},
     //error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID,
 };
-use crate::i18n::t_error::t_error;
 
 
 #[derive(Deserialize)]
@@ -94,12 +93,7 @@ pub async fn edit_file_post(
 
                     },
 
-                    Err(e) => {
-
-                        // TODO
-                        println!("{}", e);
-                        println!("{}", t_error(e, "en").message);
-
+                    Err(_e) => {
                         let body = json!({
                             "success": false,
                             // TODO: Show error

@@ -6,12 +6,10 @@ use crate::handlers::website::error_get::rw_error_w_code;
 
 
 pub fn error_website_route(
-    pg_error: Error,
+    pg_error: &Error,
     lang_code: &str,
 ) -> HttpResponse {
  
-    println!("{}", pg_error);  // debugging purposes
-
     let e = t_error(pg_error, lang_code);
 
     HttpResponse::Found()

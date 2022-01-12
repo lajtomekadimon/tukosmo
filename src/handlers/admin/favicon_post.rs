@@ -87,7 +87,7 @@ pub async fn favicon_post(
                         ),
                         q: &q,
                         t: t,
-                        error: &Some(t_error(e, &q.data.lang.code)),
+                        error: &Some(t_error(&e, &q.data.lang.code)),
                         success: &false,
                     };
 
@@ -95,7 +95,7 @@ pub async fn favicon_post(
 
                 },
 
-                Err(e2) => error_admin_route(e2, &user_req.lang_code),
+                Err(e2) => error_admin_route(&e2, &user_req.lang_code),
 
             },
 

@@ -153,7 +153,7 @@ pub async fn edit_post(
                                     q: &q,
                                     t: t,
                                     error: &Some(
-                                        t_error(e, &q.data.lang.code),
+                                        t_error(&e, &q.data.lang.code),
                                     ),
                                     form: &Some(form),
                                 };
@@ -208,7 +208,7 @@ pub async fn edit_post(
                                     },
                                     t: t,
                                     error: &Some(
-                                        t_error(e, &q.data.lang.code),
+                                        t_error(&e, &q.data.lang.code),
                                     ),
                                     form: &Some(form),
                                 };
@@ -218,7 +218,7 @@ pub async fn edit_post(
 
                         }
 
-                        Err(e2) => error_admin_route(e2, &user_req.lang_code),
+                        Err(e2) => error_admin_route(&e2, &user_req.lang_code),
 
                     },
 

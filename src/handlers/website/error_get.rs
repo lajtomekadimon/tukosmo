@@ -98,8 +98,6 @@ pub async fn error_get(
         },
 
         Err(e) => {
-            println!("{}", e);  // for debugging
-
             if let Some(dberror) = e.as_db_error() {
 
                 let error_message = dberror.message();

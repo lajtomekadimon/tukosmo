@@ -19,6 +19,7 @@ use crate::database::{
 use crate::i18n::{
     t::t,
     t_error::t_error,
+    error_website_route::error_website_route,
 };
 use crate::templates::admin::login::Login;
 
@@ -113,7 +114,7 @@ pub async fn login_post(
 
         Err(e) => match query_db(
             AgiLogin {
-                req: user_req,
+                req: user_req.clone(),
             },
         ) {
 
@@ -144,7 +145,7 @@ pub async fn login_post(
                         ),
                         q: &q,
                         t: t,
-                        error: &Some(t_error(e, &q.data.lang.code)),
+                        error: &Some(t_error(&e, &q.data.lang.code)),
                         form: &Some(form),
                     };
 
@@ -154,12 +155,8 @@ pub async fn login_post(
 
             },
 
-            Err(e2) => {
-                println!("{}", e2);
-                HttpResponse::Found()
-                    .header("Location", "/")  // TODO
-                    .finish()
-            },
+            // Website's error because the user is not logged in
+            Err(e2) => error_website_route(&e2, &user_req.lang_code),
 
         },
 

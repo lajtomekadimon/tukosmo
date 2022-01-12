@@ -99,7 +99,7 @@ pub async fn sessions_post(
 
                         }
 
-                        Err(e2) => error_admin_route(e2, &user_req.lang_code),
+                        Err(e2) => error_admin_route(&e2, &user_req.lang_code),
 
                     },
 
@@ -123,14 +123,14 @@ pub async fn sessions_post(
                                 q: &q,
                                 t: t,
                                 success: &true,
-                                error: &Some(t_error(e, &q.data.lang.code)),
+                                error: &Some(t_error(&e, &q.data.lang.code)),
                             };
 
                             HttpResponse::Ok().body(html.to_string())
 
                         }
 
-                        Err(e2) => error_admin_route(e2, &user_req.lang_code),
+                        Err(e2) => error_admin_route(&e2, &user_req.lang_code),
 
                     },
 

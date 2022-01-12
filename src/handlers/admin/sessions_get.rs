@@ -85,7 +85,7 @@ pub async fn sessions_get(
 
             },
 
-            Err(e) => error_admin_route(e, &user_req.lang_code),
+            Err(e) => error_admin_route(&e, &user_req.lang_code),
 
         },
 

@@ -68,7 +68,7 @@ pub async fn home_get(
 
         }
 
-        Err(e) => error_website_route(e, &user_req.lang_code),
+        Err(e) => error_website_route(&e, &user_req.lang_code),
 
     }
 

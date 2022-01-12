@@ -90,21 +90,16 @@ pub async fn new_post(
 
                     },
 
-                    Err(e) => {
-
-                        println!("{}", e);
-
-                        HttpResponse::Found()
-                            .header(
-                                "Location",
-                                ra_files_edit_w_id(
-                                    &user_req.lang_code,
-                                    &file_id,
-                                ),
-                            )
-                            .finish()
-
-                    },
+                    // TODO: (?)
+                    Err(_e) => HttpResponse::Found()
+                        .header(
+                            "Location",
+                            ra_files_edit_w_id(
+                                &user_req.lang_code,
+                                &file_id,
+                            ),
+                        )
+                        .finish(),
 
                 }
 

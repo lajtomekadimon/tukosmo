@@ -10,7 +10,10 @@ use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
 };
-use crate::i18n::t::t;
+use crate::i18n::{
+    t::t,
+    error_website_route::error_website_route,
+};
 use crate::templates::admin::login::Login;
 
 
@@ -88,16 +91,8 @@ pub async fn login_get(
 
         },
 
-        Err(e) => {
-            println!("{}", e);  // for debugging
-
-            let error_route = "/{lang}/error"
-                .replace("{lang}", &user_req.lang_code);
-
-            HttpResponse::Found()
-                .header("Location", error_route)
-                .finish()
-        },
+        // Website's error because the user is not logged in
+        Err(e) => error_website_route(&e, &user_req.lang_code),
 
     }
 

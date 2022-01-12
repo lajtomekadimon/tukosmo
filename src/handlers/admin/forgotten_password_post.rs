@@ -124,7 +124,7 @@ pub async fn forgotten_password_post(
                     ),
                     q: &q,
                     t: t,
-                    error: &Some(t_error(e, &q.data.lang.code)),
+                    error: &Some(t_error(&e, &q.data.lang.code)),
                     form: &Some(form),
                     success: &false,
                 };
@@ -133,8 +133,7 @@ pub async fn forgotten_password_post(
 
             },
 
-            Err(e2) => {
-                println!("{}", e2);
+            Err(_e2) => {
                 HttpResponse::Found()
                     .header("Location", "/")  // TODO
                     .finish()

@@ -13,7 +13,7 @@ pub struct ErrorDB {
 
 
 pub fn t_error(
-    e: Error,
+    e: &Error,
     lang_code: &str,
 ) -> ErrorDB {
 
@@ -38,9 +38,6 @@ pub fn t_error(
 
         } else {
 
-            // Debugging
-            println!("debugging: {}", e);
-
             ErrorDB {
                 code: ec::UNKNOWN_ERROR.to_string(),
                 message: t.err_unknown_error.to_string(),
@@ -49,9 +46,6 @@ pub fn t_error(
         }
 
     } else {
-
-        // Debugging
-        println!("debugging: {}", e);
 
         ErrorDB {
             code: ec::UNKNOWN_ERROR.to_string(),

@@ -57,9 +57,7 @@ pub async fn logout_get(
 
                 },
 
-                Err(e) => {
-                    println!("{}", e);
-
+                Err(_e) => {
                     HttpResponse::Found()
                         .header("Location", ra_login(&user_req.lang_code))
                         .finish()
