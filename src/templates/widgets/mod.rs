@@ -6,6 +6,7 @@ pub mod admin_pagination;
 pub mod admin_file_card;
 pub mod admin_file_selector;
 pub mod admin_post_editor;
+pub mod admin_login;
 
 pub mod footer;
 pub mod header;

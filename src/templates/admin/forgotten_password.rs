@@ -1,7 +1,6 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
-use crate::files::static_files::FAVICON_96X96;
 use crate::handlers::{
     admin::{
         forgotten_password_get::{
@@ -9,9 +8,7 @@ use crate::handlers::{
             ra_forgotten_password,
         },
         forgotten_password_post::FormData,
-        login_get::ra_login,
     },
-    website::home_get::rw_home,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -21,7 +18,10 @@ use crate::database::{
     types::{AdminDataDB, UserDB},
     error_codes as ec,
 };
-use crate::templates::admin_layout::AdminLayout;
+use crate::templates::{
+    admin_layout::AdminLayout,
+    widgets::admin_login::AdminLogin,
+};
 
 
 markup::define! {
@@ -49,12 +49,17 @@ markup::define! {
                 copyright_owner: q.data.copyright_owner.clone(),
             },
             routes: &q.routes,
-            content: Content {
-                q: q,
+            content: AdminLogin {
+                content: Content {
+                    q: q,
+                    t: t,
+                    error: error,
+                    form: form,
+                    success: success,
+                },
+                data: &q.data,
                 t: t,
-                error: error,
-                form: form,
-                success: success,
+                forgotten_password: &true,
             },
         }
     }
@@ -67,76 +72,41 @@ markup::define! {
         success: &'a bool,
     ) {
 
-        section[class = "hero is-success is-fullheight"] {
-            div[class = "hero-body"] {
-                div[class = "container has-text-centered"] {
-                    div[class = "column is-4 is-offset-4"] {
-                        div[class = "box"] {
-                            figure[class = "avatar"] {
-                                div[class = "avatar-container"] {
-                                    img[src = FAVICON_96X96];
-                                }
-                            }
-
-                            @if **success {
-                                p {
-                                    {&t.reset_password_success_w_email
-                                        .replace(
-                                            "{email}",
-                                            if let Some(f) = form {
-                                                &f.email
-                                            } else { "" },
-                                        )}
-                                }
-                            } else {
-                                div[
-                                    class = "notification is-info",
-                                ] {
-                                    button[class = "delete"] {}
-                                    @t.forgotten_password_message_info
-                                }
-                            }
+        @if **success {
+            p {
+                {&t.reset_password_success_w_email
+                    .replace(
+                        "{email}",
+                        if let Some(f) = form {
+                            &f.email
+                        } else { "" },
+                    )}
+            }
+        } else {
+            div[
+                class = "notification is-info",
+            ] {
+                button[class = "delete"] {}
+                @t.forgotten_password_message_info
+            }
+        }
 
 
-                            @if let Some(e) = error {
-                                div[
-                                    class = "notification is-danger",
-                                ] {
-                                    button[class = "delete"] {}
-                                    @e.message
-                                }
-                            }
+        @if let Some(e) = error {
+            div[
+                class = "notification is-danger",
+            ] {
+                button[class = "delete"] {}
+                @e.message
+            }
+        }
 
-                            @if !(**success) {
-                                @Form {
-                                    q: q,
-                                    t: t,
-                                    error: error,
-                                    form: form,
-                                }
-                            }
-                        }
-
-                        p[class = "has-text-grey has-text-left ml-3"] {
-                            a[
-                                href = &ra_login(&q.data.lang.code),
-                            ] {
-                                @t.login_k_noun
-                            }
-                        }
-
-                        p[class = "has-text-grey has-text-left mt-3 ml-3"] {
-                            a[href = rw_home(&q.data.lang.code)] {
-                                {t.go_back_to_w_website
-                                    .replace(
-                                        "{website}",
-                                        &q.data.copyright_owner,
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+        @if !(**success) {
+            @Form {
+                q: q,
+                t: t,
+                error: error,
+                form: form,
             }
         }
 
