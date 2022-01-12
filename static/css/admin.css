@@ -158,7 +158,7 @@ nav.navbar {
 
 .hero {
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .hero.is-success {
@@ -200,11 +200,11 @@ nav.navbar {
 }
 
 .hero input {
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .hero p {
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .hero p.subtitle {
