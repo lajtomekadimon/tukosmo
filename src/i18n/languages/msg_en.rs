@@ -112,6 +112,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "A user can't delete itself.",
     err_user_not_logged_in:
         "You must be logged in.",
+    err_uuid_is_not_valid:
+        "The UUID is not valid.",
     err_wrong_body_text:
         "Body text can't be empty.",
     err_wrong_copyright_owner:

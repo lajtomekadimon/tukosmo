@@ -27,6 +27,8 @@ pub const USER_CANT_DELETE_ITSELF: &'static str = "BFD51452BC4A";
 
 pub const USER_NOT_LOGGED_IN: &'static str = "D994FEF2356A";
 
+pub const UUID_IS_NOT_VALID: &'static str = "E4EFE765966E";
+
 pub const WRONG_BODY_TEXT: &'static str = "F24F7F99E78D";
 
 pub const WRONG_COPYRIGHT_OWNER: &'static str = "739A895C71A5";

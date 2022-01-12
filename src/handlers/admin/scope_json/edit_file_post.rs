@@ -12,6 +12,11 @@ use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
     //error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID,
+    error_codes::UUID_IS_NOT_VALID,
+};
+use crate::i18n::{
+    t_error::t_error,
+    error_code_message::error_code_message,
 };
 
 
@@ -93,10 +98,13 @@ pub async fn edit_file_post(
 
                     },
 
-                    Err(_e) => {
+                    Err(e) => {
+                        let error_v = &t_error(&e, &user_req.lang_code);
+
                         let body = json!({
                             "success": false,
-                            // TODO: Show error
+                            "error_code": error_v.code,
+                            "error_message": error_v.message,
                         });
                         HttpResponse::Ok()
                             .content_type("application/json")
@@ -111,7 +119,11 @@ pub async fn edit_file_post(
             Err(_e) => {
                 let body = json!({
                     "success": false,
-                    // TODO: Show error
+                    "error_code": UUID_IS_NOT_VALID,
+                    "error_message": &error_code_message(
+                        UUID_IS_NOT_VALID,
+                        &user_req.lang_code,
+                    ),
                 });
                 HttpResponse::Ok()
                     .content_type("application/json")

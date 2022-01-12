@@ -14,6 +14,7 @@ use crate::database::{
     query_db::{QueryFunction, query_db},
     //error_codes::CSRF_TOKEN_IS_NOT_A_VALID_UUID,
 };
+use crate::i18n::t_error::t_error;
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
@@ -98,28 +99,40 @@ pub async fn upload_file_post(
 
                         },
 
-                        Err(_e) => {
+                        Err(e) => {
+                            let error_v = &t_error(&e, &user_req.lang_code);
 
-                            // TODO: Delete file!!!
+                            let filepath = format!("./files/{}", filename);
 
-                            let body = json!({
-                                "success": false,
-                                // TODO: Show error
-                            });
-                            HttpResponse::Ok()
-                                .content_type("application/json")
-                                .body(body.to_string())
-
+                            // Delete file when database operation fails
+                            match std::fs::remove_file(filepath) {
+                                Ok(_) => {
+                                    let body = json!({
+                                        "success": false,
+                                        "error_code": error_v.code,
+                                        "error_message": error_v.message,
+                                    });
+                                    HttpResponse::Ok()
+                                        .content_type("application/json")
+                                        .body(body.to_string())
+                                },
+                                // TODO: (?)
+                                Err(_) => {
+                                    let body = json!({
+                                        "success": false,
+                                        "error_code": error_v.code,
+                                        "error_message": error_v.message,
+                                    });
+                                    HttpResponse::Ok()
+                                        .content_type("application/json")
+                                        .body(body.to_string())
+                                },
+                            }
                         },
-
 
                     },
 
-                    Err(e) => {
-
-                        // TODO
-                        println!("{}", e);
-
+                    Err(_e) => {
                         let body = json!({
                             "success": false,
                             // TODO: Show error
@@ -134,10 +147,13 @@ pub async fn upload_file_post(
 
             },
 
-            Err(_e) => {
+            Err(e) => {
+                let error_v = &t_error(&e, &user_req.lang_code);
+
                 let body = json!({
                     "success": false,
-                    // TODO: Show error
+                    "error_code": error_v.code,
+                    "error_message": error_v.message,
                 });
                 HttpResponse::Ok()
                     .content_type("application/json")

@@ -25,6 +25,7 @@ pub fn error_code_message(
         ec::UNKNOWN_ERROR => t.err_unknown_error,
         ec::USER_CANT_DELETE_ITSELF => t.err_user_cant_delete_itself,
         ec::USER_NOT_LOGGED_IN => t.err_user_not_logged_in,
+        ec::UUID_IS_NOT_VALID => t.err_uuid_is_not_valid,
         ec::WRONG_BODY_TEXT => t.err_wrong_body_text,
         ec::WRONG_COPYRIGHT_OWNER => t.err_wrong_copyright_owner,
         ec::WRONG_CSRF_TOKEN => t.err_wrong_csrf_token,

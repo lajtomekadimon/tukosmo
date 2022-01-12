@@ -9,7 +9,10 @@ use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
 };
-use crate::i18n::t::t;
+use crate::i18n::{
+    t::t,
+    t_error::t_error,
+};
 use crate::templates::admin::scope_json::files_selector::FilesSelector;
 
 
@@ -103,10 +106,13 @@ pub async fn files_selector_get(
 
             },
 
-            Err(_e) => {
+            Err(e) => {
+                let error_v = &t_error(&e, &user_req.lang_code);
+
                 let body = json!({
                     "success": false,
-                    // TODO: Show error
+                    "error_code": error_v.code,
+                    "error_message": error_v.message,
                 });
                 HttpResponse::Ok()
                     .content_type("application/json")

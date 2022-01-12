@@ -55,6 +55,7 @@ pub struct TranslateI18N {
     pub err_unknown_error: &'static str,
     pub err_user_cant_delete_itself: &'static str,
     pub err_user_not_logged_in: &'static str,
+    pub err_uuid_is_not_valid: &'static str,
     pub err_wrong_body_text: &'static str,
     pub err_wrong_copyright_owner: &'static str,
     pub err_wrong_csrf_token: &'static str,
