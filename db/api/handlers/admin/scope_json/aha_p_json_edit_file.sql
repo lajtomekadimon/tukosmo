@@ -63,7 +63,7 @@ BEGIN
     END IF;
 
     -- Check file name is unique
-    IF c_file_by_name(r.filename) THEN
+    IF c_file_by_name(r.filename) AND ofilename <> r.filename THEN
         PERFORM err_filename_already_exists();
     END IF;
 

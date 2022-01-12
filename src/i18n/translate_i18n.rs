@@ -43,6 +43,7 @@ pub struct TranslateI18N {
     pub drafts: &'static str,
     pub err_csrf_token_is_not_a_valid_uuid: &'static str,
     pub err_email_already_exists: &'static str,
+    pub err_featured_image_is_not_image: &'static str,
     pub err_field_is_not_lang_code: &'static str,
     pub err_filename_already_exists: &'static str,
     pub err_lang_code_already_exists: &'static str,

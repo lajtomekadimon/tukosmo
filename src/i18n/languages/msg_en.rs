@@ -88,6 +88,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The CSRF token is not a valid UUID.",
     err_email_already_exists:
         "That email is already in use.",
+    err_featured_image_is_not_image:
+        "The featured image file must be an image.",
     err_field_is_not_lang_code:
         "The language code is not valid.",
     err_filename_already_exists:

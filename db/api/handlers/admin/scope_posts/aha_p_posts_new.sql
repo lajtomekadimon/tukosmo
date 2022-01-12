@@ -26,6 +26,8 @@ DECLARE
 
     language_of_user BIGINT;
 
+    file_data "FileDB";
+
     featured_image_id BIGINT;
 
     post_id BIGINT;
@@ -69,12 +71,17 @@ BEGIN
     featured_image_id := NULL;
     IF r.featured_image IS NOT NULL THEN
         IF r.featured_image <> 0 THEN
-            IF s_file_by_id(
+            file_data := s_file_by_id(
                 r.featured_image,
                 language_of_user
-            ) IS NULL THEN
+            );
+
+            IF file_data IS NULL THEN
                 PERFORM err_wrong_file_id();
             ELSE
+                IF NOT e_ext_is_image(file_data.ext) THEN
+                    PERFORM err_featured_image_is_not_image();
+                END IF;
                 featured_image_id := r.featured_image;
             END IF;
         END IF;
