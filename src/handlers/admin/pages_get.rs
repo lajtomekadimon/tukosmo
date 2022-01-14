@@ -1,7 +1,8 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -48,6 +49,7 @@ pub struct AgoPages {
 
 
 pub async fn pages_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -55,6 +57,7 @@ pub async fn pages_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiPages {
                 req: user_req.clone(),
             },
@@ -66,6 +69,7 @@ pub async fn pages_get(
                 let t = &t(&q.data.lang.code);
 
                 let html = Pages {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.pages,

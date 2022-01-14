@@ -1,14 +1,13 @@
 use css_minify::optimizations::{Minifier, Level};
 use std::fs;
 
-use crate::config::global::CURRENT_THEME;
-
 
 fn theme_file_dir(
+    current_theme: &str,
     file_dir: &str,
 ) -> String {
     let mut current_theme_dir = "static/css/themes/".to_string();
-    current_theme_dir.push_str(CURRENT_THEME);
+    current_theme_dir.push_str(current_theme);
 
     let mut current_theme_file_dir = current_theme_dir.clone();
     current_theme_file_dir.push_str(file_dir);
@@ -18,7 +17,9 @@ fn theme_file_dir(
 }
 
 
-pub fn minify_css() {
+pub fn minify_css(
+    current_theme: &str,
+) {
     // WEBSITE
     ////////////
     let normalize_css = fs::read_to_string("static/css/extra/normalize.css")
@@ -27,12 +28,12 @@ pub fn minify_css() {
     let mut css_to_minify = String::new();
     // TODO: Add license,etc comment like GNU Project proposes
     css_to_minify.push_str(&normalize_css);
-    css_to_minify.push_str(&theme_file_dir("/html.css"));
-    css_to_minify.push_str(&theme_file_dir("/site.css"));
-    css_to_minify.push_str(&theme_file_dir("/widget.css"));
-    css_to_minify.push_str(&theme_file_dir("/blog.css"));
-    css_to_minify.push_str(&theme_file_dir("/post.css"));
-    css_to_minify.push_str(&theme_file_dir("/error.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/html.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/site.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/widget.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/blog.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/post.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/error.css"));
 
     let minified_css = Minifier::default().minify(
         &css_to_minify,

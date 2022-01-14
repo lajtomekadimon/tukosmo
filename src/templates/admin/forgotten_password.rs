@@ -26,6 +26,7 @@ use crate::templates::{
 
 markup::define! {
     ForgottenPassword<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoForgottenPassword,
         t: &'a TranslateI18N,
@@ -34,6 +35,7 @@ markup::define! {
         success: &'a bool,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &AdminDataDB {
                 userd: UserDB {

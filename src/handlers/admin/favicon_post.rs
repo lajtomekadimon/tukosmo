@@ -1,8 +1,9 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use actix_multipart::Multipart;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     favicon_get::{
@@ -39,6 +40,7 @@ impl QueryFunction for ApiFavicon {
 
 
 pub async fn favicon_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     payload: Multipart,
@@ -47,6 +49,7 @@ pub async fn favicon_post(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             ApiFavicon {
                 req: user_req.clone(),
                 //csrf_token: csrf_token_value,
@@ -70,6 +73,7 @@ pub async fn favicon_post(
             }},
 
             Err(e) => match query_db(
+                &config,
                 AgiFavicon {
                     req: user_req.clone(),
                 },
@@ -80,6 +84,7 @@ pub async fn favicon_post(
                     let t = &t(&q.data.lang.code);
 
                     let html = Favicon {
+                        domain: &config.server.domain,
                         title: &format!(
                             "{a} - {b}",
                             a = t.favicon,

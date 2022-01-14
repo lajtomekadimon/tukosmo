@@ -20,12 +20,14 @@ use crate::templates::{
 
 markup::define! {
     Delete<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoPostsDelete,
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

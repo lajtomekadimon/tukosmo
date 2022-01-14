@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::website::user_request::user_request;
 use crate::database::{
     types,
@@ -63,6 +64,7 @@ pub struct WgoBlog {
 
 
 pub async fn blog_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -74,6 +76,7 @@ pub async fn blog_get(
     let current_page = (param.p).clone().unwrap_or(1);
 
     match query_db(
+        &config,
         WgiBlog {
             req: user_req.clone(),
             results_per_page: results_per_page,
@@ -87,6 +90,7 @@ pub async fn blog_get(
             let t = &t(&q.data.lang.code);
 
             let html = Blog {
+                domain: &config.server.domain,
                 title: &format!(
                     "{a} - {b}",
                     a = t.blog,

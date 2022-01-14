@@ -26,12 +26,14 @@ use crate::templates::{
 
 markup::define! {
     Files<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoFiles,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

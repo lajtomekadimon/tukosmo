@@ -17,6 +17,7 @@ use crate::templates::{
 
 markup::define! {
     Favicon<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoFavicon,
         t: &'a TranslateI18N,
@@ -24,6 +25,7 @@ markup::define! {
         success: &'a bool,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

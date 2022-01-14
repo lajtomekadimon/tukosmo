@@ -5,6 +5,7 @@ use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_languages::edit_get::{
@@ -122,6 +123,7 @@ impl QueryFunction for ApiLanguagesEdit {
 
 
 pub async fn edit_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
@@ -139,6 +141,7 @@ pub async fn edit_post(
                 let lang_names = (form.lang_names).clone();
 
                 match query_db(
+                    &config,
                     ApiLanguagesEdit {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -160,6 +163,7 @@ pub async fn edit_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiLanguagesEdit {
                             req: user_req.clone(),
                             lang: language_id,
@@ -172,6 +176,7 @@ pub async fn edit_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Edit {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.edit_language_w_name

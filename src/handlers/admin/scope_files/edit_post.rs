@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_files::edit_get::{
@@ -50,6 +51,7 @@ impl QueryFunction for ApiFilesEdit {
 
 
 pub async fn edit_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -65,6 +67,7 @@ pub async fn edit_post(
                 let filename_value = (form.filename).clone();
 
                 match query_db(
+                    &config,
                     ApiFilesEdit {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -99,6 +102,7 @@ pub async fn edit_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiFilesEdit {
                             req: user_req.clone(),
                             id: file_id.clone(),
@@ -111,6 +115,7 @@ pub async fn edit_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Edit {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.edit_file_w_name

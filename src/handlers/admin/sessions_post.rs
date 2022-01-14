@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     sessions_get::{
@@ -49,6 +50,7 @@ impl QueryFunction for ApiSessions {
 
 
 pub async fn sessions_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -64,6 +66,7 @@ pub async fn sessions_post(
                 let date_value = (form.date).clone();
 
                 match query_db(
+                    &config,
                     ApiSessions {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -73,6 +76,7 @@ pub async fn sessions_post(
                 ) {
 
                     Ok(_row) => match query_db(
+                        &config,
                         AgiSessions {
                             req: user_req.clone(),
                         },
@@ -84,6 +88,7 @@ pub async fn sessions_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Sessions {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.sessions,
@@ -104,6 +109,7 @@ pub async fn sessions_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiSessions {
                             req: user_req.clone(),
                         },
@@ -115,6 +121,7 @@ pub async fn sessions_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Sessions {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.sessions,

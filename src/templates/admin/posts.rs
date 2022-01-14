@@ -26,12 +26,14 @@ use crate::templates::{
 
 markup::define! {
     Posts<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoPosts,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

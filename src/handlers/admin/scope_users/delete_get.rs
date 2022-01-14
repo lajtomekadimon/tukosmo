@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -52,6 +53,7 @@ pub struct AgoUsersDelete {
 
 
 pub async fn delete_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -62,6 +64,7 @@ pub async fn delete_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiUsersDelete {
                 req: user_req.clone(),
                 id: user_id.clone(),
@@ -74,6 +77,7 @@ pub async fn delete_get(
                 let t = &t(&q.data.lang.code);
 
                 let html = Delete {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.delete_user_w_name

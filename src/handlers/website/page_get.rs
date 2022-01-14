@@ -1,7 +1,8 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::website::user_request::user_request;
 use crate::database::{
     types,
@@ -41,6 +42,7 @@ pub struct WgoPage {
 
 
 pub async fn page_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -48,6 +50,7 @@ pub async fn page_get(
     let user_req = user_request(req, id);
 
     match query_db(
+        &config,
         WgiPage {
             req: user_req.clone(),
         },
@@ -59,6 +62,7 @@ pub async fn page_get(
             let t = &t(&q.data.lang.code);
 
             let html = Page {
+                domain: &config.server.domain,
                 title: &format!(
                     "{a} - {b}",
                     a = "[page title]",

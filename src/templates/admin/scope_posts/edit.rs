@@ -29,6 +29,7 @@ use crate::templates::{
 
 markup::define! {
     Edit<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoPostsEdit,
         t: &'a TranslateI18N,
@@ -36,6 +37,7 @@ markup::define! {
         form: &'a Option<ActixForm<FormData>>,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

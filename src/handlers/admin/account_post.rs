@@ -5,6 +5,7 @@ use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     account_get::{
@@ -143,6 +144,7 @@ impl QueryFunction for ApiAccount {
 
 
 pub async fn account_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -163,6 +165,7 @@ pub async fn account_post(
                 let i18n_names = (form.i18n_names).clone();
 
                 match query_db(
+                    &config,
                     ApiAccount {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -177,6 +180,7 @@ pub async fn account_post(
                 ) {
 
                     Ok(_row) => match query_db(
+                        &config,
                         AgiAccount {
                             req: user_req.clone(),
                         },
@@ -188,6 +192,7 @@ pub async fn account_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Account {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.account,
@@ -212,6 +217,7 @@ pub async fn account_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiAccount {
                             req: user_req.clone(),
                         },
@@ -223,6 +229,7 @@ pub async fn account_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Account {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.account,

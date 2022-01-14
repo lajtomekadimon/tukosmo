@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_files::edit_get::ra_files_edit_w_id,
@@ -41,6 +42,7 @@ impl QueryFunction for ApiFilesNew {
 
 
 pub async fn new_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -56,6 +58,7 @@ pub async fn new_post(
                 let filename_value = (form.filename).clone();
 
                 match query_db(
+                    &config,
                     ApiFilesNew {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,

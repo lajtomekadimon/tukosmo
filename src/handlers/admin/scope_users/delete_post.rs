@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_users::delete_get::{
@@ -48,6 +49,7 @@ impl QueryFunction for ApiUsersDelete {
 
 
 pub async fn delete_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -62,6 +64,7 @@ pub async fn delete_post(
                 let user_id = (form.id).clone();
 
                 match query_db(
+                    &config,
                     ApiUsersDelete {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -81,6 +84,7 @@ pub async fn delete_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiUsersDelete {
                             req: user_req.clone(),
                             id: user_id.clone(),
@@ -93,6 +97,7 @@ pub async fn delete_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = Delete {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.delete_user_w_name

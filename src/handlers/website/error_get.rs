@@ -3,7 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
-use crate::config::global::DEFAULT_LANG;
+use crate::config::global::Config;
 use crate::handlers::website::user_request::user_request;
 use crate::database::{
     types,
@@ -53,6 +53,7 @@ pub struct WgoError {
 
 
 pub async fn error_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -63,6 +64,7 @@ pub async fn error_get(
     let user_req = user_request(req, id);
 
     match query_db(
+        &config,
         WgiError {
             req: user_req,
             code: error_code.clone(),
@@ -83,6 +85,7 @@ pub async fn error_get(
             };
 
             let html = Error {
+                domain: &config.server.domain,
                 title: &format!(
                     "{a} - {b}",
                     a = t.error,
@@ -114,7 +117,7 @@ pub async fn error_get(
                             .header(
                                 "Location",
                                 rw_error_w_code(
-                                    DEFAULT_LANG,
+                                    &config.server.default_lang,
                                     error_code,
                                 ),
                             )

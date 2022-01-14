@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::{
     website::user_request::user_request,
     admin::forgotten_password_get::{
@@ -47,6 +48,7 @@ pub struct ApoForgottenPassword {
 
 
 pub async fn forgotten_password_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -58,6 +60,7 @@ pub async fn forgotten_password_post(
 
     // TODO: Comprobar que el usuario no está conectado
     match query_db(
+        &config,
         ApiForgottenPassword {
             req: user_req.clone(),
             email: email_value,
@@ -65,6 +68,7 @@ pub async fn forgotten_password_post(
     ) {
 
         Ok(_row) => match query_db(
+            &config,
             AgiForgottenPassword {
                 req: user_req,
             },
@@ -80,6 +84,7 @@ pub async fn forgotten_password_post(
                 let t = &t(&q2.data.lang.code);
 
                 let html = ForgottenPassword {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.forgotten_password,
@@ -106,6 +111,7 @@ pub async fn forgotten_password_post(
         },
 
         Err(e) => match query_db(
+            &config,
             AgiForgottenPassword {
                 req: user_req,
             },
@@ -117,6 +123,7 @@ pub async fn forgotten_password_post(
                 let t = &t(&q.data.lang.code);
 
                 let html = ForgottenPassword {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.forgotten_password,

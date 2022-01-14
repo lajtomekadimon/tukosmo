@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -55,6 +56,7 @@ pub struct AgoPostsEdit {
 
 
 pub async fn edit_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -65,6 +67,7 @@ pub async fn edit_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiPostsEdit {
                 req: user_req.clone(),
                 post: post_id.clone(),
@@ -80,6 +83,7 @@ pub async fn edit_get(
 
                 if let Some(ref post) = q.post {
                     let html = Edit {
+                        domain: &config.server.domain,
                         title: &format!(
                             "{a} - {b}",
                             a = t.edit_post_w_title
@@ -95,6 +99,7 @@ pub async fn edit_get(
                     HttpResponse::Ok().body(html.to_string())
                 } else {
                     let html = Edit {
+                        domain: &config.server.domain,
                         title: &format!(
                             "{a} - {b}",
                             a = t.edit_post_w_title

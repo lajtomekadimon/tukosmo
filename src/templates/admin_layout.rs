@@ -7,6 +7,7 @@ use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
 
 markup::define! {
     AdminLayout<'a, BodyContent: markup::Render>(
+        domain: &'a str,
         title: &'a str,
         data: &'a AdminDataDB,
         routes: &'a Vec<RouteDB>,
@@ -44,7 +45,8 @@ markup::define! {
                     link[
                         rel = "alternate",
                         hreflang = &route.lang.code,
-                        href = "https://tukosmo.org{route}"  // TODO: Domain!!
+                        href = "https://{domain}{route}"
+                            .replace("{domain}", domain)
                             .replace("{route}", &route.route),
                     ];
                 }

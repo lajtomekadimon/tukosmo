@@ -5,6 +5,7 @@ use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_languages::new_get::{
@@ -151,6 +152,7 @@ impl QueryFunction for ApiLanguagesNew {
 
 
 pub async fn new_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
@@ -172,6 +174,7 @@ pub async fn new_post(
                 let copyright_owner = (form.copyright_owner).clone();
 
                 match query_db(
+                    &config,
                     ApiLanguagesNew {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -197,6 +200,7 @@ pub async fn new_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiLanguagesNew {
                             req: user_req.clone(),
                         },
@@ -208,6 +212,7 @@ pub async fn new_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = New {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.add_language,

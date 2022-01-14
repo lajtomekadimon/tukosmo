@@ -18,12 +18,14 @@ use crate::templates::{
 
 markup::define! {
     Languages<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoLanguages,
         t: &'a TranslateI18N,
         success: &'a bool,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

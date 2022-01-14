@@ -1,7 +1,8 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -39,6 +40,7 @@ pub struct AgoDashboard {
 
 
 pub async fn dashboard_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -46,6 +48,7 @@ pub async fn dashboard_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiDashboard {
                 req: user_req.clone(),
             },
@@ -57,6 +60,7 @@ pub async fn dashboard_get(
                 let t = &t(&q.data.lang.code);
 
                 let html = Dashboard {
+                    domain: &config.server.domain,
                     title: t.tukosmo_admin_panel,
                     q: &q,
                     t: t,

@@ -26,6 +26,7 @@ use crate::templates::{
 
 markup::define! {
     Login<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoLogin,
         t: &'a TranslateI18N,
@@ -33,6 +34,7 @@ markup::define! {
         form: &'a Option<ActixForm<FormData>>,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &AdminDataDB {
                 userd: UserDB {

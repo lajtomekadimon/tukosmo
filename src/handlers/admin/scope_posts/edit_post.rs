@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -56,6 +57,7 @@ impl QueryFunction for ApiPostsEdit {
 
 
 pub async fn edit_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -83,6 +85,7 @@ pub async fn edit_post(
                 };
 
                 match query_db(
+                    &config,
                     ApiPostsEdit {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -127,6 +130,7 @@ pub async fn edit_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiPostsEdit {
                             req: user_req.clone(),
                             post: post_id.clone(),
@@ -144,6 +148,7 @@ pub async fn edit_post(
 
                             if let Some(ref post) = q.post {
                                 let html = Edit {
+                                    domain: &config.server.domain,
                                     title: &format!(
                                         "{a} - {b}",
                                         a = t.edit_post_w_title
@@ -161,6 +166,7 @@ pub async fn edit_post(
                                 HttpResponse::Ok().body(html.to_string())
                             } else {
                                 let html = Edit {
+                                    domain: &config.server.domain,
                                     title: &format!(
                                         "{a} - {b}",
                                         a = t.edit_post_w_title

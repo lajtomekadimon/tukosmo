@@ -19,11 +19,13 @@ use crate::templates::{
 
 markup::define! {
     Post<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a WgoBlogPost,
         t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,
@@ -31,7 +33,8 @@ markup::define! {
             og_description: &q.post.description,
             og_image: &(
                 if let Some(fimage) = &q.post.featured_image {
-                    "https://tukosmo.org{dir}"  // TODO: domain
+                    "https://{domain}{dir}"
+                        .replace("{domain}", domain)
                         .replace(
                             "{dir}",
                             &file_route(&fimage.name)

@@ -13,12 +13,14 @@ use crate::templates::{
 
 markup::define! {
     Error<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a WgoError,
         t: &'a TranslateI18N,
         e: &'a ErrorDB,
     ) {
         @WebsiteLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

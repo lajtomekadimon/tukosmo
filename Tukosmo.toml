@@ -1,0 +1,19 @@
+
+[database]
+host = "localhost"
+name = "tukosmo"
+user = "tukosmouser"
+password = "1234"
+
+[server]
+mode = "development"  # development / production
+default_lang = "en"
+theme = "simple"
+domain = "localhost"  # localhost / example.com
+    [server.development]
+    http_port = ":8080"
+    https_port = ":8443"
+    [server.production]
+    http_port = ":80"
+    https_port = ":443"
+

@@ -71,7 +71,60 @@ Roadmap:
     - [ ] Shop
     - [ ] Forum
 
+## Pre-installation
+
+On a freshly install server, run your OS commands:
+
+```sh
+# FreeBSD
+pkg upgrade
+freebsd-update fetch
+freebsd-update install
+pkg install devel/git
+
+# Debian [works for Ubuntu, Mint, etc.]
+sudo apt update
+sudo apt upgrade
+sudo apt install git make
+
+# Fedora
+sudo dnf update
+sudo dnf install git make
+
+# Arch
+sudo pacman -Syu
+sudo pacman -S git make
+```
+
+Basically, you need an updated system and `git` and `make` installed.
+**If you are using a desktop system or a server with more software,
+please follow step-by-step installation and check every command you run.**
+
 ## Installation
+
+```sh
+git clone https://github.com/lajtomekadimon/tukosmo
+cd tukosmo
+```
+
+Edit BSDmakefile and GNUmakefile and change `OS_NAME` and `MODE`.
+
+Install everything:
+
+```sh
+make -s install-all
+```
+
+## Step-by-step installation
+
+Download Tukosmo's repository:
+
+```sh
+git clone https://github.com/lajtomekadimon/tukosmo
+cd tukosmo
+```
+
+Edit `BSDmakefile` and `GNUmakefile` and change `OS_NAME` and `MODE`.
 
 Dependencies:
 
@@ -79,8 +132,7 @@ Dependencies:
 - Rust 2018
 - Go >= 1.13
 
-Install dependencies (only on FreeBSD and GNU/Linux for now; if you are using
-a GNU/Linux distribution, change the `OS_NAME` parameter on GNUmakefile file):
+Install dependencies:
 
 **(skip this if you already have PostgreSQL and Rust on your system!)**
 
@@ -89,13 +141,13 @@ make -s dep
 # Install just PostgreSQL: make -s postgresql
 # Install just Rust: make -s rust
 # The shell must be restarted after installing Rust
-# It's important to add postgresql_enable="yes" to /etc/rc.conf in FreeBSD
 ```
 
 Create (or reset) database:
 
 ```sh
-make -s resetdb
+make -s installdb
+#make -s resetdb
 
 # If you're using Fedora, you should also do:
 sudo systemctl stop postgresql
@@ -110,14 +162,6 @@ make -s install
 ```
 
 ## Run server
-
-Before running the web server, you need an SSL certificate. In localhost, you
-can generate it like this:
-
-```sh
-openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
-cert.pem -days 365 -subj '/CN=localhost'
-```
 
 Run web server:
 

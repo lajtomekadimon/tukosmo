@@ -10,6 +10,7 @@ use crate::templates::widgets::{
 
 markup::define! {
     WebsiteLayout<'a, BodyContent: markup::Render>(
+        domain: &'a str,
         title: &'a str,
         data: &'a WebsiteDataDB,
         routes: &'a Vec<RouteDB>,
@@ -50,6 +51,7 @@ markup::define! {
                 @OpenGraphMeta {
                     data: data,
                     routes: routes,
+                    domain: domain,
                     title: og_title,
                     description: og_description,
                     image: og_image,
@@ -61,7 +63,8 @@ markup::define! {
                     link[
                         rel = "alternate",
                         hreflang = &route.lang.code,
-                        href = "https://tukosmo.org{route}"  // TODO: Domain!!
+                        href = "https://{domain}{route}"
+                            .replace("{domain}", domain)
                             .replace("{route}", &route.route),
                     ];
                 }

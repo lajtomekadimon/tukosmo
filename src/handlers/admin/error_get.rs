@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     login_get::ra_login,
@@ -55,6 +56,7 @@ pub struct AgoError {
 
 
 pub async fn error_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -65,6 +67,7 @@ pub async fn error_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiError {
                 req: user_req.clone(),
                 code: error_code.clone(),
@@ -85,6 +88,7 @@ pub async fn error_get(
                 };
 
                 let html = Error {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = "ERROR {code}".replace("{code}", &e.code),

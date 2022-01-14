@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::{
     website::user_request::user_request,
     admin::login_get::{
@@ -53,6 +54,7 @@ pub struct ApoLogin {
 
 
 pub async fn login_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -74,6 +76,7 @@ pub async fn login_post(
     };
 
     match query_db(
+        &config,
         ApiLogin {
             req: user_req.clone(),
             email: email_value,
@@ -113,6 +116,7 @@ pub async fn login_post(
         },
 
         Err(e) => match query_db(
+            &config,
             AgiLogin {
                 req: user_req.clone(),
             },
@@ -138,6 +142,7 @@ pub async fn login_post(
                     id.forget();
 
                     let html = Login {
+                        domain: &config.server.domain,
                         title: &format!(
                             "{a} - {b}",
                             a = t.login_k_noun,

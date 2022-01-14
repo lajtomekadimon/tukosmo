@@ -3,7 +3,10 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
-use crate::config::global::SUPPORTED_LANGUAGES;
+use crate::config::global::{
+    Config,
+    SUPPORTED_LANGUAGES,
+};
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -57,6 +60,7 @@ pub struct AgoLanguagesNew {
 
 
 pub async fn new_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -65,6 +69,7 @@ pub async fn new_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiLanguagesNew {
                 req: user_req.clone(),
             },
@@ -85,6 +90,7 @@ pub async fn new_get(
                 };
 
                 let html = New {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.add_language,
@@ -99,7 +105,7 @@ pub async fn new_get(
 
                 HttpResponse::Ok().body(html.to_string())
 
-            }
+            },
 
             Err(e) => error_admin_route(&e, &user_req.lang_code),
 

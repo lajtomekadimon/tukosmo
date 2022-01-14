@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -54,6 +55,7 @@ pub struct AgoFavicon {
 
 
 pub async fn favicon_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -62,6 +64,7 @@ pub async fn favicon_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiFavicon {
                 req: user_req.clone(),
             },
@@ -73,6 +76,7 @@ pub async fn favicon_get(
                 let t = &t(&q.data.lang.code);
 
                 let html = Favicon {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.favicon,

@@ -1,13 +1,11 @@
 use actix_web::{App, HttpServer};
-//use actix_web::middleware;
-//use actix_web::http;
-//use actix_cors::Cors;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web_middleware_redirect_https::RedirectHTTPS;
 use rand::Rng;
 use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 mod config;
+use crate::config::global::config as config_data;
 
 mod database;
 use crate::database::query_db_noparam::query_db_noparam;
@@ -33,18 +31,48 @@ use crate::minifiers::{
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // Configuration
+    println!("Loading configuration...");
+    let config = config_data();
+
+    // Ports and domain
+    let server_mode = config.server.mode;
+
+    let devel_http_port = config.server.development.http_port;
+    let devel_https_port = config.server.development.https_port;
+    let prod_http_port = config.server.production.http_port;
+    let prod_https_port = config.server.production.https_port;
+    let domain = config.server.domain;
+
+    let http_port = match server_mode.as_str() {
+        "development" => devel_http_port,
+        "production" => prod_http_port,
+        _ => panic!("Wrong mode."),
+    };
+    let https_port = match server_mode.as_str() {
+        "development" => devel_https_port,
+        "production" => prod_https_port,
+        _ => panic!("Wrong mode."),
+    };
+
+    let http_domain = format!("{}{}", domain, http_port);
+    let https_domain = format!("{}{}", domain, https_port);
+
+    // Minify CSS and JS
     println!("Minifying CSS code...");
-    minify_css();
+    minify_css(&config.server.theme);
     println!("Minifying JS code...");
     minify_js();
-
-    println!("Done!");
     
     // Delete all previous sessions
-    if let Err(e) = query_db_noparam("SELECT as_clean_sessions()") {
+    if let Err(e) = query_db_noparam(
+        &config_data(),
+        "SELECT as_clean_sessions()",
+    ) {
         panic!("Database couldn't delete all sessions. Error: {}", e);
     }
 
+    println!("Done!");
 
     // SSL (HTTPS)
     // -----------
@@ -59,8 +87,6 @@ async fn main() -> std::io::Result<()> {
         .unwrap();
     builder.set_certificate_chain_file("cert.pem").unwrap();
 
-
-
     // AUTH COOKIE
     // -----------
     // Generate a random 32 byte key. Note that it is important to use a
@@ -68,26 +94,17 @@ async fn main() -> std::io::Result<()> {
     // key can generate authentication cookies for any user!
     let private_key = rand::thread_rng().gen::<[u8; 32]>();
 
-    println!("Server ready. Visit at: https://localhost:8443");
+    println!("Server ready. Visit at: https://{}", https_domain);
 
     // --------- //
 
     HttpServer::new(move || {
         App::new()
+            .data(config_data())
+
             .wrap(RedirectHTTPS::with_replacements(
-                &[(":8080".to_owned(), ":8443".to_owned())]
+                &[(http_port.to_owned(), https_port.to_owned())]
             ))
-
-            /*.wrap(Cors::default()
-                // TODO: This has to work with "*" instead of localhost!
-                .allowed_origin("http://localhost:8080")
-
-                .allowed_methods(vec!["GET", "POST"])
-                .allowed_headers(
-                    vec![http::header::AUTHORIZATION, http::header::ACCEPT]
-                )
-                .allowed_header(http::header::CONTENT_TYPE)
-            )*/
 
             .wrap(
                 IdentityService::new(
@@ -115,8 +132,8 @@ async fn main() -> std::io::Result<()> {
             .service(routes::lang::route())
             .service(routes::lang::subroutes())
     })
-    .bind("127.0.0.1:8080")?
-    .bind_openssl("127.0.0.1:8443", builder)?
+    .bind(http_domain)?
+    .bind_openssl(https_domain, builder)?
     .run()
     .await
 }

@@ -18,6 +18,7 @@ markup::define! {
     OpenGraphMeta<'a>(
         data: &'a WebsiteDataDB,
         routes: &'a Vec<RouteDB>,
+        domain: &'a str,
         title: &'a str,
         description: &'a str,
         image: &'a str,
@@ -27,7 +28,8 @@ markup::define! {
             @if &route.lang.code == &data.lang.code {
                 meta[
                     property = "og:url",
-                    content = "https://tukosmo.org{route}"
+                    content = "https://{domain}{route}"
+                        .replace("{domain}", domain)
                         .replace("{route}", &route.route),
                 ];
             }

@@ -2,6 +2,7 @@ use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use serde::Deserialize;
 
+use crate::config::global::Config;
 use crate::handlers::website::{
     blog_get::{
         WgiBlog,
@@ -31,6 +32,7 @@ pub fn rw_home(
 }
 
 pub async fn home_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -42,6 +44,7 @@ pub async fn home_get(
     let current_page = (param.p).clone().unwrap_or(1);
 
     match query_db(
+        &config,
         WgiBlog {
             req: user_req.clone(),
             results_per_page: results_per_page,
@@ -55,6 +58,7 @@ pub async fn home_get(
             let t = &t(&q.data.lang.code);
 
             let html = Blog {
+                domain: &config.server.domain,
                 title: &format!(
                     "{a} - {b}",
                     a = q.data.website_title,

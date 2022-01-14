@@ -1,7 +1,8 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::website::user_request::user_request;
 use crate::database::{
     types,
@@ -44,6 +45,7 @@ pub struct WgoBlogPost {
 
 
 pub async fn post_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -54,6 +56,7 @@ pub async fn post_get(
         .get("permalink").unwrap().parse().unwrap();
 
     match query_db(
+        &config,
         WgiBlogPost {
             req: user_req.clone(),
             permalink: permalink_value,
@@ -66,6 +69,7 @@ pub async fn post_get(
             let t = &t(&q.data.lang.code);
 
             let html = Post {
+                domain: &config.server.domain,
                 title: &format!(
                     "{a} - {b}",
                     a = q.post.title,

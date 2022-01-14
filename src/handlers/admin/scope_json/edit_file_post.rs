@@ -5,6 +5,7 @@ use serde_json::json;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
 };
@@ -52,6 +53,7 @@ pub fn ra_json_edit_file(
 
 
 pub async fn edit_file_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -67,6 +69,7 @@ pub async fn edit_file_post(
                 let filename_value = (form.filename).clone();
 
                 match query_db(
+                    &config,
                     ApiJsonEditFile {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,

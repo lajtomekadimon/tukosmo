@@ -4,6 +4,7 @@ use serde::Deserialize;
 use serde_json::json;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -68,6 +69,7 @@ pub struct AgoJsonFilesSelector {
 
 
 pub async fn files_selector_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -79,6 +81,7 @@ pub async fn files_selector_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiJsonFilesSelector {
                 req: user_req.clone(),
                 results_per_page: results_per_page,

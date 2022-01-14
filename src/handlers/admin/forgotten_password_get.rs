@@ -1,7 +1,8 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::{
     website::user_request::user_request,
     admin::dashboard_get::ra_dashboard,
@@ -42,6 +43,7 @@ pub struct AgoForgottenPassword {
 
 
 pub async fn forgotten_password_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -49,6 +51,7 @@ pub async fn forgotten_password_get(
     let user_req = user_request(req.clone(), id.clone());
 
     match query_db(
+        &config,
         AgiForgottenPassword {
             req: user_req.clone(),
         },
@@ -74,6 +77,7 @@ pub async fn forgotten_password_get(
                 id.forget();
 
                 let html = ForgottenPassword {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.forgotten_password,

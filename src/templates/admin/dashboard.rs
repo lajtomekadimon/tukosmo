@@ -10,11 +10,13 @@ use crate::templates::{
 
 markup::define! {
     Dashboard<'a>(
+        domain: &'a str,
         title: &'a str,
         t: &'a TranslateI18N,
         q: &'a AgoDashboard,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

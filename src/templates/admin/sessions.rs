@@ -20,6 +20,7 @@ use crate::templates::{
 
 markup::define! {
     Sessions<'a>(
+        domain: &'a str,
         title: &'a str,
         q: &'a AgoSessions,
         t: &'a TranslateI18N,
@@ -27,6 +28,7 @@ markup::define! {
         error: &'a Option<ErrorDB>,
     ) {
         @AdminLayout {
+            domain: domain,
             title: title,
             data: &q.data,
             routes: &q.routes,

@@ -1,9 +1,10 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use actix_multipart::Multipart;
 use serde_json::json;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::files::{
     save_file::save_file,
@@ -57,6 +58,7 @@ pub fn ra_json_upload_file(
 
 
 pub async fn upload_file_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     payload: Multipart,
@@ -65,6 +67,7 @@ pub async fn upload_file_post(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             ApiJsonUploadFile {
                 req: user_req.clone(),
             },
@@ -77,6 +80,7 @@ pub async fn upload_file_post(
                 match save_file(payload).await {
 
                     Ok(filename) => match query_db(
+                        &config,
                         SpiUploadFile {
                             author_id: q.data.userd.id,
                             filename: filename.clone(),

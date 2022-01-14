@@ -1,7 +1,8 @@
-use actix_web::{HttpRequest, HttpResponse, Responder};
+use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     login_get::ra_login,
@@ -31,39 +32,37 @@ impl QueryFunction for AgiLogout {
 
 
 pub async fn logout_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
 
     match user_request(req, id.clone()) {
 
-        Ok(user_req) => {
-
-            match query_db(
-                AgiLogout {
-                    req: user_req.clone(),
-                }
-            ) {
-
-                Ok(_row) => {
-
-                    // Delete auth cookie
-                    id.forget();
-
-                    // Redirect to login page
-                    HttpResponse::Found()
-                        .header("Location", ra_login(&user_req.lang_code))
-                        .finish()
-
-                },
-
-                Err(_e) => {
-                    HttpResponse::Found()
-                        .header("Location", ra_login(&user_req.lang_code))
-                        .finish()
-                },
-
+        Ok(user_req) => match query_db(
+            &config,
+            AgiLogout {
+                req: user_req.clone(),
             }
+        ) {
+
+            Ok(_row) => {
+
+                // Delete auth cookie
+                id.forget();
+
+                // Redirect to login page
+                HttpResponse::Found()
+                    .header("Location", ra_login(&user_req.lang_code))
+                    .finish()
+
+            },
+
+            Err(_e) => {
+                HttpResponse::Found()
+                    .header("Location", ra_login(&user_req.lang_code))
+                    .finish()
+            },
 
         },
 

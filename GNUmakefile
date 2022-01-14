@@ -2,11 +2,16 @@
 ## Operating system
 ## - debian [works for Ubuntu, Mint, etc.]
 ## - fedora
-## - suse
 ## - arch
+## - opensuse (TODO)
+## - gentoo (TODO)
 OS_NAME=fedora
 
-PROJECT=tukosmo
+## Mode
+## - development
+## - production
+MODE=development
+DOMAIN=example.com
 
 PG_DB=tukosmo
 PG_USER=tukosmouser
@@ -33,13 +38,7 @@ postgresql:
 	postgresql-devel
 	sudo postgresql-setup --initdb --unit postgresql
 	sudo passwd postgres
-	sudo systemctl enable postgresql
-	sudo systemctl start postgresql
-else ifeq ($(OS_NAME), suse)
-postgresql:
-	sudo zypper -n install postgresql postgresql-server postgresql-contrib \
-	postgresql-devel
-	sudo passwd postgres
+	## TODO: Change all 'ident' to 'trust' in pg_hbd.conf
 	sudo systemctl enable postgresql
 	sudo systemctl start postgresql
 else ifeq ($(OS_NAME), arch)
@@ -55,31 +54,41 @@ endif
 ifeq ($(OS_NAME), debian)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
+	sudo apt install -y curl
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	# The shell must be restarted
+	### The shell must be restarted
 	sudo apt install -y golang  # needed for JS minifying
-	sudo apt install -y openssl
+	sudo apt install -y openssl libssl-dev
+	# Certbot (automated SSL certificates)
+	sudo apt install -y snapd
+	sudo snap install core
+	sudo snap refresh core
+	sudo snap install --classic certbot
+	sudo ln -s /snap/bin/certbot /usr/bin/certbot
 else ifeq ($(OS_NAME), fedora)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
+	sudo dnf install -y curl
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	# The shell must be restarted
+	### The shell must be restarted
 	sudo dnf install -y golang  # needed for JS minifying
-	sudo dnf install -y openssl
-else ifeq ($(OS_NAME), suse)
-rust:
-	# Install Rust (https://www.rust-lang.org/tools/install)
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	# The shell must be restarted
-	sudo zypper -n install go  # needed for JS minifying
-	sudo zypper -n install openssl
+	sudo dnf install -y openssl openssl-devel
+	# Certbot (automated SSL certificates)
+	sudo dnf install -y snapd
+	sudo snap install core
+	sudo snap refresh core
+	sudo snap install --classic certbot
+	sudo ln -s /snap/bin/certbot /usr/bin/certbot
 else ifeq ($(OS_NAME), arch)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
+	sudo pacman -S --noconfirm curl
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	# The shell must be restarted
+	### The shell must be restarted
 	sudo pacman -S --noconfirm go  # needed for JS minifying
 	sudo pacman -S --noconfirm openssl
+	# Certbot (automated SSL certificates)
+	sudo pacman -S --noconfirm certbot
 endif
 
 dep: postgresql rust
@@ -95,10 +104,12 @@ deletedb:
 	sudo -i -u postgres dropdb $(PG_DB) ||:
 	sudo -i -u postgres dropuser $(PG_USER) ||:
 	@echo "Deleting files..."
-	rm files/*
-	cp static/img/featured-image-default-post.jpg files/
+	rm -Rf files/
 
 createdb:
+	@echo "Creating files directory..."
+	mkdir files
+	cp static/img/featured-image-default-post.jpg files/
 	@echo "Creating database..."
 	sudo -i -u postgres createdb $(PG_DB) -E UTF8
 	sudo -i -u postgres psql -d $(PG_DB) -c \
@@ -180,12 +191,37 @@ clean:
 	rm -f Cargo.lock
 	rm -Rf target
 
-install: clean
+ifeq ($(MODE), development)
+ssl:
+	# SSL for local development
+	openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
+	cert.pem -days 365 -subj '/CN=localhost'
+else ifeq ($(MODE), production)
+ssl:
+	# SSL for production server
+	sudo certbot certonly --standalone -d $(DOMAIN)
+	ln -s /etc/letsencrypt/live/$(DOMAIN)/fullchain.pem cert.pem
+	ln -s /etc/letsencrypt/live/$(DOMAIN)/privkey.pem key.pem
+endif
+
+ifeq ($(MODE), development)
+install: clean ssl
 	cargo build
-
-release: clean
+else ifeq ($(MODE), production)
+install: clean ssl
 	cargo build --release
+endif
 
+install-all: dep installdb install ssl
+
+ifeq ($(MODE), development)
 run:
 	cargo run
+else ifeq ($(MODE), production)
+run:
+	#cargo run --release
+	sudo target/release/tukosmo
+endif
+
+# TODO: run-always (startup and in the background)
 

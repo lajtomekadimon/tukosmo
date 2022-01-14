@@ -4,6 +4,7 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_posts::new_get::{
@@ -54,6 +55,7 @@ impl QueryFunction for ApiPostsNew {
 
 
 pub async fn new_post(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -76,6 +78,7 @@ pub async fn new_post(
                 };
 
                 match query_db(
+                    &config,
                     ApiPostsNew {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
@@ -120,6 +123,7 @@ pub async fn new_post(
                     },
 
                     Err(e) => match query_db(
+                        &config,
                         AgiPostsNew {
                             req: user_req.clone(),
                             featured_image: if featured_image_id == 0 {
@@ -134,6 +138,7 @@ pub async fn new_post(
                             let t = &t(&q.data.lang.code);
 
                             let html = New {
+                                domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.new_post,

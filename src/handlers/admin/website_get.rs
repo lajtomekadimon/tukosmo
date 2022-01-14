@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
+use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
 use crate::database::{
     types,
@@ -57,6 +58,7 @@ pub struct AgoWebsite {
 
 
 pub async fn website_get(
+    config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -65,6 +67,7 @@ pub async fn website_get(
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
+            &config,
             AgiWebsite {
                 req: user_req.clone(),
             },
@@ -76,6 +79,7 @@ pub async fn website_get(
                 let t = &t(&q.data.lang.code);
 
                 let html = Website {
+                    domain: &config.server.domain,
                     title: &format!(
                         "{a} - {b}",
                         a = t.website,
