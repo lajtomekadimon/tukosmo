@@ -8,7 +8,10 @@ mod config;
 use crate::config::global::config as config_data;
 
 mod database;
-use crate::database::query_db_noparam::query_db_noparam;
+use crate::database::{
+    initdb::initdb,
+    query_db_noparam::query_db_noparam,
+};
 
 mod i18n;
 
@@ -34,6 +37,14 @@ async fn main() -> std::io::Result<()> {
     // Configuration
     println!("Loading configuration...");
     let config = config_data();
+
+    // Reset database?
+    let reset_db = config.server.reset;
+    if reset_db.as_str() == "true" {
+        initdb(&config_data()).unwrap();
+    } else if reset_db.as_str() != "false" {
+        panic!("Wrong reset value in Tukosmo.toml");
+    }
 
     // Ports and domain
     let server_mode = config.server.mode;

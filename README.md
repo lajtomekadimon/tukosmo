@@ -73,7 +73,7 @@ Roadmap:
 
 ## Pre-installation
 
-On a freshly install server, run your OS commands:
+On a freshly installed server, run your OS commands:
 
 ```sh
 # FreeBSD

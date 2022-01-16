@@ -1,19 +1,20 @@
 
-[database]
-host = "localhost"
-name = "tukosmo"
-user = "tukosmouser"
-password = "1234"
-
 [server]
 mode = "development"  # development / production
+domain = "localhost"  # localhost / example.com
+reset = "true"  # true (WARNING: deletes everything!!!) / false
 default_lang = "en"
 theme = "simple"
-domain = "localhost"  # localhost / example.com
     [server.development]
     http_port = ":8080"
     https_port = ":8443"
     [server.production]
     http_port = ":80"
     https_port = ":443"
+
+[database]
+host = "localhost"
+name = "tukosmo"
+user = "tukosmouser"
+password = "1234"
 

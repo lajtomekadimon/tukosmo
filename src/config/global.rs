@@ -11,24 +11,17 @@ pub const SUPPORTED_LANGUAGES: &'static [&'static str] = &[
 
 #[derive(Clone, Deserialize)]
 pub struct PreConfig {
-    pub database: ConfigDatabase,
     pub server: ConfigServer,
-}
-
-#[derive(Clone, Deserialize)]
-pub struct ConfigDatabase {
-    pub host: String,
-    pub name: String,
-    pub user: String,
-    pub password: String,
+    pub database: ConfigDatabase,
 }
 
 #[derive(Clone, Deserialize)]
 pub struct ConfigServer {
     pub mode: String,
+    pub domain: String,
+    pub reset: String,
     pub default_lang: String,
     pub theme: String,
-    pub domain: String,
     pub development: ConfigServerDevelopment,
     pub production: ConfigServerProduction,
 }
@@ -46,9 +39,18 @@ pub struct ConfigServerProduction {
 }
 
 #[derive(Clone, Deserialize)]
+pub struct ConfigDatabase {
+    pub host: String,
+    pub name: String,
+    pub user: String,
+    pub password: String,
+}
+
+#[derive(Clone, Deserialize)]
 pub struct Config {
-    pub dbauth: String,
     pub server: ConfigServer,
+    pub database: ConfigDatabase,
+    pub dbauth: String,
 }
 
 
@@ -66,8 +68,9 @@ pub fn config() -> Config {
     );
 
     Config {
-        dbauth: db_auth_string.to_string(),
         server: config.server,
+        database: config.database,
+        dbauth: db_auth_string.to_string(),
     }
 }
 
