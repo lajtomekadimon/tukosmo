@@ -38,14 +38,6 @@ async fn main() -> std::io::Result<()> {
     println!("Loading configuration...");
     let config = config_data();
 
-    // Reset database?
-    let reset_db = config.server.reset;
-    if reset_db.as_str() == "true" {
-        initdb(&config_data()).unwrap();
-    } else if reset_db.as_str() != "false" {
-        panic!("Wrong reset value in Tukosmo.toml");
-    }
-
     // Ports and domain
     let server_mode = config.server.mode;
 
@@ -68,6 +60,14 @@ async fn main() -> std::io::Result<()> {
 
     let http_domain = format!("{}{}", domain, http_port);
     let https_domain = format!("{}{}", domain, https_port);
+
+    // Reset database if users wants to
+    let reset_db = config.server.reset;
+    if reset_db.as_str() == "true" {
+        initdb(&config_data()).unwrap();
+    } else if reset_db.as_str() != "false" {
+        panic!("Wrong reset value in Tukosmo.toml");
+    }
 
     // Minify CSS and JS
     println!("Minifying CSS code...");

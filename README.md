@@ -100,6 +100,8 @@ Basically, you need an updated system and `git` and `make` installed.
 **If you are using a desktop system or a server with more software,
 please follow step-by-step installation and check every command you run.**
 
+Now, edit Tukosmo.toml file and be sure everything is okay; `reset` value must be true for installation.
+
 ## Installation
 
 ```sh

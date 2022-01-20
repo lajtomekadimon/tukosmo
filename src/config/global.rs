@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::fs;
 use toml;
 
@@ -9,13 +9,13 @@ pub const SUPPORTED_LANGUAGES: &'static [&'static str] = &[
 ];
 
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct PreConfig {
     pub server: ConfigServer,
     pub database: ConfigDatabase,
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct ConfigServer {
     pub mode: String,
     pub domain: String,
@@ -26,19 +26,19 @@ pub struct ConfigServer {
     pub production: ConfigServerProduction,
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct ConfigServerDevelopment {
     pub http_port: String,
     pub https_port: String,
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct ConfigServerProduction {
     pub http_port: String,
     pub https_port: String,
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct ConfigDatabase {
     pub host: String,
     pub name: String,
@@ -46,7 +46,7 @@ pub struct ConfigDatabase {
     pub password: String,
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, Serialize)]
 pub struct Config {
     pub server: ConfigServer,
     pub database: ConfigDatabase,

@@ -1,7 +1,12 @@
+use toml;
 use std::fs;
 use postgres::{Client, NoTls, Error};
 
-use crate::config::global::Config;
+use crate::config::global::{
+    Config,
+    PreConfig,
+    ConfigServer,
+};
 
 
 pub fn append_sql(
@@ -224,6 +229,24 @@ pub fn initdb(
     }
 
     client.close().unwrap();
+
+    // Change reset value to false
+    //-------------------------------------------------------
+    let new_toml_file = toml::to_string(
+        &PreConfig {
+            server: ConfigServer {
+                mode: (&config.server.mode).clone(),
+                domain: (&config.server.domain).clone(),
+                reset: "false".to_string(),
+                default_lang: (&config.server.default_lang).clone(),
+                theme: (&config.server.theme).clone(),
+                development: (&config.server.development).clone(),
+                production: (&config.server.production).clone(),
+            },
+            database: (&config.database).clone(),
+        }
+    ).unwrap();
+    fs::write("Tukosmo.toml", new_toml_file).unwrap();
 
     Ok(())
 }
