@@ -157,6 +157,12 @@ sudo vi /var/lib/pgsql/data/pg_hba.conf  # change all 'ident' to 'trust'
 sudo systemctl start postgresql
 ```
 
+Generate database's password:
+
+```sh
+make -s db-password
+```
+
 Install web server:
 
 ```sh

@@ -13,6 +13,8 @@ OS_NAME=fedora
 MODE=development
 
 PG_DB=tukosmo  # use the name you have in Tukosmo.toml
+PG_PASSWORD=$(shell pwgen -s -1 32)
+# PG_PASSWORD is only used in the installation
 
 
 
@@ -23,7 +25,7 @@ PG_DB=tukosmo  # use the name you have in Tukosmo.toml
 ifeq ($(OS_NAME), debian)
 postgresql:
 	sudo apt install -y postgresql postgresql-client \
-	postgresql-contrib uuid libpq-dev
+	postgresql-contrib uuid libpq-dev pwgen
 	sudo apt clean -y
 	#sudo passwd postgres
 	sudo systemctl enable postgresql
@@ -31,7 +33,7 @@ postgresql:
 else ifeq ($(OS_NAME), fedora)
 postgresql:
 	sudo dnf -y install postgresql postgresql-server postgresql-contrib \
-	postgresql-devel
+	postgresql-devel pwgen
 	sudo postgresql-setup --initdb --unit postgresql
 	#sudo passwd postgres
 	## TODO: Change all 'ident' to 'trust' in pg_hbd.conf
@@ -39,7 +41,7 @@ postgresql:
 	sudo systemctl start postgresql
 else ifeq ($(OS_NAME), arch)
 postgresql:
-	sudo pacman -S --noconfirm postgresql
+	sudo pacman -S --noconfirm postgresql pwgen
 	#sudo passwd postgres
 	sudo -i -u postgres initdb --locale es_ES.UTF-8 -E UTF8 -D \
 	    '/var/lib/postgres/data'
@@ -103,6 +105,10 @@ installdb:
 	sudo -i -u postgres psql -d pretukosmo -c \
 	"ALTER USER pretukosmouser WITH SUPERUSER;"
 
+db-password:
+	sed -i '/password =/d' Tukosmo.toml
+	echo "password = \"$(PG_PASSWORD)\"" >> Tukosmo.toml
+
 psql:
 	@sudo -i -u postgres psql -q -d $(PG_DB)
 
@@ -138,7 +144,7 @@ install: clean ssl
 	cargo build --release
 endif
 
-install-all: dep installdb install ssl
+install-all: dep installdb db-password install ssl
 
 ifeq ($(MODE), development)
 run:

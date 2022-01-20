@@ -12,6 +12,8 @@ OS_NAME=freebsd
 MODE=development
 
 PG_DB=tukosmo  # use the name you have in Tukosmo.toml
+PG_PASSWORD=$(shell pwgen -s -1 32)
+# PG_PASSWORD is only used in the installation (TODO: test)
 
 
 
@@ -20,7 +22,7 @@ PG_DB=tukosmo  # use the name you have in Tukosmo.toml
 ##############################################################################
 
 postgresql:
-	pkg install postgresql13-server postgresql13-contrib
+	pkg install postgresql13-server postgresql13-contrib sysutils/pwgen
 	sysrc postgresql_enable=yes
 	/usr/local/etc/rc.d/postgresql initdb
 	#passwd postgres
@@ -55,6 +57,10 @@ preinstalldb:
 
 installdb:
 	su -m root -c 'make preinstalldb'
+
+db-password:
+	sed -i '' '/password =/d' Tukosmo.toml
+	echo "password = \"$(PG_PASSWORD)\"" >> Tukosmo.toml
 
 psql:
 	@su -m postgres -c "psql -q -d $(PG_DB)"
@@ -93,7 +99,7 @@ install: clean ssl
 	cargo build --release
 .endif
 
-install-all: dep installdb install ssl
+install-all: dep installdb db-password install ssl
 
 .if ${MODE} == development
 run:
