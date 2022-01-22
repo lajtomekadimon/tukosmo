@@ -4,8 +4,12 @@ use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
+use std::sync::mpsc;
 
-use crate::config::global::Config;
+use crate::config::{
+    global::Config,
+    change_lang::change_lang,
+};
 use crate::handlers::admin::{
     user_request::user_request,
     scope_languages::edit_get::{
@@ -127,6 +131,7 @@ pub async fn edit_post(
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
+    restarter: web::Data<mpsc::Sender<()>>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -146,7 +151,7 @@ pub async fn edit_post(
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
                         language_id: language_id,
-                        lang_code: lang_code,
+                        lang_code: lang_code.clone(),
                         lang_ids: lang_ids,
                         lang_names: lang_names,
                     },
@@ -154,12 +159,24 @@ pub async fn edit_post(
 
                     Ok(_row) => {
 
+                        if &lang_code == &config.server.default_lang {
+                            change_lang(
+                                &config,
+                                &lang_code,
+                            );
+                            // TODO: Handle errors
+
+                            // Restart server
+                            restarter.send(()).unwrap();
+                        }
+
                         HttpResponse::Found()
                             .header(
                                 "Location",
                                 ra_languages_success(&user_req.lang_code),
                             )
                             .finish()
+
                     },
 
                     Err(e) => match query_db(

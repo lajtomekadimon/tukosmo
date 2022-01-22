@@ -26,6 +26,7 @@ markup::define! {
         success: &'a bool,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
+        default_lang: &'a str,
     ) {
         @AdminLayout {
             domain: domain,
@@ -39,6 +40,8 @@ markup::define! {
                     success: success,
                     error: error,
                     form: form,
+                    domain: domain,
+                    default_lang: default_lang,
                 },
                 current_page: "website",
                 data: &q.data,
@@ -53,6 +56,8 @@ markup::define! {
         success: &'a bool,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
+        domain: &'a str,
+        default_lang: &'a str,
     ) {
         div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
@@ -165,6 +170,67 @@ markup::define! {
                                 &f.copyright_owner
                             } else { &q.copyright_owner },
                         ];
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        @t.domain_k_web
+                        // TODO: Add "DANGEROUS" and a message or something
+                        // to indicate that you must have the domain pointing
+                        // to the server's IP, etc.
+                    }
+                    div[class = "control"] {
+                        input[
+                            class = "input",  // TODO: Check
+                            type = "text",
+                            name = "domain",
+                            value = if let Some(f) = form {
+                                &f.domain
+                            } else { *domain },
+                        ];
+                    }
+                }
+
+                div[class = "field"] {
+                    label[class = "label"] {
+                        @t.default_language
+                    }
+                    div[class = "control"] {
+                        div[
+                            class = if let Some(e) = error {
+                                if e.code == ec::WRONG_LANG_CODE {
+                                    "select is-danger"
+                                } else {
+                                    "select"
+                                }
+                            } else {
+                                "select"
+                            },
+                        ] {
+                            select[
+                                name = "default_lang",
+                            ] {
+                                @for lang in q.data.languages.iter() {
+                                    option[
+                                        value = &lang.code,
+                                        selected = if let Some(f) = form {
+                                            lang.code == f.default_lang
+                                        } else {
+                                            &lang.code == default_lang
+                                        },
+                                    ] {
+                                        @lang.name
+
+                                        @if q.data.lang.code != lang.code {
+                                            " ("
+                                            @lang.original_name
+                                            ")"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 

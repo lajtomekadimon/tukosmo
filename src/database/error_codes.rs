@@ -3,6 +3,8 @@ pub const CSRF_TOKEN_IS_NOT_A_VALID_UUID: &'static str = "90D0D80E7623";
 
 pub const EMAIL_ALREADY_EXISTS: &'static str = "143EB60B303E";
 
+pub const DEFAULT_LANGUAGE_CANT_BE_DELETED: &'static str = "6499545DEC11";
+
 pub const FEATURED_IMAGE_IS_NOT_IMAGE: &'static str = "3B8A9A25C219";
 
 pub const FIELD_IS_NOT_LANG_CODE: &'static str = "C3BA3FC81BB9";

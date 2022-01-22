@@ -13,6 +13,8 @@ pub fn error_code_message(
         ec::CSRF_TOKEN_IS_NOT_A_VALID_UUID =>
             t.err_csrf_token_is_not_a_valid_uuid,
         ec::EMAIL_ALREADY_EXISTS => t.err_email_already_exists,
+        ec::DEFAULT_LANGUAGE_CANT_BE_DELETED =>
+            t.err_default_language_cant_be_deleted,
         ec::FEATURED_IMAGE_IS_NOT_IMAGE => t.err_featured_image_is_not_image,
         ec::FIELD_IS_NOT_LANG_CODE => t.err_field_is_not_lang_code,
         ec::FILENAME_ALREADY_EXISTS => t.err_filename_already_exists,

@@ -2,6 +2,7 @@
 CREATE TYPE "ApiLanguagesDelete" AS (
     req "AdminRequest",
     csrf_token UUID,
+    default_lang TEXT,
     id BIGINT
 );
 
@@ -25,6 +26,8 @@ DECLARE
 
     language_of_user BIGINT;
 
+    lang_data "LanguageDB";
+
 BEGIN
 
     -- Check request
@@ -40,12 +43,19 @@ BEGIN
         PERFORM err_wrong_csrf_token();
     END IF;
 
-    -- Check language ID is correct
-    IF s_language_by_id_lang(
+    lang_data := s_language_by_id_lang(
         r.id,
         language_of_user
-    ) IS NULL THEN
+    );
+
+    -- Check language ID is correct
+    IF lang_data IS NULL THEN
         PERFORM err_wrong_lang_id();
+    END IF;
+
+    -- Check the language is not default language
+    IF lang_data.code = r.default_lang THEN
+        PERFORM err_default_language_cant_be_deleted();
     END IF;
 
     PERFORM d_language(r.id);

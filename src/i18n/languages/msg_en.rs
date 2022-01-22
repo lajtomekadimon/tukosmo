@@ -52,6 +52,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Data",
     date:
         "Date",
+    default_language:
+        "Default language",
     delete:
         "Delete",
     delete_file:
@@ -76,6 +78,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Device",
     documentation:
         "Documentation",
+    domain_k_web:
+        "Domain",
     download:
         "Download",
     draft:
@@ -88,6 +92,9 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The CSRF token is not a valid UUID.",
     err_email_already_exists:
         "That email is already in use.",
+    err_default_language_cant_be_deleted:
+        "The default language can't be deleted; \
+        choose another default language first.",
     err_featured_image_is_not_image:
         "The featured image file must be an image.",
     err_field_is_not_lang_code:

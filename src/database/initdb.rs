@@ -1,11 +1,9 @@
-use toml;
 use std::fs;
 use postgres::{Client, NoTls, Error};
 
-use crate::config::global::{
-    Config,
-    PreConfig,
-    ConfigServer,
+use crate::config::{
+    global::Config,
+    change_reset::change_reset,
 };
 
 
@@ -41,21 +39,6 @@ pub fn initdb(
 ) -> Result<(), Error> {
 
     println!("Creating database...");
-
-    /*
-    deletedb:
-        @echo "Dropping database..."
-        sudo -i -u postgres dropdb $(PG_DB) ||:
-        sudo -i -u postgres dropuser $(PG_USER) ||:
-
-    createdb:
-        @echo "Creating database..."
-        sudo -i -u postgres createdb $(PG_DB) -E UTF8
-        sudo -i -u postgres psql -d $(PG_DB) -c \
-        "CREATE USER $(PG_USER) PASSWORD '$(PG_PASSWORD)';"
-        sudo -i -u postgres psql -d $(PG_DB) -c \
-        "ALTER USER $(PG_USER) WITH SUPERUSER;"
-    */
 
     // Reset files uploaded by the user
     match fs::remove_dir_all("files/") {
@@ -232,21 +215,7 @@ pub fn initdb(
 
     // Change reset value to false
     //-------------------------------------------------------
-    let new_toml_file = toml::to_string(
-        &PreConfig {
-            server: ConfigServer {
-                mode: (&config.server.mode).clone(),
-                domain: (&config.server.domain).clone(),
-                reset: "false".to_string(),
-                default_lang: (&config.server.default_lang).clone(),
-                theme: (&config.server.theme).clone(),
-                development: (&config.server.development).clone(),
-                production: (&config.server.production).clone(),
-            },
-            database: (&config.database).clone(),
-        }
-    ).unwrap();
-    fs::write("Tukosmo.toml", new_toml_file).unwrap();
+    change_reset(config, "false");
 
     Ok(())
 }

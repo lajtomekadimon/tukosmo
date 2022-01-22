@@ -38,6 +38,7 @@ pub struct FormData {
 pub struct ApiLanguagesDelete {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
+    pub default_lang: String,
     pub id: i64,
 }
 
@@ -68,6 +69,9 @@ pub async fn delete_post(
                     ApiLanguagesDelete {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
+                        default_lang: (
+                            &config.server.default_lang
+                        ).to_string(),
                         id: lang_id.clone(),
                     },
                 ) {

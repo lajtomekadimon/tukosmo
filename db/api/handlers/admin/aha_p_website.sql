@@ -4,7 +4,9 @@ CREATE TYPE "ApiWebsite" AS (
     csrf_token UUID,
     website_title TEXT,
     website_subtitle TEXT,
-    copyright_owner TEXT
+    copyright_owner TEXT,
+    domain TEXT,
+    default_lang TEXT
 );
 
 
@@ -51,6 +53,13 @@ BEGIN
     -- Check copyright owner in the new language
     IF NOT e_is_copyright_owner(r.website_subtitle) THEN
         PERFORM err_wrong_copyright_owner();
+    END IF;
+
+    -- TODO: Check domain
+
+    -- Check default language
+    IF NOT c_lang_by_code(r.default_lang) THEN
+        PERFORM err_wrong_lang_code();
     END IF;
 
     PERFORM u_website_info(

@@ -100,7 +100,10 @@ Basically, you need an updated system and `git` and `make` installed.
 **If you are using a desktop system or a server with more software,
 please follow step-by-step installation and check every command you run.**
 
-Now, edit Tukosmo.toml file and be sure everything is okay; `reset` value must be true for installation.
+Now, edit Tukosmo.toml file and be sure everything is okay;
+`reset = "true"` is needed for installation, and in production you must set
+`mode = "production"` and `domain` (have in mind that `password` will be
+changed automatically by the Makefile).
 
 ## Installation
 

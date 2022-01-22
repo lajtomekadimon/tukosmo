@@ -3,8 +3,12 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
+use std::sync::mpsc;
 
-use crate::config::global::Config;
+use crate::config::{
+    global::Config,
+    change_domain_lang::change_domain_lang,
+};
 use crate::handlers::admin::{
     user_request::user_request,
     website_get::{
@@ -33,6 +37,8 @@ pub struct FormData {
     pub website_title: String,
     pub website_subtitle: String,
     pub copyright_owner: String,
+    pub domain: String,
+    pub default_lang: String,
 }
 
 
@@ -43,6 +49,8 @@ pub struct ApiWebsite {
     pub website_title: String,
     pub website_subtitle: String,
     pub copyright_owner: String,
+    pub domain: String,
+    pub default_lang: String,
 }
 
 impl QueryFunction for ApiWebsite {
@@ -57,6 +65,7 @@ pub async fn website_post(
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
+    restarter: web::Data<mpsc::Sender<()>>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -68,6 +77,8 @@ pub async fn website_post(
                 let website_title = (form.website_title).clone();
                 let website_subtitle = (form.website_subtitle).clone();
                 let copyright_owner = (form.copyright_owner).clone();
+                let domain_value = (form.domain).clone();
+                let default_lang = (form.default_lang).clone();
 
                 match query_db(
                     &config,
@@ -77,10 +88,33 @@ pub async fn website_post(
                         website_title: website_title,
                         website_subtitle: website_subtitle,
                         copyright_owner: copyright_owner,
+                        domain: domain_value.clone(),
+                        default_lang: default_lang.clone(),
                     },
                 ) {
 
                     Ok(_row) => {
+
+                        if (
+                            &config.server.domain != &domain_value
+                        ) || (
+                            &config.server.default_lang != &default_lang
+                        ) {
+                            change_domain_lang(
+                                &config,
+                                &domain_value,
+                                &default_lang,
+                            );
+                            // TODO: Handle errors
+
+                            // If new domain, regenerate SSL certificates
+                            if &config.server.domain != &domain_value {
+                                // TODO
+                            }
+
+                            // Restart server
+                            restarter.send(()).unwrap();
+                        }
 
                         HttpResponse::Found()
                             .header(
@@ -117,6 +151,7 @@ pub async fn website_post(
                                     t_error(&e, &q.data.lang.code),
                                 ),
                                 form: &Some(form),
+                                default_lang: &config.server.default_lang,
                             };
 
                             HttpResponse::Ok().body(html.to_string())

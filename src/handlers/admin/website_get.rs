@@ -93,6 +93,7 @@ pub async fn website_get(
                     },
                     error: &None,
                     form: &None,
+                    default_lang: &config.server.default_lang,
                 };
 
                 HttpResponse::Ok().body(html.to_string())

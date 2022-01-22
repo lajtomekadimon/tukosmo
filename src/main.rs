@@ -1,150 +1,86 @@
-use actix_web::{App, HttpServer};
-use actix_identity::{CookieIdentityPolicy, IdentityService};
-use actix_web_middleware_redirect_https::RedirectHTTPS;
+use std::{
+    sync::{mpsc, Arc, Mutex},
+    thread,
+};
 use rand::Rng;
-use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+use futures::executor;
 
 mod config;
-use crate::config::global::config as config_data;
-
 mod database;
-use crate::database::{
-    initdb::initdb,
-    query_db_noparam::query_db_noparam,
-};
-
-mod i18n;
-
 mod files;
-
+mod handlers;
+mod i18n;
+mod markdown;
+mod minifiers;
 mod routes;
-
+mod server;
 mod templates;
 
-mod handlers;
-
-mod markdown;
-
-mod minifiers;
-use crate::minifiers::{
-    minify_css::minify_css,
-    minify_js::minify_js,
-};
+use crate::server::new_server::new_server;
 
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    // Configuration
-    println!("Loading configuration...");
-    let config = config_data();
-
-    // Ports and domain
-    let server_mode = config.server.mode;
-
-    let devel_http_port = config.server.development.http_port;
-    let devel_https_port = config.server.development.https_port;
-    let prod_http_port = config.server.production.http_port;
-    let prod_https_port = config.server.production.https_port;
-    let domain = config.server.domain;
-
-    let http_port = match server_mode.as_str() {
-        "development" => devel_http_port,
-        "production" => prod_http_port,
-        _ => panic!("Wrong mode."),
-    };
-    let https_port = match server_mode.as_str() {
-        "development" => devel_https_port,
-        "production" => prod_https_port,
-        _ => panic!("Wrong mode."),
-    };
-
-    let http_domain = format!("{}{}", domain, http_port);
-    let https_domain = format!("{}{}", domain, https_port);
-
-    // Reset database if users wants to
-    let reset_db = config.server.reset;
-    if reset_db.as_str() == "true" {
-        initdb(&config_data()).unwrap();
-    } else if reset_db.as_str() != "false" {
-        panic!("Wrong reset value in Tukosmo.toml");
-    }
-
-    // Minify CSS and JS
-    println!("Minifying CSS code...");
-    minify_css(&config.server.theme);
-    println!("Minifying JS code...");
-    minify_js();
-    
-    // Delete all previous sessions
-    if let Err(e) = query_db_noparam(
-        &config_data(),
-        "SELECT as_clean_sessions()",
-    ) {
-        panic!("Database couldn't delete all sessions. Error: {}", e);
-    }
-
-    println!("Done!");
-
-    // SSL (HTTPS)
-    // -----------
-    // Load SSL keys.
-    // To create a self-signed temporary cert for testing:
-    // openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
-    // cert.pem -days 365 -subj '/CN=localhost'
-    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
-        .unwrap();
-    builder
-        .set_private_key_file("key.pem", SslFiletype::PEM)
-        .unwrap();
-    builder.set_certificate_chain_file("cert.pem").unwrap();
 
     // AUTH COOKIE
     // -----------
-    // Generate a random 32 byte key. Note that it is important to use a
+    // Generate a random 32 byte key. Note that it's important to use a
     // unique private key for every project. Anyone with access to the
     // key can generate authentication cookies for any user!
-    let private_key = rand::thread_rng().gen::<[u8; 32]>();
+    let private_key: [u8; 32] = rand::thread_rng().gen::<[u8; 32]>();
 
-    println!("Server ready. Visit at: https://{}", https_domain);
+    let mut start_n: i64 = 0;
+    let man_restart = Arc::new(Mutex::new(false));
 
-    // --------- //
+    loop {
+        start_n += 1;
 
-    HttpServer::new(move || {
-        App::new()
-            .data(config_data())
+        // Create a channel
+        let (tx, rx) = mpsc::channel::<()>();
 
-            .wrap(RedirectHTTPS::with_replacements(
-                &[(http_port.to_owned(), https_port.to_owned())]
-            ))
+        // Start server as normal but don't .await after .run() yet
+        let server = new_server(
+            tx,
+            &private_key,
+            &start_n,
+        );
 
-            .wrap(
-                IdentityService::new(
-                    CookieIdentityPolicy::new(&private_key)
-                        .name("auth")
-                        .secure(true)
-                        .http_only(true)
-                        .max_age(604800)  // 1 week
-                )
-            )
+        // Clone the Server handle
+        let srv = server.clone();
+        let manual_restart_child = Arc::clone(&man_restart);
+        thread::spawn(move || {
+            // Wait for shutdown signal
+            rx.recv().unwrap();
 
-            // Firefox's view source code doesn't work with this (?)
-            //.wrap(middleware::Compress::default())
+            // Indicate that the server has to restart
+            let mut is_manual_restart_child =
+                manual_restart_child.lock().unwrap();
+            *is_manual_restart_child = true;
 
-            // Website root: /
-            .service(routes::root::route())
+            // Stop server gracefully
+            executor::block_on(srv.stop(true))
+        });
 
-            // Static files: /static/.../...
-            .service(routes::staticf::routes())
+        // Run server
+        match server.await {
+            Ok(_) => {
+                let manual_restart_end = Arc::clone(&man_restart);
+                let mut has_to_restart = manual_restart_end.lock().unwrap();
+                if *has_to_restart {
+                    *has_to_restart = false;
+                    continue;
+                } else {
+                    break;
+                }
+            },
+            Err(e) => {
+                panic!("ACTIX SERVER ERROR: {}", e);
+            }
+        };
 
-            // Uploaded files: /files/...
-            .service(routes::files::routes())
+    }
 
-            // Homepage: /{lang}
-            .service(routes::lang::route())
-            .service(routes::lang::subroutes())
-    })
-    .bind(http_domain)?
-    .bind_openssl(https_domain, builder)?
-    .run()
-    .await
+    Ok(())
+
 }
+
