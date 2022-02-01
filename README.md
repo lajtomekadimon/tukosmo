@@ -116,7 +116,15 @@ Now, edit Tukosmo.toml file and be sure everything is okay;
 
 Edit BSDmakefile and GNUmakefile and change `OS_NAME` and `MODE`.
 
-Install everything:
+Install dependencies:
+
+```sh
+make -s dep
+```
+
+Reboot server.
+
+Install Tukosmo:
 
 ```sh
 make -s install-all
@@ -155,27 +163,19 @@ make -s dep
 # The shell must be restarted after installing Rust
 ```
 
-Create (or reset) database:
+Reboot server.
+
+Install Tukosmo:
 
 ```sh
 make -s installdb
-#make -s resetdb
 
 # If you're using Fedora, you should also do:
-sudo systemctl stop postgresql
-sudo vi /var/lib/pgsql/data/pg_hba.conf  # change all 'ident' to 'trust'
-sudo systemctl start postgresql
-```
+#sudo systemctl stop postgresql
+#sudo vi /var/lib/pgsql/data/pg_hba.conf  # change all 'ident' to 'trust'
+#sudo systemctl start postgresql
 
-Generate database's password:
-
-```sh
-make -s db-password
-```
-
-Install web server:
-
-```sh
+make -s db-password  # auto-generate strong password in Tukosmo.toml
 make -s install
 ```
 

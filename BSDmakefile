@@ -33,9 +33,8 @@ rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
 	pkg install ftp/curl
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	source .cshrc  # the shell must be restarted for cargo (TODO: test)
 	pkg install lang/go  # needed for JS minifying
-	pkg install security/openssl security/openssl-devel
+	pkg install security/openssl security/openssl-devel  # needed for TLS
 	# Certbot (automated SSL certificates)
 	pkg install security/py-certbot
 
@@ -89,7 +88,7 @@ install: clean
 	cargo build --release
 .endif
 
-install-all: dep installdb db-password install
+install-all: installdb db-password install
 
 .if ${MODE} == development
 run:

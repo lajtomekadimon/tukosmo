@@ -177,6 +177,7 @@ pub fn initdb(
         "db/selects/s_file_by_id.sql".to_string(),
         "db/selects/s_language_code_by_id.sql".to_string(),
         "db/selects/s_language_id_by_code.sql".to_string(),
+        "db/selects/s_language_by_id_lang.sql".to_string(),
         "db/selects/s_name_of_language.sql".to_string(),
         "db/selects/s_untrans_post_title_by_id.sql".to_string(),
     ]);
@@ -216,6 +217,8 @@ pub fn initdb(
     // Change reset value to false
     //-------------------------------------------------------
     change_reset(config, "false");
+
+    println!("Database created!");
 
     Ok(())
 }

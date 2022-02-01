@@ -83,6 +83,7 @@ pub fn new_server(
     // -----------
     // TODO: Generate certificates only when it's really needed, and not
     // every time we restart the server.
+    println!("Generating TLS certificate...");
     let mut ssl_builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
         .unwrap();
     if &server_mode == "production" {
@@ -91,6 +92,8 @@ pub fn new_server(
             &domain,
         ) {
             Ok(cert) => {
+                println!("TLS certificate generated!");
+
                 // Generate thread that restarts server to renew TLS
                 let cert_valid_days_left = u64::try_from(
                     cert.valid_days_left().unwrap()
@@ -143,6 +146,8 @@ pub fn new_server(
 
     if &server_mode == "development" {
         println!("Server ready. Visit at: https://{}", https_domain);
+    } else {
+        println!("Server ready. Visit at: https://{}", domain);
     }
 
     // Start server as normal but don't .await after .run() yet
