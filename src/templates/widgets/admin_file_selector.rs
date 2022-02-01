@@ -81,8 +81,13 @@ markup::define! {
 
         button[
             id = "file-selector-cancel",
-            class = "button is-danger is-light \
-                     has-text-weight-normal is-hidden",
+            class = if let Some(_f) = current_file {
+                "button is-danger is-light \
+                has-text-weight-normal"
+            } else {
+                "button is-danger is-light \
+                has-text-weight-normal is-hidden"
+            },
             type = "button",
         ] {
             @t.remove_featured_image

@@ -4,7 +4,7 @@ function el_id_fileJs_input() {
 
     if (elem !== null) {
         elem.onchange = () => {
-            if (e.files.length > 0) {
+            if (elem.files.length > 0) {
                 const class_fileName =
                     document.querySelector('#file-js .file-name');
                 class_fileName.textContent = elem.files[0].name;

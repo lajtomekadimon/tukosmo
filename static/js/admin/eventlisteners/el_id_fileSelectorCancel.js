@@ -21,4 +21,4 @@ function el_id_fileSelectorCancel() {
     }
 }
 
-//el_id_fileSelectorCancel();
+el_id_fileSelectorCancel();
