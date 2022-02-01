@@ -72,8 +72,15 @@ pub async fn generate_favicon(
 ) -> bool {
     // Delete temp/favicon/*
     let temp_favicon_path = "./temp/favicon";
-    fs::remove_dir_all(temp_favicon_path).unwrap();
-    fs::create_dir(temp_favicon_path).unwrap();
+    match fs::remove_dir_all(temp_favicon_path) {
+        // TODO: (?)
+        Ok(_) => {
+            fs::create_dir(temp_favicon_path).unwrap();
+        },
+        Err(_) => {
+            fs::create_dir(temp_favicon_path).unwrap();
+        },
+    }
 
     match save_file(payload).await {
         Ok(filename) => if filename != "" {

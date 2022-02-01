@@ -7,7 +7,7 @@ function el_id_fileJs_input() {
             if (e.files.length > 0) {
                 const class_fileName =
                     document.querySelector('#file-js .file-name');
-                class_fileName.textContent = id_fileJs_input.files[0].name;
+                class_fileName.textContent = elem.files[0].name;
             }
         }
     }
