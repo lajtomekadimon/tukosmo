@@ -79,7 +79,9 @@ pub async fn post_get(
                 t: t,
             };
 
-            HttpResponse::Ok().body(html.to_string())
+            HttpResponse::Ok()
+                .content_type("text/html; charset=UTF-8")
+                .body(html.to_string())
 
         },
 

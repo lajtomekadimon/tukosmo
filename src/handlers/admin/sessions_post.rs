@@ -100,7 +100,9 @@ pub async fn sessions_post(
                                 error: &None,
                             };
 
-                            HttpResponse::Ok().body(html.to_string())
+                            HttpResponse::Ok()
+                                .content_type("text/html; charset=UTF-8")
+                                .body(html.to_string())
 
                         }
 
@@ -133,7 +135,9 @@ pub async fn sessions_post(
                                 error: &Some(t_error(&e, &q.data.lang.code)),
                             };
 
-                            HttpResponse::Ok().body(html.to_string())
+                            HttpResponse::Ok()
+                                .content_type("text/html; charset=UTF-8")
+                                .body(html.to_string())
 
                         }
 

@@ -110,7 +110,9 @@ pub async fn users_get(
                     },
                 };
 
-                HttpResponse::Ok().body(html.to_string())
+                HttpResponse::Ok()
+                    .content_type("text/html; charset=UTF-8")
+                    .body(html.to_string())
 
             },
 

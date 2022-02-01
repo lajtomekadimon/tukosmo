@@ -109,7 +109,9 @@ pub async fn delete_post(
                                 error: &Some(t_error(&e, &q.data.lang.code)),
                             };
 
-                            HttpResponse::Ok().body(html.to_string())
+                            HttpResponse::Ok()
+                                .content_type("text/html; charset=UTF-8")
+                                .body(html.to_string())
 
                         }
 

@@ -97,7 +97,9 @@ pub async fn forgotten_password_post(
                     success: &true,
                 };
 
-                HttpResponse::Ok().body(html.to_string())
+                HttpResponse::Ok()
+                    .content_type("text/html; charset=UTF-8")
+                    .body(html.to_string())
 
             },
 
@@ -136,7 +138,9 @@ pub async fn forgotten_password_post(
                     success: &false,
                 };
 
-                HttpResponse::Ok().body(html.to_string())
+                HttpResponse::Ok()
+                    .content_type("text/html; charset=UTF-8")
+                    .body(html.to_string())
 
             },
 

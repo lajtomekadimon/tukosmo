@@ -144,7 +144,9 @@ pub async fn domain_post(
                                     &(&config.server.mode == "development"),
                             };
 
-                            HttpResponse::Ok().body(html.to_string())
+                            HttpResponse::Ok()
+                                .content_type("text/html; charset=UTF-8")
+                                .body(html.to_string())
 
                         }
 

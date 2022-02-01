@@ -96,7 +96,9 @@ pub async fn website_get(
                     default_lang: &config.server.default_lang,
                 };
 
-                HttpResponse::Ok().body(html.to_string())
+                HttpResponse::Ok()
+                    .content_type("text/html; charset=UTF-8")
+                    .body(html.to_string())
 
             },
 
