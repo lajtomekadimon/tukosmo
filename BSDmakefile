@@ -89,7 +89,7 @@ install: clean
 	cargo build --release
 .endif
 
-install-all: dep installdb db-password install ssl
+install-all: dep installdb db-password install
 
 .if ${MODE} == development
 run:
