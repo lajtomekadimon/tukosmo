@@ -67,6 +67,7 @@ async fn main() -> std::io::Result<()> {
                 let manual_restart_end = Arc::clone(&man_restart);
                 let mut has_to_restart = manual_restart_end.lock().unwrap();
                 if *has_to_restart {
+                    // Reset restart value
                     *has_to_restart = false;
                     continue;
                 } else {

@@ -27,6 +27,7 @@ pub mod scope_files;
 pub mod favicon;
 
 pub mod website;
+pub mod domain;
 pub mod tukosmo;
 
 pub mod json;

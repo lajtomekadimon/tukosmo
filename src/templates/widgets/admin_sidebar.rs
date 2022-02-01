@@ -11,6 +11,7 @@ use crate::handlers::admin::{
     files_get::ra_files,
     favicon_get::ra_favicon,
     website_get::ra_website,
+    domain_get::ra_domain,
     tukosmo_get::ra_tukosmo,
 };
 use crate::i18n::translate_i18n::TranslateI18N;
@@ -292,6 +293,18 @@ markup::define! {
                         i[class = "eos-icons"] { "web" }
                         " "
                         @t.website
+                    }
+                }
+                li {
+                    a[
+                        href = &ra_domain(&data.lang.code),
+                        class = if current_page == &"domain" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[class = "eos-icons"] { "dns" }
+                        " "
+                        @t.domain_k_web
                     }
                 }
                 li {

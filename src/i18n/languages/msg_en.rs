@@ -130,6 +130,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
     err_wrong_description:
         "Description can't start or begin with empty space; \
         it can't have more than 600 characters either.",
+    err_wrong_domain:
+        "That domain is not valid.",
     err_wrong_email:
         "That email is not valid.",
     err_wrong_file_id:
@@ -255,6 +257,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Names for each language",
     names_in_the_new_language_for_each_language:
         "Names (in the new language) for each language",
+    new_domain_k_web:
+        "New domain",
     new_password:
         "New password",
     new_post:
@@ -281,6 +285,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Password",
     permalink:
         "Permalink",
+    please_visit_new_domain_w_domain:
+        "Please visit https://{domain}",
     png_image:
         "PNG image",
     posts:
@@ -308,6 +314,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
     reset_password_success_w_email:
         "We have sent an email to {email} with a link to \
          reset your password. It expires in 20 minutes.",
+    same_domain_recieved_nothing_changed:
+        "Some domain recieved; nothing changed.",
     scheduled_k_posts:
         "Scheduled",
     select_a_language:
@@ -372,6 +380,12 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Users",
     visit_website:
         "Visit website",
+    warning_domain_paragraph:
+        "WARNING: Before doing anything, you must add a record of type A \
+        pointing to your server's IP in the DNS zone of your new domain; \
+        sometimes you have to wait hours or days until that change is \
+        applied. If you don't do this, Tukosmo might stop working and you'll \
+        need manual intervention on your server. Be careful!",
     web_browsers_preview:
         "Web browsers preview",
     website:
@@ -386,8 +400,13 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Website title (in the new language)",
     widgets:
         "Widgets",
+    youll_receive_any_expiry_notices_of_tls_certificates:
+        "You'll receive any expiry notices of TLS certificates \
+        (only if Tukosmo wasn't able to renew them automatically).",
     your_account_has_been_successfully_updated:
         "Your account has been successfully updated.",
+    your_current_domain_is_w_domain:
+        "Your current domain is: {domain}",
     your_email:
         "Your email",
     your_file_has_been_successfully_uploaded:

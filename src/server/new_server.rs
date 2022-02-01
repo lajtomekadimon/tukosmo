@@ -1,8 +1,15 @@
 use actix_web::{App, HttpServer, dev};
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web_middleware_redirect_https::RedirectHTTPS;
-use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+use openssl::{
+    ssl::{SslAcceptor, SslFiletype, SslMethod},
+    pkey::PKey,
+    x509::X509,
+};
 use std::sync::mpsc;
+use std::time::Duration;
+use std::thread;
+use std::convert::TryFrom;
 
 use crate::config::global::config as config_data;
 use crate::minifiers::{
@@ -13,6 +20,7 @@ use crate::database::{
     initdb::initdb,
     query_db_noparam::query_db_noparam,
 };
+use crate::server::gen_tls_cert::gen_tls_cert;
 use crate::routes;
 
 
@@ -22,7 +30,6 @@ pub fn new_server(
     start_n: &i64,
 ) -> dev::Server {
     // Configuration
-    println!("Loading configuration...");
     let config = config_data();
 
     // Ports and domain
@@ -33,6 +40,7 @@ pub fn new_server(
     let prod_http_port = config.server.production.http_port;
     let prod_https_port = config.server.production.https_port;
     let domain = config.server.domain;
+    let user_email = config.server.user_email;
 
     let http_port = match server_mode.as_str() {
         "development" => devel_http_port,
@@ -57,9 +65,7 @@ pub fn new_server(
     }
 
     // Minify CSS and JS
-    println!("Minifying CSS code...");
     minify_css(&config.server.theme);
-    println!("Minifying JS code...");
     minify_js();
     
     // If this is the first server start...
@@ -73,24 +79,71 @@ pub fn new_server(
         }
     }
 
-    println!("Done!");
-
     // SSL (HTTPS)
     // -----------
-    // Load SSL keys.
-    // To create a self-signed temporary cert for testing:
-    // openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
-    // cert.pem -days 365 -subj '/CN=localhost'
-    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
+    // TODO: Generate certificates only when it's really needed, and not
+    // every time we restart the server.
+    let mut ssl_builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
         .unwrap();
-    builder
-        .set_private_key_file("key.pem", SslFiletype::PEM)
-        .unwrap();
-    builder.set_certificate_chain_file("cert.pem").unwrap();
+    if &server_mode == "production" {
+        match gen_tls_cert(
+            &user_email,
+            &domain,
+        ) {
+            Ok(cert) => {
+                // Generate thread that restarts server to renew TLS
+                let cert_valid_days_left = u64::try_from(
+                    cert.valid_days_left().unwrap()
+                ).ok().unwrap();
+                let restarter = tx.clone();
+                thread::spawn(move || {
+                    // Wait two months
+                    thread::sleep(
+                        Duration::from_secs(
+                            // Remember:
+                            // - Let's Encrypt certificates last for 90 days.
+                            // - They send an expiration notice 20 days before
+                            //   the TLS certificate expires.
+                            // - We will renew them 30 days before,
+                            //   so there will be no expiration notice.
+                            (cert_valid_days_left - 30) * 24 * 60 * 60,
+                        )
+                    );
+
+                    // Restart server to generate a new TLS certificate
+                    restarter.send(()).unwrap();
+                });
+
+                let pkey_der = PKey::private_key_from_der(
+                    &cert.private_key_der().unwrap()
+                ).unwrap();
+                ssl_builder.set_private_key(&pkey_der).unwrap();
+
+                let cert_der = X509::from_der(
+                    &cert.certificate_der().unwrap()
+                ).unwrap();
+                ssl_builder.set_certificate(&cert_der).unwrap();
+                ssl_builder.add_extra_chain_cert(cert_der).unwrap();
+            },
+            Err(e) => {
+                panic!("ERROR (TLS): {}", e);
+            },
+        }
+    } else if &server_mode == "development" {
+        // Load TLS private key and certificate (created by make in local)
+        ssl_builder
+            .set_private_key_file("key.pem", SslFiletype::PEM)
+            .unwrap();
+        ssl_builder.set_certificate_chain_file("cert.pem").unwrap();
+    } else {
+        panic!("Wrong mode in Tukosmo.toml");
+    }
 
     let private_cookie_key: [u8; 32] = *private_key;
 
-    println!("Server ready. Visit at: https://{}", https_domain);
+    if &server_mode == "development" {
+        println!("Server ready. Visit at: https://{}", https_domain);
+    }
 
     // Start server as normal but don't .await after .run() yet
     let server = HttpServer::new(move || {
@@ -129,8 +182,8 @@ pub fn new_server(
             .service(routes::lang::subroutes())
     })
     .bind(http_domain).unwrap()
-    .bind_openssl(https_domain, builder).unwrap()
-    .shutdown_timeout(1)  // seconds to shutdown after stop signal
+    .bind_openssl(https_domain, ssl_builder).unwrap()
+    .shutdown_timeout(0)  // seconds to shutdown after stop signal
     .run();
 
     server

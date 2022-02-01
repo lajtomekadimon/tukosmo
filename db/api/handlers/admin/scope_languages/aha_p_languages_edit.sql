@@ -8,12 +8,17 @@ CREATE TYPE "ApiLanguagesEdit" AS (
     lang_names TEXT[]
 );
 
+CREATE TYPE "ApoLanguagesEdit" AS (
+    data "AdminDataDB",
+    old_lang_code TEXT
+);
+
 
 CREATE OR REPLACE FUNCTION aha_p_languages_edit(
     r "ApiLanguagesEdit"
 )
 
-RETURNS VOID
+RETURNS "ApoLanguagesEdit"
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -23,6 +28,12 @@ PARALLEL UNSAFE
 AS $$
 
 DECLARE
+
+    d "AdminDataDB";
+
+    language_of_user BIGINT;
+
+    lang_data "LanguageDB";
 
     other_lang_id BIGINT;
 
@@ -34,7 +45,9 @@ DECLARE
 BEGIN
 
     -- Check request
-    PERFORM s_admin_handler_data(r.req);
+    d := s_admin_handler_data(r.req);
+
+    language_of_user := (d.lang).id;
 
     -- Check CSRF token
     IF NOT c_csrf_token_by_token_session(
@@ -48,6 +61,11 @@ BEGIN
     IF NOT c_lang_by_id(r.language_id) THEN
         PERFORM err_wrong_lang_id();
     END IF;
+
+    lang_data := s_language_by_id_lang(
+        r.language_id,
+        language_of_user
+    );
 
     -- Check language code is correct
     IF NOT e_is_lang_code(r.lang_code) THEN
@@ -103,6 +121,14 @@ BEGIN
 
         END IF;
     END LOOP;
+
+    RETURN ROW(
+        -- data
+        d,
+
+        -- old_lang_code
+        lang_data.code
+    );
 
 END;
 

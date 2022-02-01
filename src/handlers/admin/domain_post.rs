@@ -7,16 +7,16 @@ use std::sync::mpsc;
 
 use crate::config::{
     global::Config,
-    change_lang::change_lang,
+    change_domain::change_domain,
 };
 use crate::handlers::admin::{
     user_request::user_request,
-    website_get::{
-        AgiWebsite,
-        AgoWebsite,
+    domain_get::{
+        AgiDomain,
+        AgoDomain,
     },
     error_get::ra_error_w_code,
-    website_get::ra_website_success,
+    domain_get::ra_domain_nochange,
 };
 use crate::database::{
     types,
@@ -28,37 +28,33 @@ use crate::i18n::{
     t_error::t_error,
     error_admin_route::error_admin_route,
 };
-use crate::templates::admin::website::Website;
+use crate::templates::admin::domain::Domain;
 
 
 #[derive(Deserialize)]
 pub struct FormData {
     pub csrf_token: String,
-    pub website_title: String,
-    pub website_subtitle: String,
-    pub copyright_owner: String,
-    pub default_lang: String,
+    pub domain: String,
+    pub email: String,
 }
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct ApiWebsite {
+pub struct ApiDomain {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
-    pub website_title: String,
-    pub website_subtitle: String,
-    pub copyright_owner: String,
-    pub default_lang: String,
+    pub domain: String,
+    pub email: String,
 }
 
-impl QueryFunction for ApiWebsite {
+impl QueryFunction for ApiDomain {
     fn query(&self) -> &str {
-        "SELECT aha_p_website($1)"
+        "SELECT aha_p_domain($1)"
     }
 }
 
 
-pub async fn website_post(
+pub async fn domain_post(
     config: web::Data<Config>,
     req: HttpRequest,
     id: Identity,
@@ -66,78 +62,86 @@ pub async fn website_post(
     restarter: web::Data<mpsc::Sender<()>>,
 ) -> impl Responder {
 
+    // TODO: Block it if config != production
+
     match user_request(req, id) {
 
         Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
 
             Ok(csrf_token_value) => {
 
-                let website_title = (form.website_title).clone();
-                let website_subtitle = (form.website_subtitle).clone();
-                let copyright_owner = (form.copyright_owner).clone();
-                let default_lang = (form.default_lang).clone();
+                let domain_value = (form.domain).clone();
+                let email_value = (form.email).clone();
 
                 match query_db(
                     &config,
-                    ApiWebsite {
+                    ApiDomain {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
-                        website_title: website_title,
-                        website_subtitle: website_subtitle,
-                        copyright_owner: copyright_owner,
-                        default_lang: default_lang.clone(),
+                        domain: domain_value.clone(),
+                        email: email_value.clone(),
                     },
                 ) {
 
                     Ok(_row) => {
 
-                        if &config.server.default_lang != &default_lang {
-                            change_lang(
+                        if &config.server.domain != &domain_value {
+                            let t = &t(&user_req.lang_code);
+
+                            change_domain(
                                 &config,
-                                &default_lang,
+                                &domain_value,
+                                &email_value,
                             );
                             // TODO: Handle errors
 
                             // Restart server
                             restarter.send(()).unwrap();
-                        }
 
-                        HttpResponse::Found()
-                            .header(
-                                "Location",
-                                ra_website_success(&user_req.lang_code),
+                            HttpResponse::Ok().body(
+                                t.please_visit_new_domain_w_domain
+                                    .replace("{domain}", &domain_value)
                             )
-                            .finish()
+                        } else {
+                            HttpResponse::Found()
+                                .header(
+                                    "Location",
+                                    ra_domain_nochange(&user_req.lang_code),
+                                )
+                                .finish()
+                        }
 
                     },
 
                     Err(e) => match query_db(
                         &config,
-                        AgiWebsite {
+                        AgiDomain {
                             req: user_req.clone(),
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: AgoWebsite = row.get(0);
+                            let q: AgoDomain = row.get(0);
                             let t = &t(&q.data.lang.code);
 
-                            let html = Website {
+                            let html = Domain {
                                 domain: &config.server.domain,
                                 title: &format!(
                                     "{a} - {b}",
-                                    a = t.website,
+                                    a = t.domain_k_web,
                                     b = t.tukosmo_admin_panel,
                                 ),
                                 q: &q,
                                 t: t,
-                                success: &false,
+                                nochange: &false,
                                 error: &Some(
                                     t_error(&e, &q.data.lang.code),
                                 ),
                                 form: &Some(form),
-                                default_lang: &config.server.default_lang,
+                                user_email: &config.server.user_email,
+                                is_development:
+                                    &(&config.server.mode == "development"),
                             };
 
                             HttpResponse::Ok().body(html.to_string())

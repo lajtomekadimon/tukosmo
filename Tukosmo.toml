@@ -1,6 +1,7 @@
 [server]
 mode = "development"
 domain = "localhost"
+user_email = "test@test.com"
 reset = "false"
 default_lang = "en"
 theme = "simple"

@@ -5,7 +5,6 @@ CREATE TYPE "ApiWebsite" AS (
     website_title TEXT,
     website_subtitle TEXT,
     copyright_owner TEXT,
-    domain TEXT,
     default_lang TEXT
 );
 
@@ -54,8 +53,6 @@ BEGIN
     IF NOT e_is_copyright_owner(r.website_subtitle) THEN
         PERFORM err_wrong_copyright_owner();
     END IF;
-
-    -- TODO: Check domain
 
     -- Check default language
     IF NOT c_lang_by_code(r.default_lang) THEN

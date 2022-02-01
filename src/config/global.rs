@@ -19,6 +19,7 @@ pub struct PreConfig {
 pub struct ConfigServer {
     pub mode: String,
     pub domain: String,
+    pub user_email: String,
     pub reset: String,
     pub default_lang: String,
     pub theme: String,

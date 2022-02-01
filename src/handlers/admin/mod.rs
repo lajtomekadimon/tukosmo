@@ -41,6 +41,9 @@ pub mod tukosmo_get;
 pub mod website_get;
 pub mod website_post;
 
+pub mod domain_get;
+pub mod domain_post;
+
 pub mod error_get;
 
 pub mod scope_json;

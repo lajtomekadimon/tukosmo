@@ -39,6 +39,8 @@ pub const WRONG_CSRF_TOKEN: &'static str = "D6088ED0B20B";
 
 pub const WRONG_DESCRIPTION: &'static str = "4E576E6BB1EE";
 
+pub const WRONG_DOMAIN: &'static str = "4261DDD8B3B5";
+
 pub const WRONG_EMAIL: &'static str = "1A2387FF4723";
 
 pub const WRONG_FILE_ID: &'static str = "74CCCAC9B0DC";

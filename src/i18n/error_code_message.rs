@@ -32,6 +32,7 @@ pub fn error_code_message(
         ec::WRONG_COPYRIGHT_OWNER => t.err_wrong_copyright_owner,
         ec::WRONG_CSRF_TOKEN => t.err_wrong_csrf_token,
         ec::WRONG_DESCRIPTION => t.err_wrong_description,
+        ec::WRONG_DOMAIN => t.err_wrong_domain,
         ec::WRONG_EMAIL => t.err_wrong_email,
         ec::WRONG_FILE_ID => t.err_wrong_file_id,
         ec::WRONG_FILENAME => t.err_wrong_filename,

@@ -76,26 +76,16 @@ clean:
 	rm -Rf target
 
 .if ${MODE} == development
-ssl: clean
+install: clean
 	# SSL for local development
 	openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
 	cert.pem -days 365 -subj '/CN=localhost'
-.endif
-.if ${MODE} == production
-ssl: clean
-	# SSL for production server (THIS HAS NOT BEEN TESTED!!!)
-	su -m root -c "certbot certonly --standalone -d $(DOMAIN) --agree-tos \
-	--register-unsafely-without-email --noninteractive"
-	ln -s /etc/letsencrypt/live/$(DOMAIN)/fullchain.pem cert.pem
-	ln -s /etc/letsencrypt/live/$(DOMAIN)/privkey.pem key.pem
-.endif
-
-.if ${MODE} == development
-install: clean ssl
+	# Compile Tukosmo
 	cargo build
 .endif
 .if ${MODE} == production
-install: clean ssl
+install: clean
+	# Compile Tukosmo
 	cargo build --release
 .endif
 

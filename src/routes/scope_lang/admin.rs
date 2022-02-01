@@ -83,8 +83,13 @@ pub fn subroutes() -> Scope {
         // Website: /{lang}/admin/website
         .service(scope_admin::website::route())
 
+        // Domain: /{lang}/admin/domain
+        .service(scope_admin::domain::route())
+
         // Tukosmo: /{lang}/admin/tukosmo
         .service(scope_admin::tukosmo::route())
+
+        /*---*/
 
         // JSON API: /{lang}/admin/json/*
         .service(scope_admin::json::subroutes())

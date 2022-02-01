@@ -130,6 +130,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
     err_wrong_description:
         "La descripción no puede empezar o terminar en espacios; \
         tampoco puede exceder los 600 caracteres.",
+    err_wrong_domain:
+        "Ese dominio no es válido.",
     err_wrong_email:
         "Ese correo electrónico no es válido.",
     err_wrong_file_id:
@@ -256,6 +258,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Nombres para cada idioma",
     names_in_the_new_language_for_each_language:
         "Nombres (en el nuevo idioma) para cada idioma",
+    new_domain_k_web:
+        "Dominio nuevo",
     new_password:
         "Contraseña nueva",
     new_post:
@@ -282,6 +286,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Contraseña",
     permalink:
         "Permalink",
+    please_visit_new_domain_w_domain:
+        "Por favor, visite https://{domain}",
     png_image:
         "Imagen PNG",
     posts:
@@ -309,6 +315,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
     reset_password_success_w_email:
         "Hemos enviado un correo electrónico a {email} con \
          un enlace para resetear tu contraseña. Caduca en 20 minutos.",
+    same_domain_recieved_nothing_changed:
+        "Mismo dominio recibido; no cambió nada.",
     scheduled_k_posts:
         "Programadas",
     select_a_language:
@@ -373,6 +381,12 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Usuarios",
     visit_website:
         "Visitar página web",
+    warning_domain_paragraph:
+        "ADVERTENCIA: Antes de hacer nada, debes añadir un registro de tipo A \
+        apuntando a la IP de tu servidor en la zona DNS de tu nuevo dominio; \
+        a veces es necesario esperar horas o días hasta que ese cambio sea \
+        aplicado. Si no haces esto, Tukosmo puede dejar de funcionar y \
+        necesitarás intervención manual en tu servidor. ¡Ten cuidado!",
     web_browsers_preview:
         "Previsualización en navegadores web",
     website:
@@ -387,8 +401,13 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Título de la página web (en el nuevo idioma)",
     widgets:
         "Widgets",
+    youll_receive_any_expiry_notices_of_tls_certificates:
+        "Recibirás cualquier aviso de caducidad de los certificados TLS \
+        (solo si Tukosmo no fuera capaz de renovarlos automáticamente).",
     your_account_has_been_successfully_updated:
         "Tu cuenta ha sido actualizada con éxito.",
+    your_current_domain_is_w_domain:
+        "Tu dominio actual es: {domain}",
     your_email:
         "Tu correo electrónico",
     your_file_has_been_successfully_uploaded:

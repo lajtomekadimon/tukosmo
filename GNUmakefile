@@ -56,13 +56,7 @@ rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	source ~/.bashrc  # the shell must be restarted for cargo
 	sudo apt install -y golang  # needed for JS minifying
-	sudo apt install -y openssl libssl-dev
-	# Certbot (automated SSL certificates)
-	sudo apt install -y snapd
-	sudo snap install core
-	sudo snap refresh core
-	sudo snap install --classic certbot
-	sudo ln -s /snap/bin/certbot /usr/bin/certbot
+	sudo apt install -y openssl libssl-dev pkg-config  # needed for TLS
 else ifeq ($(OS_NAME), fedora)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
@@ -70,13 +64,7 @@ rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	source ~/.bashrc  # the shell must be restarted for cargo
 	sudo dnf install -y golang  # needed for JS minifying
-	sudo dnf install -y openssl openssl-devel
-	# Certbot (automated SSL certificates)
-	sudo dnf install -y snapd
-	sudo snap install core
-	sudo snap refresh core
-	sudo snap install --classic certbot
-	sudo ln -s /snap/bin/certbot /usr/bin/certbot
+	sudo dnf install -y openssl openssl-devel pkg-config  # needed for TLS
 else ifeq ($(OS_NAME), arch)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
@@ -84,9 +72,7 @@ rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	source ~/.bashrc  # the shell must be restarted for cargo
 	sudo pacman -S --noconfirm go  # needed for JS minifying
-	sudo pacman -S --noconfirm openssl
-	# Certbot (automated SSL certificates)
-	sudo pacman -S --noconfirm certbot
+	sudo pacman -S --noconfirm openssl pkgconf  # needed for TLS
 endif
 
 dep: postgresql rust
@@ -123,24 +109,15 @@ clean:
 	rm -Rf target
 
 ifeq ($(MODE), development)
-ssl:
+install: clean
 	# SSL for local development
 	openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
 	cert.pem -days 365 -subj '/CN=localhost'
-else ifeq ($(MODE), production)
-ssl:
-	# SSL for production server
-	sudo certbot certonly --standalone -d $(DOMAIN) --agree-tos \
-	--register-unsafely-without-email --noninteractive
-	ln -s /etc/letsencrypt/live/$(DOMAIN)/fullchain.pem cert.pem
-	ln -s /etc/letsencrypt/live/$(DOMAIN)/privkey.pem key.pem
-endif
-
-ifeq ($(MODE), development)
-install: clean ssl
+	# Compile Tukosmo
 	cargo build
 else ifeq ($(MODE), production)
-install: clean ssl
+install: clean
+	# Compile Tukosmo
 	cargo build --release
 endif
 

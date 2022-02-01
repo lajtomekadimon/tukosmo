@@ -8,7 +8,7 @@ use crate::handlers::admin::{
     },
     scope_languages::edit_post::FormData,
     scope_languages::delete_get::ra_languages_delete_w_id,
-    languages_get::ra_languages,
+    languages_get::{ra_languages, ra_languages_success},
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -81,6 +81,7 @@ markup::define! {
             }
 
             form[
+                id = "form-langedit",
                 method = "post",
                 action = ra_languages_edit_w_id(
                     &q.data.lang.code,
@@ -166,35 +167,52 @@ markup::define! {
                         }
                     }
                 }
+            }  // end form
 
-                div[class = "field is-grouped"] {
-                    div[class = "control"] {
-                        button[class = "button is-link"] {
-                            @t.submit
-                        }
-                    }
-                    div[class = "control"] {
-                        a[
-                            href = ra_languages(&q.data.lang.code),
-                            class = "button is-link is-light",
-                        ] {
-                            @t.cancel
-                        }
-                    }
-
-                    div[class = "control"] {
-                        a[
-                            href = ra_languages_delete_w_id(
-                                &q.data.lang.code,
-                                &q.lang.id,
-                            ),
-                            class = "button is-danger \
-                                     has-text-weight-normal mr-4",
-                        ] {
-                            @t.delete
-                        }
+            div[class = "field is-grouped"] {
+                div[class = "control"] {
+                    button[
+                        id = "form-langedit-button",
+                        class = "button is-link",
+                        "data-nexturl" = ra_languages_success(
+                            &q.data.lang.code
+                        ),
+                    ] {
+                        @t.submit
                     }
                 }
+                div[class = "control"] {
+                    a[
+                        href = ra_languages(&q.data.lang.code),
+                        class = "button is-link is-light",
+                    ] {
+                        @t.cancel
+                    }
+                }
+
+                div[class = "control"] {
+                    a[
+                        href = ra_languages_delete_w_id(
+                            &q.data.lang.code,
+                            &q.lang.id,
+                        ),
+                        class = "button is-danger \
+                                 has-text-weight-normal mr-4",
+                    ] {
+                        @t.delete
+                    }
+                }
+            }
+
+            div[
+                id = "form-langedit-progress",
+                class = "is-hidden",
+            ] {
+                progress[
+                    class = "progress is-large is-link",
+                    value = "80",
+                    max = "100",
+                ] {}
             }
         }
     }

@@ -26,7 +26,7 @@ function el_id_fileSelectorUploadChange(function_value) {
                 })
             }
         ).then(
-            response => response.json()
+            response => response.json()  // TODO: Remove this line?
         ).then(
             json_resp => {
                 if (json_resp.success) {

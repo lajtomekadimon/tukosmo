@@ -125,6 +125,12 @@ impl QueryFunction for ApiLanguagesEdit {
     }
 }
 
+#[derive(Clone, Debug, ToSql, FromSql)]
+pub struct ApoLanguagesEdit {
+    pub data: types::AdminDataDB,
+    pub old_lang_code: String,
+}
+
 
 pub async fn edit_post(
     config: web::Data<Config>,
@@ -157,9 +163,13 @@ pub async fn edit_post(
                     },
                 ) {
 
-                    Ok(_row) => {
+                    Ok(row) => {
 
-                        if &lang_code == &config.server.default_lang {
+                        let q: ApoLanguagesEdit = row.get(0);
+
+                        if (&q.old_lang_code == &config.server.default_lang)
+                            && (&lang_code != &q.old_lang_code)
+                        {
                             change_lang(
                                 &config,
                                 &lang_code,

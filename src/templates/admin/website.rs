@@ -2,7 +2,7 @@ use actix_web::web::Form as ActixForm;
 use markup;
 
 use crate::handlers::admin::{
-    website_get::{ra_website, AgoWebsite},
+    website_get::{ra_website, ra_website_success, AgoWebsite},
     website_post::FormData,
 };
 use crate::i18n::{
@@ -40,7 +40,6 @@ markup::define! {
                     success: success,
                     error: error,
                     form: form,
-                    domain: domain,
                     default_lang: default_lang,
                 },
                 current_page: "website",
@@ -56,7 +55,6 @@ markup::define! {
         success: &'a bool,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
-        domain: &'a str,
         default_lang: &'a str,
     ) {
         div[class = "box is-marginless mb-6"] {
@@ -92,6 +90,7 @@ markup::define! {
             }
 
             form[
+                id = "form-website",
                 method = "post",
                 action = ra_website(&q.data.lang.code),
             ] {
@@ -175,25 +174,6 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        @t.domain_k_web
-                        // TODO: Add "DANGEROUS" and a message or something
-                        // to indicate that you must have the domain pointing
-                        // to the server's IP, etc.
-                    }
-                    div[class = "control"] {
-                        input[
-                            class = "input",  // TODO: Check
-                            type = "text",
-                            name = "domain",
-                            value = if let Some(f) = form {
-                                &f.domain
-                            } else { *domain },
-                        ];
-                    }
-                }
-
-                div[class = "field"] {
-                    label[class = "label"] {
                         @t.default_language
                     }
                     div[class = "control"] {
@@ -233,14 +213,31 @@ markup::define! {
                         }
                     }
                 }
+            }  // end form
 
-                div[class = "field is-grouped"] {
-                    div[class = "control"] {
-                        button[class = "button is-link"] {
-                            @t.submit
-                        }
+            div[class = "field is-grouped"] {
+                div[class = "control"] {
+                    button[
+                        id = "form-website-button",
+                        class = "button is-link",
+                        "data-nexturl" = ra_website_success(
+                            &q.data.lang.code
+                        ),
+                    ] {
+                        @t.submit
                     }
                 }
+            }
+
+            div[
+                id = "form-website-progress",
+                class = "is-hidden",
+            ] {
+                progress[
+                    class = "progress is-large is-link",
+                    value = "80",
+                    max = "100",
+                ] {}
             }
         }
     }
