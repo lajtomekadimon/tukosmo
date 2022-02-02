@@ -123,7 +123,7 @@ pub fn new_server(
                     &cert.certificate_der().unwrap()
                 ).unwrap();
                 ssl_builder.set_certificate(&cert_der).unwrap();
-                ssl_builder.add_extra_chain_cert(cert_der).unwrap();
+                //ssl_builder.add_extra_chain_cert(cert_der).unwrap();
             },
             Err(e) => {
                 panic!("ERROR (TLS): {}", e);
