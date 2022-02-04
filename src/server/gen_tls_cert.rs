@@ -18,8 +18,12 @@ pub fn gen_tls_cert(
 
     // Create acme-challenge dir
     match fs::remove_dir_all("./acme-challenge") {
-        Ok(_) => {fs::create_dir("./acme-challenge").unwrap();}
-        Err(_) => {fs::create_dir("./acme-challenge").unwrap();}
+        Ok(_) => {
+            fs::create_dir("./acme-challenge").unwrap();
+        },
+        Err(_) => {
+            fs::create_dir("./acme-challenge").unwrap();
+        },
     }
 
     // Create temporary server for ACME challenge

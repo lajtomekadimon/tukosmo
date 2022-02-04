@@ -112,10 +112,14 @@ install: clean
 	cert.pem -days 365 -subj '/CN=localhost'
 	# Compile Tukosmo
 	cargo build
+	# Create /temp dir
+	mkdir temp
 else ifeq ($(MODE), production)
 install: clean
 	# Compile Tukosmo
 	cargo build --release
+	# Create /temp dir
+	mkdir temp
 endif
 
 install-all: installdb db-password install

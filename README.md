@@ -127,6 +127,7 @@ Reboot server.
 Install Tukosmo:
 
 ```sh
+cd tukosmo
 make -s install-all
 ```
 
@@ -168,6 +169,7 @@ Reboot server.
 Install Tukosmo:
 
 ```sh
+cd tukosmo
 make -s installdb
 
 # If you're using Fedora, you should also do:

@@ -382,7 +382,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Visit website",
     warning_domain_paragraph:
         "WARNING: Before doing anything, you must add a record of type A \
-        pointing to your server's IP in the DNS zone of your new domain; \
+        pointing to your server's IP and a record of type CAA \
+        (128 issue \"letsencrypt.org\") in the DNS zone of your new domain; \
         sometimes you have to wait hours or days until that change is \
         applied. If you don't do this, Tukosmo might stop working and you'll \
         need manual intervention on your server. Be careful!",

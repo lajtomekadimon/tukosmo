@@ -10,6 +10,7 @@ use std::sync::mpsc;
 use std::time::Duration;
 use std::thread;
 use std::convert::TryFrom;
+use reqwest;
 
 use crate::config::global::config as config_data;
 use crate::minifiers::{
@@ -114,16 +115,25 @@ pub fn new_server(
                     restarter.send(()).unwrap();
                 });
 
+                // Get and add private key
                 let pkey_der = PKey::private_key_from_der(
                     &cert.private_key_der().unwrap()
                 ).unwrap();
                 ssl_builder.set_private_key(&pkey_der).unwrap();
 
+                // Get and add certificate
                 let cert_der = X509::from_der(
                     &cert.certificate_der().unwrap()
                 ).unwrap();
                 ssl_builder.set_certificate(&cert_der).unwrap();
-                //ssl_builder.add_extra_chain_cert(cert_der).unwrap();
+
+                // Get and add intermediate certificate to the chain
+                let icert_url =
+                    "https://letsencrypt.org/certs/lets-encrypt-r3.der";
+                let icert_bytes = reqwest::blocking::get(icert_url)
+                    .unwrap().bytes().unwrap();
+                let intermediate_cert = X509::from_der(&icert_bytes).unwrap();
+                ssl_builder.add_extra_chain_cert(intermediate_cert).unwrap();
             },
             Err(e) => {
                 panic!("ERROR (TLS): {}", e);
