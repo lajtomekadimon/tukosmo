@@ -5,12 +5,16 @@ use openssl::{
     ssl::{SslAcceptor, SslFiletype, SslMethod},
     pkey::PKey,
     x509::X509,
+    asn1::{Asn1Time, Asn1TimeRef},
+    error::ErrorStack,
 };
 use std::sync::mpsc;
-use std::time::Duration;
+use std::time::{
+    Duration,
+    SystemTime,
+};
 use std::thread;
-use std::convert::TryFrom;
-use reqwest;
+use std::fs;
 
 use crate::config::global::config as config_data;
 use crate::minifiers::{
@@ -23,6 +27,18 @@ use crate::database::{
 };
 use crate::server::gen_tls_cert::gen_tls_cert;
 use crate::routes;
+
+
+fn asn1_time_to_system_time(
+    time: &Asn1TimeRef,
+) -> Result<SystemTime, ErrorStack> {
+    let unix_time = Asn1Time::from_unix(0)?.diff(time)?;
+    Ok(
+        SystemTime::UNIX_EPOCH + Duration::from_secs(
+            unix_time.days as u64 * 86400 + unix_time.secs as u64
+        )
+    )
+}
 
 
 pub fn new_server(
@@ -82,63 +98,87 @@ pub fn new_server(
 
     // SSL (HTTPS)
     // -----------
-    // TODO: Generate certificates only when it's really needed, and not
-    // every time we restart the server.
     let mut ssl_builder = SslAcceptor::mozilla_intermediate(SslMethod::tls())
         .unwrap();
     if &server_mode == "production" {
-        match gen_tls_cert(
-            &user_email,
-            &domain,
-        ) {
-            Ok(cert) => {
-                // Generate thread that restarts server to renew TLS
-                let cert_valid_days_left = u64::try_from(
-                    cert.valid_days_left().unwrap()
-                ).ok().unwrap();
-                let restarter = tx.clone();
-                thread::spawn(move || {
-                    // Wait two months
-                    thread::sleep(
-                        Duration::from_secs(
-                            // Remember:
-                            // - Let's Encrypt certificates last for 90 days.
-                            // - They send an expiration notice 20 days before
-                            //   the TLS certificate expires.
-                            // - We will renew them 30 days before,
-                            //   so there will be no expiration notice.
-                            (cert_valid_days_left - 30) * 24 * 60 * 60,
-                        )
-                    );
+        // Generate or renewal certificate if necessary
+        let need_cert = match fs::read("cert.der") {
+            Ok(cert_bytes) => {
+                let cert_der = X509::from_der(&cert_bytes).unwrap();
 
-                    // Restart server to generate a new TLS certificate
-                    restarter.send(()).unwrap();
-                });
-
-                // Get and add private key
-                let pkey_der = PKey::private_key_from_der(
-                    &cert.private_key_der().unwrap()
+                let expiry_date = asn1_time_to_system_time(
+                    cert_der.not_after()
                 ).unwrap();
-                ssl_builder.set_private_key(&pkey_der).unwrap();
 
-                // Get and add certificate
-                let cert_der = X509::from_der(
-                    &cert.certificate_der().unwrap()
-                ).unwrap();
-                ssl_builder.set_certificate(&cert_der).unwrap();
-
-                // Get and add intermediate certificate to the chain
-                let icert_url =
-                    "https://letsencrypt.org/certs/lets-encrypt-r3.der";
-                let icert_bytes = reqwest::blocking::get(icert_url)
-                    .unwrap().bytes().unwrap();
-                let intermediate_cert = X509::from_der(&icert_bytes).unwrap();
-                ssl_builder.add_extra_chain_cert(intermediate_cert).unwrap();
+                match expiry_date.elapsed() {
+                    Ok(_) => true,
+                    Err(expiry) => expiry.duration() < Duration::from_secs(
+                        // Remember:
+                        // - Let's Encrypt certificates last for 90 days.
+                        // - They send an expiration notice 20 days before
+                        //   the TLS certificate expires.
+                        // - We will renew them 30 days before,
+                        //   so there will be no expiration notice.
+                        30 * 24 * 60 * 60  // 30 days
+                    ),
+                }
             },
-            Err(e) => {
-                panic!("ERROR (TLS): {}", e);
-            },
+            Err(_) => true,
+        };
+        if need_cert {
+            gen_tls_cert(&user_email, &domain).unwrap();
         }
+
+        // Add private key
+        let pkey_bytes = fs::read("pkey.der").unwrap();
+        let pkey_der = PKey::private_key_from_der(
+            &pkey_bytes
+            //&cert.private_key_der().unwrap()
+        ).unwrap();
+        ssl_builder.set_private_key(&pkey_der).unwrap();
+
+        // Add certificate
+        let cert_bytes = fs::read("cert.der").unwrap();
+        let cert_der = X509::from_der(
+            &cert_bytes
+            //&cert.certificate_der().unwrap()
+        ).unwrap();
+        ssl_builder.set_certificate(&cert_der).unwrap();
+
+        // Add intermediate certificate to the chain
+        let icert_bytes = fs::read("icert.der").unwrap();
+        let icert_der = X509::from_der(&icert_bytes).unwrap();
+        ssl_builder.add_extra_chain_cert(icert_der).unwrap();
+
+        // Generate thread that restarts server to renew TLS
+        let secs_until_expiry = match asn1_time_to_system_time(
+            cert_der.not_after()
+        ).unwrap().elapsed() {
+            Ok(_) => {
+                panic!("Certificate expiry date is not valid.");
+            },
+            Err(expiry) => expiry.duration().as_secs(),
+        };
+        let restarter = tx.clone();
+        thread::spawn(move || {
+            if secs_until_expiry > (30 * 24 * 60 * 60) {
+                // Wait two months
+                thread::sleep(
+                    Duration::from_secs(
+                        // Remember:
+                        // - Let's Encrypt certificates last for 90 days.
+                        // - They send an expiration notice 20 days before
+                        //   the TLS certificate expires.
+                        // - We will renew them 30 days before,
+                        //   so there will be no expiration notice.
+                        secs_until_expiry - (30 * 24 * 60 * 60)
+                    )
+                );
+            }
+
+            // Restart server to generate a new TLS certificate
+            restarter.send(()).unwrap();
+        });
     } else if &server_mode == "development" {
         // Load TLS private key and certificate (created by make in local)
         ssl_builder
@@ -192,6 +232,15 @@ pub fn new_server(
             // Homepage: /{lang}
             .service(routes::lang::route())
             .service(routes::lang::subroutes())
+
+            // NOT FOUND
+            /*
+            .default_service(
+                web::route()
+                    .guard(guard::Not(guard::Get()))
+                    .to(|| HttpResponse::MethodNotAllowed()),
+            )
+            */
     })
     .bind(http_domain).unwrap()
     .bind_openssl(https_domain, ssl_builder).unwrap()

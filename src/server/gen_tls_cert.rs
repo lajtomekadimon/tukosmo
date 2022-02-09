@@ -7,6 +7,7 @@ use acme_micro::create_p384_key;
 use std::time::Duration;
 use futures::executor;
 use std::fs;
+use reqwest;
 
 use crate::config::global::config as config_data;
 
@@ -145,6 +146,19 @@ pub fn gen_tls_cert(
 
     // Delete acme-challenge dir
     fs::remove_dir_all("./acme-challenge").unwrap();
+
+    //------//
+
+    // Obtain intermediate certificate (for the chain)
+    let icert_url =
+        "https://letsencrypt.org/certs/lets-encrypt-r3.der";
+    let icert_bytes = reqwest::blocking::get(icert_url)
+        .unwrap().bytes().unwrap();
+
+    // Store TLS/SSL certificate in .der files
+    fs::write("pkey.der", &cert.private_key_der().unwrap()).unwrap();
+    fs::write("cert.der", &cert.certificate_der().unwrap()).unwrap();
+    fs::write("icert.der", &icert_bytes).unwrap();
 
     Ok(cert)
 
