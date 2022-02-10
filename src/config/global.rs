@@ -56,8 +56,8 @@ pub struct Config {
 
 
 pub fn config() -> Config {
-    let toml_file = &fs::read_to_string("Tukosmo.toml")
-        .expect("Something went wrong reading Tukosmo.toml!");
+    let toml_file = &fs::read_to_string("etc/Tukosmo.toml")
+        .expect("Something went wrong reading etc/Tukosmo.toml!");
     let config: PreConfig = toml::from_str(toml_file).unwrap();
 
     let db_auth_string = &format!(

@@ -28,5 +28,5 @@ pub fn change_domain(
             database: (&config.database).clone(),
         }
     ).unwrap();
-    fs::write("Tukosmo.toml", new_toml_file).unwrap();
+    fs::write("etc/Tukosmo.toml", new_toml_file).unwrap();
 }
