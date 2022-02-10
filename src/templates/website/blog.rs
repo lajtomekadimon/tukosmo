@@ -15,7 +15,7 @@ use crate::i18n::{
 use crate::templates::{
     website_layout::WebsiteLayout,
     widgets::website::Website,
-    widgets::blog_pagination::BlogPagination,
+    widgets::pagination::Pagination,
 };
 
 
@@ -162,7 +162,7 @@ markup::define! {
         }
 
         @if &q.total_pages > &1 {
-            @BlogPagination {
+            @Pagination {
                 data: &q.data,
                 t: t,
                 route: &rw_blog_wu_rpp_p(&q.data.lang.code),

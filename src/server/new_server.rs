@@ -245,6 +245,7 @@ pub fn new_server(
     .bind(http_domain).unwrap()
     .bind_openssl(https_domain, ssl_builder).unwrap()
     .shutdown_timeout(0)  // seconds to shutdown after stop signal
+                          // TODO: Set value in etc/Tukosmo.toml
     .run();
 
     server

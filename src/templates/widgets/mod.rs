@@ -13,7 +13,7 @@ pub mod header;
 pub mod navigation;
 pub mod sidebar;
 pub mod website;
-pub mod blog_pagination;
+pub mod pagination;
 
 pub mod favicon_meta;
 pub mod faviconadmin_meta;

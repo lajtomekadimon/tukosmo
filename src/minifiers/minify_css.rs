@@ -34,6 +34,7 @@ pub fn minify_css(
     css_to_minify.push_str(&theme_file_dir(current_theme, "/blog.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/post.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/error.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/pagination.css"));
 
     let minified_css = Minifier::default().minify(
         &css_to_minify,
