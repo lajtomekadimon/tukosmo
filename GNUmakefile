@@ -108,8 +108,8 @@ clean:
 ifeq ($(MODE), development)
 install: clean
 	# SSL for local development
-	openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out \
-	cert.pem -days 365 -subj '/CN=localhost'
+	openssl req -x509 -newkey rsa:4096 -nodes -keyout etc/pkey.pem -out \
+	etc/cert.pem -days 365 -subj '/CN=localhost'
 	# Compile Tukosmo
 	cargo build
 	# Create /temp dir
@@ -121,6 +121,7 @@ install: clean
 	# Create /temp dir
 	mkdir temp
 endif
+# TODO: Move Tukosmo.toml to etc/ and modify it like db-password?
 
 install-all: installdb db-password install
 
@@ -133,5 +134,17 @@ run:
 	sudo target/release/tukosmo
 endif
 
-# TODO: run-always (startup and in the background)
+ifeq ($(MODE), production)
+run-service:
+	systemctl --user enable etc/tukosmo.service
+	systemctl --user daemon-reload
+	systemctl --user start tukosmo.service
+	systemctl --user status tukosmo.service
+endif
+
+ifeq ($(MODE), production)
+stop-service:
+	systemctl --user stop tukosmo.service
+	systemctl --user status tukosmo.service
+endif
 

@@ -1,0 +1,15 @@
+[Unit]
+Description=Tukosmo
+After=network.target
+After=postgresql.service
+Requires=postgresql.service
+
+[Service]
+ExecStart=target/release/tukosmo >> etc/server.log
+# Restart after boot:
+Restart=always
+Environment=PATH=/usr/bin:/usr/local/bin
+WorkingDirectory=/srv/tukosmo
+
+[Install]
+WantedBy=multi-user.target

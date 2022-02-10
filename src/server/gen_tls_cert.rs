@@ -156,9 +156,9 @@ pub fn gen_tls_cert(
         .unwrap().bytes().unwrap();
 
     // Store TLS/SSL certificate in .der files
-    fs::write("pkey.der", &cert.private_key_der().unwrap()).unwrap();
-    fs::write("cert.der", &cert.certificate_der().unwrap()).unwrap();
-    fs::write("icert.der", &icert_bytes).unwrap();
+    fs::write("etc/pkey.der", &cert.private_key_der().unwrap()).unwrap();
+    fs::write("etc/cert.der", &cert.certificate_der().unwrap()).unwrap();
+    fs::write("etc/icert.der", &icert_bytes).unwrap();
 
     Ok(cert)
 

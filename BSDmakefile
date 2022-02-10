@@ -91,6 +91,7 @@ install: clean
 	# Create /temp dir
 	mkdir temp
 .endif
+# TODO: Move Tukosmo.toml to etc/ and modify it like db-password?
 
 install-all: installdb db-password install
 
@@ -104,5 +105,18 @@ run:
 	su -m root -c "target/release/tukosmo"  # Bad idea...
 .endif
 
-# TODO: run-always (startup and in the background)
+.if ${MODE} == production
+run-service:
+	rm -f /usr/local/etc/rc.d/tukosmo
+	cp etc/tukosmo-freebsd.sh /usr/local/etc/rc.d/tukosmo
+	sysrc tukosmo_enable=yes
+	service tukosmo start
+	service tukosmo status
+.endif
+
+.if ${MODE} == production
+stop-service:
+	service tukosmo stop
+	service tukosmo status
+.endif
 

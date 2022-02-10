@@ -106,7 +106,13 @@ please follow step-by-step installation and check every command you run.**
 
 ```sh
 git clone https://github.com/lajtomekadimon/tukosmo
+
+# If you are in development (local)
 cd tukosmo
+
+# If you are in production
+mv tukosmo /srv/tukosmo
+cd /srv/tukosmo
 ```
 
 Now, edit Tukosmo.toml file and be sure everything is okay;
@@ -127,7 +133,7 @@ Reboot server.
 Install Tukosmo:
 
 ```sh
-cd tukosmo
+cd tukosmo  # /srv/tukosmo in production
 make -s install-all
 ```
 
@@ -137,7 +143,13 @@ Download Tukosmo's repository:
 
 ```sh
 git clone https://github.com/lajtomekadimon/tukosmo
+
+# If you are in development (local)
 cd tukosmo
+
+# If you are in production
+mv tukosmo /srv/tukosmo
+cd /srv/tukosmo
 ```
 
 Now, edit Tukosmo.toml file and be sure everything is okay;
@@ -169,7 +181,7 @@ Reboot server.
 Install Tukosmo:
 
 ```sh
-cd tukosmo
+cd tukosmo  # /srv/tukosmo in production
 make -s installdb
 
 # If you're using Fedora, you should also do:

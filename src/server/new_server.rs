@@ -102,7 +102,7 @@ pub fn new_server(
         .unwrap();
     if &server_mode == "production" {
         // Generate or renewal certificate if necessary
-        let need_cert = match fs::read("cert.der") {
+        let need_cert = match fs::read("etc/cert.der") {
             Ok(cert_bytes) => {
                 let cert_der = X509::from_der(&cert_bytes).unwrap();
 
@@ -130,7 +130,7 @@ pub fn new_server(
         }
 
         // Add private key
-        let pkey_bytes = fs::read("pkey.der").unwrap();
+        let pkey_bytes = fs::read("etc/pkey.der").unwrap();
         let pkey_der = PKey::private_key_from_der(
             &pkey_bytes
             //&cert.private_key_der().unwrap()
@@ -138,7 +138,7 @@ pub fn new_server(
         ssl_builder.set_private_key(&pkey_der).unwrap();
 
         // Add certificate
-        let cert_bytes = fs::read("cert.der").unwrap();
+        let cert_bytes = fs::read("etc/cert.der").unwrap();
         let cert_der = X509::from_der(
             &cert_bytes
             //&cert.certificate_der().unwrap()
@@ -146,7 +146,7 @@ pub fn new_server(
         ssl_builder.set_certificate(&cert_der).unwrap();
 
         // Add intermediate certificate to the chain
-        let icert_bytes = fs::read("icert.der").unwrap();
+        let icert_bytes = fs::read("etc/icert.der").unwrap();
         let icert_der = X509::from_der(&icert_bytes).unwrap();
         ssl_builder.add_extra_chain_cert(icert_der).unwrap();
 
@@ -182,9 +182,9 @@ pub fn new_server(
     } else if &server_mode == "development" {
         // Load TLS private key and certificate (created by make in local)
         ssl_builder
-            .set_private_key_file("key.pem", SslFiletype::PEM)
+            .set_private_key_file("etc/pkey.pem", SslFiletype::PEM)
             .unwrap();
-        ssl_builder.set_certificate_chain_file("cert.pem").unwrap();
+        ssl_builder.set_certificate_chain_file("etc/cert.pem").unwrap();
     } else {
         panic!("Wrong mode in Tukosmo.toml");
     }
