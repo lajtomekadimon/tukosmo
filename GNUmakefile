@@ -12,7 +12,10 @@ OS_NAME=fedora
 ## - production
 MODE=development
 
-PG_DB=tukosmo  # use the name you have in Tukosmo.toml
+DOMAIN=localhost
+USER_EMAIL=test@test.com
+
+PG_DB=tukosmo  # use the name you have in etc/Tukosmo.toml
 PG_PASSWORD=$(shell pwgen -s -1 32)
 # PG_PASSWORD is only used in the installation
 
@@ -88,10 +91,6 @@ installdb:
 	sudo -i -u postgres psql -d pretukosmo -c \
 	"ALTER USER pretukosmouser WITH SUPERUSER;"
 
-db-password:
-	sed -i '/password =/d' Tukosmo.toml
-	echo "password = \"$(PG_PASSWORD)\"" >> Tukosmo.toml
-
 psql:
 	@sudo -i -u postgres psql -q -d $(PG_DB)
 
@@ -107,6 +106,14 @@ clean:
 
 ifeq ($(MODE), development)
 install: clean
+	sed -i 's/mode = \"production\"/mode = \"development\"/g' etc/Tukosmo.toml
+	sed -i 's/domain = \"localhost\"/domain = \"$(DOMAIN)\"/g' etc/Tukosmo.toml
+	sed -i \
+	's/user_email = \"test@test.com\"/user_email = \"$(USER_EMAIL)\"/g' \
+	etc/Tukosmo.toml
+	sed -i 's/reset = \"false\"/reset = \"true\"/g' etc/Tukosmo.toml
+	sed -i 's/password = \"1234\"/password = \"$(PG_PASSWORD)\"/g' \
+	etc/Tukosmo.toml
 	# SSL for local development
 	openssl req -x509 -newkey rsa:4096 -nodes -keyout etc/pkey.pem -out \
 	etc/cert.pem -days 365 -subj '/CN=localhost'
@@ -116,14 +123,21 @@ install: clean
 	mkdir temp
 else ifeq ($(MODE), production)
 install: clean
+	sed -i 's/mode = \"development\"/mode = \"production\"/g' etc/Tukosmo.toml
+	sed -i 's/domain = \"localhost\"/domain = \"$(DOMAIN)\"/g' etc/Tukosmo.toml
+	sed -i \
+	's/user_email = \"test@test.com\"/user_email = \"$(USER_EMAIL)\"/g' \
+	etc/Tukosmo.toml
+	sed -i 's/reset = \"false\"/reset = \"true\"/g' etc/Tukosmo.toml
+	sed -i 's/password = \"1234\"/password = \"$(PG_PASSWORD)\"/g' \
+	etc/Tukosmo.toml
 	# Compile Tukosmo
 	cargo build --release
 	# Create /temp dir
 	mkdir temp
 endif
-# TODO: Move Tukosmo.toml to etc/ and modify it like db-password?
 
-install-all: installdb db-password install
+install-all: installdb install
 
 ifeq ($(MODE), development)
 run:

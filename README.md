@@ -115,12 +115,8 @@ mv tukosmo /srv/tukosmo
 cd /srv/tukosmo
 ```
 
-Now, edit Tukosmo.toml file and be sure everything is okay;
-`reset = "true"` is needed for installation, and in production you must set
-`mode = "production"` and `domain` and `user_email` (have in mind that
-`password` will be changed automatically by the Makefile).
-
-Edit BSDmakefile and GNUmakefile and change `OS_NAME` and `MODE`.
+Edit BSDmakefile and GNUmakefile and change `OS_NAME` and `MODE`. If you are
+in production, change `DOMAIN` and `USER_EMAIL` as well.
 
 Install dependencies:
 
@@ -152,12 +148,8 @@ mv tukosmo /srv/tukosmo
 cd /srv/tukosmo
 ```
 
-Now, edit Tukosmo.toml file and be sure everything is okay;
-`reset = "true"` is needed for installation, and in production you must set
-`mode = "production"` and `domain` and `user_email` (have in mind that
-`password` will be changed automatically by the Makefile).
-
-Edit `BSDmakefile` and `GNUmakefile` and change `OS_NAME` and `MODE`.
+Edit BSDmakefile and GNUmakefile and change `OS_NAME` and `MODE`. If you are
+in production, change `DOMAIN` and `USER_EMAIL` as well.
 
 Dependencies:
 
@@ -189,7 +181,6 @@ make -s installdb
 #sudo vi /var/lib/pgsql/data/pg_hba.conf  # change all 'ident' to 'trust'
 #sudo systemctl start postgresql
 
-make -s db-password  # auto-generate strong password in Tukosmo.toml
 make -s install
 ```
 
