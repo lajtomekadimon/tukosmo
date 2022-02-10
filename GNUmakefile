@@ -131,6 +131,8 @@ install: clean
 	sed -i 's/reset = \"false\"/reset = \"true\"/g' etc/Tukosmo.toml
 	sed -i 's/password = \"1234\"/password = \"$(PG_PASSWORD)\"/g' \
 	etc/Tukosmo.toml
+	# Set hostname (TODO: do it when Tukosmo changes its domain)
+	sudo hostnamectl set-hostname $(DOMAIN)
 	# Compile Tukosmo
 	cargo build --release
 	# Create /temp dir
