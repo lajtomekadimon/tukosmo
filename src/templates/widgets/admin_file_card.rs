@@ -24,7 +24,10 @@ markup::define! {
                 @if IMG_EXTS.contains(
                     &file_data.ext.as_str(),
                 ) {
-                    img[src = &file_route(&file_data.name)];
+                    img[
+                        src = &file_route(&file_data.name),
+                        alt = &file_data.name,
+                    ];
                 }
 
                 // TODO: File size

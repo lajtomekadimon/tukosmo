@@ -27,7 +27,10 @@ markup::define! {
                         div[class = "box"] {
                             figure[class = "avatar"] {
                                 div[class = "avatar-container"] {
-                                    img[src = FAVICON_96X96];
+                                    img[
+                                        src = FAVICON_96X96,
+                                        alt = FAVICON_96X96,
+                                    ];
                                 }
                             }
 

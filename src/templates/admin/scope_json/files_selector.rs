@@ -233,12 +233,17 @@ markup::define! {
                                                 &file.ext.as_str()
                                             ) {
                                                 img[
-                                                    src = file_route(&file.name),
+                                                    src = file_route(
+                                                        &file.name
+                                                    ),
                                                     alt = &file.name,
                                                 ];
                                             }
                                         }
-                                        div[class = "card-content is-overlay is-clipped"] {
+                                        div[
+                                            class = "card-content is-overlay \
+                                                     is-clipped",
+                                        ] {
                                             span[class = "tag is-link"] {
                                                 @file.ext.to_uppercase()
                                             }
@@ -261,7 +266,9 @@ markup::define! {
                     @AdminPagination {
                         data: &q.data,
                         t: t,
-                        route: &ra_json_files_selector_wu_rpp_p(&q.data.lang.code),
+                        route: &ra_json_files_selector_wu_rpp_p(
+                            &q.data.lang.code
+                        ),
                         current_page: &q.page,
                         total_pages: &q.total_pages,
                         results_per_page: &q.results_per_page,
