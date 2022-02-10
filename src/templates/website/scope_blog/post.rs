@@ -107,7 +107,10 @@ markup::define! {
                                 href = rw_blog(&q.data.lang.code),
                             ] {
                             */
-                            i[class = "eos-icons"] {
+                            i[
+                                class = "eos-icons notranslate",
+                                translate = "no",
+                            ] {
                                 "person"
                             }
 
@@ -127,7 +130,10 @@ markup::define! {
                                 href = rw_blog(&q.data.lang.code),
                             ] {
                             */
-                            i[class = "eos-icons"] {
+                            i[
+                                class = "eos-icons notranslate",
+                                translate = "no",
+                            ] {
                                 "calendar_today"
                             }
 
@@ -149,7 +155,10 @@ markup::define! {
                                         &q.post.id,
                                     ),
                                 ] {
-                                    i[class = "eos-icons"] {
+                                    i[
+                                        class = "eos-icons notranslate",
+                                        translate = "no",
+                                    ] {
                                         "mode_edit"
                                     }
 

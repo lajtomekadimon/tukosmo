@@ -92,7 +92,10 @@ markup::define! {
                         ];
                         span[class = "file-cta"] {
                             span[class = "file-icon"] {
-                                i[class = "eos-icons"] { "cloud_upload" }
+                                i[
+                                    class = "eos-icons notranslate",
+                                    translate = "no",
+                                ] { "cloud_upload" }
                             }
                             span[class = "file-label"] {
                                 @t.choose_a_file

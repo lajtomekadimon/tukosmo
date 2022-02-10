@@ -75,6 +75,7 @@ markup::define! {
                     href = "https://fonts.googleapis.com/css?family=Poppins",
                 ];*/
 
+                // TODO: Add it to Tukosmo's CSS
                 link[
                     rel = "stylesheet",
                     href = "https://cdn.jsdelivr.net/npm/\

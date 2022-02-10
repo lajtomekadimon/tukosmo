@@ -155,7 +155,10 @@ markup::define! {
             ] {
                 @t.login_k_verb
                 " "
-                i[class = "eos-icons ml-2"] { "login" }
+                i[
+                    class = "eos-icons notranslate ml-2",
+                    translate = "no",
+                ] { "login" }
             }
         }
     }

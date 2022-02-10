@@ -51,6 +51,7 @@ markup::define! {
                     ];
                 }
 
+                // TODO: Add it to Tukosmo's CSS
                 link[
                     rel = "stylesheet",
                     href = "https://cdn.jsdelivr.net/npm/\

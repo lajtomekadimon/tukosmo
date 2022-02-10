@@ -139,6 +139,9 @@ endif
 
 install-all: installdb install
 
+resetdb:
+	sed -i 's/reset = \"false\"/reset = \"true\"/g' etc/Tukosmo.toml
+
 ifeq ($(MODE), development)
 run:
 	cargo run

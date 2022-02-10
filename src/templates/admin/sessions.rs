@@ -147,7 +147,11 @@ markup::define! {
                                         type = "submit",
                                         title = t.logout_k_verb,
                                     ] {
-                                        i[class = "eos-icons is-size-5"] {
+                                        i[
+                                            class = "eos-icons notranslate \
+                                                     is-size-5",
+                                            translate = "no",
+                                        ] {
                                             "logout"
                                         }
                                     }

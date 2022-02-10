@@ -113,6 +113,9 @@ install: clean
 
 install-all: installdb install
 
+resetdb:
+	sed -r -i 's/reset = \"false\"/reset = \"true\"/g' etc/Tukosmo.toml
+
 .if ${MODE} == development
 run:
 	cargo run

@@ -44,7 +44,10 @@ markup::define! {
                         target = "_blank",
                         title = t.visit_website,
                     ] {
-                        i[class = "eos-icons mr-1"] { "home" }
+                        i[
+                            class = "eos-icons notranslate mr-1",
+                            translate = "no",
+                        ] { "home" }
                         " "
                         @data.website_title
                     }

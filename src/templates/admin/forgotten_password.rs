@@ -156,7 +156,10 @@ markup::define! {
             ] {
                 @t.reset_password
                 " "
-                i[class = "eos-icons ml-2"] { "vpn_key" }
+                i[
+                    class = "eos-icons notranslate ml-2",
+                    translate = "no",
+                ] { "vpn_key" }
             }
         }
     }

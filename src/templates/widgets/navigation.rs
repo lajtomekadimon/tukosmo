@@ -33,7 +33,11 @@ markup::define! {
                     @if data.languages.iter().len() > 1 {
                         li[class = "site-navigation-li"] {
                             button[id = "button-select-language"] {
-                                i[class = "eos-icons eos-icons-l"] {
+                                i[
+                                    class = "eos-icons eos-icons-l \
+                                             notranslate",
+                                    translate = "no",
+                                ] {
                                     "language"
                                 }
                                 {data.lang.code.to_uppercase()}

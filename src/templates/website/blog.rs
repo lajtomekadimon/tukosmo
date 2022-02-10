@@ -99,7 +99,10 @@ markup::define! {
                                     ),
                                 ] {
                                 */
-                                i[class = "eos-icons"] {
+                                i[
+                                    class = "eos-icons notranslate",
+                                    translate = "no",
+                                ] {
                                     "calendar_today"
                                 }
 

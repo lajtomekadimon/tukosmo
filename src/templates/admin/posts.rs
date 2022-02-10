@@ -185,7 +185,10 @@ markup::define! {
                                         target = "_blank",
                                         title = &t.open_in_new_tab,
                                     ] {
-                                        i[class = "eos-icons"] {
+                                        i[
+                                            class = "eos-icons notranslate",
+                                            translate = "no",
+                                        ] {
                                             "open_in_new"
                                         }
                                     }

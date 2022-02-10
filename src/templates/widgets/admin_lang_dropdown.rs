@@ -23,7 +23,10 @@ markup::define! {
                         @data.lang.name
                     }
                     span[class = "icon is-small"] {
-                        i[class = "eos-icons"] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] {
                             "arrow_drop_down"
                         }
                     }
