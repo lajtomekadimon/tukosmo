@@ -8,16 +8,16 @@ markup::define! {
     Header<'a>(
         data: &'a WebsiteDataDB,
     ) {
-        header[class = "site-header"] {
-            div[class = "container"] {
-                div[class = "site-branding"] {
-                    h1[class = "site-title"] {
+        header[class = "header"] {
+            div[class = "header-container"] {
+                div[class = "header-branding"] {
+                    h1[class = "header-title"] {
                         a[href = rw_home(&data.lang.code)] {
                             @data.website_title
                         }
                     }
 
-                    p[class = "site-description"] {
+                    p[class = "header-description"] {
                         @data.website_subtitle
                     }
                 }

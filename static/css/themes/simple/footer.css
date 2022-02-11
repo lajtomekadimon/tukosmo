@@ -1,0 +1,89 @@
+
+.footer {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #020202;
+}
+
+.footer-container {
+    width: auto;
+    margin: 0 auto;
+}
+
+.footer-credits {
+    width: 100%;
+    text-align: center;
+    color: #999;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .footer {
+        padding: 2.8125rem 0;
+    }
+
+    .footer-container {
+        max-width: 1300px;
+        padding: 0 50px;
+    }
+
+    .footer-credits {
+        font-size: 0.875rem;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .footer {
+        padding: 2.8125rem 0;
+    }
+
+    .footer-container {
+        max-width: 1140px;
+        padding: 0 36px;
+    }
+
+    .footer-credits {
+        font-size: 0.875rem;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .footer {
+        padding: 2.8125rem 0;
+    }
+
+    .footer-container {
+        max-width: 720px;
+        padding: 0 40px;
+    }
+
+    .footer-credits {
+        font-size: 0.875rem;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .footer {
+        padding: 2.8125rem 0;
+    }
+
+    .footer-container {
+        padding: 0;
+    }
+
+    .footer-credits {
+        font-size: 0.875rem;
+    }
+}

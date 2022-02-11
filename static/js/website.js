@@ -1,34 +1,46 @@
 
-let site_languages = document.getElementById("site-languages");
+let languages = document.getElementById("languages");
 
 document.getElementById("button-select-language").addEventListener(
     'click',
     function() {
-        site_languages.style.display = "block";
-        site_languages.style.opacity = '1';
+        languages.style.display = "block";
+        languages.style.opacity = "1";
     }
 );
 
-document.getElementById("close-site-languages").addEventListener(
+document.getElementById("languages-close").addEventListener(
     'click',
     function() {
-        site_languages.style.opacity = '0';
+        languages.style.opacity = "0";
     }
 );
 
-document.getElementById("site-languages-bg").addEventListener(
+document.getElementById("languages-bg").addEventListener(
     'click',
     function() {
-        site_languages.style.opacity = '0';
+        languages.style.opacity = "0";
     }
 );
 
-site_languages.addEventListener(
+languages.addEventListener(
     'transitionend',
     function() {
-        if (site_languages.style.display === "block") {
-            site_languages.style.display = "none";
+        if (languages.style.display === "block") {
+            languages.style.display = "none";
         }
     }
 );
 
+document.getElementById("navigation-burger").addEventListener(
+    'click',
+    function() {
+        let navigation_ul = document.getElementById("navigation-ul");
+
+        if (navigation_ul.style.display === "block") {
+            navigation_ul.style.display = "none";
+        } else {
+            navigation_ul.style.display = "block";
+        }
+    }
+);

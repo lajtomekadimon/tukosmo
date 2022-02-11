@@ -11,9 +11,10 @@ pub mod admin_login;
 pub mod footer;
 pub mod header;
 pub mod navigation;
-pub mod sidebar;
-pub mod website;
+pub mod widget;
+pub mod site;
 pub mod pagination;
+pub mod languages;
 
 pub mod favicon_meta;
 pub mod faviconadmin_meta;

@@ -243,6 +243,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Login",
     logout_k_verb:
         "Logout",
+    menu:
+        "Menu",
     menus:
         "Menus",
     n_posts:

@@ -9,24 +9,15 @@
     box-shadow: 0 1px 5px rgba(0, 0, 1, 0.05);
 }
 
-.error-content {
-    padding: 2.8125rem;
-}
-
 .error-header {
     position: relative;
-    width: 90%;
-    margin: 0 auto 2.8125rem;
     padding: 0;
     text-align: center;
 }
 
 .error-title {
     margin: 0;
-    padding: 0 0 4px 0;
-    font-size: 2.375rem;
     font-weight: 700;
-    line-height: 1.4;
     word-wrap: break-word;
 }
 
@@ -34,4 +25,82 @@
     margin: 0;
     padding: 0;
     word-wrap: break-word;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .error-content {
+        padding: 2.8125rem;
+    }
+
+    .error-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .error-title {
+        padding: 0 0 4px 0;
+        font-size: 2.375rem;
+        line-height: 1.4;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .error-content {
+        padding: 2.8125rem;
+    }
+
+    .error-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .error-title {
+        padding: 0 0 4px 0;
+        font-size: 2.375rem;
+        line-height: 1.4;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .error-content {
+        padding: 2.8125rem;
+    }
+
+    .error-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .error-title {
+        padding: 0 0 4px 0;
+        font-size: 2.375rem;
+        line-height: 1.4;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .error-content {
+        padding: 2.8125rem;
+    }
+
+    .error-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .error-title {
+        padding: 0 0 4px 0;
+        font-size: 2.375rem;
+        line-height: 1.4;
+    }
 }

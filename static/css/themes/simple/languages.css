@@ -1,0 +1,202 @@
+
+.languages {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    position: fixed;
+    z-index: 98;
+    width: 100%;
+    height: 100%;
+}
+
+.languages-bg {
+    position: absolute;
+    z-index: 99;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+}
+
+.languages-content {
+    position: relative;
+    z-index: 100;
+    display: block;
+    width: auto;
+    background-color: #fff;
+}
+
+.languages-content h3 {
+    text-align: center;
+}
+
+.languages-content ul {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+}
+
+.languages-content a,
+.languages a:visited {
+    color: #020202;
+    text-decoration: none;
+}
+
+.languages a:hover {
+    text-decoration: underline;
+}
+
+.languages-close {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    display: inline-block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-size: 0;
+    width: 20px;
+    height: 20px;
+    max-height: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    min-width: 20px;
+    outline: 0;
+    position: relative;
+    vertical-align: top;
+    margin: 0;
+    padding: 4px;
+    right: 0.5rem;
+    position: absolute;
+    top: 0.5rem;
+}
+
+.languages-close::before,
+.languages-close::after {
+    background-color: #020202;
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    transform-origin: center center;
+}
+
+.languages-close::before {
+    height: 2px;
+    width: 50%;
+}
+
+.languages-close::after {
+    height: 50%;
+    width: 2px;
+}
+
+.languages-close:hover {
+    background-color: #eee;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .languages-content {
+        max-width: 900px;
+        margin: 100px auto;
+        border-radius: 10px;
+        padding: 40px;
+    }
+
+    .languages-content h3 {
+        margin: 0 0 40px 0;
+    }
+
+    .languages-content ul {
+        max-height: 500px;
+    }
+
+    .languages-content li {
+        width: 300px;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .languages-content {
+        max-width: 900px;
+        margin: 100px auto;
+        border-radius: 10px;
+        padding: 40px;
+    }
+
+    .languages-content h3 {
+        margin: 0 0 40px 0;
+    }
+
+    .languages-content ul {
+        max-height: 500px;
+    }
+
+    .languages-content li {
+        width: 300px;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .languages-content {
+        margin: 50px;
+        border-radius: 10px;
+        padding: 40px;
+    }
+
+    .languages-content h3 {
+        margin: 0 0 40px 0;
+    }
+
+    .languages-content ul {
+        max-height: 500px;
+    }
+
+    .languages-content li {
+        width: 300px;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .languages-content {
+        margin: 30px;
+        border-radius: 10px;
+        padding: 40px;
+    }
+
+    .languages-content h3 {
+        margin: 0 0 40px 0;
+    }
+
+    .languages-content ul {
+        max-height: 500px;
+    }
+
+    .languages-content li {
+        width: 100%;
+    }
+}

@@ -1,0 +1,247 @@
+
+.navigation {
+    position: relative;
+    display: block;
+    background-color: white;
+}
+
+.navigation-container {
+    width: auto;
+    margin: 0 auto;
+}
+
+.navigation-burger {
+    /*display: flex;*/ /* already in Responsive Design */
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    color: #020202;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+
+.navigation-burger:hover {
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.navigation-burger-text {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.navigation-burger-icon .eos-icons {
+    margin-left: 8px !important;
+}
+
+.navigation-ul {
+    margin: 0;
+    list-style: none;
+}
+
+.navigation-li {
+    position: relative;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.navigation-li a,
+.navigation-li a:visited {
+    display: block;
+    position: relative;
+    color: #020202;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.navigation-li a:hover {
+    text-decoration: underline;
+}
+
+.navigation-li button {
+    display: block;
+    position: relative;
+    color: #020202;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+}
+
+.navigation-li button:hover {
+    text-decoration: underline;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.navigation-li button .eos-icons {
+    font-size: 18px;
+}
+
+.navigation-li button .eos-icons-l {
+    margin-right: 6px;
+}
+
+.navigation-li button .eos-icons-r {
+    margin-left: 6px;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .navigation-container {
+        max-width: 1300px;
+        padding: 0 50px;
+    }
+
+    .navigation-burger {
+        display: none;
+    }
+
+    .navigation-ul {
+        display: block;
+        padding: 1.4rem 0;
+        text-align: center;
+        border-top: 2px solid #020202;
+    }
+
+    .navigation-li {
+        display: inline-block;
+        line-height: 1.5;
+    }
+
+    .navigation-li a,
+    .navigation-li a:visited,
+    .navigation-li button {
+        padding: 0 1.0625rem;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .navigation-container {
+        max-width: 1140px;
+        padding: 0 36px;
+    }
+
+    .navigation-burger {
+        display: none;
+    }
+
+    .navigation-ul {
+        display: block;
+        padding: 1.2rem 0;
+        text-align: center;
+        border-top: 2px solid #020202;
+    }
+
+    .navigation-li {
+        display: inline-block;
+        line-height: 1.5;
+    }
+
+    .navigation-li a,
+    .navigation-li a:visited,
+    .navigation-li button {
+        padding: 0 1.0625rem;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .navigation-container {
+        max-width: 720px;
+        padding: 0 40px;
+    }
+
+    .navigation-burger {
+        display: flex;
+        padding: 16px 0;
+        line-height: 1.5;
+    }
+
+    .navigation-burger,
+    .navigation-burger:hover {
+        border-top: 2px solid #020202;
+    }
+
+    .navigation-ul {
+        display: none;
+        padding: 0.6rem 0 0.4rem 0;
+        text-align: left;
+    }
+
+    .navigation-li {
+        display: block;
+        line-height: 1.5;
+    }
+
+    .navigation-li a,
+    .navigation-li a:visited,
+    .navigation-li button {
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+        width: 100%;
+        text-align: left;
+        line-height: 1.5;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .navigation-container {
+        padding: 0;
+    }
+
+    .navigation-burger {
+        display: flex;
+        padding: 16px 0;
+        line-height: 1.5;
+    }
+
+    .navigation-burger,
+    .navigation-burger:hover {
+        border-top: 2px solid #020202;
+    }
+
+    .navigation-ul {
+        display: none;
+        padding: 0.6rem 0 0.4rem 0;
+        text-align: left;
+    }
+
+    .navigation-li {
+        display: block;
+        line-height: 1.5;
+    }
+
+    .navigation-li a,
+    .navigation-li a:visited,
+    .navigation-li button {
+        padding: 0.4rem 1rem;
+        font-size: 1rem;
+        width: 100%;
+        text-align: left;
+        line-height: 1.5;
+    }
+}

@@ -12,7 +12,7 @@ use crate::i18n::{
 };
 use crate::templates::{
     website_layout::WebsiteLayout,
-    widgets::website::Website,
+    widgets::site::Site,
     widgets::open_graph_meta::ArticleOG,
 };
 
@@ -48,7 +48,7 @@ markup::define! {
                     modified_time: q.post.date.clone(),
                 }
             ),
-            content: Website {
+            content: Site {
                 content: Content {
                     q: q,
                     t: t,

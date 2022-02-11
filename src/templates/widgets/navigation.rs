@@ -1,37 +1,44 @@
 use markup;
 
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::WebsiteDataDB;
+use crate::handlers::website::blog_get::rw_blog;
 
 
 markup::define! {
     Navigation<'a>(
+        t: &'a TranslateI18N,
         data: &'a WebsiteDataDB,
     ) {
-        nav[class = "site-navigation"] {
-            div [class = "container"] {
-                ul[class = "site-navigation-ul"] {
-                    /*
-                    li[class = "site-navigation-li"] {
-                        a[href = "/"] {
-                            "Blog"
-                        }
+        nav[class = "navigation"] {
+            div[class = "navigation-container"] {
+                button[
+                    id = "navigation-burger",
+                    class = "navigation-burger",
+                ] {
+                    div[class = "navigation-burger-text"] {
+                        @t.menu
                     }
 
-                    li[class = "site-navigation-li"] {
-                        a[href = "/"] {
-                            "About me"
+                    div[class = "navigation-burger-icon"] {
+                        i[class = "eos-icons notranslate"] {
+                            "menu"
                         }
                     }
+                }
 
-                    li[class = "site-navigation-li"] {
-                        a[href = "/"] {
-                            "Contact"
+                ul[
+                    id = "navigation-ul",
+                    class = "navigation-ul",
+                ] {
+                    li[class = "navigation-li"] {
+                        a[href = rw_blog(&data.lang.code)] {
+                            @t.blog
                         }
                     }
-                    */
 
                     @if data.languages.iter().len() > 1 {
-                        li[class = "site-navigation-li"] {
+                        li[class = "navigation-li"] {
                             button[id = "button-select-language"] {
                                 i[
                                     class = "eos-icons eos-icons-l \

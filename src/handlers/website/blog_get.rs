@@ -23,13 +23,11 @@ pub struct GetParamData {
 }
 
 
-/*
 pub fn rw_blog(
     lang_code: &str,
 ) -> String {
     "/{lang}/blog".replace("{lang}", lang_code)
 }
-*/
 
 pub fn rw_blog_wu_rpp_p(
     lang_code: &str,

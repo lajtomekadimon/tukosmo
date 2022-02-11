@@ -28,28 +28,17 @@
     border: 0;
 }
 
-.post-image figure figcaption {
-
-}
-
-.post-content {
-    padding: 2.8125rem;
-}
+.post-image figure figcaption {}
 
 .post-header {
     position: relative;
-    width: 90%;
-    margin: 0 auto 2.8125rem;
     padding: 0;
     text-align: center;
 }
 
 .post-title {
     margin: 0;
-    padding: 0 0 4px 0;
-    font-size: 2.375rem;
     font-weight: 700;
-    line-height: 1.4;
     word-wrap: break-word;
 }
 
@@ -58,14 +47,8 @@
     text-align: center;
 }
 
-.post-meta,
-.post-meta .eos-icons {
-    font-size: 0.875rem;
-}
 .post-meta span {
     display: inline-block;
-    margin-top: 0.625rem;
-    margin: 0.625rem 0.5rem 0 0.5rem;
 }
 
 .post-meta a,
@@ -80,17 +63,11 @@
     text-decoration: none;
 }
 
-.post-meta-author {
+.post-meta-author {}
 
-}
+.post-meta-date {}
 
-.post-meta-date {
-
-}
-
-.post-meta-edit {
-
-}
+.post-meta-edit {}
 
 .post-body {
     margin: 0;
@@ -102,16 +79,21 @@
     color: #020202;
 }
 
-.post-body a:hover {
-    color: #555;
-}
-
 .post-body a:visited {
     color: #020202;
 }
 
+.post-body a:hover {
+    color: #555;
+}
+
 .footnote-reference {
     font-weight: bold;
+}
+
+.footnote-reference a,
+.footnote-reference a:hover {
+    text-decoration: none;
 }
 
 .footnote-definition {
@@ -122,17 +104,171 @@
 .footnote-definition p {
     display: inline-block;
     margin: 0;
-    font-size: 90%;
 }
 
 .footnote-definition-label {
     display: block;
     top: 0;
-    padding: 0 6px 0 0;
-    font-size: 90%;
-    line-height: 1.8;
 }
 
 .footnote-definition-label:after {
     content: ".";
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .post-content {
+        padding: 2.8125rem;
+    }
+
+    .post-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .post-title {
+        padding: 0 0 4px 0;
+        font-size: 2.375rem;
+        line-height: 1.4;
+    }
+
+    .post-meta,
+    .post-meta .eos-icons {
+        font-size: 0.875rem;
+    }
+
+    .post-meta span {
+        margin-top: 0.625rem;
+        margin: 0.625rem 0.5rem 0 0.5rem;
+    }
+
+    .footnote-definition p {
+        font-size: 90%;
+    }
+
+    .footnote-definition-label {
+        padding: 0 6px 0 0;
+        font-size: 90%;
+        line-height: 1.5;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .post-content {
+        padding: 2rem;
+    }
+
+    .post-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .post-title {
+        padding: 0 0 4px 0;
+        font-size: 2.1rem;
+        line-height: 1.4;
+    }
+
+    .post-meta,
+    .post-meta .eos-icons {
+        font-size: 0.875rem;
+    }
+
+    .post-meta span {
+        margin-top: 0.625rem;
+        margin: 0.625rem 0.5rem 0 0.5rem;
+    }
+
+    .footnote-definition p {
+        font-size: 90%;
+    }
+
+    .footnote-definition-label {
+        padding: 0 6px 0 0;
+        font-size: 90%;
+        line-height: 1.5;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .post-content {
+        padding: 2rem;
+    }
+
+    .post-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .post-title {
+        padding: 0 0 4px 0;
+        font-size: 2.1rem;
+        line-height: 1.4;
+    }
+
+    .post-meta,
+    .post-meta .eos-icons {
+        font-size: 0.875rem;
+    }
+
+    .post-meta span {
+        margin-top: 0.625rem;
+        margin: 0.625rem 0.5rem 0 0.5rem;
+    }
+
+    .footnote-definition p {
+        font-size: 90%;
+    }
+
+    .footnote-definition-label {
+        padding: 0 6px 0 0;
+        font-size: 90%;
+        line-height: 1.5;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .post-content {
+        padding: 1rem;
+    }
+
+    .post-header {
+        width: 90%;
+        margin: 0 auto 2.8125rem;
+    }
+
+    .post-title {
+        padding: 0 0 4px 0;
+        font-size: 2rem;
+        line-height: 1.4;
+    }
+
+    .post-meta,
+    .post-meta .eos-icons {
+        font-size: 0.875rem;
+    }
+
+    .post-meta span {
+        margin-top: 0.625rem;
+        margin: 0.625rem 0.5rem 0 0.5rem;
+    }
+
+    .footnote-definition p {
+        font-size: 90%;
+    }
+
+    .footnote-definition-label {
+        padding: 0 6px 0 0;
+        font-size: 90%;
+        line-height: 1.5;
+    }
 }

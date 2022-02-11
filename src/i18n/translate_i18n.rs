@@ -118,6 +118,7 @@ pub struct TranslateI18N {
     pub login_k_noun: &'static str,
     pub login_k_verb: &'static str,
     pub logout_k_verb: &'static str,
+    pub menu: &'static str,
     pub menus: &'static str,
     pub n_posts: &'static str,
     pub n_results_of_m: &'static str,

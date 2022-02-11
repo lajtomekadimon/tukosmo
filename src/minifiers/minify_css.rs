@@ -30,6 +30,10 @@ pub fn minify_css(
     css_to_minify.push_str(&normalize_css);
     css_to_minify.push_str(&theme_file_dir(current_theme, "/html.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/site.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/header.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/navigation.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/footer.css"));
+    css_to_minify.push_str(&theme_file_dir(current_theme, "/languages.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/widget.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/blog.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/post.css"));

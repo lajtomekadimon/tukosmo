@@ -244,6 +244,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Iniciar sesión",
     logout_k_verb:
         "Cerrar sesión",
+    menu:
+        "Menú",
     menus:
         "Menús",
     n_posts:

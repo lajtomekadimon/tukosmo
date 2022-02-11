@@ -7,7 +7,7 @@ use crate::i18n::{
 };
 use crate::templates::{
     website_layout::WebsiteLayout,
-    widgets::website::Website,
+    widgets::site::Site,
 };
 
 
@@ -28,7 +28,7 @@ markup::define! {
             og_description: "",
             og_image: "",
             og_article: &None,
-            content: Website {
+            content: Site {
                 content: Content {
                     e: e,
                 },

@@ -35,7 +35,7 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] Automatic JavaScript minifying to one single file.
 - [ ] Zero external resources (CSS, JavaScript, images, ...).
 - [x] Themes are just CSS code; all themes share the same HTML.
-- [ ] Responsive design.
+- [x] Responsive design.
 - [x] Internationalization (i18n).
 - [x] Website's language set by URL (good for SEO).
 - [x] Custom languages.

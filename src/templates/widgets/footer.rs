@@ -11,13 +11,13 @@ markup::define! {
         data: &'a WebsiteDataDB,
     ) {
         div[
-            class = "site-footer",
+            class = "footer",
         ] {
             div[
-                class = "container",
+                class = "footer-container",
             ] {
                 div[
-                    class = "site-credits",
+                    class = "footer-credits",
                 ] {
                     @t.copyright_w_year_name
                         .replace(

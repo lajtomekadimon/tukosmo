@@ -2,9 +2,6 @@
 .widget {
     display: block;
     position: relative;
-    padding: 1.875rem;
-    margin: 1.875rem 0 0 0;
-    font-size: 0.875rem;
     word-wrap: break-word;
     background-color: #fff;
     box-shadow: 0 1px 5px rgba(0, 0, 1, 0.05);
@@ -12,4 +9,46 @@
 
 .widget:nth-of-type(1) {
     margin: 0;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .widget {
+        padding: 1.875rem;
+        margin: 1.875rem 0 0 0;
+        font-size: 0.875rem;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .widget {
+        padding: 1.875rem;
+        margin: 1.875rem 0 0 0;
+        font-size: 0.875rem;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .widget {
+        padding: 1.875rem;
+        margin: 1.875rem 0 0 0;
+        font-size: 0.875rem;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .widget {
+        padding: 1.875rem;
+        margin: 1.875rem 0 0 0;
+        font-size: 0.875rem;
+    }
 }

@@ -4,7 +4,7 @@ use crate::handlers::website::page_get::WgoPage;
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::{
     website_layout::WebsiteLayout,
-    widgets::website::Website,
+    widgets::site::Site,
 };
 
 
@@ -24,7 +24,7 @@ markup::define! {
             og_description: "",
             og_image: "",
             og_article: &None,
-            content: Website {
+            content: Site {
                 content: Content {},
                 routes: &q.routes,
                 data: &q.data,

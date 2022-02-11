@@ -7,8 +7,6 @@ body {
     display: block;
     margin: 0;
     font-family: "Noto Sans", sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.8;
     color: #222;
     background: #f2f2f2;
 }
@@ -27,17 +25,10 @@ p img {
     max-width: 100%;
 }
 
-code {
-    background-color: #eee;
-    padding: 3px 5px;
-    border-radius: 5px;
-}
-
+code,
 pre {
+    font-size: 0.9rem;
     background-color: #eee;
-    padding: 12px 16px;
-    border-radius: 10px;
-    line-height: 1.4;
 }
 
 pre code {
@@ -53,7 +44,108 @@ table {
 
 table th,
 table td {
-    padding: 0.3em 0.6em;
     border: 1px solid #dbdbdb;
     vertical-align: top;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    body {
+        font-size: 1.125rem;
+        line-height: 1.5;
+    }
+
+    code {
+        padding: 3px 5px;
+        border-radius: 5px;
+    }
+
+    pre {
+        padding: 12px 16px;
+        border-radius: 10px;
+        line-height: 1.4;
+    }
+
+    table th,
+    table td {
+        padding: 0.3em 0.6em;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    body {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    code {
+        padding: 3px 5px;
+        border-radius: 5px;
+    }
+
+    pre {
+        padding: 12px 16px;
+        border-radius: 10px;
+        line-height: 1.4;
+    }
+
+    table th,
+    table td {
+        padding: 0.3em 0.6em;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    body {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    code {
+        padding: 3px 5px;
+        border-radius: 5px;
+    }
+
+    pre {
+        padding: 12px 16px;
+        border-radius: 10px;
+        line-height: 1.4;
+    }
+
+    table th,
+    table td {
+        padding: 0.3em 0.6em;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    body {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    code {
+        padding: 3px 5px;
+        border-radius: 5px;
+    }
+
+    pre {
+        padding: 12px 16px;
+        border-radius: 10px;
+        line-height: 1.4;
+    }
+
+    table th,
+    table td {
+        padding: 0.3em 0.6em;
+    }
 }

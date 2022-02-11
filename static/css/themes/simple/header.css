@@ -1,0 +1,145 @@
+
+.header {
+    position: relative;
+    margin: 0;
+    background-color: #fff;
+}
+
+.header-container {
+    width: auto;
+    margin: 0 auto;
+}
+
+.header-branding {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+}
+
+.header-title {
+    /* TODO: Better font? */
+    font-family: "Noto Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    word-wrap: break-word;
+}
+
+.header-title a,
+.header-title a:visited {
+    color: #020202;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.header-title a:hover {
+    text-decoration: underline;
+}
+
+.header-description {
+    color: #4d4d4d;
+    font-family: "Noto Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    word-wrap: break-word;
+}
+
+
+
+/*---------------------
+   RESPONSIVE DESIGN
+---------------------*/
+
+/* Large screen in HD: PC, laptop */
+@media (min-width: 1280px) {
+    .header {
+        padding: 1.25rem 0 1.875rem 0;
+    }
+
+    .header-container {
+        max-width: 1300px;
+        padding: 0 50px;
+    }
+
+    .header-title {
+        font-size: 2.75rem;
+        line-height: 1.1;
+        margin: 12px 0;
+    }
+
+    .header-description {
+        font-size: 1.125rem;
+        line-height: 1.4;
+    }
+}
+
+/* Large screen: PC, laptop */
+@media (min-width: 1008px) and (max-width: 1279px) {
+    .header {
+        padding: 1.25rem 0 1.875rem 0;
+    }
+
+    .header-container {
+        max-width: 1140px;
+        padding: 0 36px;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        line-height: 1.1;
+        margin: 12px 0;
+    }
+
+    .header-description {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+}
+
+/* Medium screen: Tablet */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .header {
+        padding: 1.25rem 0 1.875rem 0;
+    }
+
+    .header-container {
+        max-width: 720px;
+        padding: 0 40px;
+    }
+
+    .header-title {
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin: 10px 0;
+    }
+
+    .header-description {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+}
+
+/* Small screen: Smartphone, TV (due to distance) */
+@media (max-width: 640px) {
+    .header {
+        padding: 1.25rem 0 1.875rem 0;
+    }
+
+    .header-container {
+        padding: 0 20px;
+    }
+
+    .header-title {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin: 10px 0;
+    }
+
+    .header-description {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+}

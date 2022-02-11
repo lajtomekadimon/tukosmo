@@ -14,7 +14,7 @@ use crate::i18n::{
 };
 use crate::templates::{
     website_layout::WebsiteLayout,
-    widgets::website::Website,
+    widgets::site::Site,
     widgets::pagination::Pagination,
 };
 
@@ -35,7 +35,7 @@ markup::define! {
             og_description: "",
             og_image: "",
             og_article: &None,
-            content: Website {
+            content: Site {
                 content: Content {
                     q: q,
                     t: t,
@@ -52,14 +52,14 @@ markup::define! {
         t: &'a TranslateI18N,
     ) {
         div[
-            class = "post-list",
+            class = "blog",
         ] {
             @for post in q.posts.iter() {
                 section[
-                    class = "post-wrapper"
+                    class = "blog-post"
                 ] {
                     @if let Some(fimage) = &post.featured_image {
-                        div[class = "post-wrapper-image"] {
+                        div[class = "blog-post-image"] {
                             a[
                                 href = rw_blog_post(
                                     &post.lang.code,
@@ -80,16 +80,16 @@ markup::define! {
 
                     div[
                         class = if let Some(_fimage) = &post.featured_image {
-                            "post-wrapper-data"
+                            "blog-post-data"
                         } else {
-                            "post-wrapper-data post-wrapper-data-noimg"
+                            "blog-post-data blog-post-data-noimg"
                         }
                     ] {
                         div[
-                            class = "post-wrapper-data-meta",
+                            class = "blog-post-data-meta",
                         ] {
                             div[
-                                class = "post-wrapper-data-meta-date",
+                                class = "blog-post-data-meta-date",
                             ] {
                                 /*
                                 a[
@@ -145,7 +145,7 @@ markup::define! {
                         }
 
                         div[
-                            class = "post-wrapper-data-more",
+                            class = "blog-post-data-more",
                         ] {
                             a[
                                 href = rw_blog_post(
