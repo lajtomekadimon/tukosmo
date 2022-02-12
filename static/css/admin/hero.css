@@ -1,0 +1,70 @@
+
+.hero {
+    border-radius: 6px;
+}
+
+.hero.welcome.is-info {
+    background: #36D1DC;
+    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+    background: linear-gradient(to right, #5B86E5, #36D1DC);
+}
+
+.hero.welcome .title,
+.hero.welcome .subtitle {
+    color: hsl(192, 17%, 99%);
+}
+
+.hero {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.hero.is-success {
+    background: #F2F6FA;
+}
+
+.hero .nav,
+.hero.is-success .nav {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.hero .box {
+    margin-top: 54px;
+    -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
+                        0 0 0 1px rgba(10, 10, 10, .1);
+    box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
+                0 0 0 1px rgba(10, 10, 10, .1);
+}
+
+.hero .avatar {
+    margin-top: -70px;
+    padding-bottom: 20px;
+}
+
+.hero .avatar-container {
+    display: inline-block;
+    border-radius: 50%;
+    padding: 20px;
+    background: #fff;
+    -webkit-box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
+                        0 0 0 1px rgba(10, 10, 10, .1);
+    box-shadow: 0 2px 3px rgba(10, 10, 10, .1),
+                0 0 0 1px rgba(10, 10, 10, .1);
+}
+
+.hero .avatar img {
+    background: #fff;
+}
+
+.hero input {
+    font-weight: 400;
+}
+
+.hero p {
+    font-weight: 400;
+}
+
+.hero p.subtitle {
+    padding-top: 1rem;
+}

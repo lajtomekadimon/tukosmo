@@ -1,6 +1,6 @@
 use markup;
 
-use crate::files::static_files::FAVICON_96X96;
+use crate::files::static_files::FAVICONADMIN_96X96;
 use crate::handlers::{
     admin::{
         login_get::ra_login,
@@ -28,8 +28,8 @@ markup::define! {
                             figure[class = "avatar"] {
                                 div[class = "avatar-container"] {
                                     img[
-                                        src = FAVICON_96X96,
-                                        alt = FAVICON_96X96,
+                                        src = FAVICONADMIN_96X96,
+                                        alt = FAVICONADMIN_96X96,
                                     ];
                                 }
                             }

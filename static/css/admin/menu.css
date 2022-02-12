@@ -1,0 +1,47 @@
+
+.menu-list {
+    line-height: 1.5;
+}
+
+.menu-list li {
+    padding-bottom: 10px;
+}
+
+.menu-list .eos-icons {
+    width: 19px;
+    height: 19px;
+    margin: 0 5px 0 0;
+    font-size: 19px;
+}
+
+.menu-label {
+    /*color: #8F99A3;*/
+    color: #0f1d38;
+    letter-spacing: 1.3;
+    font-weight: 700;
+}
+
+.menu-list a {
+    display: flex;
+    align-items: center;
+    color: #0F1D38;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+.menu-list a:hover {
+    /*background-color: transparent;*/
+    background-color: #e1e3e8;
+    /*color: #276cda;*/
+    color: #0F1D38;
+}
+
+.menu-list a.is-active,
+.menu-list a.is-active:hover {
+    /*background-color: transparent;*/
+    background-color: #485fc7;
+    /*color: #276cda;*/
+    color: #eee;
+    font-weight: 700;
+}

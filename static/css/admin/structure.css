@@ -1,0 +1,66 @@
+
+.nostyle-button {
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.width100 {
+    width: 100%;
+}
+
+.columns {
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
+}
+
+.info-tiles {
+    margin: 1rem 0;
+}
+
+.info-tiles .subtitle {
+    font-weight: 300;
+    color: #8F99A3;
+}
+
+.login-hr {
+    border-bottom: 1px solid black;
+}
+
+.has-text-black {
+    color: black;
+}
+
+.field {
+    padding-bottom: 10px;
+}
+
+.tap-logo {
+    background-image: url(/static/img/tukosmo-logo-tap-40.png);
+    height: 52px;
+    width: 52px;
+}
+
+.dropdown-content {
+    border: 1px solid #dbdbdb;
+}
+
+.dropdown-content:hover {
+    border: 1px solid #b5b5b5;
+}
+
+.notification {
+    transition: opacity 0.3s;
+}
+
+.pagination {
+    width: 100%;
+}
+
+label[for=toastuiAltTextInput],
+#toastuiAltTextInput {
+    display: none !important;
+}

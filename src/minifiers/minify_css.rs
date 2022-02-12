@@ -17,6 +17,17 @@ fn theme_file_dir(
 }
 
 
+fn admin_file_dir(
+    file_dir: &str,
+) -> String {
+    let mut admin_dir = "static/css/admin/".to_string();
+    admin_dir.push_str(file_dir);
+
+    fs::read_to_string(admin_dir)
+        .expect("Something went wrong reading CSS admin file!")
+}
+
+
 pub fn minify_css(
     current_theme: &str,
 ) {
@@ -53,12 +64,16 @@ pub fn minify_css(
     // TODO: Use bulma.css instead
     let bulma_css = fs::read_to_string("static/css/extra/bulma.min.css")
         .expect("Something went wrong reading bulma.css!");
-    let admin_css = fs::read_to_string("static/css/admin.css")
-        .expect("Something went wrong reading CSS admin file!");
 
     let mut css_to_minify2 = String::new();
     css_to_minify2.push_str(&bulma_css);
-    css_to_minify2.push_str(&admin_css);
+    css_to_minify2.push_str(&admin_file_dir("html.css"));
+    css_to_minify2.push_str(&admin_file_dir("structure.css"));
+    css_to_minify2.push_str(&admin_file_dir("navbar.css"));
+    css_to_minify2.push_str(&admin_file_dir("menu.css"));
+    css_to_minify2.push_str(&admin_file_dir("card.css"));
+    css_to_minify2.push_str(&admin_file_dir("hero.css"));
+    css_to_minify2.push_str(&admin_file_dir("structure.css"));
 
     let mut minified_css2 = Minifier::default().minify(
         &css_to_minify2,
