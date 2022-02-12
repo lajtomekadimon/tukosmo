@@ -16,7 +16,7 @@ use crate::handlers::admin::{
         AgoDomain,
     },
     error_get::ra_error_w_code,
-    domain_get::ra_domain_nochange,
+    domain_get::{ra_domain, ra_domain_nochange},
 };
 use crate::database::{
     types,
@@ -62,8 +62,6 @@ pub async fn domain_post(
     restarter: web::Data<mpsc::Sender<()>>,
 ) -> impl Responder {
 
-    // TODO: Block it if config != production
-
     match user_request(req, id) {
 
         Ok(user_req) => match Uuid::parse_str(&(form.csrf_token).clone()) {
@@ -85,7 +83,17 @@ pub async fn domain_post(
 
                     Ok(_row) => {
 
-                        if &config.server.domain != &domain_value {
+                        if &config.server.mode != "production" {
+
+                            HttpResponse::Found()
+                                .header(
+                                    "Location",
+                                    ra_domain(&user_req.lang_code),
+                                )
+                                .finish()
+
+                        } else if &config.server.domain != &domain_value {
+
                             let t = &t(&user_req.lang_code);
 
                             change_domain(
@@ -102,13 +110,16 @@ pub async fn domain_post(
                                 t.please_visit_new_domain_w_domain
                                     .replace("{domain}", &domain_value)
                             )
+
                         } else {
+
                             HttpResponse::Found()
                                 .header(
                                     "Location",
                                     ra_domain_nochange(&user_req.lang_code),
                                 )
                                 .finish()
+
                         }
 
                     },

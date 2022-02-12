@@ -78,6 +78,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Device",
     documentation:
         "Documentation",
+    domain_cant_be_changed_in_development_mode:
+        "Domain can't be changed in development mode.",
     domain_k_web:
         "Domain",
     download:

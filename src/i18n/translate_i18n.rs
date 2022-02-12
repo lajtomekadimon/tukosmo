@@ -38,6 +38,7 @@ pub struct TranslateI18N {
     pub description: &'static str,
     pub device: &'static str,
     pub documentation: &'static str,
+    pub domain_cant_be_changed_in_development_mode: &'static str,
     pub domain_k_web: &'static str,
     pub download: &'static str,
     pub draft: &'static str,

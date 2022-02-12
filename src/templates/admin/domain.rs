@@ -83,6 +83,15 @@ markup::define! {
 
             hr[];
 
+            @if **is_development {
+                div[
+                    class = "notification is-info",
+                ] {
+                    button[class = "delete"] {}
+                    @t.domain_cant_be_changed_in_development_mode
+                }
+            }
+
             @if **nochange {
                 div[
                     class = "notification is-info",
