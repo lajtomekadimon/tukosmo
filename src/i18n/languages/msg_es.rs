@@ -323,6 +323,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Mismo dominio recibido; no cambió nada.",
     scheduled_k_posts:
         "Programadas",
+    see_languages:
+        "Ver idiomas",
     select_a_language:
         "Selecciona un idioma",
     server:

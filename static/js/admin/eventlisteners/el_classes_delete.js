@@ -6,7 +6,12 @@ function el_classes_delete() {
         el => el.addEventListener(
             'click',
             event => {
-                event.currentTarget.parentNode.style.opacity = '0';
+                if (event.currentTarget.id === "languages-close") {
+                    // Do nothing
+                } else {
+                    const parent_node = event.currentTarget.parentNode;
+                    parent_node.style.opacity = '0';
+                }
             }
         )
     );

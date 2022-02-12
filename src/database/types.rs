@@ -114,3 +114,22 @@ pub struct WebsiteDataDB {
     pub website_subtitle: String,
     pub copyright_owner: String,
 }
+
+pub fn websitedata_to_admindata(
+    data: &WebsiteDataDB,
+) -> AdminDataDB {
+    AdminDataDB {
+        userd: UserDB {
+            id: 0,
+            email: "".to_string(),
+            name: "".to_string(),
+            date: "".to_string(),
+        },
+        lang: data.lang.clone(),
+        languages: data.languages.clone(),
+        website_title: data.website_title.clone(),
+        website_subtitle: data.website_subtitle.clone(),
+        copyright_owner: data.copyright_owner.clone(),
+    }
+}
+

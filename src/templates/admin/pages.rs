@@ -25,6 +25,7 @@ markup::define! {
                 current_page: "pages",
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }

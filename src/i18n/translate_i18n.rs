@@ -157,6 +157,7 @@ pub struct TranslateI18N {
     pub reset_password_success_w_email: &'static str,
     pub same_domain_recieved_nothing_changed: &'static str,
     pub scheduled_k_posts: &'static str,
+    pub see_languages: &'static str,
     pub select_a_language: &'static str,
     pub server: &'static str,
     pub sessions: &'static str,

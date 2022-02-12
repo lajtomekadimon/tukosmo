@@ -15,7 +15,6 @@ use crate::i18n::{
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
     widgets::admin_pagination::AdminPagination,
 };
 
@@ -42,6 +41,7 @@ markup::define! {
                 current_page: "users",
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }
@@ -54,15 +54,6 @@ markup::define! {
         div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.users
-
-                @if q.data.languages.iter().len() > 1 {
-                    div[class = "is-pulled-right"] {
-                        @AdminLangDropdown {
-                            routes: &q.routes,
-                            data: &q.data,
-                        }
-                    }
-                }
 
                 a[
                     href = ra_users_new(&q.data.lang.code),

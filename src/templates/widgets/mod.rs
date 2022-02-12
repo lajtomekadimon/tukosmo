@@ -1,4 +1,4 @@
-pub mod admin_lang_dropdown;
+pub mod admin_languages;
 pub mod admin_sidebar;
 pub mod admin_navbar;
 pub mod admin_panel;

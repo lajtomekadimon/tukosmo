@@ -21,7 +21,6 @@ use crate::database::{
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
     widgets::admin_post_editor::AdminPostEditor,
     widgets::admin_file_selector::AdminFileSelector,
 };
@@ -52,6 +51,7 @@ markup::define! {
                 current_page: "edit_post",
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }
@@ -67,15 +67,6 @@ markup::define! {
             h1[class = "title"] {
                 @t.edit_post_w_title
                     .replace("{title}", &post.id.to_string())
-
-                @if q.data.languages.iter().len() > 1 {
-                    div[class = "is-pulled-right"] {
-                        @AdminLangDropdown {
-                            routes: &q.routes,
-                            data: &q.data,
-                        }
-                    }
-                }
             }
 
             @if let Some(e) = error {

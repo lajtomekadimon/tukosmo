@@ -19,7 +19,6 @@ use crate::database::error_codes as ec;
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
 };
 
 
@@ -47,6 +46,7 @@ markup::define! {
                 current_page: "edit_user",
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }
@@ -61,15 +61,6 @@ markup::define! {
             h1[class = "title"] {
                 @t.edit_user_w_name
                     .replace("{name}", &q.user_data.name)
-
-                @if q.data.languages.iter().len() > 1 {
-                    div[class = "is-pulled-right"] {
-                        @AdminLangDropdown {
-                            routes: &q.routes,
-                            data: &q.data,
-                        }
-                    }
-                }
             }
 
             @if let Some(e) = error {

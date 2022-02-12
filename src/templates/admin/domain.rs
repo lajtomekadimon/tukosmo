@@ -13,7 +13,6 @@ use crate::database::error_codes as ec;
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
 };
 
 
@@ -48,6 +47,7 @@ markup::define! {
                 current_page: "domain",
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }
@@ -65,15 +65,6 @@ markup::define! {
         div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.domain_k_web
-
-                @if q.data.languages.iter().len() > 1 {
-                    div[class = "is-pulled-right"] {
-                        @AdminLangDropdown {
-                            routes: &q.routes,
-                            data: &q.data,
-                        }
-                    }
-                }
             }
 
             p[class = "mt-3 mb-3 is-size-4"] {

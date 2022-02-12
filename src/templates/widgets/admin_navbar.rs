@@ -45,10 +45,9 @@ markup::define! {
                         title = t.visit_website,
                     ] {
                         i[
-                            class = "eos-icons notranslate mr-1",
+                            class = "eos-icons notranslate mr-1 is-size-6",
                             translate = "no",
                         ] { "home" }
-                        " "
                         @data.website_title
                     }
                     /*
@@ -63,6 +62,22 @@ markup::define! {
                 }
 
                 div[class = "navbar-end"] {
+                    @if data.languages.iter().len() > 1 {
+                        a[
+                            id = "button-select-language",
+                            class = "navbar-item",
+                            title = t.select_a_language,
+                        ] {
+                            i[
+                                class = "eos-icons notranslate mr-1 is-size-6",
+                                translate = "no",
+                            ] {
+                                "language"
+                            }
+                            {data.lang.code.to_uppercase()}
+                        }
+                    }
+
                     div[
                         id = "navbar-dropdown",
                         class = "navbar-item has-dropdown",

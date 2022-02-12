@@ -73,7 +73,7 @@ pub fn minify_css(
     css_to_minify2.push_str(&admin_file_dir("menu.css"));
     css_to_minify2.push_str(&admin_file_dir("card.css"));
     css_to_minify2.push_str(&admin_file_dir("hero.css"));
-    css_to_minify2.push_str(&admin_file_dir("structure.css"));
+    css_to_minify2.push_str(&admin_file_dir("favicon.css"));
 
     let mut minified_css2 = Minifier::default().minify(
         &css_to_minify2,

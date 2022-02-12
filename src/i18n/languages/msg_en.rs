@@ -322,6 +322,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Some domain recieved; nothing changed.",
     scheduled_k_posts:
         "Scheduled",
+    see_languages:
+        "See languages",
     select_a_language:
         "Select a language",
     server:

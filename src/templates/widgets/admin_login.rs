@@ -9,7 +9,12 @@ use crate::handlers::{
     website::home_get::rw_home,
 };
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::database::types::WebsiteDataDB;
+use crate::database::types::{
+    WebsiteDataDB,
+    RouteDB,
+    websitedata_to_admindata,
+};
+use crate::templates::widgets::admin_languages::AdminLanguages;
 
 
 markup::define! {
@@ -17,8 +22,14 @@ markup::define! {
         content: BodyContent,
         data: &'a WebsiteDataDB,
         t: &'a TranslateI18N,
+        routes: &'a Vec<RouteDB>,
         forgotten_password: &'a bool,
     ) {
+        @AdminLanguages {
+            routes: routes,
+            data: &websitedata_to_admindata(data),
+            t: t,
+        }
 
         section[class = "hero is-success is-fullheight"] {
             div[class = "hero-body"] {
@@ -67,11 +78,26 @@ markup::define! {
                                 }
                             }
                         }
+
+                        p[class = "has-text-grey has-text-left mt-3 ml-3"] {
+                            a[
+                                id = "button-select-language",
+                                title = t.select_a_language,
+                            ] {
+                                i[
+                                    class = "eos-icons notranslate mr-1 \
+                                             is-size-6",
+                                    translate = "no",
+                                ] {
+                                    "language"
+                                }
+                                {data.lang.code.to_uppercase()}
+                            }
+                        }
                     }
                 }
             }
         }
-
     }
 }
 

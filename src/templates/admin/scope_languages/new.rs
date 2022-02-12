@@ -20,7 +20,6 @@ use crate::database::error_codes as ec;
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
 };
 
 
@@ -50,6 +49,7 @@ markup::define! {
                 current_page: "new_language",
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }
@@ -64,15 +64,6 @@ markup::define! {
         div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.add_language
-
-                @if q.data.languages.iter().len() > 1 {
-                    div[class = "is-pulled-right"] {
-                        @AdminLangDropdown {
-                            routes: &q.routes,
-                            data: &q.data,
-                        }
-                    }
-                }
             }
 
             p[

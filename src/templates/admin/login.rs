@@ -15,7 +15,7 @@ use crate::i18n::{
     t_error::ErrorDB,
 };
 use crate::database::{
-    types::{AdminDataDB, UserDB},
+    types::websitedata_to_admindata,
     error_codes as ec,
 };
 use crate::templates::{
@@ -36,19 +36,7 @@ markup::define! {
         @AdminLayout {
             domain: domain,
             title: title,
-            data: &AdminDataDB {
-                userd: UserDB {
-                    id: 0,
-                    email: "".to_string(),
-                    name: "".to_string(),
-                    date: "".to_string(),
-                },
-                lang: q.data.lang.clone(),
-                languages: q.data.languages.clone(),
-                website_title: q.data.website_title.clone(),
-                website_subtitle: q.data.website_subtitle.clone(),
-                copyright_owner: q.data.copyright_owner.clone(),
-            },
+            data: &websitedata_to_admindata(&q.data),
             routes: &q.routes,
             content: AdminLogin {
                 content: Content {
@@ -59,6 +47,7 @@ markup::define! {
                 },
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
                 forgotten_password: &false,
             },
         }

@@ -1,10 +1,14 @@
 use markup;
 
 use crate::i18n::translate_i18n::TranslateI18N;
-use crate::database::types::AdminDataDB;
+use crate::database::types::{
+    AdminDataDB,
+    RouteDB,
+};
 use crate::templates::widgets::{
     admin_sidebar::AdminSidebar,
     admin_navbar::AdminNavbar,
+    admin_languages::AdminLanguages,
 };
 
 
@@ -14,7 +18,14 @@ markup::define! {
         current_page: &'a str,
         data: &'a AdminDataDB,
         t: &'a TranslateI18N,
+        routes: &'a Vec<RouteDB>,
     ) {
+        @AdminLanguages {
+            routes: routes,
+            data: data,
+            t: t,
+        }
+
         @AdminNavbar {
             data: data,
             t: t,

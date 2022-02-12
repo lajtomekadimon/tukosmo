@@ -19,7 +19,6 @@ use crate::i18n::{
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
-    widgets::admin_lang_dropdown::AdminLangDropdown,
     widgets::admin_pagination::AdminPagination,
 };
 
@@ -56,6 +55,7 @@ markup::define! {
                 },
                 data: &q.data,
                 t: t,
+                routes: &q.routes,
             },
         }
     }
@@ -77,15 +77,6 @@ markup::define! {
                     @t.deleted_posts
                 } else {
                     @t.posts
-                }
-
-                @if q.data.languages.iter().len() > 1 {
-                    div[class = "is-pulled-right"] {
-                        @AdminLangDropdown {
-                            routes: &q.routes,
-                            data: &q.data,
-                        }
-                    }
                 }
 
                 a[
