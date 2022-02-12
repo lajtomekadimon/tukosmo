@@ -18,6 +18,7 @@ pub fn change_domain(
             server: ConfigServer {
                 mode: (&config.server.mode).clone(),
                 domain: domain_value.to_string(),
+                new_domain: "true".to_string(),
                 user_email: email_value.to_string(),
                 reset: (&config.server.reset).clone(),
                 default_lang: (&config.server.default_lang).clone(),

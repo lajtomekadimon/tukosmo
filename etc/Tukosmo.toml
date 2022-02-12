@@ -1,6 +1,7 @@
 [server]
 mode = "development"
 domain = "localhost"
+new_domain = "false"
 user_email = "test@test.com"
 reset = "false"
 default_lang = "en"

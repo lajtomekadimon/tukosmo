@@ -17,6 +17,7 @@ pub fn change_reset(
             server: ConfigServer {
                 mode: (&config.server.mode).clone(),
                 domain: (&config.server.domain).clone(),
+                new_domain: (&config.server.new_domain).clone(),
                 user_email: (&config.server.user_email).clone(),
                 reset: new_reset_value.to_string(),
                 default_lang: (&config.server.default_lang).clone(),

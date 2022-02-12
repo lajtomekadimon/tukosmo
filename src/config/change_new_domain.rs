@@ -8,19 +8,19 @@ use crate::config::global::{
 };
 
 
-pub fn change_lang(
+pub fn change_new_domain(
     config: &Config,
-    default_lang_value: &str,
+    new_domain_value: &str,
 ) {
     let new_toml_file = toml::to_string(
         &PreConfig {
             server: ConfigServer {
                 mode: (&config.server.mode).clone(),
                 domain: (&config.server.domain).clone(),
-                new_domain: (&config.server.new_domain).clone(),
+                new_domain: new_domain_value.to_string(),
                 user_email: (&config.server.user_email).clone(),
                 reset: (&config.server.reset).clone(),
-                default_lang: default_lang_value.to_string(),
+                default_lang: (&config.server.default_lang).clone(),
                 theme: (&config.server.theme).clone(),
                 development: (&config.server.development).clone(),
                 production: (&config.server.production).clone(),

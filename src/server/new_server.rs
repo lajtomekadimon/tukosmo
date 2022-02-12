@@ -16,7 +16,10 @@ use std::time::{
 use std::thread;
 use std::fs;
 
-use crate::config::global::config as config_data;
+use crate::config::{
+    global::config as config_data,
+    change_new_domain::change_new_domain,
+};
 use crate::minifiers::{
     minify_css::minify_css,
     minify_js::minify_js,
@@ -125,7 +128,13 @@ pub fn new_server(
             },
             Err(_) => true,
         };
-        if need_cert {
+        if &config.server.new_domain == "true" {
+            gen_tls_cert(&user_email, &domain).unwrap();
+            change_new_domain(
+                &config_data(),
+                "false"
+            );
+        } else if need_cert {
             gen_tls_cert(&user_email, &domain).unwrap();
         }
 
