@@ -196,7 +196,7 @@ Run web server:
 make -s run
 ```
 
-Run web server in the background and start on every boot:
+Run web server in the background, starting on every boot:
 
 ```sh
 make -s run-service

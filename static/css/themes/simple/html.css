@@ -25,6 +25,26 @@ p img {
     max-width: 100%;
 }
 
+blockquote {
+    background: #f9f9f9;
+    margin: 1.5em 10px;
+    padding: 1em;
+}
+
+blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+    font-style: italic;
+}
+
 code,
 pre {
     font-size: 0.9rem;
@@ -61,6 +81,10 @@ table td {
         line-height: 1.5;
     }
 
+    blockquote {
+        border-left: 10px solid #ccc;
+    }
+
     code {
         padding: 3px 5px;
         border-radius: 5px;
@@ -83,6 +107,10 @@ table td {
     body {
         font-size: 1rem;
         line-height: 1.5;
+    }
+
+    blockquote {
+        border-left: 7px solid #ccc;
     }
 
     code {
@@ -109,6 +137,10 @@ table td {
         line-height: 1.5;
     }
 
+    blockquote {
+        border-left: 7px solid #ccc;
+    }
+
     code {
         padding: 3px 5px;
         border-radius: 5px;
@@ -131,6 +163,10 @@ table td {
     body {
         font-size: 1rem;
         line-height: 1.5;
+    }
+
+    blockquote {
+        border-left: 5px solid #ccc;
     }
 
     code {

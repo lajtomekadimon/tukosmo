@@ -143,18 +143,18 @@
     .site-content-inside {
         flex-wrap: wrap;
         flex-direction: column;
-        margin: 0 -5px;
+        margin: 0;
     }
 
     .site-main {
         box-sizing: border-box;
         width: 100%;
-        padding: 0 5px;
+        padding: 0;
     }
 
     .site-sidebar {
         box-sizing: border-box;
         width: 100%;
-        padding: 60px 5px 0 5px;
+        padding: 60px 10px 0 10px;
     }
 }
