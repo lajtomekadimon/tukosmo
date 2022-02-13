@@ -110,8 +110,12 @@ git clone https://github.com/lajtomekadimon/tukosmo
 # If you are in development (local)
 cd tukosmo
 
-# If you are in production
-mv tukosmo /srv/tukosmo
+# If you are in production on FreeBSD
+su -m root -c 'mv tukosmo /srv/tukosmo'
+cd /srv/tukosmo
+
+# If you are in production on GNU/Linux
+sudo mv tukosmo /srv/tukosmo
 cd /srv/tukosmo
 ```
 
@@ -191,3 +195,13 @@ Run web server:
 ```sh
 make -s run
 ```
+
+Run web server in the background and start on every boot:
+
+```sh
+make -s run-service
+
+# If you want to stop it:
+make -s stop-service
+```
+

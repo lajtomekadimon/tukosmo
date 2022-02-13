@@ -155,15 +155,16 @@ endif
 
 ifeq ($(MODE), production)
 run-service:
-	systemctl --user enable etc/tukosmo.service
-	systemctl --user daemon-reload
-	systemctl --user start tukosmo.service
-	systemctl --user status tukosmo.service
+	sudo cp etc/tukosmo.service /etc/systemd/system/
+	sudo systemctl daemon-reload
+	sudo systemctl enable tukosmo.service
+	sudo systemctl start tukosmo.service
+	sudo systemctl status tukosmo.service
 endif
 
 ifeq ($(MODE), production)
 stop-service:
-	systemctl --user stop tukosmo.service
-	systemctl --user status tukosmo.service
+	sudo systemctl stop tukosmo.service
+	sudo systemctl status tukosmo.service
 endif
 
