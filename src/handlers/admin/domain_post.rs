@@ -56,6 +56,7 @@ impl QueryFunction for ApiDomain {
 
 pub async fn domain_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -138,6 +139,7 @@ pub async fn domain_post(
 
                             let html = Domain {
                                 domain: &config.server.domain,
+                                codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.domain_k_web,

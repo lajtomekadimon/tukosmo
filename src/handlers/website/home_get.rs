@@ -33,6 +33,7 @@ pub fn rw_home(
 
 pub async fn home_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -59,6 +60,7 @@ pub async fn home_get(
 
             let html = Blog {
                 domain: &config.server.domain,
+                codename: &codename,
                 title: &format!(
                     "{a} - {b}",
                     a = q.data.website_title,

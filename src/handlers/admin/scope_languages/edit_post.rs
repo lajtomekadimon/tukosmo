@@ -134,6 +134,7 @@ pub struct ApoLanguagesEdit {
 
 pub async fn edit_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
@@ -204,6 +205,7 @@ pub async fn edit_post(
 
                             let html = Edit {
                                 domain: &config.server.domain,
+                                codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.edit_language_w_name

@@ -1,6 +1,5 @@
 use markup;
 
-use crate::files::static_files;
 use crate::database::types::{WebsiteDataDB, RouteDB};
 use crate::templates::widgets::{
     favicon_meta::FaviconMeta,
@@ -11,6 +10,7 @@ use crate::templates::widgets::{
 markup::define! {
     WebsiteLayout<'a, BodyContent: markup::Render>(
         domain: &'a str,
+        codename: &'a str,
         title: &'a str,
         data: &'a WebsiteDataDB,
         routes: &'a Vec<RouteDB>,
@@ -85,15 +85,22 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
-                    href = "/static/bundle.css",
-                    href = static_files::CSS_WEBSITE,
+                    href = "/static/bundles/b-{codename}.css".replace(
+                        "{codename}",
+                        codename,
+                    ),
                 ];
             }
             body {
                 @content
 
                 // JavaScript
-                script[src = static_files::JS_WEBSITE] {}
+                script[
+                    src = "/static/bundles/b-{codename}.js".replace(
+                        "{codename}",
+                        codename,
+                    ),
+                ] {}
             }
         }
     }

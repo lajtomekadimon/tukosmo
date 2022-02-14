@@ -44,6 +44,7 @@ pub struct AgoPostsNew {
 
 pub async fn new_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -65,6 +66,7 @@ pub async fn new_get(
 
                 let html = New {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.new_post,

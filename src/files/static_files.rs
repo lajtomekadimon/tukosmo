@@ -57,19 +57,3 @@ pub const FAVICONADMIN_16X16: &'static str =
 pub const FAVICONADMIN_MANIFEST: &'static str =
     "/static/faviconadmin/manifest.json";
 
-
-
-// CSS files
-pub const CSS_WEBSITE: &'static str =
-    "/static/bundle.css";
-pub const CSS_ADMIN: &'static str =
-    "/static/bundle.admin.css";
-
-
-
-// JavaScript files
-pub const JS_WEBSITE: &'static str =
-    "/static/bundle.js";
-pub const JS_ADMIN: &'static str =
-    "/static/bundle.admin.js";
-

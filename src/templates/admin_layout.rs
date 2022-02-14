@@ -1,6 +1,5 @@
 use markup;
 
-use crate::files::static_files;
 use crate::database::types::{AdminDataDB, RouteDB};
 use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
 
@@ -8,6 +7,7 @@ use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
 markup::define! {
     AdminLayout<'a, BodyContent: markup::Render>(
         domain: &'a str,
+        codename: &'a str,
         title: &'a str,
         data: &'a AdminDataDB,
         routes: &'a Vec<RouteDB>,
@@ -60,14 +60,22 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
-                    href = static_files::CSS_ADMIN,
+                    href = "/static/bundles/b-{codename}.admin.css".replace(
+                        "{codename}",
+                        codename,
+                    ),
                 ];
             }
             body {
                 @content
 
                 // JavaScript
-                script[src = static_files::JS_ADMIN] {}
+                script[
+                    src = "/static/bundles/b-{codename}.admin.js".replace(
+                        "{codename}",
+                        codename,
+                    ),
+                ] {}
             }
         }
     }

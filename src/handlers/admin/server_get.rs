@@ -41,6 +41,7 @@ pub struct AgoServer {
 
 pub async fn server_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -61,6 +62,7 @@ pub async fn server_get(
 
                 let html = Server {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.server,

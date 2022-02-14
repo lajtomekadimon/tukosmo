@@ -19,6 +19,7 @@ use crate::templates::{
 markup::define! {
     Domain<'a>(
         domain: &'a str,
+        codename: &'a str,
         title: &'a str,
         q: &'a AgoDomain,
         t: &'a TranslateI18N,
@@ -30,6 +31,7 @@ markup::define! {
     ) {
         @AdminLayout {
             domain: domain,
+            codename: codename,
             title: title,
             data: &q.data,
             routes: &q.routes,

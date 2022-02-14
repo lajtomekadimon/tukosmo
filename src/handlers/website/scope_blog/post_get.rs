@@ -46,6 +46,7 @@ pub struct WgoBlogPost {
 
 pub async fn post_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -70,6 +71,7 @@ pub async fn post_get(
 
             let html = Post {
                 domain: &config.server.domain,
+                codename: &codename,
                 title: &format!(
                     "{a} - {b}",
                     a = q.post.title,

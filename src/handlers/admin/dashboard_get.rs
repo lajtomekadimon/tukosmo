@@ -41,6 +41,7 @@ pub struct AgoDashboard {
 
 pub async fn dashboard_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -61,6 +62,7 @@ pub async fn dashboard_get(
 
                 let html = Dashboard {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: t.tukosmo_admin_panel,
                     q: &q,
                     t: t,

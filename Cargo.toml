@@ -11,6 +11,7 @@ actix-web = {version = "3", features = ["openssl"]}
 openssl = {version = "0.10", features = ["v110"]}
 actix-cors = "0.5"
 actix-files = "0.5.0"
+actix-service = "2.0.2"
 actix-multipart = "0.3.0"
 futures-util = "0.3.18"
 sanitize-filename = "0.3.0"

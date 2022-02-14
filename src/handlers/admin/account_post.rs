@@ -145,6 +145,7 @@ impl QueryFunction for ApiAccount {
 
 pub async fn account_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -193,6 +194,7 @@ pub async fn account_post(
 
                             let html = Account {
                                 domain: &config.server.domain,
+                                codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.account,
@@ -232,6 +234,7 @@ pub async fn account_post(
 
                             let html = Account {
                                 domain: &config.server.domain,
+                                codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.account,

@@ -54,6 +54,7 @@ pub struct AgoFilesEdit {
 
 pub async fn edit_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -78,6 +79,7 @@ pub async fn edit_get(
 
                 let html = Edit {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.edit_file_w_name

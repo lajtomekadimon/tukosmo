@@ -63,6 +63,7 @@ pub struct WgoBlog {
 
 pub async fn blog_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -89,6 +90,7 @@ pub async fn blog_get(
 
             let html = Blog {
                 domain: &config.server.domain,
+                codename: &codename,
                 title: &format!(
                     "{a} - {b}",
                     a = t.blog,

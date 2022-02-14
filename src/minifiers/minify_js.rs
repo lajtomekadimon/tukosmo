@@ -6,7 +6,7 @@ use esbuild_rs::{TransformOptionsBuilder, transform_direct, TransformResult};
 
 fn minify_js_file(
     input_code: String,
-    output_file: &'static str,
+    output_file: String,
 ) {
     let src = Arc::new(input_code.as_bytes().to_vec());
 
@@ -33,13 +33,18 @@ fn minify_js_file(
 
 
 
-pub fn minify_js() {
+pub fn minify_js(
+    codename: &str,
+) {
     let website_js = fs::read_to_string("static/js/website.js")
         .expect("Something went wrong reading the JS file!");
 
     minify_js_file(
         website_js,
-        "static/bundle.js",
+        "static/bundles/b-{codename}.js".replace(
+            "{codename}",
+            codename,
+        ),
     );
 
     /*---*/
@@ -84,7 +89,10 @@ pub fn minify_js() {
 
     minify_js_file(
         admin_js,
-        "static/bundle.admin.js",
+        "static/bundles/b-{codename}.admin.js".replace(
+            "{codename}",
+            codename,
+        ),
     );
 }
 

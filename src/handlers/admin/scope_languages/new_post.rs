@@ -153,6 +153,7 @@ impl QueryFunction for ApiLanguagesNew {
 
 pub async fn new_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
@@ -213,6 +214,7 @@ pub async fn new_post(
 
                             let html = New {
                                 domain: &config.server.domain,
+                                codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.add_language,

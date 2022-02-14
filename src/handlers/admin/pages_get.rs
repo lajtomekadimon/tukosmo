@@ -50,6 +50,7 @@ pub struct AgoPages {
 
 pub async fn pages_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -70,6 +71,7 @@ pub async fn pages_get(
 
                 let html = Pages {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.pages,

@@ -41,6 +41,7 @@ pub struct AgoStatistics {
 
 pub async fn statistics_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -61,6 +62,7 @@ pub async fn statistics_get(
 
                 let html = Statistics {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.statistics,

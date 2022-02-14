@@ -49,6 +49,7 @@ pub struct ApoForgottenPassword {
 
 pub async fn forgotten_password_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -85,6 +86,7 @@ pub async fn forgotten_password_post(
 
                 let html = ForgottenPassword {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.forgotten_password,
@@ -126,6 +128,7 @@ pub async fn forgotten_password_post(
 
                 let html = ForgottenPassword {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.forgotten_password,

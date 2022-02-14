@@ -11,12 +11,14 @@ use crate::templates::{
 markup::define! {
     Pages<'a>(
         domain: &'a str,
+        codename: &'a str,
         title: &'a str,
         q: &'a AgoPages,
         t: &'a TranslateI18N,
     ) {
         @AdminLayout {
             domain: domain,
+            codename: codename,
             title: title,
             data: &q.data,
             routes: &q.routes,

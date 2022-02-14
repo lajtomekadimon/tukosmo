@@ -44,6 +44,7 @@ pub struct AgoAccount {
 
 pub async fn account_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -64,6 +65,7 @@ pub async fn account_get(
 
                 let html = Account {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.account,

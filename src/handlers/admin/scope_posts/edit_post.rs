@@ -58,6 +58,7 @@ impl QueryFunction for ApiPostsEdit {
 
 pub async fn edit_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -149,6 +150,7 @@ pub async fn edit_post(
                             if let Some(ref post) = q.post {
                                 let html = Edit {
                                     domain: &config.server.domain,
+                                    codename: &codename,
                                     title: &format!(
                                         "{a} - {b}",
                                         a = t.edit_post_w_title
@@ -169,6 +171,7 @@ pub async fn edit_post(
                             } else {
                                 let html = Edit {
                                     domain: &config.server.domain,
+                                    codename: &codename,
                                     title: &format!(
                                         "{a} - {b}",
                                         a = t.edit_post_w_title

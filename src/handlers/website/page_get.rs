@@ -43,6 +43,7 @@ pub struct WgoPage {
 
 pub async fn page_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
 ) -> impl Responder {
@@ -63,6 +64,7 @@ pub async fn page_get(
 
             let html = Page {
                 domain: &config.server.domain,
+                codename: &codename,
                 title: &format!(
                     "{a} - {b}",
                     a = "[page title]",

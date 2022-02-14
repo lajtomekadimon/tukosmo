@@ -131,6 +131,7 @@ impl QueryFunction for ApiUsersEdit {
 
 pub async fn edit_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
@@ -187,6 +188,7 @@ pub async fn edit_post(
 
                             let html = Edit {
                                 domain: &config.server.domain,
+                                codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.edit_user_w_name

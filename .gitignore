@@ -13,9 +13,6 @@ icert.der
 /etc/pkey.der
 /etc/cert.der
 /etc/icert.der
-/static/bundle.admin.css
-/static/bundle.css
-/static/bundle.admin.js
-/static/bundle.js
+/static/bundles/*
 /files/*
 /static/favicon/temp/*

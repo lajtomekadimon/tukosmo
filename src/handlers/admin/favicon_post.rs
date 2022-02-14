@@ -41,6 +41,7 @@ impl QueryFunction for ApiFavicon {
 
 pub async fn favicon_post(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     payload: Multipart,
@@ -85,6 +86,7 @@ pub async fn favicon_post(
 
                     let html = Favicon {
                         domain: &config.server.domain,
+                        codename: &codename,
                         title: &format!(
                             "{a} - {b}",
                             a = t.favicon,

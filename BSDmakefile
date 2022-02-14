@@ -72,6 +72,8 @@ psql:
 clean:
 	rm -f Cargo.lock
 	rm -Rf target
+	rm -Rf static/bundles
+	mkdir -p static/bundles
 
 .if ${MODE} == development
 install: clean
@@ -91,7 +93,9 @@ install: clean
 	# Compile Tukosmo
 	cargo build
 	# Create /temp dir
-	mkdir temp
+	mkdir -p temp
+	# Create /static/bundles dir
+	mkdir -p static/bundles
 .endif
 .if ${MODE} == production
 install: clean
@@ -113,7 +117,9 @@ install: clean
 	# Compile Tukosmo
 	cargo build --release
 	# Create /temp dir
-	mkdir temp
+	mkdir -p temp
+	# Create /static/bundles dir
+	mkdir -p static/bundles
 .endif
 
 install-all: installdb install

@@ -57,6 +57,7 @@ pub struct AgoError {
 
 pub async fn error_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -89,6 +90,7 @@ pub async fn error_get(
 
                 let html = Error {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = "ERROR {code}".replace("{code}", &e.code),

@@ -9,3 +9,4 @@ pub fn routes() -> Files {
         "static",
     ).show_files_listing()
 }
+

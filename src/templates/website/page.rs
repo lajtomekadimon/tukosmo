@@ -11,12 +11,14 @@ use crate::templates::{
 markup::define! {
     Page<'a>(
         domain: &'a str,
+        codename: &'a str,
         title: &'a str,
         q: &'a WgoPage,
         t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {
             domain: domain,
+            codename: codename,
             title: title,
             data: &q.data,
             routes: &q.routes,

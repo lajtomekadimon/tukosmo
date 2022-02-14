@@ -59,6 +59,7 @@ pub struct AgoWebsite {
 
 pub async fn website_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -80,6 +81,7 @@ pub async fn website_get(
 
                 let html = Website {
                     domain: &config.server.domain,
+                    codename: &codename,
                     title: &format!(
                         "{a} - {b}",
                         a = t.website,

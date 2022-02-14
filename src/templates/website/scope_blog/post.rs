@@ -20,12 +20,14 @@ use crate::templates::{
 markup::define! {
     Post<'a>(
         domain: &'a str,
+        codename: &'a str,
         title: &'a str,
         q: &'a WgoBlogPost,
         t: &'a TranslateI18N,
     ) {
         @WebsiteLayout {
             domain: domain,
+            codename: codename,
             title: title,
             data: &q.data,
             routes: &q.routes,

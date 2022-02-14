@@ -57,6 +57,7 @@ pub struct AgoPostsEdit {
 
 pub async fn edit_get(
     config: web::Data<Config>,
+    codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
     web::Query(param): web::Query<GetParamData>,
@@ -84,6 +85,7 @@ pub async fn edit_get(
                 if let Some(ref post) = q.post {
                     let html = Edit {
                         domain: &config.server.domain,
+                        codename: &codename,
                         title: &format!(
                             "{a} - {b}",
                             a = t.edit_post_w_title
@@ -102,6 +104,7 @@ pub async fn edit_get(
                 } else {
                     let html = Edit {
                         domain: &config.server.domain,
+                        codename: &codename,
                         title: &format!(
                             "{a} - {b}",
                             a = t.edit_post_w_title

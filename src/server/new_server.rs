@@ -15,6 +15,7 @@ use std::time::{
 };
 use std::thread;
 use std::fs;
+use chrono::Utc;
 
 use crate::config::{
     global::config as config_data,
@@ -85,8 +86,19 @@ pub fn new_server(
     }
 
     // Minify CSS and JS
-    minify_css(&config.server.theme);
-    minify_js();
+    let bundles_path = "./static/bundles";
+    match fs::remove_dir_all(bundles_path) {
+        // TODO: (?)
+        Ok(_) => {
+            fs::create_dir(bundles_path).unwrap();
+        },
+        Err(_) => {
+            fs::create_dir(bundles_path).unwrap();
+        },
+    }
+    let codename = format!("{:x}", Utc::now().timestamp());
+    minify_css(&config.server.theme, &codename);
+    minify_js(&codename);
     
     // If this is the first server start...
     if start_n == &1 {
@@ -210,6 +222,7 @@ pub fn new_server(
     let server = HttpServer::new(move || {
         App::new()
             .data(config_data())  // to load Tukosmo.toml config values
+            .data(codename.clone())  // to load cached files
             .data(tx.clone())  // to stop server
 
             .wrap(RedirectHTTPS::with_replacements(
