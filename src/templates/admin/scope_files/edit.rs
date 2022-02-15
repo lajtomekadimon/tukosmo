@@ -45,6 +45,7 @@ markup::define! {
                     error: error,
                     form: form,
                 },
+                codename: codename,
                 current_page: "edit_file",
                 data: &q.data,
                 t: t,

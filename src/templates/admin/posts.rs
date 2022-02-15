@@ -55,6 +55,7 @@ markup::define! {
                 } else {
                     "posts"
                 },
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

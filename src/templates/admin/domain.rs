@@ -47,6 +47,7 @@ markup::define! {
                     is_development: is_development,
                 },
                 current_page: "domain",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

@@ -25,6 +25,7 @@ markup::define! {
             content: AdminPanel {
                 content: Content {},
                 current_page: "server",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

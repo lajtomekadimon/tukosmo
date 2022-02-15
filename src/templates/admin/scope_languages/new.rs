@@ -49,6 +49,7 @@ markup::define! {
                     form: form,
                 },
                 current_page: "new_language",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

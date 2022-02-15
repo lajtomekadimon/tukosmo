@@ -85,6 +85,9 @@ pub fn new_server(
         panic!("Wrong reset value in Tukosmo.toml");
     }
 
+    // Codename for static files efficient cache policy
+    let codename = format!("{:x}", Utc::now().timestamp());
+
     // Minify CSS and JS
     let bundles_path = "./static/bundles";
     match fs::remove_dir_all(bundles_path) {
@@ -96,9 +99,8 @@ pub fn new_server(
             fs::create_dir(bundles_path).unwrap();
         },
     }
-    let codename = format!("{:x}", Utc::now().timestamp());
-    minify_css(&config.server.theme, &codename);
-    minify_js(&codename);
+    minify_css(&config.server.theme);
+    minify_js();
     
     // If this is the first server start...
     if start_n == &1 {
@@ -246,7 +248,7 @@ pub fn new_server(
             .service(routes::root::route())
 
             // Static files: /static/.../...
-            .service(routes::staticf::routes())
+            .service(routes::staticf::route())
 
             // Uploaded files: /files/...
             .service(routes::files::routes())

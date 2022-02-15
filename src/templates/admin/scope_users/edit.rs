@@ -46,6 +46,7 @@ markup::define! {
                     form: form,
                 },
                 current_page: "edit_user",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

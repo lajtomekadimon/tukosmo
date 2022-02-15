@@ -1,5 +1,14 @@
 use markup;
 
+use crate::files::static_files::{
+    staticf_route,
+    FAVICON_96X96,
+    FAVICON_16X16,
+    FIREFOX_TABS_LIGHT,
+    FIREFOX_TABS_DARK,
+    CHROME_TABS_LIGHT,
+    CHROME_TABS_DARK,
+};
 use crate::handlers::admin::favicon_get::{
     AgoFavicon,
     ra_favicon,
@@ -36,8 +45,10 @@ markup::define! {
                     t: t,
                     error: error,
                     success: success,
+                    codename: codename,
                 },
                 current_page: "favicon",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,
@@ -50,6 +61,7 @@ markup::define! {
         t: &'a TranslateI18N,
         error: &'a Option<ErrorDB>,
         success: &'a bool,
+        codename: &'a str,
     ) {
         div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
@@ -142,7 +154,7 @@ markup::define! {
 
             p {
                 img[
-                    src = "/static/favicon/favicon-96x96.png",
+                    src = staticf_route(FAVICON_96X96, codename),
                     alt = "favicon-96x96.png",
                 ];
             }
@@ -157,61 +169,85 @@ markup::define! {
                 @t.web_browsers_preview
             }
 
-            div[class = "favicon-firefox-light-preview"] {
+            div[
+                class = "favicon-firefox-preview",
+                style = "background-image:url({url})".replace(
+                    "{url}",
+                    &staticf_route(FIREFOX_TABS_LIGHT, codename),
+                ),
+            ] {
                 div[class = "favicon-firefox-tab1"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
                 div[class = "favicon-firefox-tab2"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
             }
 
-            div[class = "favicon-firefox-dark-preview"] {
+            div[
+                class = "favicon-firefox-preview",
+                style = "background-image:url({url})".replace(
+                    "{url}",
+                    &staticf_route(FIREFOX_TABS_DARK, codename),
+                ),
+            ] {
                 div[class = "favicon-firefox-tab1"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
                 div[class = "favicon-firefox-tab2"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
             }
 
-            div[class = "favicon-chrome-light-preview"] {
+            div[
+                class = "favicon-chrome-preview",
+                style = "background-image:url({url})".replace(
+                    "{url}",
+                    &staticf_route(CHROME_TABS_LIGHT, codename),
+                ),
+            ] {
                 div[class = "favicon-chrome-tab1"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
                 div[class = "favicon-chrome-tab2"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
             }
 
-            div[class = "favicon-chrome-dark-preview"] {
+            div[
+                class = "favicon-chrome-preview",
+                style = "background-image:url({url})".replace(
+                    "{url}",
+                    &staticf_route(CHROME_TABS_DARK, codename),
+                ),
+            ] {
                 div[class = "favicon-chrome-tab1"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }
                 div[class = "favicon-chrome-tab2"] {
                     img[
-                        src = "/static/favicon/favicon-16x16.png",
+                        src = staticf_route(FAVICON_16X16, codename),
                         alt = "favicon-16x16.png",
                     ];
                 }

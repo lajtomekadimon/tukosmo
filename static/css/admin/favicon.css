@@ -1,34 +1,18 @@
 
-.favicon-firefox-light-preview,
-.favicon-firefox-dark-preview,
-.favicon-chrome-light-preview,
-.favicon-chrome-dark-preview {
+.favicon-firefox-preview,
+.favicon-chrome-preview {
     position: relative;
     margin-bottom: 10px;
 }
 
-.favicon-firefox-light-preview {
+.favicon-firefox-preview {
     width: 454px;
     height: 117px;
-    background-image: url(/static/img/firefox-tabs-light.png);
 }
 
-.favicon-firefox-dark-preview {
-    width: 454px;
-    height: 117px;
-    background-image: url(/static/img/firefox-tabs-dark.png);
-}
-
-.favicon-chrome-light-preview {
+.favicon-chrome-preview {
     width: 492px;
     height: 107px;
-    background-image: url(/static/img/chrome-tabs-light.png);
-}
-
-.favicon-chrome-dark-preview {
-    width: 492px;
-    height: 107px;
-    background-image: url(/static/img/chrome-tabs-dark.png);
 }
 
 .favicon-firefox-tab1,

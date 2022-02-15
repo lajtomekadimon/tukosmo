@@ -31,6 +31,7 @@ markup::define! {
                     e: e,
                 },
                 current_page: "error",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

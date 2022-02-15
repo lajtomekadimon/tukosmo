@@ -16,6 +16,7 @@ markup::define! {
     AdminPanel<'a, BodyContent: markup::Render>(
         content: BodyContent,
         current_page: &'a str,
+        codename: &'a str,
         data: &'a AdminDataDB,
         t: &'a TranslateI18N,
         routes: &'a Vec<RouteDB>,
@@ -27,24 +28,23 @@ markup::define! {
         }
 
         @AdminNavbar {
+            codename: codename,
             data: data,
             t: t,
         }
 
-        //div[class = "container"] {
-            div[class = "columns"] {
-                div[class = "column is-2"] {
-                    @AdminSidebar {
-                        current_page: current_page,
-                        data: data,
-                        t: t,
-                    }
-                }
-                div[class = "column is-10"] {
-                    @content
+        div[class = "columns"] {
+            div[class = "column is-2"] {
+                @AdminSidebar {
+                    current_page: current_page,
+                    data: data,
+                    t: t,
                 }
             }
-        //}
+            div[class = "column is-10"] {
+                @content
+            }
+        }
     }
 }
 

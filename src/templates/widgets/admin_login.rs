@@ -1,6 +1,9 @@
 use markup;
 
-use crate::files::static_files::FAVICONADMIN_96X96;
+use crate::files::static_files::{
+    staticf_route,
+    FAVICONADMIN_96X96,
+};
 use crate::handlers::{
     admin::{
         login_get::ra_login,
@@ -20,6 +23,7 @@ use crate::templates::widgets::admin_languages::AdminLanguages;
 markup::define! {
     AdminLogin<'a, BodyContent: markup::Render>(
         content: BodyContent,
+        codename: &'a str,
         data: &'a WebsiteDataDB,
         t: &'a TranslateI18N,
         routes: &'a Vec<RouteDB>,
@@ -39,8 +43,11 @@ markup::define! {
                             figure[class = "avatar"] {
                                 div[class = "avatar-container"] {
                                     img[
-                                        src = FAVICONADMIN_96X96,
-                                        alt = FAVICONADMIN_96X96,
+                                        src = staticf_route(
+                                            FAVICONADMIN_96X96,
+                                            codename,
+                                        ),
+                                        alt = "tukosmo",
                                     ];
                                 }
                             }

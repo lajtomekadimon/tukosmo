@@ -45,6 +45,7 @@ markup::define! {
                     success: success,
                 },
                 current_page: "files",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

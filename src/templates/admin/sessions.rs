@@ -41,6 +41,7 @@ markup::define! {
                     error: error,
                 },
                 current_page: "sessions",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

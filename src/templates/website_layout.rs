@@ -1,5 +1,10 @@
 use markup;
 
+use crate::files::static_files::{
+    staticf_route,
+    CSS_WEBSITE,
+    JS_WEBSITE,
+};
 use crate::database::types::{WebsiteDataDB, RouteDB};
 use crate::templates::widgets::{
     favicon_meta::FaviconMeta,
@@ -45,7 +50,9 @@ markup::define! {
                 */
 
                 // Favicon
-                @FaviconMeta {}
+                @FaviconMeta {
+                    codename: codename,
+                }
 
                 // Open Graph
                 @OpenGraphMeta {
@@ -85,10 +92,7 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
-                    href = "/static/bundles/b-{codename}.css".replace(
-                        "{codename}",
-                        codename,
-                    ),
+                    href = staticf_route(CSS_WEBSITE, codename),
                 ];
             }
             body {
@@ -96,10 +100,7 @@ markup::define! {
 
                 // JavaScript
                 script[
-                    src = "/static/bundles/b-{codename}.js".replace(
-                        "{codename}",
-                        codename,
-                    ),
+                    src = staticf_route(JS_WEBSITE, codename),
                 ] {}
             }
         }

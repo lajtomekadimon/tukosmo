@@ -33,18 +33,13 @@ fn minify_js_file(
 
 
 
-pub fn minify_js(
-    codename: &str,
-) {
+pub fn minify_js() {
     let website_js = fs::read_to_string("static/js/website.js")
         .expect("Something went wrong reading the JS file!");
 
     minify_js_file(
         website_js,
-        "static/bundles/b-{codename}.js".replace(
-            "{codename}",
-            codename,
-        ),
+        "static/bundles/bundle.js".to_string(),
     );
 
     /*---*/
@@ -89,10 +84,7 @@ pub fn minify_js(
 
     minify_js_file(
         admin_js,
-        "static/bundles/b-{codename}.admin.js".replace(
-            "{codename}",
-            codename,
-        ),
+        "static/bundles/bundle.admin.js".to_string(),
     );
 }
 

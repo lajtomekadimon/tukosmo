@@ -41,6 +41,7 @@ markup::define! {
                     success: success,
                 },
                 current_page: "users",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

@@ -27,6 +27,7 @@ markup::define! {
                     t: t,
                 },
                 current_page: "tukosmo",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

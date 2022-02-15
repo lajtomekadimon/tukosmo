@@ -28,6 +28,7 @@ markup::define! {
                     t: t,
                 },
                 current_page: "dashboard",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

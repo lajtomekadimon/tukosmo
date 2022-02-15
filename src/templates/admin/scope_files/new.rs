@@ -40,6 +40,7 @@ markup::define! {
                     error: error,
                 },
                 current_page: "upload_file",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

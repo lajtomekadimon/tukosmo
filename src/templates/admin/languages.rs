@@ -37,6 +37,7 @@ markup::define! {
                     success: success,
                 },
                 current_page: "languages",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

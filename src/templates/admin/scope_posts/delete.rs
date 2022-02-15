@@ -39,6 +39,7 @@ markup::define! {
                     error: error,
                 },
                 current_page: "delete_post",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

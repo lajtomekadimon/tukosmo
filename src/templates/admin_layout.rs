@@ -1,5 +1,10 @@
 use markup;
 
+use crate::files::static_files::{
+    staticf_route,
+    CSS_ADMIN,
+    JS_ADMIN,
+};
 use crate::database::types::{AdminDataDB, RouteDB};
 use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
 
@@ -38,7 +43,9 @@ markup::define! {
                 */
 
                 // Favicon
-                @FaviconAdminMeta {}
+                @FaviconAdminMeta {
+                    codename: codename,
+                }
 
                 // i18n routes
                 @for route in routes.iter() {
@@ -60,10 +67,7 @@ markup::define! {
 
                 link[
                     rel = "stylesheet",
-                    href = "/static/bundles/b-{codename}.admin.css".replace(
-                        "{codename}",
-                        codename,
-                    ),
+                    href = staticf_route(CSS_ADMIN, codename),
                 ];
             }
             body {
@@ -71,10 +75,7 @@ markup::define! {
 
                 // JavaScript
                 script[
-                    src = "/static/bundles/b-{codename}.admin.js".replace(
-                        "{codename}",
-                        codename,
-                    ),
+                    src = staticf_route(JS_ADMIN, codename),
                 ] {}
             }
         }

@@ -1,5 +1,9 @@
 use markup;
 
+use crate::files::static_files::{
+    staticf_route,
+    TUKOSMO_LOGO_TAP_40,
+};
 use crate::handlers::{
     admin::dashboard_get::ra_dashboard,
     admin::account_get::ra_account,
@@ -13,6 +17,7 @@ use crate::database::types::AdminDataDB;
 
 markup::define! {
     AdminNavbar<'a>(
+        codename: &'a str,
         data: &'a AdminDataDB,
         t: &'a TranslateI18N,
     ) {
@@ -20,6 +25,9 @@ markup::define! {
             div[class = "navbar-brand"] {
                 a[
                     class = "navbar-item brand-text tap-logo",
+                    style = "background-image:url({url})".replace(
+                        "{url}", &staticf_route(TUKOSMO_LOGO_TAP_40, codename),
+                    ),
                     href = &ra_dashboard(&data.lang.code),
                     title = t.tukosmo_admin_panel,
                 ] {}

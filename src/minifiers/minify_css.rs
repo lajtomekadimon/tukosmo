@@ -30,7 +30,6 @@ fn admin_file_dir(
 
 pub fn minify_css(
     current_theme: &str,
-    codename: &str,
 ) {
     // WEBSITE
     ////////////
@@ -58,9 +57,9 @@ pub fn minify_css(
     ).expect("CSS couldn't be minified!");
 
     fs::write(
-        "static/bundles/b-{codename}.css".replace("{codename}", codename),
+        "static/bundles/bundle.css",
         &minified_css,
-    ).expect("Error writing to b-{codename}.css");
+    ).expect("Error writing to bundle.css");
 
     // ADMIN
     //////////
@@ -92,10 +91,7 @@ pub fn minify_css(
     // TODO: Add license, etc. of everything in a comment like GNU proposes
 
     fs::write(
-        "static/bundles/b-{codename}.admin.css".replace(
-            "{codename}",
-            codename,
-        ),
+        "static/bundles/bundle.admin.css",
         &minified_css2,
-    ).expect("Error writing to b-{codename}.admin.css");
+    ).expect("Error writing to bundle.admin.css");
 }

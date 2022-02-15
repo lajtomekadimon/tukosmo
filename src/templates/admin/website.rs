@@ -44,6 +44,7 @@ markup::define! {
                     default_lang: default_lang,
                 },
                 current_page: "website",
+                codename: codename,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,
