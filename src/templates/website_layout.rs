@@ -76,22 +76,14 @@ markup::define! {
                     ];
                 }
 
-                // Styles
+                // CSS
                 /*link[
                     rel = "stylesheet",
                     href = "https://fonts.googleapis.com/css?family=Poppins",
                 ];*/
-
-                // TODO: Add it to Tukosmo's CSS
                 link[
                     rel = "stylesheet",
-                    href = "https://cdn.jsdelivr.net/npm/\
-                            eos-icons@latest/dist/css/eos-icons.css",
-                ];
-
-
-                link[
-                    rel = "stylesheet",
+                    type = "text/css",
                     href = staticf_route(CSS_WEBSITE, codename),
                 ];
             }

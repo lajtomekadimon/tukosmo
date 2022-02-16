@@ -39,6 +39,9 @@ pub fn minify_css(
     let mut css_to_minify = String::new();
     // TODO: Add license,etc comment like GNU Project proposes
     css_to_minify.push_str(&normalize_css);
+    css_to_minify.push_str(
+        &fs::read_to_string("static/css/extra/eos-icons.css").unwrap()
+    );
     css_to_minify.push_str(&theme_file_dir(current_theme, "/html.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/site.css"));
     css_to_minify.push_str(&theme_file_dir(current_theme, "/header.css"));
@@ -68,6 +71,9 @@ pub fn minify_css(
         .expect("Something went wrong reading bulma.css!");
 
     let mut css_to_minify2 = String::new();
+    css_to_minify2.push_str(
+        &fs::read_to_string("static/css/extra/eos-icons.css").unwrap()
+    );
     css_to_minify2.push_str(&bulma_css);
     css_to_minify2.push_str(&admin_file_dir("html.css"));
     css_to_minify2.push_str(&admin_file_dir("structure.css"));

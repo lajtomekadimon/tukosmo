@@ -58,15 +58,10 @@ markup::define! {
                     ];
                 }
 
-                // TODO: Add it to Tukosmo's CSS
+                // CSS
                 link[
                     rel = "stylesheet",
-                    href = "https://cdn.jsdelivr.net/npm/\
-                            eos-icons@latest/dist/css/eos-icons.css",
-                ];
-
-                link[
-                    rel = "stylesheet",
+                    type = "text/css",
                     href = staticf_route(CSS_ADMIN, codename),
                 ];
             }
