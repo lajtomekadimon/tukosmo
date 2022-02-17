@@ -12,6 +12,7 @@ use crate::files::static_files::{
 use crate::handlers::admin::favicon_get::{
     AgoFavicon,
     ra_favicon,
+    ra_favicon_success,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -87,6 +88,7 @@ markup::define! {
             }
 
             form[
+                id = "form-favicon",
                 method = "post",
                 action = ra_favicon(&q.data.lang.code),
                 enctype = "multipart/form-data",
@@ -136,14 +138,31 @@ markup::define! {
                         }
                     }
                 }
+            }  // end form
 
-                div[class = "field is-grouped"] {
-                    div[class = "control"] {
-                        button[class = "button is-link"] {
-                            @t.submit
-                        }
+            div[class = "field is-grouped"] {
+                div[class = "control"] {
+                    button[
+                        id = "form-favicon-button",
+                        class = "button is-link",
+                        "data-nexturl" = ra_favicon_success(
+                            &q.data.lang.code
+                        ),
+                    ] {
+                        @t.submit
                     }
                 }
+            }
+
+            div[
+                id = "form-favicon-progress",
+                class = "is-hidden",
+            ] {
+                progress[
+                    class = "progress is-large is-link",
+                    value = "80",
+                    max = "100",
+                ] {}
             }
 
             hr;

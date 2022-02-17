@@ -67,7 +67,7 @@ markup::define! {
                 }
             }
 
-            // This should be out of form, because it's sent using JavaScript
+            // This is out of <form> because it's sent using JavaScript
             div[class = "field"] {
                 label[class = "label"] {
                     @t.file

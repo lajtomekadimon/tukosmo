@@ -2,6 +2,7 @@ use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use actix_multipart::Multipart;
 use postgres_types::{ToSql, FromSql};
+use std::sync::mpsc;
 
 use crate::config::global::Config;
 use crate::handlers::admin::{
@@ -45,6 +46,7 @@ pub async fn favicon_post(
     req: HttpRequest,
     id: Identity,
     payload: Multipart,
+    restarter: web::Data<mpsc::Sender<()>>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -58,6 +60,9 @@ pub async fn favicon_post(
         ) {
 
             Ok(_row) => {if generate_favicon(payload).await {
+
+                // Restart server
+                restarter.send(()).unwrap();
 
                 HttpResponse::Found()
                     .header(
