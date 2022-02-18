@@ -16,11 +16,11 @@ markup::define! {
                     id = "navigation-burger",
                     class = "navigation-burger",
                 ] {
-                    div[class = "navigation-burger-text"] {
+                    span[class = "navigation-burger-text"] {
                         @t.menu
                     }
 
-                    div[class = "navigation-burger-icon"] {
+                    span[class = "navigation-burger-icon"] {
                         i[class = "eos-icons notranslate"] {
                             "menu"
                         }
