@@ -25,7 +25,7 @@ use crate::i18n::{
 pub struct FormData {
     pub csrf_token: String,
     pub id: i64,
-    pub filename: String,
+    pub file_title: String,
 }
 
 
@@ -34,7 +34,7 @@ pub struct ApiJsonEditFile {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub id: i64,
-    pub filename: String,
+    pub file_title: String,
 }
 
 impl QueryFunction for ApiJsonEditFile {
@@ -66,7 +66,7 @@ pub async fn edit_file_post(
             Ok(csrf_token_value) => {
 
                 let file_id = (form.id).clone();
-                let filename_value = (form.filename).clone();
+                let file_title_value = (form.file_title).clone();
 
                 match query_db(
                     &config,
@@ -74,30 +74,18 @@ pub async fn edit_file_post(
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
                         id: file_id.clone(),
-                        filename: filename_value.clone(),
+                        file_title: file_title_value.clone(),
                     },
                 ) {
 
-                    Ok(row) => {
-
-                        let ofilename: String = row.get(0);
-
-                        let filepath = format!("./files/{}", ofilename);
-                        let nfilepath = format!("./files/{}", filename_value);
+                    Ok(_row) => {
 
                         let body = json!({
                             "success": true,
                         });
-
-                        // TODO: What if file couldn't be renamed?
-                        match std::fs::rename(filepath, nfilepath) {
-                            Ok(_) => HttpResponse::Ok()
-                                .content_type("application/json")
-                                .body(body.to_string()),
-                            Err(_) => HttpResponse::Ok()
-                                .content_type("application/json")
-                                .body(body.to_string()),
-                        }
+                        HttpResponse::Ok()
+                            .content_type("application/json")
+                            .body(body.to_string())
 
                     },
 

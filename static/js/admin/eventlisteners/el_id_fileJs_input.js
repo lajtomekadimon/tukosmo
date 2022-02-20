@@ -1,4 +1,5 @@
 
+/*
 function el_id_fileJs_input() {
     const elem = document.querySelector('#file-js input[type=file]');
 
@@ -14,3 +15,4 @@ function el_id_fileJs_input() {
 }
 
 el_id_fileJs_input();
+*/

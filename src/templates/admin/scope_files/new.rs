@@ -137,13 +137,13 @@ markup::define! {
 
                 div[class = "field"] {
                     label[class = "label"] {
-                        @t.change_filename_question
+                        @t.file_title
                     }
                     div[class = "control"] {
                         input[
                             class = "input",
                             type = "text",
-                            name = "filename",
+                            name = "file_title",
                             value = "",
                         ];
                     }

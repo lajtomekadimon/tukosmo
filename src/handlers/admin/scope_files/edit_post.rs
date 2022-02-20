@@ -31,7 +31,7 @@ use crate::templates::admin::scope_files::edit::Edit;
 pub struct FormData {
     pub csrf_token: String,
     pub id: i64,
-    pub filename: String,
+    pub file_title: String,
 }
 
 
@@ -40,7 +40,7 @@ pub struct ApiFilesEdit {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
     pub id: i64,
-    pub filename: String,
+    pub file_title: String,
 }
 
 impl QueryFunction for ApiFilesEdit {
@@ -65,7 +65,7 @@ pub async fn edit_post(
             Ok(csrf_token_value) => {
 
                 let file_id = (form.id).clone();
-                let filename_value = (form.filename).clone();
+                let file_title_value = (form.file_title).clone();
 
                 match query_db(
                     &config,
@@ -73,32 +73,18 @@ pub async fn edit_post(
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
                         id: file_id.clone(),
-                        filename: filename_value.clone(),
+                        file_title: file_title_value.clone(),
                     },
                 ) {
 
-                    Ok(row) => {
+                    Ok(_row) => {
 
-                        let ofilename: String = row.get(0);
-
-                        let filepath = format!("./files/{}", ofilename);
-                        let nfilepath = format!("./files/{}", filename_value);
-
-                        // TODO: What if file couldn't be renamed?
-                        match std::fs::rename(filepath, nfilepath) {
-                            Ok(_) => HttpResponse::Found()
-                                .header(
-                                    "Location",
-                                    ra_files_success(&user_req.lang_code),
-                                )
-                                .finish(),
-                            Err(_) => HttpResponse::Found()
-                                .header(
-                                    "Location",
-                                    ra_files_success(&user_req.lang_code),
-                                )
-                                .finish(),
-                        }
+                        HttpResponse::Found()
+                            .header(
+                                "Location",
+                                ra_files_success(&user_req.lang_code),
+                            )
+                            .finish()
 
                     },
 

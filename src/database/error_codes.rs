@@ -9,6 +9,8 @@ pub const FEATURED_IMAGE_IS_NOT_IMAGE: &'static str = "3B8A9A25C219";
 
 pub const FIELD_IS_NOT_LANG_CODE: &'static str = "C3BA3FC81BB9";
 
+pub const FILE_TITLE_ALREADY_EXISTS: &'static str = "09DD33C2C469";
+
 pub const FILENAME_ALREADY_EXISTS: &'static str = "6500FAFC5C8B";
 
 pub const LANG_CODE_ALREADY_EXISTS: &'static str = "4C66AB9F871B";
@@ -44,6 +46,8 @@ pub const WRONG_DOMAIN: &'static str = "4261DDD8B3B5";
 pub const WRONG_EMAIL: &'static str = "1A2387FF4723";
 
 pub const WRONG_FILE_ID: &'static str = "74CCCAC9B0DC";
+
+pub const WRONG_FILE_TITLE: &'static str = "752AA61F6C72";
 
 pub const WRONG_FILENAME: &'static str = "DCF6E03D613D";
 

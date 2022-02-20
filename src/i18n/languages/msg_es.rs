@@ -101,6 +101,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "El archivo de la imagen de presentación debe ser una imagen.",
     err_field_is_not_lang_code:
         "El código del idioma no es válido.",
+    err_file_title_already_exists:
+        "Ese título del archivo ya está en uso.",
     err_filename_already_exists:
         "Ese nombre de archivo ya está en uso.",
     err_lang_code_already_exists:
@@ -138,6 +140,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ese correo electrónico no es válido.",
     err_wrong_file_id:
         "La ID del archivo no es correcta.",
+    err_wrong_file_title:
+        "El título del archivo no es válido.",
     err_wrong_filename:
         "Ese nombre de archivo no es válido. Solo se permiten caracteres
          alfanuméricos (A-Z, a-z, 0-9), puntos (.), guiones (-)
@@ -203,6 +207,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Imagen de presentación",
     file:
         "Archivo",
+    file_title:
+        "Título del archivo",
     filename:
         "Nombre del archivo",
     files:

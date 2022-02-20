@@ -39,12 +39,14 @@ function el_id_fileUpload_input() {
                                     '#file-upload-form input[name=id]'
                                 );
                             id_fileUploadForm_id.value = json_resp.id;
+                            /*
                             const id_fileUploadForm_filename =
                                 id_fileUploadForm.querySelector(
                                     '#file-upload-form input[name=filename]'
                                 );
                             id_fileUploadForm_filename.value =
                                 json_resp.filename;
+                            */
 
                             // Hide progress bar
                             id_fileUploadProgress.style.display = "none";

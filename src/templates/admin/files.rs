@@ -135,7 +135,7 @@ markup::define! {
                                 }
                                 footer[class = "card-footer"] {
                                     span[class = "card-footer-item"] {
-                                        @file.name
+                                        @file.title
                                     }
                                 }
                             }

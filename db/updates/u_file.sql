@@ -1,7 +1,7 @@
 
 CREATE OR REPLACE FUNCTION u_file(
     file_id BIGINT,
-    filename TEXT
+    file_title TEXT
 )
 
 RETURNS BIGINT
@@ -16,7 +16,7 @@ AS $$
 BEGIN
 
     UPDATE t_files
-    SET tf_name = filename
+    SET tf_title = file_title
     WHERE tf_id = file_id;
 
     RETURN file_id;

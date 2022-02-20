@@ -108,12 +108,12 @@ markup::define! {
                     div[class = "column"] {
                         div[class = "field"] {
                             label[class = "label"] {
-                                @t.filename
+                                @t.file_title
                             }
                             div[class = "control"] {
                                 input[
                                     class = if let Some(e) = error {
-                                        if e.code == ec::WRONG_FILENAME {
+                                        if e.code == ec::WRONG_FILE_TITLE {
                                             "input is-danger"
                                         } else {
                                             "input"
@@ -122,10 +122,10 @@ markup::define! {
                                         "input"
                                     },
                                     type = "text",
-                                    name = "filename",
+                                    name = "file_title",
                                     value = if let Some(f) = form {
-                                        &f.filename
-                                    } else { &q.file_data.name },
+                                        &f.file_title
+                                    } else { &q.file_data.title },
                                 ];
                             }
                         }

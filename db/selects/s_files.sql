@@ -28,6 +28,9 @@ SELECT ARRAY(
             ''
         ),
 
+        -- title
+        tf_title,
+
         -- route
         '/files/' || tf_name,
 

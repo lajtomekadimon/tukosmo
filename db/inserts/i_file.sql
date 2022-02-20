@@ -31,6 +31,7 @@ BEGIN
         --tf_id,
         tf_name,
         tf_ext,
+        tf_title,
         tf_author
         --tf_date
     )
@@ -38,6 +39,7 @@ BEGIN
         -- BIGSERIAL (autoincrement)
         filename,
         file_ext_value,
+        filename,
         author_id
         --NOW()
     )

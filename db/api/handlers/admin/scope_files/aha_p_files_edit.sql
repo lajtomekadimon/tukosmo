@@ -3,7 +3,7 @@ CREATE TYPE "ApiFilesEdit" AS (
     req "AdminRequest",
     csrf_token UUID,
     id BIGINT,
-    filename TEXT
+    file_title TEXT
 );
 
 
@@ -11,7 +11,7 @@ CREATE OR REPLACE FUNCTION aha_p_files_edit(
     r "ApiFilesEdit"
 )
 
-RETURNS TEXT
+RETURNS VOID
 
 LANGUAGE PLPGSQL
 VOLATILE
@@ -27,8 +27,6 @@ DECLARE
     language_of_user BIGINT;
 
     file_data "FileDB";
-
-    ofilename TEXT;
 
 BEGIN
 
@@ -55,24 +53,20 @@ BEGIN
         PERFORM err_wrong_file_id();
     END IF;
 
-    ofilename := file_data.name;
-
-    -- Check file name
-    IF NOT e_is_filename(r.filename) THEN
-        PERFORM err_wrong_filename();
+    -- Check file title
+    IF NOT e_is_file_title(r.file_title) THEN
+        PERFORM err_wrong_file_title();
     END IF;
 
-    -- Check file name is unique
-    IF c_file_by_name(r.filename) THEN
-        PERFORM err_filename_already_exists();
+    -- Check file title is unique
+    IF c_file_by_title(r.file_title) AND file_data.title <> r.file_title THEN
+        PERFORM err_file_title_already_exists();
     END IF;
 
     PERFORM u_file(
         r.id,
-        r.filename
+        r.file_title
     );
-
-    RETURN ofilename;
 
 END;
 

@@ -101,6 +101,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The featured image file must be an image.",
     err_field_is_not_lang_code:
         "The language code is not valid.",
+    err_file_title_already_exists:
+        "That file title is already in use.",
     err_filename_already_exists:
         "That file name is already in use.",
     err_lang_code_already_exists:
@@ -138,6 +140,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "That email is not valid.",
     err_wrong_file_id:
         "That file ID is not correct.",
+    err_wrong_file_title:
+        "That file title is not valid.",
     err_wrong_filename:
         "That file name is not valid. Only alphanumeric (A-Z, a-z, 0-9),
          dot (.), hyphen (-) and underscore (_) characters are allowed.",
@@ -202,6 +206,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Featured image",
     file:
         "File",
+    file_title:
+        "File title",
     filename:
         "File name",
     files:

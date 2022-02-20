@@ -29,6 +29,11 @@ BEGIN
         user_id
     );
 
+    PERFORM u_file(
+        file_id,
+        'Ocean With Rock Formation Under Starry Night'
+    );
+
     post_id := i_post(
         file_id,
         user_id

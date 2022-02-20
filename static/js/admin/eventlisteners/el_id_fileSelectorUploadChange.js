@@ -11,8 +11,8 @@ function el_id_fileSelectorUploadChange(function_value) {
         const file_id = document.querySelector(
             '#file-upload-form input[name=id]'
         ).value;
-        const filename = document.querySelector(
-            '#file-upload-form input[name=filename]'
+        const file_title = document.querySelector(
+            '#file-upload-form input[name=file_title]'
         ).value;
 
         fetch(
@@ -22,7 +22,7 @@ function el_id_fileSelectorUploadChange(function_value) {
                 body: new URLSearchParams({
                     'csrf_token': csrf_token_value,
                     'id': file_id,
-                    'filename': filename
+                    'file_title': file_title
                 })
             }
         ).then(
@@ -54,7 +54,7 @@ function el_id_fileSelectorUploadChange(function_value) {
 
         // Press enter on the input
         document.querySelector(
-            '#file-upload-form input[name=filename]'
+            '#file-upload-form input[name=file_title]'
         ).addEventListener(
             'keyup',
             event_input => {
