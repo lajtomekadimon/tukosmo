@@ -5,7 +5,7 @@ use crate::handlers::files_get::files_get;
 
 
 pub fn route() -> Resource {
-    resource("/files/{codename}/{filename:.*}").route(
+    resource("/files/{filename:.*}").route(
         get().to(files_get)
     )
 }

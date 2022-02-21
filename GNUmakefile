@@ -125,6 +125,8 @@ install: clean
 	mkdir -p temp
 	# Create /static/bundles dir
 	mkdir -p static/bundles
+	# Unzip TinyMCE
+	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
 else ifeq ($(MODE), production)
 install: clean
 	sed -i 's/mode = \"development\"/mode = \"production\"/g' etc/Tukosmo.toml
@@ -143,6 +145,8 @@ install: clean
 	mkdir -p temp
 	# Create /static/bundles dir
 	mkdir -p static/bundles
+	# Unzip TinyMCE
+	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
 endif
 
 install-all: installdb install

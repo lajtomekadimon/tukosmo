@@ -1,5 +1,4 @@
 use actix_web::{
-    web,
     http::header::{
         CACHE_CONTROL,
         CacheControl,
@@ -19,16 +18,8 @@ pub fn r_file(
 }
 
 pub async fn files_get(
-    codename: web::Data<String>,
     req: HttpRequest,
 ) -> impl Responder {
-    let codename_req: String = req.match_info()
-        .get("codename").unwrap().parse().unwrap();
-
-    if codename.to_string() != codename_req {
-        panic!("That URL has expired!");
-    }
-
     let pathreq: PathBuf = req.match_info().query("filename").parse().unwrap();
     let mut path: PathBuf = PathBuf::from("files/");
     path.push(pathreq.as_path());

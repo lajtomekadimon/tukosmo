@@ -77,6 +77,8 @@ pub const JS_WEBSITE: &'static str =
     "/static/{codename}/bundles/bundle.js";
 pub const JS_ADMIN: &'static str =
     "/static/{codename}/bundles/bundle.admin.js";
+pub const JS_TINYMCE: &'static str =
+    "/static/{codename}/js/external/tinymce/tinymce.min.js";
 
 
 // Images

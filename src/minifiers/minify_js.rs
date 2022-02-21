@@ -46,12 +46,6 @@ pub fn minify_js() {
 
     let mut admin_js = String::new();
 
-    // Toast UI Editor must be first
-    let toastui_editor_js = fs::read_to_string(
-        "static/js/external/toastui-editor-all.min.js",
-    ).expect("Something went wrong reading the JS file!");
-    admin_js.push_str(&toastui_editor_js);
-
     // TODO: Function that adds an entire directory to some string
     // Extra
     let extra_paths = fs::read_dir("static/js/admin/extra/").unwrap();

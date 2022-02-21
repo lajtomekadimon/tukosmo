@@ -33,20 +33,18 @@ https://github.com/utkarshkukreti/markup.rs).
 - [ ] Minimum of allocation and copying in Rust (efficiency!).
 - [x] Automatic CSS minifying to one single file.
 - [x] Automatic JavaScript minifying to one single file.
-- [ ] Zero external resources (CSS, JavaScript, images, ...).
+- [x] Zero external resources (CSS, JavaScript, images, ...).
 - [x] Themes are just CSS code; all themes share the same HTML.
 - [x] Responsive design.
 - [x] Internationalization (i18n).
 - [x] Website's language set by URL (good for SEO).
 - [x] Custom languages.
 - [x] Cookie-based auth.
-- [x] CommonMark written posts rendered by [pulldown-cmark](
-https://github.com/raphlinus/pulldown-cmark).
-- [x] WYSIWYG CommonMark post editor using [TOAST UI Editor](
-https://github.com/nhn/tui.editor).
-- [x] Admin Panel; styles using [Bulma](https://bulma.io/).
 - [x] Icons by [EOS icons](https://eos-icons.com/).
-- [x] Open Graph cards.
+- [x] Admin Panel; styles using [Bulma](https://bulma.io/).
+- [x] WYSIWYG post editor using [TinyMCE](
+https://github.com/tinymce/tinymce).
+- [x] Automatic Open Graph cards.
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
 

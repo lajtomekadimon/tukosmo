@@ -4,6 +4,7 @@ use crate::files::static_files::{
     staticf_route,
     CSS_ADMIN,
     JS_ADMIN,
+    JS_TINYMCE,
 };
 use crate::database::types::{AdminDataDB, RouteDB};
 use crate::templates::widgets::faviconadmin_meta::FaviconAdminMeta;
@@ -69,6 +70,9 @@ markup::define! {
                 @content
 
                 // JavaScript
+                script[
+                    src = staticf_route(JS_TINYMCE, codename),
+                ] {}
                 script[
                     src = staticf_route(JS_ADMIN, codename),
                 ] {}

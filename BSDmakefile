@@ -96,6 +96,8 @@ install: clean
 	mkdir -p temp
 	# Create /static/bundles dir
 	mkdir -p static/bundles
+	# Unzip TinyMCE
+	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
 .endif
 .if ${MODE} == production
 install: clean
@@ -120,6 +122,8 @@ install: clean
 	mkdir -p temp
 	# Create /static/bundles dir
 	mkdir -p static/bundles
+	# Unzip TinyMCE
+	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
 .endif
 
 install-all: installdb install

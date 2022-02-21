@@ -16,3 +16,4 @@ icert.der
 /static/bundles/*
 /files/*
 /static/favicon/temp/*
+/static/js/external/tinymce/*

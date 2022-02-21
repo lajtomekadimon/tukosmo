@@ -96,6 +96,8 @@ pub async fn upload_file_post(
                                 "id": file_id,
                                 "filename": filename.clone(),
                                 "url": r_file(&filename.clone()),
+                                "location":
+                                    r_file(&filename.clone()),  // TinyMCE
                             });
                             HttpResponse::Ok()
                                 .content_type("application/json")

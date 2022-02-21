@@ -2,112 +2,93 @@
 const id_editor = document.getElementById("editor");
 
 if (id_editor !== null) {
-    const Editor = toastui.Editor;
-
-    const body_text_value = document.getElementById("body-text").value;
+    var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     const language_of_user = document.getElementsByTagName('html')[0]
         .getAttribute('lang');
 
-    // Full list of options:
-    // https://nhn.github.io/tui.editor/latest/ToastUIEditorCore
-    const editor = new Editor({
-        // Container element
-        el: document.querySelector('#editor'),
-
-        // Language
+    tinymce.init({
+        selector: '#editor',
         language: language_of_user,
+        plugins: 'print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+        imagetools_cors_hosts: ['picsum.photos'],
+        menubar: 'file edit view insert format tools table help',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+        toolbar_sticky: true,
+        autosave_ask_before_unload: true,
+        autosave_interval: '30s',
+        autosave_prefix: '{path}{query}-{id}-',
+        autosave_restore_when_empty: false,
+        autosave_retention: '2m',
+        image_advtab: true,
 
-        // Editor's height style value. Height is applied as border-box
-        // (examples: '300px', '100%', 'auto', ...)
-        height: '500px',
+        /* Without images_upload_url set, Upload tab won't show up*/
+        images_upload_url: '/en/admin/json/upload_file',  // TODO
 
-        // Initial editor type (markdown, wysiwyg)
-        initialEditType: 'markdown',
-
-        // Markdown editor's preview style (tab, vertical)
-        previewStyle: 'vertical',
-
-        // Send hostname to Google Analytics
-        usageStatistics: false,
-
-        // Events
-        events: {
-            change: function() {
-                const body_text = document.getElementById("body-text");
-                body_text.value = editor.getMarkdown();
-            },
-        },
-
-        // Toolbar items
         /*
-        toolbarItems: [
-            ['heading', 'bold', 'italic', 'strike'],
-            ['hr', 'quote'],
-            ['ul', 'ol', 'task', 'indent', 'outdent'],
-            ['table', 'image', 'link'],
-            ['code', 'codeblock'],
+        link_list: [
+            { title: 'My page 1', value: 'https://www.tiny.cloud' },
+            { title: 'My page 2', value: 'http://www.moxiecode.com' }
+        ],
+        image_list: [
+            { title: 'My page 1', value: 'https://www.tiny.cloud' },
+            { title: 'My page 2', value: 'http://www.moxiecode.com' }
+        ],
+        image_class_list: [
+            { title: 'None', value: '' },
+            { title: 'Some class', value: 'class-name' }
         ],
         */
 
-        hooks: {
-            addImageBlobHook: (blob, callback) => {
-                let formData = new FormData();
+        importcss_append: true,
+        file_picker_callback: function (callback, value, meta) {
+            /* Provide file and text for the link dialog */
+            if (meta.filetype === 'file') {
+                callback('https://www.google.com/logos/google.jpg', { text: 'My text' });
+            }
 
-                // file in a 'multipart/form-data' request
-                formData.append(0, blob, blob.name);
+            /* Provide image and alt text for the image dialog */
+            if (meta.filetype === 'image') {
+                callback('https://www.google.com/logos/google.jpg', { alt: 'My alt text' });
+            }
 
-                fetch(
-                    // TODO: Don't use a string, import the route!
-                    '/en/admin/json/upload_file',
-                    {
-                        method: 'POST',
-                        body: formData
-                    }
-                ).then(
-                    response => {
-                        if (response.ok) {
-                            return response.json();
-                        }
+            /* Provide alternative source and posted for the media dialog */
+            if (meta.filetype === 'media') {
+                callback('movie.mp4', { source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg' });
+            }
+        },
 
-                        throw new Error('Server or network error');
-                    }
-                ).then(
-                    json_resp => {
-                        if (json_resp.success) {
-                            callback(json_resp.url, json_resp.filename);
-                        } else {
-                            console.error("Something went bad.");
-                            // TODO: Show error, etc.
-                        }
-                    }
-                ).catch(
-                    error => {
-                        // TODO: Show error, etc.
-                        console.error(error);
-                    }
-                );
+        /*
+        templates: [
+            {
+                title: 'New Table',
+                description: 'creates a new table',
+                content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'
             },
-        },
+            {
+                title: 'Starting my story',
+                description: 'A cure for writers block',
+                content: 'Once upon a time...'
+            },
+            {
+                title: 'New list with dates',
+                description: 'New List with dates',
+                content: '<div class="mceTmpl"><span class="cdate">cdate</span><br /><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'
+            }
+        ],
+        template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
+        template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
+        */
 
-        // Editor's initial value
-        initialValue: body_text_value
+        height: 600,
+        image_caption: true,
+        quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+        noneditable_noneditable_class: 'mceNonEditable',
+        toolbar_mode: 'sliding',
+        contextmenu: 'link image imagetools table',
+        skin: useDarkMode ? 'oxide-dark' : 'oxide',
+        content_css: useDarkMode ? 'dark' : 'default',
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
     });
-
-    /*
-    editor.insertToolbarItem(
-        {
-            groupIndex: 3,
-            itemIndex: 1
-        },
-        {
-            name: 'myItem',
-            tooltip: 'Insert image',
-            command: 'image',
-            //text: '@',
-            className: 'image toastui-editor-toolbar-icons first'
-        }
-    );
-    */
 }
 
