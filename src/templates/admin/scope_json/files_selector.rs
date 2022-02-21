@@ -1,17 +1,17 @@
 use markup;
 
-use crate::files::{
-    extensions::IMG_EXTS,
-    file_route::file_route,
-};
-use crate::handlers::admin::{
-    scope_json::files_selector_get::{
-        AgoJsonFilesSelector,
-        ra_json_files_selector_w_rpp_p,
-        ra_json_files_selector_wu_rpp_p,
+use crate::files::extensions::IMG_EXTS;
+use crate::handlers::{
+    admin::{
+        scope_json::files_selector_get::{
+            AgoJsonFilesSelector,
+            ra_json_files_selector_w_rpp_p,
+            ra_json_files_selector_wu_rpp_p,
+        },
+        scope_json::upload_file_post::ra_json_upload_file,
+        scope_json::edit_file_post::ra_json_edit_file,
     },
-    scope_json::upload_file_post::ra_json_upload_file,
-    scope_json::edit_file_post::ra_json_edit_file,
+    files_get::r_file,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -224,7 +224,7 @@ markup::define! {
                                     ),
                                 "data-id" = &file.id,
                                 "data-name" = &file.name,
-                                "data-route" = &file.route,
+                                "data-route" = &r_file(&file.name),
                             ] {
                                 div[class = "card m-0"] {
                                     div[class = "card-image"] {
@@ -233,8 +233,8 @@ markup::define! {
                                                 &file.ext.as_str()
                                             ) {
                                                 img[
-                                                    src = file_route(
-                                                        &file.name
+                                                    src = r_file(
+                                                        &file.name,
                                                     ),
                                                     alt = &file.name,
                                                 ];

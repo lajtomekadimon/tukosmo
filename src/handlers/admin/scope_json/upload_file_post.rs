@@ -5,11 +5,11 @@ use serde_json::json;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
-use crate::handlers::admin::user_request::user_request;
-use crate::files::{
-    save_file::save_file,
-    file_route::file_route,
+use crate::handlers::{
+    admin::user_request::user_request,
+    files_get::r_file,
 };
+use crate::files::save_file::save_file;
 use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
@@ -95,7 +95,7 @@ pub async fn upload_file_post(
                                 "success": true,
                                 "id": file_id,
                                 "filename": filename.clone(),
-                                "url": file_route(&filename.clone()),
+                                "url": r_file(&filename.clone()),
                             });
                             HttpResponse::Ok()
                                 .content_type("application/json")

@@ -1,10 +1,10 @@
 use markup;
 
 use crate::markdown::render_html::render_html;
-use crate::files::file_route::file_route;
 use crate::handlers::{
     website::scope_blog::post_get::WgoBlogPost,
     admin::scope_posts::edit_get::ra_posts_edit_w_id,
+    files_get::r_file,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -39,7 +39,7 @@ markup::define! {
                         .replace("{domain}", domain)
                         .replace(
                             "{dir}",
-                            &file_route(&fimage.name)
+                            &r_file(&fimage.name),
                         )
 
                 } else { "".to_string() }
@@ -75,7 +75,7 @@ markup::define! {
                 ] {
                     figure {
                         img[
-                            src = &file_route(&fimage.name),
+                            src = &r_file(&fimage.name),
                             alt = &fimage.name,
                         ];
                     }

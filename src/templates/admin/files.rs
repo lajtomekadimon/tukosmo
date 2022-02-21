@@ -1,12 +1,12 @@
 use markup;
 
-use crate::files::{
-    extensions::IMG_EXTS,
-    file_route::file_route,
-};
-use crate::handlers::admin::files_get::{
-    AgoFiles,
-    ra_files_wu_rpp_p,
+use crate::files::extensions::IMG_EXTS;
+use crate::handlers::{
+    admin::files_get::{
+        AgoFiles,
+        ra_files_wu_rpp_p,
+    },
+    files_get::r_file,
 };
 use crate::handlers::admin::scope_files::{
     new_get::ra_files_new,
@@ -119,7 +119,7 @@ markup::define! {
                                             &file.ext.as_str()
                                         ) {
                                             img[
-                                                src = file_route(&file.name),
+                                                src = &r_file(&file.name),
                                                 alt = &file.name,
                                             ];
                                         }

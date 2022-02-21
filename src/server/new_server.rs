@@ -251,7 +251,7 @@ pub fn new_server(
             .service(routes::staticf::route())
 
             // Uploaded files: /files/...
-            .service(routes::files::routes())
+            .service(routes::files::route())
 
             // Homepage: /{lang}
             .service(routes::lang::route())

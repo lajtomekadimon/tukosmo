@@ -1,12 +1,14 @@
 use markup;
 
-use crate::files::file_route::file_route;
-use crate::handlers::website::{
-    blog_get::{
-        WgoBlog,
-        rw_blog_wu_rpp_p,
+use crate::handlers::{
+    website::{
+        blog_get::{
+            WgoBlog,
+            rw_blog_wu_rpp_p,
+        },
+        scope_blog::post_get::rw_blog_post,
     },
-    scope_blog::post_get::rw_blog_post,
+    files_get::r_file,
 };
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -73,7 +75,9 @@ markup::define! {
                                         "background-image: url({url});"
                                             .replace(
                                                 "{url}",
-                                                &file_route(&fimage.name),
+                                                &r_file(
+                                                    &fimage.name,
+                                                ),
                                             ),
                                 ] {}
                             }

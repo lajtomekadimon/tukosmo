@@ -1,10 +1,10 @@
 use markup;
 
-use crate::files::{
-    extensions::IMG_EXTS,
-    file_route::file_route,
+use crate::files::extensions::IMG_EXTS;
+use crate::handlers::{
+    admin::scope_users::edit_get::ra_users_edit_w_id,
+    files_get::r_file,
 };
-use crate::handlers::admin::scope_users::edit_get::ra_users_edit_w_id;
 use crate::i18n::{
     translate_i18n::TranslateI18N,
     t_date::t_date,
@@ -25,7 +25,7 @@ markup::define! {
                     &file_data.ext.as_str(),
                 ) {
                     img[
-                        src = &file_route(&file_data.name),
+                        src = &r_file(&file_data.name),
                         alt = &file_data.name,
                     ];
                 }
@@ -60,11 +60,10 @@ markup::define! {
                 div[class = "card-footer-item"] {
                     span {
                         a[
-                            href = &file_route(&file_data.name),
+                            href = &r_file(&file_data.name),
                             target = "_blank",
                         ] {
-                            "/files/"
-                            @file_data.name
+                            {&r_file(&file_data.name)}
                         }
                     }
                 }
@@ -72,7 +71,7 @@ markup::define! {
                     span {
                         a[
                             class = "button is-link is-light",
-                            href = &file_route(&file_data.name),
+                            href = &r_file(&file_data.name),
                             download = true,
                         ] {
                             @t.download

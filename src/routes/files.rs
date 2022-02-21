@@ -1,11 +1,11 @@
-use actix_files::Files;
+use actix_web::Resource;
+use actix_web::web::{resource, get};
+
+use crate::handlers::files_get::files_get;
 
 
-pub fn routes() -> Files {
-    Files::new(
-        // Website route
-        "/files",
-        // System dir
-        "files",
-    ).show_files_listing()
+pub fn route() -> Resource {
+    resource("/files/{codename}/{filename:.*}").route(
+        get().to(files_get)
+    )
 }

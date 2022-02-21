@@ -1,7 +1,8 @@
 use markup;
 
-use crate::handlers::admin::{
-    scope_json::files_selector_get::ra_json_files_selector_w_rpp_p,
+use crate::handlers::{
+    admin::scope_json::files_selector_get::ra_json_files_selector_w_rpp_p,
+    files_get::r_file,
 };
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::FileDB;
@@ -68,9 +69,9 @@ markup::define! {
                     img[
                         id = "file-img",
                         src = if let Some(f) = current_file {
-                            &f.route
+                            r_file(&f.name)
                         } else {
-                            ""
+                            "".to_string()
                         },
                         alt = if let Some(f) = current_file {
                             &f.name

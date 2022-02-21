@@ -12,7 +12,13 @@ use actix_files::NamedFile;
 use std::path::PathBuf;
 
 
-pub async fn staticf_get(
+pub fn r_file(
+    filename: &str,
+) -> String {
+    "/files/{filename}".replace("{filename}", filename)
+}
+
+pub async fn files_get(
     codename: web::Data<String>,
     req: HttpRequest,
 ) -> impl Responder {
@@ -20,11 +26,11 @@ pub async fn staticf_get(
         .get("codename").unwrap().parse().unwrap();
 
     if codename.to_string() != codename_req {
-        panic!("That URL has expired! {} {}", codename.to_string(), codename_req);
+        panic!("That URL has expired!");
     }
 
     let pathreq: PathBuf = req.match_info().query("filename").parse().unwrap();
-    let mut path: PathBuf = PathBuf::from("static/");
+    let mut path: PathBuf = PathBuf::from("files/");
     path.push(pathreq.as_path());
 
     let named_file = match NamedFile::open(path.clone()) {

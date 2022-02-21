@@ -28,7 +28,6 @@ CREATE TYPE "FileDB" AS (
     name TEXT,
     ext TEXT,
     title TEXT,
-    route TEXT,
     author BIGINT,
     author_name TEXT,
     date TEXT
