@@ -21,8 +21,17 @@ a:visited {
     color: inherit;
 }
 
+img,
+figure img,
 p img {
     max-width: 100%;
+    height: auto;
+}
+
+figure figcaption {
+    font-size: 0.82rem;
+    color: #686868;
+    text-align: center;
 }
 
 blockquote {
