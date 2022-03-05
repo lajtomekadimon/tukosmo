@@ -11,7 +11,9 @@ CREATE TYPE "AgoPostsEdit" AS (
     routes "RouteDB"[],
     csrf_token TEXT,
     post "PostDB",
-    featured_image "FileDB"
+    featured_image "FileDB",
+    tags "TagDB"[],
+    tags_of_post "TagDB"[]
 );
 
 
@@ -39,6 +41,10 @@ DECLARE
     post "PostDB";
 
     featured_image "FileDB";
+
+    tags "TagDB"[];
+
+    tags_of_post "TagDB"[];
 
 BEGIN
 
@@ -85,6 +91,13 @@ BEGIN
         END IF;
     END IF;
 
+    tags := s_tags(language_of_user);
+
+    tags_of_post := s_tags_of_post(
+        language_of_user,
+        r.post
+    );
+
     -- User is logged in
     RETURN ROW(
         -- data
@@ -102,7 +115,13 @@ BEGIN
         post,
 
         -- featured_image
-        featured_image
+        featured_image,
+
+        -- tags
+        tags,
+
+        -- tags_of_post
+        tags_of_post
     );
 
 END;

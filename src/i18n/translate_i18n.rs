@@ -1,6 +1,7 @@
 
 pub struct TranslateI18N {
     pub account: &'static str,
+    pub add_k_verb: &'static str,
     pub add_language: &'static str,
     pub appearance: &'static str,
     pub are_you_sure_that_you_want_to_delete_this_file: &'static str,
@@ -171,6 +172,7 @@ pub struct TranslateI18N {
     pub scheduled_k_posts: &'static str,
     pub see_languages: &'static str,
     pub select_a_language: &'static str,
+    pub select_a_tag: &'static str,
     pub server: &'static str,
     pub sessions: &'static str,
     pub settings: &'static str,

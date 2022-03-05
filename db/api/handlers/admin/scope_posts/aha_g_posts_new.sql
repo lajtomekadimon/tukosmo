@@ -8,7 +8,8 @@ CREATE TYPE "AgoPostsNew" AS (
     data "AdminDataDB",
     routes "RouteDB"[],
     csrf_token TEXT,
-    featured_image "FileDB"
+    featured_image "FileDB",
+    tags "TagDB"[]
 );
 
 
@@ -35,6 +36,8 @@ DECLARE
 
     featured_image "FileDB";
 
+    tags "TagDB"[];
+
 BEGIN
 
     -- Check request and select common data
@@ -60,6 +63,8 @@ BEGIN
         END IF;
     END IF;
 
+    tags := s_tags(language_of_user);
+
     RETURN ROW(
         -- data
         d,
@@ -73,7 +78,10 @@ BEGIN
         )::TEXT,
 
         -- featured_image
-        featured_image
+        featured_image,
+
+        -- tags
+        tags
     );
 
 END;

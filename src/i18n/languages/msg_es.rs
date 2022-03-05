@@ -4,6 +4,8 @@ use crate::i18n::translate_i18n::TranslateI18N;
 pub const MSG_ES: TranslateI18N = TranslateI18N {
     account:
         "Cuenta",
+    add_k_verb:
+        "Añadir",
     add_language:
         "Añadir idioma",
     appearance:
@@ -351,6 +353,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ver idiomas",
     select_a_language:
         "Selecciona un idioma",
+    select_a_tag:
+        "Selecciona una etiqueta",
     server:
         "Servidor",
     sessions:

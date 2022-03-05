@@ -209,6 +209,126 @@ markup::define! {
                 }
 
                 div[class = "field"] {
+                    label[class = "label"] {
+                        @t.tags
+                    }
+                    div[class = "control"] {
+                        div[class = "field has-addons"] {
+                            div[class = "control is-expanded"] {
+                                div[class = "select is-fullwidth"] {
+                                    select[
+                                        id = "ttags-list",
+                                    ] {
+                                        option[
+                                            selected = true,
+                                            disabled = true,
+                                            hidden = true,
+                                        ] {
+                                            @t.select_a_tag
+                                        }
+                                        @for tag in q.tags.iter() {
+                                            option[
+                                                value = &tag.id,
+                                            ] {
+                                                @tag.name
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            div[class = "control"] {
+                                button[
+                                    id = "ttag-add-button",
+                                    class = "button is-link",
+                                    type = "button",
+                                ] {
+                                    @t.add_k_verb
+                                }
+                            }
+                        }
+
+                        div[
+                            id = "ttags-added",
+                            class = "field is-grouped is-grouped-multiline",
+                        ] {
+                            @if let Some(f) = form {
+                                @for tag in q.tags.iter() {
+                                    @if f.tags.contains(&tag.id) {
+                                        input[
+                                            id = "tag-input-{id}"
+                                                .replace(
+                                                    "{id}",
+                                                    &tag.id.to_string(),
+                                                ),
+                                            type = "hidden",
+                                            name = "tag",
+                                            value = &tag.id,
+                                        ];
+
+                                        div[
+                                            id = "tag-label-{id}"
+                                                .replace(
+                                                    "{id}",
+                                                    &tag.id.to_string(),
+                                                ),
+                                            class = "control",
+                                        ] {
+                                            div[class = "tags has-addons"] {
+                                                a[
+                                                    class = "tag is-link",
+                                                ] {
+                                                    @tag.name
+                                                }
+                                                a[
+                                                    class = "tag is-delete \
+                                                             ttag-remove",
+                                                    "data-id" = &tag.id,
+                                                ] {}
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                @for tag in q.tags_of_post.iter() {
+                                    input[
+                                        id = "tag-input-{id}"
+                                            .replace(
+                                                "{id}",
+                                                &tag.id.to_string(),
+                                            ),
+                                        type = "hidden",
+                                        name = "tag",
+                                        value = &tag.id,
+                                    ];
+
+                                    div[
+                                        id = "tag-label-{id}"
+                                            .replace(
+                                                "{id}",
+                                                &tag.id.to_string(),
+                                            ),
+                                        class = "control",
+                                    ] {
+                                        div[class = "tags has-addons"] {
+                                            a[
+                                                class = "tag is-link",
+                                            ] {
+                                                @tag.name
+                                            }
+                                            a[
+                                                class = "tag is-delete \
+                                                         ttag-remove",
+                                                "data-id" = &tag.id,
+                                            ] {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                div[class = "field"] {
                     div[class = "control"] {
                         label[class = "checkbox"] {
                             input[

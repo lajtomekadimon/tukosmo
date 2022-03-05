@@ -46,9 +46,7 @@ BEGIN
         language_of_user
     );
 
-    tags := s_tags(
-        language_of_user
-    );
+    tags := s_tags(language_of_user);
 
     RETURN ROW(
         -- data

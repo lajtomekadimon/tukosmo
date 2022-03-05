@@ -164,6 +164,7 @@ pub fn initdb(
         "db/tables/t_page_translations.sql".to_string(),
         "db/tables/t_posts.sql".to_string(),
         "db/tables/t_post_translations.sql".to_string(),
+        "db/tables/t_tags_of_posts.sql".to_string(),
         "db/tables/t_reset_password_codes.sql".to_string(),
     ]);
 

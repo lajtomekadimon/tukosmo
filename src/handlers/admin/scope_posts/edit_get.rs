@@ -52,6 +52,8 @@ pub struct AgoPostsEdit {
     pub csrf_token: String,
     pub post: Option<types::PostDB>,
     pub featured_image: Option<types::FileDB>,
+    pub tags: Vec<types::TagDB>,
+    pub tags_of_post: Vec<types::TagDB>,
 }
 
 
@@ -136,6 +138,8 @@ pub async fn edit_get(
                                 }
                             ),
                             featured_image: q.featured_image.clone(),
+                            tags: q.tags.clone(),
+                            tags_of_post: q.tags_of_post.clone(),
                         },
                         t: t,
                         error: &None,

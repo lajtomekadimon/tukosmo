@@ -3,7 +3,8 @@ CREATE TYPE "ApiPostsNew" AS (
     req "AdminRequest",
     csrf_token UUID,
     post "PostDB",
-    featured_image BIGINT
+    featured_image BIGINT,
+    tags BIGINT[]
 );
 
 
@@ -31,6 +32,8 @@ DECLARE
     featured_image_id BIGINT;
 
     post_id BIGINT;
+
+    tag_id BIGINT;
 
 BEGIN
 
@@ -102,6 +105,19 @@ BEGIN
         (d.userd).id,
         (r.post).draft
     );
+
+    FOREACH tag_id IN ARRAY r.tags LOOP
+        -- Check tag ID is correct
+        IF NOT c_tag_by_id(tag_id) THEN
+            PERFORM err_wrong_tag_id();
+        END IF;
+
+        PERFORM i_tag_of_post(
+            tag_id,
+            post_id,
+            (d.userd).id
+        );
+    END LOOP;
 
 END;
 

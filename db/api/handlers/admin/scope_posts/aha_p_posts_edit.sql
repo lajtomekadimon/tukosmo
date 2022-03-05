@@ -3,7 +3,8 @@ CREATE TYPE "ApiPostsEdit" AS (
     req "AdminRequest",
     csrf_token UUID,
     post "PostDB",
-    featured_image BIGINT
+    featured_image BIGINT,
+    tags BIGINT[]
 );
 
 
@@ -29,6 +30,8 @@ DECLARE
     file_data "FileDB";
 
     featured_image_id BIGINT;
+
+    tag_id BIGINT;
 
 BEGIN
 
@@ -132,6 +135,21 @@ BEGIN
         );
 
     END IF;
+
+    PERFORM d_tags_of_post((r.post).id);
+
+    FOREACH tag_id IN ARRAY r.tags LOOP
+        -- Check tag ID is correct
+        IF NOT c_tag_by_id(tag_id) THEN
+            PERFORM err_wrong_tag_id();
+        END IF;
+
+        PERFORM i_tag_of_post(
+            tag_id,
+            (r.post).id,
+            (d.userd).id
+        );
+    END LOOP;
 
     -- Send post to trash if deleted=TRUE
     IF (r.post).deleted THEN

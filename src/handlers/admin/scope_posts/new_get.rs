@@ -39,6 +39,7 @@ pub struct AgoPostsNew {
     pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
     pub featured_image: Option<types::FileDB>,
+    pub tags: Vec<types::TagDB>,
 }
 
 
