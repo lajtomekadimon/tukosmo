@@ -25,6 +25,10 @@ pub const SOME_WRONG_LANG_NAME: &'static str = "39464FAE6EEB";
 
 pub const SOME_WRONG_NAME_FOR_LANG: &'static str = "55FF47829756";
 
+pub const SOME_WRONG_TAG_NAME: &'static str = "0E9BF09A2086";
+
+pub const SOME_WRONG_TAG_PERMALINK: &'static str = "C59CD417ABDC";
+
 pub const UNKNOWN_ERROR: &'static str = "BCDD2EA230A5";
 
 pub const USER_CANT_DELETE_ITSELF: &'static str = "BFD51452BC4A";
@@ -68,6 +72,8 @@ pub const WRONG_POST_ID: &'static str = "E4E9108D630B";
 pub const WRONG_POST_PERMALINK: &'static str = "C90EAC6F8E2E";
 
 pub const WRONG_RPP_NUMBER: &'static str = "1632986F3CB9";
+
+pub const WRONG_TAG_ID: &'static str = "406517953D5E";
 
 pub const WRONG_TITLE: &'static str = "7B744BC3C936";
 

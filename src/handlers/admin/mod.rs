@@ -25,6 +25,9 @@ pub mod scope_users;
 pub mod languages_get;
 pub mod scope_languages;
 
+pub mod tags_get;
+pub mod scope_tags;
+
 pub mod posts_get;
 pub mod scope_posts;
 

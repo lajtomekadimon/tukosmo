@@ -163,6 +163,8 @@ run:
 	sudo target/release/tukosmo
 endif
 
+reset-run: resetdb run
+
 ifeq ($(MODE), production)
 run-service:
 	sudo cp etc/tukosmo.service /etc/systemd/system/

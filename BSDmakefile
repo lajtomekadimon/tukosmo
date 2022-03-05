@@ -141,6 +141,8 @@ run:
 	su -m root -c "target/release/tukosmo"  # Bad idea...
 .endif
 
+reset-run: resetdb run
+
 .if ${MODE} == production
 run-service:
 	rm -f /usr/local/etc/rc.d/tukosmo

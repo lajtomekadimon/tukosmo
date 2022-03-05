@@ -16,6 +16,9 @@ pub mod scope_users;
 pub mod languages;
 pub mod scope_languages;
 
+pub mod tags;
+pub mod scope_tags;
+
 pub mod posts;
 pub mod scope_posts;
 

@@ -57,6 +57,20 @@ CREATE TYPE "LanguageWithNamesDB" AS (
     names "NameDB"[]
 );
 
+CREATE TYPE "TagDB" AS (
+    id BIGINT,
+    trans_id BIGINT,
+    lang "LanguageDB",
+    name TEXT,
+    permalink TEXT,
+    author BIGINT,
+    author_name TEXT,
+    translator BIGINT,
+    translator_name TEXT,
+    date TEXT,
+    date_trans TEXT
+);
+
 CREATE TYPE "PostDB" AS (
     id BIGINT,
     featured_image "FileDB",

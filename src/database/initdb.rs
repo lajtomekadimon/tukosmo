@@ -156,6 +156,8 @@ pub fn initdb(
         "db/tables/t_sessions.sql".to_string(),
         "db/tables/t_languages.sql".to_string(),
         "db/tables/t_language_names.sql".to_string(),
+        "db/tables/t_tags.sql".to_string(),
+        "db/tables/t_tag_translations.sql".to_string(),
         "db/tables/t_user_names.sql".to_string(),
         "db/tables/t_files.sql".to_string(),
         "db/tables/t_pages.sql".to_string(),
@@ -180,6 +182,7 @@ pub fn initdb(
         "db/selects/s_language_by_id_lang.sql".to_string(),
         "db/selects/s_name_of_language.sql".to_string(),
         "db/selects/s_untrans_post_title_by_id.sql".to_string(),
+        "db/selects/s_untrans_tag_name_by_id.sql".to_string(),
     ]);
     append_sql(&mut sql_files, "db/selects/");
     // Inserts

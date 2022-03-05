@@ -6,6 +6,7 @@ use crate::handlers::admin::{
     server_get::ra_server,
     users_get::ra_users,
     languages_get::ra_languages,
+    tags_get::ra_tags,
     posts_get::{ra_posts, ra_posts_w_f},
     pages_get::ra_pages,
     files_get::ra_files,
@@ -121,6 +122,21 @@ markup::define! {
                         ] { "translate" }
                         " "
                         @t.languages
+                    }
+                }
+                li {
+                    a[
+                        href = &ra_tags(&data.lang.code),
+                        class = if current_page == &"tags" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] { "label" }
+                        " "
+                        @t.tags
                     }
                 }
                 li {

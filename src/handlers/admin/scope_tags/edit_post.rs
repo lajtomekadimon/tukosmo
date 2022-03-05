@@ -4,20 +4,16 @@ use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
-use std::sync::mpsc;
 
-use crate::config::{
-    global::Config,
-    change_lang::change_lang,
-};
+use crate::config::global::Config;
 use crate::handlers::admin::{
     user_request::user_request,
-    scope_languages::edit_get::{
-        AgiLanguagesEdit,
-        AgoLanguagesEdit,
+    scope_tags::edit_get::{
+        AgiTagsEdit,
+        AgoTagsEdit,
     },
     error_get::ra_error_w_code,
-    languages_get::ra_languages_success,
+    tags_get::ra_tags_success,
 };
 use crate::database::{
     types,
@@ -29,7 +25,7 @@ use crate::i18n::{
     t_error::t_error,
     error_admin_route::error_admin_route,
 };
-use crate::templates::admin::scope_languages::edit::Edit;
+use crate::templates::admin::scope_tags::edit::Edit;
 
 
 impl<'de> Deserialize<'de> for FormData {
@@ -57,27 +53,27 @@ impl<'de> Deserialize<'de> for FormData {
             where V: MapAccess<'de>
             {
                 let mut csrf_token_value: String = "".to_string();
-                let mut language_id: i64 = 0;
-                let mut lang_code: String = "".to_string();
+                let mut tag_id: i64 = 0;
                 let mut lang_ids: Vec<i64> = Vec::default();
-                let mut lang_names: Vec<String> = Vec::default();
+                let mut tag_names: Vec<String> = Vec::default();
+                let mut tag_permalinks: Vec<String> = Vec::default();
 
                 while let Some(key) = map.next_key()? {
                     match key {
                         "csrf_token" => {
                             csrf_token_value = map.next_value::<String>()?;
                         }
-                        "language_id" => {
-                            language_id = map.next_value::<i64>()?;
-                        }
-                        "lang_code" => {
-                            lang_code = map.next_value::<String>()?;
+                        "tag_id" => {
+                            tag_id = map.next_value::<i64>()?;
                         }
                         "lang_id" => {
                             lang_ids.push(map.next_value::<i64>()?);
                         }
-                        "lang_name" => {
-                            lang_names.push(map.next_value::<String>()?);
+                        "tag_name" => {
+                            tag_names.push(map.next_value::<String>()?);
+                        }
+                        "tag_permalink" => {
+                            tag_permalinks.push(map.next_value::<String>()?);
                         }
                         _ => unreachable!()
                     }
@@ -87,10 +83,10 @@ impl<'de> Deserialize<'de> for FormData {
 
                 Ok(FormData {
                     csrf_token: csrf_token_value,
-                    language_id: language_id,
-                    lang_code: lang_code,
+                    tag_id: tag_id,
                     lang_ids: lang_ids,
-                    lang_names: lang_names,
+                    tag_names: tag_names,
+                    tag_permalinks: tag_permalinks,
                 })
             }
         }
@@ -102,33 +98,27 @@ impl<'de> Deserialize<'de> for FormData {
 
 pub struct FormData {
     pub csrf_token: String,
-    pub language_id: i64,
-    pub lang_code: String,
+    pub tag_id: i64,
     pub lang_ids: Vec<i64>,
-    pub lang_names: Vec<String>,
+    pub tag_names: Vec<String>,
+    pub tag_permalinks: Vec<String>,
 }
 
 
 #[derive(Clone, Debug, ToSql, FromSql)]
-pub struct ApiLanguagesEdit {
+pub struct ApiTagsEdit {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
-    pub language_id: i64,
-    pub lang_code: String,
+    pub tag_id: i64,
     pub lang_ids: Vec<i64>,
-    pub lang_names: Vec<String>,
+    pub tag_names: Vec<String>,
+    pub tag_permalinks: Vec<String>,
 }
 
-impl QueryFunction for ApiLanguagesEdit {
+impl QueryFunction for ApiTagsEdit {
     fn query(&self) -> &str {
-        "SELECT aha_p_languages_edit($1)"
+        "SELECT aha_p_tags_edit($1)"
     }
-}
-
-#[derive(Clone, Debug, ToSql, FromSql)]
-pub struct ApoLanguagesEdit {
-    pub data: types::AdminDataDB,
-    pub old_lang_code: String,
 }
 
 
@@ -138,7 +128,6 @@ pub async fn edit_post(
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
-    restarter: web::Data<mpsc::Sender<()>>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -147,44 +136,29 @@ pub async fn edit_post(
 
             Ok(csrf_token_value) => {
 
-                let language_id = (form.language_id).clone();
-                let lang_code = (form.lang_code).clone();
+                let tag_id = (form.tag_id).clone();
                 let lang_ids = (form.lang_ids).clone();
-                let lang_names = (form.lang_names).clone();
+                let tag_names = (form.tag_names).clone();
+                let tag_permalinks = (form.tag_permalinks).clone();
 
                 match query_db(
                     &config,
-                    ApiLanguagesEdit {
+                    ApiTagsEdit {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
-                        language_id: language_id,
-                        lang_code: lang_code.clone(),
+                        tag_id: tag_id,
                         lang_ids: lang_ids,
-                        lang_names: lang_names,
+                        tag_names: tag_names,
+                        tag_permalinks: tag_permalinks,
                     },
                 ) {
 
-                    Ok(row) => {
-
-                        let q: ApoLanguagesEdit = row.get(0);
-
-                        if (&q.old_lang_code == &config.server.default_lang)
-                            && (&lang_code != &q.old_lang_code)
-                        {
-                            change_lang(
-                                &config,
-                                &lang_code,
-                            );
-                            // TODO: Handle errors
-
-                            // Restart server
-                            restarter.send(()).unwrap();
-                        }
+                    Ok(_row) => {
 
                         HttpResponse::Found()
                             .header(
                                 "Location",
-                                ra_languages_success(&lang_code),
+                                ra_tags_success(&user_req.lang_code),
                             )
                             .finish()
 
@@ -192,15 +166,15 @@ pub async fn edit_post(
 
                     Err(e) => match query_db(
                         &config,
-                        AgiLanguagesEdit {
+                        AgiTagsEdit {
                             req: user_req.clone(),
-                            lang: language_id,
+                            tag: tag_id,
                         },
                     ) {
 
                         Ok(row) => {
 
-                            let q: AgoLanguagesEdit = row.get(0);
+                            let q: AgoTagsEdit = row.get(0);
                             let t = &t(&q.data.lang.code);
 
                             let html = Edit {
@@ -208,8 +182,8 @@ pub async fn edit_post(
                                 codename: &codename,
                                 title: &format!(
                                     "{a} - {b}",
-                                    a = t.edit_language_w_name
-                                        .replace("{name}", &q.lang.name),
+                                    a = t.edit_tag_w_name
+                                        .replace("{name}", &q.tag.name),
                                     b = t.tukosmo_admin_panel,
                                 ),
                                 q: &q,

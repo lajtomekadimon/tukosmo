@@ -14,6 +14,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "¿Estás seguro de que quieres eliminar este idioma?",
     are_you_sure_that_you_want_to_delete_this_post:
         "¿Estás seguro de que quieres eliminar esta entrada?",
+    are_you_sure_that_you_want_to_delete_this_tag:
+        "¿Estás seguro de que quieres eliminar esta etiqueta?",
     are_you_sure_that_you_want_to_delete_this_user:
         "¿Estás seguro de que quieres eliminar este usuario?",
     author:
@@ -26,6 +28,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Navegador",
     cancel:
         "Cancelar",
+    categories:
+        "Categorías",
     change_filename_question:
         "¿Cambiar nombre del archivo?",
     choose_a_file:
@@ -66,6 +70,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Eliminar (permanente)",
     delete_post_w_title:
         "Eliminar entrada: '{title}'",
+    delete_tag_w_name:
+        "Eliminar etiqueta: {name}",
     delete_user_w_name:
         "Eliminar usuario: {name}",
     deleted_k_post:
@@ -90,6 +96,22 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Borradores de entradas",
     drafts:
         "Borradores",
+    edit:
+        "Editar",
+    edit_file:
+        "Editar archivo",
+    edit_file_w_name:
+        "Editar archivo: {name}",
+    edit_language_w_name:
+        "Editar idioma: {name}",
+    edit_post_w_title:
+        "Editar entrada: '{title}'",
+    edit_tag_w_name:
+        "Editar etiqueta: {name}",
+    edit_user_w_name:
+        "Editar usuario: {name}",
+    email:
+        "Correo electrónico",
     err_csrf_token_is_not_a_valid_uuid:
         "El token CSRF no es una UUID válida.",
     err_email_already_exists:
@@ -119,6 +141,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Algunos de los nombres (en el nuevo idioma) no son válidos.",
     err_unknown_error:
         "Error desconocido.",
+    err_some_wrong_tag_name:
+        "Algunos de los nombres de la etiqueta no son válidos.",
+    err_some_wrong_tag_permalink:
+        "Algunos de los permalinks de la etiqueta no son válidos.",
     err_user_cant_delete_itself:
         "Un usuario no puede eliminarse a sí mismo.",
     err_user_not_logged_in:
@@ -164,6 +190,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Esa entrada no existe.",
     err_wrong_rpp_number:
         "El número de resultados por página no es correcto.",
+    err_wrong_tag_id:
+        "La ID de la etiqueta no es correcta.",
     err_wrong_title:
         "El título no es válido.",
     err_wrong_user_email:
@@ -178,20 +206,6 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "El subtítulo de la página web no es válido.",
     err_wrong_website_title:
         "El título de la página web no es válido.",
-    edit:
-        "Editar",
-    edit_file:
-        "Editar archivo",
-    edit_file_w_name:
-        "Editar archivo: {name}",
-    edit_language_w_name:
-        "Editar idioma: {name}",
-    edit_post_w_title:
-        "Editar entrada: '{title}'",
-    edit_user_w_name:
-        "Editar usuario: '{name}'",
-    email:
-        "Correo electrónico",
     error:
         "Error",
     examples_of_lang_codes:
@@ -268,12 +282,16 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Nombres para cada idioma",
     names_in_the_new_language_for_each_language:
         "Nombres (en el nuevo idioma) para cada idioma",
+    new_category:
+        "Nueva categoría",
     new_domain_k_web:
         "Dominio nuevo",
     new_password:
         "Contraseña nueva",
     new_post:
         "Nueva entrada",
+    new_tag:
+        "Nueva etiqueta",
     new_user:
         "Nuevo usuario",
     next:
@@ -351,6 +369,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Enviar",
     system_k_os:
         "Sistema",
+    tags:
+        "Etiquetas",
     the_post_will_be_permanently_deleted:
         "La entrada será eliminada de forma permanente.",
     the_post_will_be_sent_to_trash:
@@ -429,6 +449,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Tu contraseña",
     your_sessions_have_been_successfully_updated:
         "Tus sesiones han sido actualizadas con éxito.",
+    your_website_categories_were_successfully_updated:
+        "Las categorías de tu página web se actualizaron con éxito.",
     your_website_favicon_was_successfully_updated:
         "El favicon de tu página web se actualizó con éxito.",
     your_website_files_were_successfully_updated:
@@ -439,6 +461,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Los idiomas de tu página web se actualizaron con éxito.",
     your_website_posts_were_successfully_updated:
         "Las entradas de tu página web se actualizaron con éxito.",
+    your_website_tags_were_successfully_updated:
+        "Las etiquetas de tu página web se actualizaron con éxito.",
     your_website_users_were_successfully_updated:
         "Los usuarios de tu página web se actualizaron con éxito.",
 };

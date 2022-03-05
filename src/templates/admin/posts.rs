@@ -170,20 +170,22 @@ markup::define! {
                                         @post.title
                                     }
 
-                                    a[
-                                        class = "is-pulled-right",
-                                        href = rw_blog_post(
-                                            &post.lang.code,
-                                            &post.permalink,
-                                        ),
-                                        target = "_blank",
-                                        title = &t.open_in_new_tab,
-                                    ] {
-                                        i[
-                                            class = "eos-icons notranslate",
-                                            translate = "no",
+                                    @if post.translator != 0 {
+                                        a[
+                                            class = "is-pulled-right",
+                                            href = rw_blog_post(
+                                                &post.lang.code,
+                                                &post.permalink,
+                                            ),
+                                            target = "_blank",
+                                            title = &t.open_in_new_tab,
                                         ] {
-                                            "open_in_new"
+                                            i[
+                                                class = "eos-icons notranslate",
+                                                translate = "no",
+                                            ] {
+                                                "open_in_new"
+                                            }
                                         }
                                     }
                                 }

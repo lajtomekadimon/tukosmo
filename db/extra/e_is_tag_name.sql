@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION e_is_lang_name(
+CREATE OR REPLACE FUNCTION e_is_tag_name(
     text_value TEXT
 )
 

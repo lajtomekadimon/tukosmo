@@ -14,6 +14,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Are you sure that you want to delete this language?",
     are_you_sure_that_you_want_to_delete_this_post:
         "Are you sure that you want to delete this post?",
+    are_you_sure_that_you_want_to_delete_this_tag:
+        "Are you sure that you want to delete this tag?",
     are_you_sure_that_you_want_to_delete_this_user:
         "Are you sure that you want to delete this user?",
     author:
@@ -26,6 +28,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Browser",
     cancel:
         "Cancel",
+    categories:
+        "Categories",
     change_filename_question:
         "Change file name?",
     choose_a_file:
@@ -66,6 +70,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Delete (permanent)",
     delete_post_w_title:
         "Delete post: '{title}'",
+    delete_tag_w_name:
+        "Delete tag: {name}",
     delete_user_w_name:
         "Delete user: {name}",
     deleted_k_post:
@@ -90,6 +96,22 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Draft posts",
     drafts:
         "Drafts",
+    edit:
+        "Edit",
+    edit_file:
+        "Edit file",
+    edit_file_w_name:
+        "Edit file: {name}",
+    edit_language_w_name:
+        "Edit language: {name}",
+    edit_post_w_title:
+        "Edit post: '{title}'",
+    edit_tag_w_name:
+        "Edit tag: {name}",
+    edit_user_w_name:
+        "Edit user: {name}",
+    email:
+        "Email",
     err_csrf_token_is_not_a_valid_uuid:
         "The CSRF token is not a valid UUID.",
     err_email_already_exists:
@@ -117,6 +139,10 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Some of the language names are not valid.",
     err_some_wrong_name_for_lang:
         "Some of the names (in the new language) are not valid.",
+    err_some_wrong_tag_name:
+        "Some of the tag names are not valid.",
+    err_some_wrong_tag_permalink:
+        "Some of the tag permalinks are not valid.",
     err_unknown_error:
         "Unknown error.",
     err_user_cant_delete_itself:
@@ -163,6 +189,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "That post doesn't exist.",
     err_wrong_rpp_number:
         "The number of results per page is not correct.",
+    err_wrong_tag_id:
+        "The tag ID is not correct.",
     err_wrong_title:
         "The title is not valid.",
     err_wrong_user_email:
@@ -177,20 +205,6 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "The website's subtitle is not valid.",
     err_wrong_website_title:
         "The website's title is not valid.",
-    edit:
-        "Edit",
-    edit_file:
-        "Edit file",
-    edit_file_w_name:
-        "Edit file: {name}",
-    edit_language_w_name:
-        "Edit language: {name}",
-    edit_post_w_title:
-        "Edit post: '{title}'",
-    edit_user_w_name:
-        "Edit user: '{name}'",
-    email:
-        "Email",
     error:
         "Error",
     examples_of_lang_codes:
@@ -267,12 +281,16 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Names for each language",
     names_in_the_new_language_for_each_language:
         "Names (in the new language) for each language",
+    new_category:
+        "New category",
     new_domain_k_web:
         "New domain",
     new_password:
         "New password",
     new_post:
         "New post",
+    new_tag:
+        "New tag",
     new_user:
         "New user",
     next:
@@ -350,6 +368,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Submit",
     system_k_os:
         "System",
+    tags:
+        "Tags",
     the_post_will_be_permanently_deleted:
         "The post will be permanent deleted.",
     the_post_will_be_sent_to_trash:
@@ -428,6 +448,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Your password",
     your_sessions_have_been_successfully_updated:
         "Your sessions have been successfully updated.",
+    your_website_categories_were_successfully_updated:
+        "Your website categories were successfully updated.",
     your_website_favicon_was_successfully_updated:
         "Your website favicon was successfully updated.",
     your_website_files_were_successfully_updated:
@@ -438,6 +460,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Your website languages were successfully updated.",
     your_website_posts_were_successfully_updated:
         "Your website posts were successfully updated.",
+    your_website_tags_were_successfully_updated:
+        "Your website tags were successfully updated.",
     your_website_users_were_successfully_updated:
         "Your website users were successfully updated.",
 };

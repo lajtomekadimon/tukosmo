@@ -62,6 +62,10 @@ pub fn subroutes() -> Scope {
         .service(scope_admin::languages::route())
         .service(scope_admin::languages::subroutes())
 
+        // Tags: /{lang}/admin/tags
+        .service(scope_admin::tags::route())
+        .service(scope_admin::tags::subroutes())
+
         // Posts: /{lang}/admin/posts
         .service(scope_admin::posts::route())
         .service(scope_admin::posts::subroutes())

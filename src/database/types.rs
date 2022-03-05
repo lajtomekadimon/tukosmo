@@ -70,6 +70,21 @@ pub struct LanguageWithNamesDB {
 }
 
 #[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct TagDB {
+    pub id: i64,
+    pub trans_id: i64,
+    pub lang: LanguageDB,
+    pub name: String,
+    pub permalink: String,
+    pub author: i64,
+    pub author_name: String,
+    pub translator: i64,
+    pub translator_name: String,
+    pub date: String,
+    pub date_trans: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct PostDB {
     pub id: i64,
     pub featured_image: Option<FileDB>,
