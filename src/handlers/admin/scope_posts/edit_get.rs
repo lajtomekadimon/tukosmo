@@ -37,6 +37,7 @@ pub struct AgiPostsEdit {
     pub post: i64,
     pub featured_image: Option<i64>,
     pub first_request: bool,
+    pub tags_added: Vec<i64>,
 }
 
 impl QueryFunction for AgiPostsEdit {
@@ -54,7 +55,7 @@ pub struct AgoPostsEdit {
     pub post: Option<types::PostDB>,
     pub featured_image: Option<types::FileDB>,
     pub tags: Vec<types::TagDB>,
-    pub tags_of_post: Vec<types::TagDB>,
+    pub tags_added: Vec<types::TagDB>,
 }
 
 
@@ -68,6 +69,8 @@ pub async fn edit_get(
 
     let post_id = param.id;
 
+    let empty_tags_added: Vec<i64> = Vec::new();
+
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
@@ -77,6 +80,7 @@ pub async fn edit_get(
                 post: post_id.clone(),
                 featured_image: None,
                 first_request: true,
+                tags_added: empty_tags_added,
             },
         ) {
 

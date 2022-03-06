@@ -3,7 +3,8 @@ CREATE TYPE "AgiPostsEdit" AS (
     req "AdminRequest",
     post BIGINT,
     featured_image BIGINT,
-    first_request BOOL
+    first_request BOOL,
+    tags_added BIGINT[]
 );
 
 CREATE TYPE "AgoPostsEdit" AS (
@@ -14,7 +15,7 @@ CREATE TYPE "AgoPostsEdit" AS (
     post "PostDB",
     featured_image "FileDB",
     tags "TagDB"[],
-    tags_of_post "TagDB"[]
+    tags_added "TagDB"[]
 );
 
 
@@ -45,7 +46,7 @@ DECLARE
 
     tags "TagDB"[];
 
-    tags_of_post "TagDB"[];
+    tags_added "TagDB"[];
 
 BEGIN
 
@@ -94,10 +95,18 @@ BEGIN
 
     tags := s_tags(language_of_user);
 
-    tags_of_post := s_tags_of_post(
-        language_of_user,
-        r.post
-    );
+    IF r.first_request THEN
+        tags_added := s_tags_of_post(
+            language_of_user,
+            r.post
+        );
+    ELSE
+        -- NOTE: Tag IDs are not cheched, but it's not necessary.
+        tags_added := s_tags_by_ids(
+            language_of_user,
+            r.tags_added
+        );
+    END IF;
 
     -- User is logged in
     RETURN ROW(
@@ -124,8 +133,8 @@ BEGIN
         -- tags
         tags,
 
-        -- tags_of_post
-        tags_of_post
+        -- tags_added
+        tags_added
     );
 
 END;

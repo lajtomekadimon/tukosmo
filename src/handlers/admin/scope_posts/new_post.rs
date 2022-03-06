@@ -173,7 +173,7 @@ pub async fn new_post(
                         permalink: permalink_value,
                         draft: is_draft,
                         featured_image: featured_image_id,
-                        tags: tags_added,
+                        tags: tags_added.clone(),
                     },
                 ) {
 
@@ -195,6 +195,7 @@ pub async fn new_post(
                             featured_image: if featured_image_id == 0 {
                                 None
                             } else { Some(featured_image_id) },
+                            tags_added: tags_added,
                         },
                     ) {
 

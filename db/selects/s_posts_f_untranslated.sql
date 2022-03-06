@@ -45,6 +45,9 @@ SELECT ARRAY(
         -- permalink
         '',
 
+        -- tags
+        s_tags_of_post(language_of_user, tp_id),
+
         -- author
         tp_author,
 

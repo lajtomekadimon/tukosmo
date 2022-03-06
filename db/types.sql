@@ -80,6 +80,7 @@ CREATE TYPE "PostDB" AS (
     description TEXT,
     body TEXT,
     permalink TEXT,
+    tags "TagDB"[],
     author BIGINT,
     author_name TEXT,
     translator BIGINT,

@@ -1,7 +1,8 @@
 
 CREATE TYPE "AgiPostsNew" AS (
     req "AdminRequest",
-    featured_image BIGINT
+    featured_image BIGINT,
+    tags_added BIGINT[]
 );
 
 CREATE TYPE "AgoPostsNew" AS (
@@ -9,7 +10,8 @@ CREATE TYPE "AgoPostsNew" AS (
     routes "RouteDB"[],
     csrf_token TEXT,
     featured_image "FileDB",
-    tags "TagDB"[]
+    tags "TagDB"[],
+    tags_added "TagDB"[]
 );
 
 
@@ -38,6 +40,8 @@ DECLARE
 
     tags "TagDB"[];
 
+    tags_added "TagDB"[];
+
 BEGIN
 
     -- Check request and select common data
@@ -65,6 +69,12 @@ BEGIN
 
     tags := s_tags(language_of_user);
 
+    -- NOTE: Tag IDs are not cheched, but it's not necessary.
+    tags_added := s_tags_by_ids(
+        language_of_user,
+        r.tags_added
+    );
+
     RETURN ROW(
         -- data
         d,
@@ -81,7 +91,10 @@ BEGIN
         featured_image,
 
         -- tags
-        tags
+        tags,
+
+        -- tags_added
+        tags_added
     );
 
 END;

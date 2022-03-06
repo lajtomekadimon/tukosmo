@@ -94,6 +94,7 @@ pub struct PostDB {
     pub description: String,
     pub body: String,
     pub permalink: String,
+    pub tags: Vec<TagDB>,
     pub author: i64,
     pub author_name: String,
     pub translator: i64,

@@ -36,6 +36,8 @@ SELECT (
     tpt_body,
     -- permalink
     tpt_permalink,
+    -- tags
+    s_tags_of_post(post_lang, post_id),
     -- author
     tp_author,
     -- author_name

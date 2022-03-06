@@ -25,6 +25,7 @@ pub fn ra_posts_new(
 pub struct AgiPostsNew {
     pub req: types::AdminRequest,
     pub featured_image: Option<i64>,
+    pub tags_added: Vec<i64>,
 }
 
 impl QueryFunction for AgiPostsNew {
@@ -40,6 +41,7 @@ pub struct AgoPostsNew {
     pub csrf_token: String,
     pub featured_image: Option<types::FileDB>,
     pub tags: Vec<types::TagDB>,
+    pub tags_added: Vec<types::TagDB>,
 }
 
 
@@ -50,6 +52,8 @@ pub async fn new_get(
     id: Identity,
 ) -> impl Responder {
 
+    let empty_tags_added: Vec<i64> = Vec::new();
+
     match user_request(req, id) {
 
         Ok(user_req) => match query_db(
@@ -57,6 +61,7 @@ pub async fn new_get(
             AgiPostsNew {
                 req: user_req.clone(),
                 featured_image: None,
+                tags_added: empty_tags_added,
             },
         ) {
 

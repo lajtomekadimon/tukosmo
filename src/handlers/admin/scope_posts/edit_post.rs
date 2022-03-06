@@ -191,7 +191,7 @@ pub async fn edit_post(
                         draft: is_draft,
                         deleted: is_deleted,
                         featured_image: featured_image_id,
-                        tags: tags_added,
+                        tags: tags_added.clone(),
                     },
                 ) {
 
@@ -215,6 +215,7 @@ pub async fn edit_post(
                                 None
                             } else { Some(featured_image_id) },
                             first_request: false,
+                            tags_added: tags_added,
                         },
                     ) {
 

@@ -235,41 +235,37 @@ markup::define! {
                             id = "ttags-added",
                             class = "field is-grouped is-grouped-multiline",
                         ] {
-                            @if let Some(f) = form {
-                                @for tag in q.tags.iter() {
-                                    @if f.tags.contains(&tag.id) {
-                                        input[
-                                            id = "tag-input-{id}"
-                                                .replace(
-                                                    "{id}",
-                                                    &tag.id.to_string(),
-                                                ),
-                                            type = "hidden",
-                                            name = "tag",
-                                            value = &tag.id,
-                                        ];
+                            @for tag in q.tags_added.iter() {
+                                input[
+                                    id = "tag-input-{id}"
+                                        .replace(
+                                            "{id}",
+                                            &tag.id.to_string(),
+                                        ),
+                                    type = "hidden",
+                                    name = "tag",
+                                    value = &tag.id,
+                                ];
 
-                                        div[
-                                            id = "tag-label-{id}"
-                                                .replace(
-                                                    "{id}",
-                                                    &tag.id.to_string(),
-                                                ),
-                                            class = "control",
+                                div[
+                                    id = "tag-label-{id}"
+                                        .replace(
+                                            "{id}",
+                                            &tag.id.to_string(),
+                                        ),
+                                    class = "control",
+                                ] {
+                                    div[class = "tags has-addons"] {
+                                        a[
+                                            class = "tag is-link",
                                         ] {
-                                            div[class = "tags has-addons"] {
-                                                a[
-                                                    class = "tag is-link",
-                                                ] {
-                                                    @tag.name
-                                                }
-                                                a[
-                                                    class = "tag is-delete \
-                                                             ttag-remove",
-                                                    "data-id" = &tag.id,
-                                                ] {}
-                                            }
+                                            @tag.name
                                         }
+                                        a[
+                                            class = "tag is-delete \
+                                                     ttag-remove",
+                                            "data-id" = &tag.id,
+                                        ] {}
                                     }
                                 }
                             }
