@@ -285,10 +285,7 @@ markup::define! {
                                 name = "draft",
                                 value = "yes",
                                 checked = if let Some(f) = form {
-                                    match &f.draft {
-                                        Some(_) => true,
-                                        None => false,
-                                    }
+                                    f.draft
                                 } else { false },
                             ];
                             " "

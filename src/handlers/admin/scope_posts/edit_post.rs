@@ -60,8 +60,8 @@ impl<'de> Deserialize<'de> for FormData {
                 let mut body_value: String = "".to_string();
                 let mut permalink_value: String = "".to_string();
                 let mut tags: Vec<i64> = Vec::default();
-                let mut draft_value: Option<String> = None;
-                let mut deleted_value: Option<String> = None;
+                let mut draft_value: bool = false;
+                let mut deleted_value: bool = false;
 
                 while let Some(key) = map.next_key()? {
                     match key {
@@ -90,10 +90,10 @@ impl<'de> Deserialize<'de> for FormData {
                             tags.push(map.next_value::<i64>()?);
                         }
                         "draft" => {
-                            draft_value = Some("yes".to_string());
+                            draft_value = true;
                         }
                         "deleted" => {
-                            deleted_value = Some("yes".to_string());
+                            deleted_value = true;
                         }
                         _ => unreachable!()
                     }
@@ -127,8 +127,8 @@ pub struct FormData {
     pub body: String,
     pub permalink: String,
     pub tags: Vec<i64>,
-    pub draft: Option<String>,
-    pub deleted: Option<String>,
+    pub draft: bool,
+    pub deleted: bool,
 }
 
 
@@ -136,7 +136,13 @@ pub struct FormData {
 pub struct ApiPostsEdit {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
-    pub post: types::PostDB,
+    pub id: i64,
+    pub title: String,
+    pub description: String,
+    pub body: String,
+    pub permalink: String,
+    pub draft: bool,
+    pub deleted: bool,
     pub featured_image: i64,
     pub tags: Vec<i64>,
 }
@@ -168,14 +174,8 @@ pub async fn edit_post(
                 let description_value = (form.description).clone();
                 let body_value = (form.body).clone();
                 let permalink_value = (form.permalink).clone();
-                let is_draft: bool = match (form.draft).clone() {
-                    Some(_) => true,
-                    None => false,
-                };
-                let is_deleted: bool = match (form.deleted).clone() {
-                    Some(_) => true,
-                    None => false,
-                };
+                let is_draft = (form.draft).clone();
+                let is_deleted = (form.deleted).clone();
                 let tags_added = (form.tags).clone();
 
                 match query_db(
@@ -183,31 +183,13 @@ pub async fn edit_post(
                     ApiPostsEdit {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
-                        post: types::PostDB {
-                            id: post_id,
-                            featured_image: None,
-                            trans_id: 0,
-                            lang: types::LanguageDB {
-                                id: 0,
-                                code: "".to_string(),
-                                name: "".to_string(),
-                                original_name: "".to_string(),
-                                date: "".to_string(),
-                                has_all_names: false,
-                            },
-                            title: title_value,
-                            description: description_value,
-                            body: body_value,
-                            permalink: permalink_value,
-                            author: 0,
-                            author_name: "".to_string(),
-                            translator: 0,
-                            translator_name: "".to_string(),
-                            date: "".to_string(),
-                            date_trans: "".to_string(),
-                            draft: is_draft,
-                            deleted: is_deleted,
-                        },
+                        id: post_id,
+                        title: title_value,
+                        description: description_value,
+                        body: body_value,
+                        permalink: permalink_value,
+                        draft: is_draft,
+                        deleted: is_deleted,
                         featured_image: featured_image_id,
                         tags: tags_added,
                     },
@@ -241,89 +223,33 @@ pub async fn edit_post(
                             let q: AgoPostsEdit = row.get(0);
                             let t = &t(&q.data.lang.code);
 
-                            if let Some(ref post) = q.post {
-                                let html = Edit {
-                                    domain: &config.server.domain,
-                                    codename: &codename,
-                                    title: &format!(
-                                        "{a} - {b}",
-                                        a = t.edit_post_w_title
-                                            .replace("{title}", &post.title),
-                                        b = t.tukosmo_admin_panel,
-                                    ),
-                                    q: &q,
-                                    t: t,
-                                    error: &Some(
-                                        t_error(&e, &q.data.lang.code),
-                                    ),
-                                    form: &Some(form),
-                                };
-
-                                HttpResponse::Ok()
-                                    .content_type("text/html; charset=UTF-8")
-                                    .body(html.to_string())
+                            let post_id_str = &post_id.to_string();
+                            let title_tab_value = if let Some(post) = &q.post {
+                                &post.title
                             } else {
-                                let html = Edit {
-                                    domain: &config.server.domain,
-                                    codename: &codename,
-                                    title: &format!(
-                                        "{a} - {b}",
-                                        a = t.edit_post_w_title
-                                            .replace(
-                                                "{title}",
-                                                &post_id.to_string(),
-                                            ),
-                                        b = t.tukosmo_admin_panel,
-                                    ),
-                                    q: &AgoPostsEdit {
-                                        data: q.data.clone(),
-                                        routes: q.routes.clone(),
-                                        csrf_token: q.csrf_token.clone(),
-                                        post: Some(
-                                            types::PostDB{
-                                                id: post_id,
-                                                featured_image: None,
-                                                trans_id: 0,
-                                                lang: types::LanguageDB {
-                                                    id: 0,
-                                                    code: "".to_string(),
-                                                    name: "".to_string(),
-                                                    original_name: ""
-                                                        .to_string(),
-                                                    date: "".to_string(),
-                                                    has_all_names: false,
-                                                },
-                                                title: "".to_string(),
-                                                description: "".to_string(),
-                                                body: "".to_string(),
-                                                permalink: "".to_string(),
-                                                author: 0,
-                                                author_name: "".to_string(),
-                                                translator: q.data.userd.id,
-                                                translator_name: ""
-                                                    .to_string(),
-                                                date: "".to_string(),
-                                                date_trans: "".to_string(),
-                                                draft: false,
-                                                deleted: false,
-                                            }
-                                        ),
-                                        featured_image: q.featured_image
-                                            .clone(),
-                                        tags: q.tags.clone(),
-                                        tags_of_post: q.tags_of_post.clone(),
-                                    },
-                                    t: t,
-                                    error: &Some(
-                                        t_error(&e, &q.data.lang.code),
-                                    ),
-                                    form: &Some(form),
-                                };
+                                post_id_str
+                            };
 
-                                HttpResponse::Ok()
-                                    .content_type("text/html; charset=UTF-8")
-                                    .body(html.to_string())
-                            }
+                            let html = Edit {
+                                domain: &config.server.domain,
+                                codename: &codename,
+                                title: &format!(
+                                    "{a} - {b}",
+                                    a = t.edit_post_w_title
+                                        .replace("{title}", title_tab_value),
+                                    b = t.tukosmo_admin_panel,
+                                ),
+                                q: &q,
+                                t: t,
+                                error: &Some(
+                                    t_error(&e, &q.data.lang.code),
+                                ),
+                                form: &Some(form),
+                            };
+
+                            HttpResponse::Ok()
+                                .content_type("text/html; charset=UTF-8")
+                                .body(html.to_string())
 
                         }
 

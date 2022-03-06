@@ -12,7 +12,7 @@ PARALLEL SAFE
 
 AS $$
 
-SELECT (text_value ~ '^[a-z-]+$') AND
+SELECT (text_value ~ '^[0-9a-z-]+$') AND
     (LENGTH(text_value) > 0) AND
     (LENGTH(text_value) < 600)
 

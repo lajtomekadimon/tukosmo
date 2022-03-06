@@ -14,10 +14,7 @@ use crate::i18n::{
     translate_i18n::TranslateI18N,
     t_error::ErrorDB,
 };
-use crate::database::{
-    types::PostDB,
-    error_codes as ec,
-};
+use crate::database::error_codes as ec;
 use crate::templates::{
     admin_layout::AdminLayout,
     widgets::admin_panel::AdminPanel,
@@ -46,7 +43,6 @@ markup::define! {
                 content: Content {
                     q: q,
                     t: t,
-                    post: &(q.post).as_ref().unwrap(),
                     error: error,
                     form: form,
                 },
@@ -62,14 +58,13 @@ markup::define! {
     Content<'a>(
         q: &'a AgoPostsEdit,
         t: &'a TranslateI18N,
-        post: &'a PostDB,
         error: &'a Option<ErrorDB>,
         form: &'a Option<ActixForm<FormData>>,
     ) {
         div[class = "box is-marginless mb-6"] {
             h1[class = "title"] {
                 @t.edit_post_w_title
-                    .replace("{title}", &post.id.to_string())
+                    .replace("{title}", &q.id.to_string())
             }
 
             @if let Some(e) = error {
@@ -91,7 +86,7 @@ markup::define! {
                 method = "post",
                 action = ra_posts_edit_w_id(
                     &q.data.lang.code,
-                    &post.id,
+                    &q.id,
                 ),
             ] {
                 input[
@@ -103,7 +98,7 @@ markup::define! {
                 input[
                     type = "hidden",
                     name = "id",
-                    value = &post.id,
+                    value = &q.id,
                 ];
 
                 div[class = "field"] {
@@ -125,7 +120,11 @@ markup::define! {
                             name = "title",
                             value = if let Some(f) = form {
                                 &f.title
-                            } else { &post.title },
+                            } else {
+                                if let Some(post) = &q.post {
+                                    &post.title
+                                } else { "" }
+                            },
                         ];
                     }
                 }
@@ -162,7 +161,11 @@ markup::define! {
                             name = "permalink",
                             value = if let Some(f) = form {
                                 &f.permalink
-                            } else { &post.permalink },
+                            } else {
+                                if let Some(post) = &q.post {
+                                    &post.permalink
+                                } else { "" }
+                            },
                         ];
                     }
                 }
@@ -187,7 +190,11 @@ markup::define! {
                         ] {
                             @if let Some(f) = form {
                                 {&f.description}
-                            } else { @post.description }
+                            } else {
+                                @if let Some(post) = &q.post {
+                                    {&post.description}
+                                } else { "" }
+                            }
                         }
                     }
                 }
@@ -202,7 +209,9 @@ markup::define! {
                             init_value: if let Some(f) = form {
                                 &f.body
                             } else {
-                                &post.body
+                                if let Some(post) = &q.post {
+                                    &post.body
+                                } else { "" }
                             },
                         }
                     }
@@ -336,11 +345,12 @@ markup::define! {
                                 name = "draft",
                                 value = "yes",
                                 checked = if let Some(f) = form {
-                                    match &f.draft {
-                                        Some(_) => true,
-                                        None => false,
-                                    }
-                                } else { post.draft },
+                                    f.draft
+                                } else {
+                                    if let Some(post) = &q.post {
+                                        post.draft
+                                    } else { false }
+                                },
                             ];
                             " "
                             @t.draft
@@ -357,11 +367,12 @@ markup::define! {
                                 name = "deleted",
                                 value = "yes",
                                 checked = if let Some(f) = form {
-                                    match &f.deleted {
-                                        Some(_) => true,
-                                        None => false,
-                                    }
-                                } else { post.deleted },
+                                    f.deleted
+                                } else {
+                                    if let Some(post) = &q.post {
+                                        post.deleted
+                                    } else { false }
+                                },
                             ];
                             " "
                             @t.deleted_k_post
@@ -388,15 +399,17 @@ markup::define! {
                         a[
                             href = ra_posts_delete_w_id(
                                 &q.data.lang.code,
-                                &post.id,
+                                &q.id,
                             ),
                             class = "button is-danger \
                                      has-text-weight-normal mr-4",
                         ] {
-                            @if post.deleted {
-                                @t.delete_permanent
-                            } else {
-                                @t.delete
+                            @if let Some(post) = &q.post {
+                                @if post.deleted {
+                                    @t.delete_permanent
+                                } else {
+                                    @t.delete
+                                }
                             }
                         }
                     }

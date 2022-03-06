@@ -2,7 +2,11 @@
 CREATE TYPE "ApiPostsNew" AS (
     req "AdminRequest",
     csrf_token UUID,
-    post "PostDB",
+    title TEXT,
+    description TEXT,
+    body TEXT,
+    permalink TEXT,
+    draft BOOL,
     featured_image BIGINT,
     tags BIGINT[]
 );
@@ -51,22 +55,22 @@ BEGIN
     END IF;
 
     -- Check post title
-    IF NOT e_is_title((r.post).title) THEN
+    IF NOT e_is_title(r.title) THEN
         PERFORM err_wrong_title();
     END IF;
 
     -- Check post description
-    IF NOT e_is_description((r.post).description) THEN
+    IF NOT e_is_description(r.description) THEN
         PERFORM err_wrong_description();
     END IF;
 
     -- Check post body
-    IF NOT e_is_body_text((r.post).body) THEN
+    IF NOT e_is_body_text(r.body) THEN
         PERFORM err_wrong_body_text();
     END IF;
 
     -- Check post permalink
-    IF NOT e_is_permalink((r.post).permalink) THEN
+    IF NOT e_is_permalink(r.permalink) THEN
         PERFORM err_wrong_permalink();
     END IF;
 
@@ -98,12 +102,12 @@ BEGIN
     PERFORM i_post_translation(
         post_id,
         (d.lang).id,
-        (r.post).title,
-        (r.post).description,
-        (r.post).body,
-        (r.post).permalink,
+        r.title,
+        r.description,
+        r.body,
+        r.permalink,
         (d.userd).id,
-        (r.post).draft
+        r.draft
     );
 
     FOREACH tag_id IN ARRAY r.tags LOOP

@@ -10,6 +10,7 @@ CREATE TYPE "AgoPostsEdit" AS (
     data "AdminDataDB",
     routes "RouteDB"[],
     csrf_token TEXT,
+    id BIGINT,
     post "PostDB",
     featured_image "FileDB",
     tags "TagDB"[],
@@ -110,6 +111,9 @@ BEGIN
         s_csrf_token_by_session(
             (r.req).session
         )::TEXT,
+
+        -- id
+        r.post,
 
         -- post
         post,

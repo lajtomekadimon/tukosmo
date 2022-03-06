@@ -50,6 +50,7 @@ pub struct AgoPostsEdit {
     pub data: types::AdminDataDB,
     pub routes: Vec<types::RouteDB>,
     pub csrf_token: String,
+    pub id: i64,
     pub post: Option<types::PostDB>,
     pub featured_image: Option<types::FileDB>,
     pub tags: Vec<types::TagDB>,
@@ -84,72 +85,31 @@ pub async fn edit_get(
                 let q: AgoPostsEdit = row.get(0);
                 let t = &t(&q.data.lang.code);
 
-                if let Some(ref post) = q.post {
-                    let html = Edit {
-                        domain: &config.server.domain,
-                        codename: &codename,
-                        title: &format!(
-                            "{a} - {b}",
-                            a = t.edit_post_w_title
-                                .replace("{title}", &post.title),
-                            b = t.tukosmo_admin_panel,
-                        ),
-                        q: &q,
-                        t: t,
-                        error: &None,
-                        form: &None,
-                    };
-
-                    HttpResponse::Ok()
-                        .content_type("text/html; charset=UTF-8")
-                        .body(html.to_string())
+                let post_id_str = &post_id.to_string();
+                let title_tab_value = if let Some(post) = &q.post {
+                    &post.title
                 } else {
-                    let html = Edit {
-                        domain: &config.server.domain,
-                        codename: &codename,
-                        title: &format!(
-                            "{a} - {b}",
-                            a = t.edit_post_w_title
-                                .replace("{title}", &post_id.to_string()),
-                            b = t.tukosmo_admin_panel,
-                        ),
-                        q: &AgoPostsEdit {
-                            data: q.data.clone(),
-                            routes: q.routes.clone(),
-                            csrf_token: q.csrf_token.clone(),
-                            post: Some(
-                                types::PostDB{
-                                    id: post_id,
-                                    featured_image: None,
-                                    trans_id: 0,
-                                    lang: q.data.lang.clone(),
-                                    title: "".to_string(),
-                                    description: "".to_string(),
-                                    body: "".to_string(),
-                                    permalink: "".to_string(),
-                                    author: 0,
-                                    author_name: "".to_string(),
-                                    translator: q.data.userd.id,
-                                    translator_name: "".to_string(),
-                                    date: "".to_string(),
-                                    date_trans: "".to_string(),
-                                    draft: false,
-                                    deleted: false,
-                                }
-                            ),
-                            featured_image: q.featured_image.clone(),
-                            tags: q.tags.clone(),
-                            tags_of_post: q.tags_of_post.clone(),
-                        },
-                        t: t,
-                        error: &None,
-                        form: &None,
-                    };
+                    post_id_str
+                };
 
-                    HttpResponse::Ok()
-                        .content_type("text/html; charset=UTF-8")
-                        .body(html.to_string())
-                }
+                let html = Edit {
+                    domain: &config.server.domain,
+                    codename: &codename,
+                    title: &format!(
+                        "{a} - {b}",
+                        a = t.edit_post_w_title
+                            .replace("{title}", title_tab_value),
+                        b = t.tukosmo_admin_panel,
+                    ),
+                    q: &q,
+                    t: t,
+                    error: &None,
+                    form: &None,
+                };
+
+                HttpResponse::Ok()
+                    .content_type("text/html; charset=UTF-8")
+                    .body(html.to_string())
 
             }
 

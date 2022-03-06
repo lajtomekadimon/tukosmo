@@ -59,7 +59,7 @@ impl<'de> Deserialize<'de> for FormData {
                 let mut body_value: String = "".to_string();
                 let mut permalink_value: String = "".to_string();
                 let mut tags: Vec<i64> = Vec::default();
-                let mut draft_value: Option<String> = None;
+                let mut draft_value: bool = false;
 
                 while let Some(key) = map.next_key()? {
                     match key {
@@ -85,7 +85,7 @@ impl<'de> Deserialize<'de> for FormData {
                             tags.push(map.next_value::<i64>()?);
                         }
                         "draft" => {
-                            draft_value = Some("yes".to_string());
+                            draft_value = true;
                         }
                         _ => unreachable!()
                     }
@@ -116,7 +116,7 @@ pub struct FormData {
     pub body: String,
     pub permalink: String,
     pub tags: Vec<i64>,
-    pub draft: Option<String>,
+    pub draft: bool,
 }
 
 
@@ -124,7 +124,11 @@ pub struct FormData {
 pub struct ApiPostsNew {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
-    pub post: types::PostDB,
+    pub title: String,
+    pub description: String,
+    pub body: String,
+    pub permalink: String,
+    pub draft: bool,
     pub featured_image: i64,
     pub tags: Vec<i64>,
 }
@@ -155,10 +159,7 @@ pub async fn new_post(
                 let description_value = (form.description).clone();
                 let body_value = (form.body).clone();
                 let permalink_value = (form.permalink).clone();
-                let is_draft: bool = match (form.draft).clone() {
-                    Some(_) => true,
-                    None => false,
-                };
+                let is_draft = (form.draft).clone();
                 let tags_added = (form.tags).clone();
 
                 match query_db(
@@ -166,31 +167,11 @@ pub async fn new_post(
                     ApiPostsNew {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
-                        post: types::PostDB {
-                            id: 0,
-                            featured_image: None,
-                            trans_id: 0,
-                            lang: types::LanguageDB {
-                                id: 0,
-                                code: "".to_string(),
-                                name: "".to_string(),
-                                original_name: "".to_string(),
-                                date: "".to_string(),
-                                has_all_names: false,
-                            },
-                            title: title_value,
-                            description: description_value,
-                            body: body_value,
-                            permalink: permalink_value,
-                            author: 0,
-                            author_name: "".to_string(),
-                            translator: 0,
-                            translator_name: "".to_string(),
-                            date: "".to_string(),
-                            date_trans: "".to_string(),
-                            draft: is_draft,
-                            deleted: false,
-                        },
+                        title: title_value,
+                        description: description_value,
+                        body: body_value,
+                        permalink: permalink_value,
+                        draft: is_draft,
                         featured_image: featured_image_id,
                         tags: tags_added,
                     },
