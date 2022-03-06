@@ -87,6 +87,28 @@
     color: #555;
 }
 
+.post-tags {
+    font-size: 80%;
+    margin-top: 50px;
+    line-height: 1.8rem;
+}
+
+.post-tag,
+.post-tag:visited {
+    background-color: #444;
+    color: #fff;
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.4rem 0.13rem 0.4rem;
+    margin-left: 0.4rem;
+    text-decoration: none;
+}
+
+.post-tag:hover {
+    background-color: #666;
+    color: #fff;
+    text-decoration: none;
+}
+
 .footnote-reference {
     font-weight: bold;
 }

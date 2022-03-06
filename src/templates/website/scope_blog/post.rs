@@ -178,6 +178,21 @@ markup::define! {
                 ] {
                     {markup::raw(&render_html(&q.post.body))}
                 }
+
+                div[
+                    class = "post-tags",
+                ] {
+                    @t.tags
+                    ":"
+                    @for tag in q.post.tags.iter() {
+                        a[
+                            class = "post-tag",
+                            href = "",
+                        ] {
+                            @tag.name
+                        }
+                    }
+                }
             }
         }
     }
