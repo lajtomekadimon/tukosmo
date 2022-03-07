@@ -56,6 +56,7 @@ Roadmap:
     - [ ] Server
     - [x] Users
     - [x] Languages
+    - [x] Tags
     - [x] Posts
     - [ ] Pages
     - [x] Files
