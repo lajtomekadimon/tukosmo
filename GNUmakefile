@@ -127,6 +127,8 @@ install: clean
 	mkdir -p static/bundles
 	# Unzip TinyMCE
 	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
+	# Unzip EOS-icons
+	unzip static/fonts/eos-icons.zip -d static/fonts/
 else ifeq ($(MODE), production)
 install: clean
 	sed -i 's/mode = \"development\"/mode = \"production\"/g' etc/Tukosmo.toml
@@ -147,6 +149,8 @@ install: clean
 	mkdir -p static/bundles
 	# Unzip TinyMCE
 	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
+	# Unzip EOS-icons
+	unzip static/fonts/eos-icons.zip -d static/fonts/
 endif
 
 install-all: installdb install

@@ -97,7 +97,9 @@ install: clean
 	# Create /static/bundles dir
 	mkdir -p static/bundles
 	# Unzip TinyMCE
-	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
+	unzip static/js/external/tinymce.zip -d static/js/external/
+	# Unzip EOS-icons
+	unzip static/fonts/eos-icons.zip -d static/fonts/
 .endif
 .if ${MODE} == production
 install: clean
@@ -123,7 +125,9 @@ install: clean
 	# Create /static/bundles dir
 	mkdir -p static/bundles
 	# Unzip TinyMCE
-	unzip static/js/external/tinymce.zip -d static/js/external/tinymce
+	unzip static/js/external/tinymce.zip -d static/js/external/
+	# Unzip EOS-icons
+	unzip static/fonts/eos-icons.zip -d static/fonts/
 .endif
 
 install-all: installdb install
