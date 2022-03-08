@@ -169,15 +169,15 @@ pub async fn new_post(
                         i18n_name_langs: i18n_name_langs,
                         i18n_names: i18n_names,
                     },
-                ) {
+                ).await {
 
                     Ok(_) => {
 
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 ra_users_success(&user_req.lang_code),
-                            )
+                            ))
                             .finish()
 
                     },
@@ -187,7 +187,7 @@ pub async fn new_post(
                         AgiUsersNew {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -223,13 +223,13 @@ pub async fn new_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

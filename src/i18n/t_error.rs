@@ -1,4 +1,4 @@
-use postgres::Error;
+use tokio_postgres::Error;
 
 
 use crate::i18n::t::t;

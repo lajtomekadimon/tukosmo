@@ -44,7 +44,7 @@ pub async fn logout_get(
             AgiLogout {
                 req: user_req.clone(),
             }
-        ) {
+        ).await {
 
             Ok(_row) => {
 
@@ -53,14 +53,14 @@ pub async fn logout_get(
 
                 // Redirect to login page
                 HttpResponse::Found()
-                    .header("Location", ra_login(&user_req.lang_code))
+                    .append_header(("Location", ra_login(&user_req.lang_code)))
                     .finish()
 
             },
 
             Err(_e) => {
                 HttpResponse::Found()
-                    .header("Location", ra_login(&user_req.lang_code))
+                    .append_header(("Location", ra_login(&user_req.lang_code)))
                     .finish()
             },
 

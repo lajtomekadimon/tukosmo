@@ -69,7 +69,7 @@ pub async fn favicon_get(
             AgiFavicon {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

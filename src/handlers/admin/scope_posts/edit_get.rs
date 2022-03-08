@@ -82,7 +82,7 @@ pub async fn edit_get(
                 first_request: true,
                 tags_added: empty_tags_added,
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

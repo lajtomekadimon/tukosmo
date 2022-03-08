@@ -1,18 +1,16 @@
-use actix_web::{rt::System, App, HttpServer};
+use actix_web::{App, HttpServer};
 use actix_files::Files;
-use std::sync::mpsc;
-use std::thread;
 use acme_micro::{Error, Certificate, Directory, DirectoryUrl};
 use acme_micro::create_p384_key;
 use std::time::Duration;
-use futures::executor;
 use std::fs;
 use reqwest;
+use tokio;
 
 use crate::config::global::config as config_data;
 
 
-pub fn gen_tls_cert(
+pub async fn gen_tls_cert(
     user_email: &str,
     user_domain: &str,
 ) -> Result<Certificate, Error> {
@@ -27,32 +25,25 @@ pub fn gen_tls_cert(
         },
     }
 
-    // Create temporary server for ACME challenge
-    let (tx, rx) = mpsc::channel();
-    thread::spawn(move || {
-        let sys = System::new("http-server");
+    let config = config_data();
 
-        let config = config_data();
+    let srv = HttpServer::new(|| {
+        App::new()
+            .service(
+                Files::new(
+                    // HTTP route
+                    "/.well-known/acme-challenge",
+                    // System dir
+                    "acme-challenge",
+                ).show_files_listing()
+            )
+    })
+    .bind((config.server.domain, 80))?
+    .shutdown_timeout(0)  // seconds to shutdown after stop signal
+    .run();
 
-        let srv = HttpServer::new(|| {
-            App::new()
-                .service(
-                    Files::new(
-                        // HTTP route
-                        "/.well-known/acme-challenge",
-                        // System dir
-                        "acme-challenge",
-                    ).show_files_listing()
-                )
-        })
-        .bind((config.server.domain, 80))?
-        .shutdown_timeout(0)  // seconds to shutdown after stop signal
-        .run();
-
-        let _ = tx.send(srv);
-        sys.run()
-    });
-    let srv = rx.recv().unwrap();
+    let srv_handle = srv.handle();
+    let hnd = tokio::spawn(srv);
 
     // Use DirectoryUrl::LetsEncrypStaging for dev/testing.
     let url = DirectoryUrl::LetsEncrypt;
@@ -142,7 +133,14 @@ pub fn gen_tls_cert(
     let cert = ord_cert.download_cert()?;
 
     // Stop temporary server for ACME challenge
-    executor::block_on(srv.stop(true));
+    srv_handle.stop(true).await;
+    // Wait until server stops, and then...
+    match hnd.await {
+        Ok(_) => {},
+        Err(e) => {
+            panic!("ACTIX SERVER ERROR: {}", e);
+        }
+    };
 
     // Delete acme-challenge dir
     fs::remove_dir_all("./acme-challenge").unwrap();

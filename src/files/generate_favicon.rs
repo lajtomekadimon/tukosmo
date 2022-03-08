@@ -1,4 +1,4 @@
-use actix_web::{web, HttpResponse, Error};
+use actix_web::{web, Error};
 use actix_multipart::Multipart;
 use uuid::Uuid;
 use std::io::Write;
@@ -20,8 +20,8 @@ pub async fn save_file(
     while let Some(mut field) = payload.try_next().await? {
         // A multipart/form-data stream has to contain `content_disposition`
         let content_disposition = field
-            .content_disposition()
-            .ok_or_else(|| HttpResponse::BadRequest().finish())?;
+            .content_disposition();
+            //.ok_or_else(|| HttpResponse::BadRequest().finish())?;
             // I think this HttpResponse should be a different value (type)...
 
         let filename = content_disposition.get_filename().map_or_else(
@@ -50,8 +50,8 @@ pub async fn save_file(
                             // filesystem operations are blocking,
                             // we have to use threadpool
                             f = web::block(
-                                move || f.write_all(&chunk).map(|_| f)
-                            ).await?;
+                                move || f.as_ref().unwrap().write_all(&chunk).map(|_| f)
+                            ).await?.unwrap();
                         }
 
                         rvalue = Ok(filename);

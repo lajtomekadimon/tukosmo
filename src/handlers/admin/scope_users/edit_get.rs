@@ -71,7 +71,7 @@ pub async fn edit_get(
                 req: user_req.clone(),
                 id: user_id.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

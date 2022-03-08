@@ -72,7 +72,7 @@ pub async fn website_get(
             AgiWebsite {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

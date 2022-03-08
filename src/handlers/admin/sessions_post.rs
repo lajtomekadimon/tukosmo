@@ -74,14 +74,14 @@ pub async fn sessions_post(
                         user_agent: user_agent_value,
                         date: date_value,
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => match query_db(
                         &config,
                         AgiSessions {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -117,7 +117,7 @@ pub async fn sessions_post(
                         AgiSessions {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -153,13 +153,13 @@ pub async fn sessions_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

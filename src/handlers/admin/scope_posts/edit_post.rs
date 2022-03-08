@@ -193,15 +193,15 @@ pub async fn edit_post(
                         featured_image: featured_image_id,
                         tags: tags_added.clone(),
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => {
 
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 ra_posts_success(&user_req.lang_code),
-                            )
+                            ))
                             .finish()
 
                     },
@@ -217,7 +217,7 @@ pub async fn edit_post(
                             first_request: false,
                             tags_added: tags_added,
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -263,13 +263,13 @@ pub async fn edit_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

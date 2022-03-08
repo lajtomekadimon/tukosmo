@@ -62,7 +62,7 @@ pub async fn pages_get(
             AgiPages {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

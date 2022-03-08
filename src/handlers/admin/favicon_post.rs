@@ -2,9 +2,9 @@ use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use actix_multipart::Multipart;
 use postgres_types::{ToSql, FromSql};
-use std::sync::mpsc;
 
 use crate::config::global::Config;
+use crate::server::new_server::Handle;
 use crate::handlers::admin::{
     user_request::user_request,
     favicon_get::{
@@ -46,7 +46,7 @@ pub async fn favicon_post(
     req: HttpRequest,
     id: Identity,
     payload: Multipart,
-    restarter: web::Data<mpsc::Sender<()>>,
+    handle: web::Data<Handle>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -57,18 +57,18 @@ pub async fn favicon_post(
                 req: user_req.clone(),
                 //csrf_token: csrf_token_value,
             },
-        ) {
+        ).await {
 
             Ok(_row) => {if generate_favicon(payload).await {
 
                 // Restart server
-                restarter.send(()).unwrap();
+                let _ = handle.stop(true);
 
                 HttpResponse::Found()
-                    .header(
+                    .append_header((
                         "Location",
                         ra_favicon_success(&user_req.lang_code),
-                    )
+                    ))
                     .finish()
 
             } else {
@@ -83,7 +83,7 @@ pub async fn favicon_post(
                 AgiFavicon {
                     req: user_req.clone(),
                 },
-            ) {
+            ).await {
 
                 Ok(row) => {
                     let q: AgoFavicon = row.get(0);

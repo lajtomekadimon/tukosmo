@@ -71,7 +71,7 @@ pub async fn upload_file_post(
             ApiJsonUploadFile {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 
@@ -85,7 +85,7 @@ pub async fn upload_file_post(
                             author_id: q.data.userd.id,
                             filename: filename.clone(),
                         },
-                    ){
+                    ).await {
 
                         Ok(row2) => {
 

@@ -11,9 +11,9 @@ pub async fn root_get(
 ) -> impl Responder {
     let lang_code = http_accept_language(&config, req);
 
-    HttpResponse::Found().header(
+    HttpResponse::Found().append_header((
         "Location",
         rw_home(&lang_code),
-    ).finish()
+    )).finish()
 }
 

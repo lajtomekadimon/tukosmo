@@ -65,28 +65,28 @@ pub async fn new_post(
                         id: file_id.clone(),
                         file_title: file_title_value.clone(),
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => {
 
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 ra_files_success(&user_req.lang_code),
-                            )
+                            ))
                             .finish()
 
                     },
 
                     // TODO: (?)
                     Err(_e) => HttpResponse::Found()
-                        .header(
+                        .append_header((
                             "Location",
                             ra_files_edit_w_id(
                                 &user_req.lang_code,
                                 &file_id,
                             ),
-                        )
+                        ))
                         .finish(),
 
                 }
@@ -94,13 +94,13 @@ pub async fn new_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

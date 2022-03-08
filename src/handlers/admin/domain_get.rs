@@ -69,7 +69,7 @@ pub async fn domain_get(
             AgiDomain {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

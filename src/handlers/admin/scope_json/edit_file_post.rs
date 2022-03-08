@@ -76,7 +76,7 @@ pub async fn edit_file_post(
                         id: file_id.clone(),
                         file_title: file_title_value.clone(),
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => {
 

@@ -54,7 +54,7 @@ pub async fn new_get(
             AgiUsersNew {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

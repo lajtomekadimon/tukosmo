@@ -73,7 +73,7 @@ pub async fn error_get(
                 req: user_req.clone(),
                 code: error_code.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 
@@ -127,10 +127,10 @@ pub async fn error_get(
                         } else if error_code == ec::USER_NOT_LOGGED_IN {
 
                             HttpResponse::Found()
-                                .header(
+                                .append_header((
                                     "Location",
                                     ra_login(&user_req.lang_code),
-                                )
+                                ))
                                 .finish()
 
                         } else {

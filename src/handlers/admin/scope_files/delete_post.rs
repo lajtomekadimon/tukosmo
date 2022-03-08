@@ -71,7 +71,7 @@ pub async fn delete_post(
                         csrf_token: csrf_token_value,
                         id: file_id.clone(),
                     },
-                ) {
+                ).await {
 
                     Ok(row) => {
 
@@ -83,19 +83,19 @@ pub async fn delete_post(
                         match std::fs::remove_file(filepath) {
                             Ok(_) => {
                                 HttpResponse::Found()
-                                    .header(
+                                    .append_header((
                                         "Location",
                                         ra_files_success(&user_req.lang_code),
-                                    )
+                                    ))
                                     .finish()
                             },
                             // TODO: (?)
                             Err(_) => {
                                 HttpResponse::Found()
-                                    .header(
+                                    .append_header((
                                         "Location",
                                         ra_files_success(&user_req.lang_code),
-                                    )
+                                    ))
                                     .finish()
                             },
                         }
@@ -108,7 +108,7 @@ pub async fn delete_post(
                             req: user_req.clone(),
                             id: file_id.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -144,13 +144,13 @@ pub async fn delete_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

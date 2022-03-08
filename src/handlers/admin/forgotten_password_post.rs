@@ -66,14 +66,14 @@ pub async fn forgotten_password_post(
             req: user_req.clone(),
             email: email_value,
         },
-    ) {
+    ).await {
 
         Ok(_row) => match query_db(
             &config,
             AgiForgottenPassword {
                 req: user_req,
             },
-        ) {
+        ).await {
 
             Ok(row2) => {
 
@@ -108,7 +108,7 @@ pub async fn forgotten_password_post(
             Err(e2) => {
                 println!("{}", e2);
                 HttpResponse::Found()
-                    .header("Location", "/")  // TODO
+                    .append_header(("Location", "/"))  // TODO
                     .finish()
             },
 
@@ -119,7 +119,7 @@ pub async fn forgotten_password_post(
             AgiForgottenPassword {
                 req: user_req,
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 
@@ -149,7 +149,7 @@ pub async fn forgotten_password_post(
 
             Err(_e2) => {
                 HttpResponse::Found()
-                    .header("Location", "/")  // TODO
+                    .append_header(("Location", "/"))  // TODO
                     .finish()
             },
 

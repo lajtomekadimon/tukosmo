@@ -63,7 +63,7 @@ pub async fn sessions_get(
             AgiSessions {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

@@ -56,7 +56,7 @@ pub async fn forgotten_password_get(
         AgiForgottenPassword {
             req: user_req.clone(),
         },
-    ) {
+    ).await {
 
         Ok(row) => {
 
@@ -66,10 +66,10 @@ pub async fn forgotten_password_get(
             if let Some(_user) = q.data.userd {
 
                 HttpResponse::Found()
-                    .header(
+                    .append_header((
                         "Location",
                         ra_dashboard(&q.data.lang.code),
-                    )
+                    ))
                     .finish()
 
             } else {

@@ -69,7 +69,7 @@ pub async fn languages_get(
             AgiLanguages {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

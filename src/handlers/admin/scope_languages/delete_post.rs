@@ -75,15 +75,15 @@ pub async fn delete_post(
                         ).to_string(),
                         id: lang_id.clone(),
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => {
 
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 ra_languages_success(&user_req.lang_code),
-                            )
+                            ))
                             .finish()
 
                     },
@@ -94,7 +94,7 @@ pub async fn delete_post(
                             req: user_req.clone(),
                             id: lang_id.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -130,13 +130,13 @@ pub async fn delete_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

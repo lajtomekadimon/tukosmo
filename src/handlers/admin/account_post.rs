@@ -178,14 +178,14 @@ pub async fn account_post(
                         i18n_name_langs: i18n_name_langs,
                         i18n_names: i18n_names,
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => match query_db(
                         &config,
                         AgiAccount {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -225,7 +225,7 @@ pub async fn account_post(
                         AgiAccount {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -267,13 +267,13 @@ pub async fn account_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
         },
 

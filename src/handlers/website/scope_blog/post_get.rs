@@ -62,7 +62,7 @@ pub async fn post_get(
             req: user_req.clone(),
             permalink: permalink_value,
         },
-    ) {
+    ).await {
 
         Ok(row) => {
 

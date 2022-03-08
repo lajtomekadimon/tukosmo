@@ -1,6 +1,5 @@
-use actix_web::{App, HttpServer, dev};
+use actix_web::{web, App, HttpServer, dev};
 use actix_identity::{CookieIdentityPolicy, IdentityService};
-use actix_web_middleware_redirect_https::RedirectHTTPS;
 use openssl::{
     ssl::{SslAcceptor, SslFiletype, SslMethod},
     pkey::PKey,
@@ -8,14 +7,15 @@ use openssl::{
     asn1::{Asn1Time, Asn1TimeRef},
     error::ErrorStack,
 };
-use std::sync::mpsc;
 use std::time::{
     Duration,
     SystemTime,
 };
-use std::thread;
 use std::fs;
 use chrono::Utc;
+use tokio;
+use std::sync::{Arc, Mutex};
+use core::future::Future;
 
 use crate::config::{
     global::config as config_data,
@@ -29,7 +29,10 @@ use crate::database::{
     initdb::initdb,
     query_db_noparam::query_db_noparam,
 };
-use crate::server::gen_tls_cert::gen_tls_cert;
+use crate::server::{
+    gen_tls_cert::gen_tls_cert,
+    redirect_https::RedirectHTTPS,
+};
 use crate::routes;
 
 
@@ -45,10 +48,34 @@ fn asn1_time_to_system_time(
 }
 
 
-pub fn new_server(
-    tx: mpsc::Sender<()>,
-    private_key: &[u8; 32],
-    start_n: &i64,
+#[derive(Clone)]
+pub struct Handle(pub Arc<Mutex<Option<dev::ServerHandle>>>);
+
+impl Handle {
+    pub fn new() -> Self {
+        Self(Arc::new(Mutex::new(None)))
+    }
+
+    pub async fn replace(
+        &self,
+        handle: dev::ServerHandle,
+    ) -> Option<dev::ServerHandle> {
+        self.0.lock().unwrap().replace(handle)
+    }
+
+    pub async fn stop(
+        &self,
+        graceful: bool,
+    ) -> impl Future<Output = ()> {
+        self.0.lock().unwrap().take().unwrap().stop(graceful)
+    }
+}
+
+
+pub async fn new_server(
+    handle: Handle,
+    private_key: [u8; 32],
+    start_n: i64,
 ) -> dev::Server {
     // Configuration
     let config = config_data();
@@ -80,7 +107,7 @@ pub fn new_server(
     // Reset database if user wants to
     let reset_db = config.server.reset;
     if reset_db.as_str() == "true" {
-        initdb(&config_data()).unwrap();
+        initdb(&config_data()).await.unwrap();
     } else if reset_db.as_str() != "false" {
         panic!("Wrong reset value in Tukosmo.toml");
     }
@@ -103,12 +130,12 @@ pub fn new_server(
     minify_js();
     
     // If this is the first server start...
-    if start_n == &1 {
+    if start_n == 1 {
         // Delete all previous sessions
         if let Err(e) = query_db_noparam(
             &config_data(),
             "SELECT as_clean_sessions()",
-        ) {
+        ).await {
             panic!("Database couldn't delete all sessions. Error: {}", e);
         }
     }
@@ -143,20 +170,19 @@ pub fn new_server(
             Err(_) => true,
         };
         if &config.server.new_domain == "true" {
-            gen_tls_cert(&user_email, &domain).unwrap();
+            gen_tls_cert(&user_email, &domain).await.unwrap();
             change_new_domain(
                 &config_data(),
                 "false"
             );
         } else if need_cert {
-            gen_tls_cert(&user_email, &domain).unwrap();
+            gen_tls_cert(&user_email, &domain).await.unwrap();
         }
 
         // Add private key
         let pkey_bytes = fs::read("etc/pkey.der").unwrap();
         let pkey_der = PKey::private_key_from_der(
             &pkey_bytes
-            //&cert.private_key_der().unwrap()
         ).unwrap();
         ssl_builder.set_private_key(&pkey_der).unwrap();
 
@@ -164,7 +190,6 @@ pub fn new_server(
         let cert_bytes = fs::read("etc/cert.der").unwrap();
         let cert_der = X509::from_der(
             &cert_bytes
-            //&cert.certificate_der().unwrap()
         ).unwrap();
         ssl_builder.set_certificate(&cert_der).unwrap();
 
@@ -182,11 +207,11 @@ pub fn new_server(
             },
             Err(expiry) => expiry.duration().as_secs(),
         };
-        let restarter = tx.clone();
-        thread::spawn(move || {
+        let handle_for_renew = handle.clone();
+        tokio::spawn(async move {
             if secs_until_expiry > (30 * 24 * 60 * 60) {
                 // Wait two months
-                thread::sleep(
+                tokio::time::sleep(
                     Duration::from_secs(
                         // Remember:
                         // - Let's Encrypt certificates last for 90 days.
@@ -196,11 +221,11 @@ pub fn new_server(
                         //   so there will be no expiration notice.
                         secs_until_expiry - (30 * 24 * 60 * 60)
                     )
-                );
+                ).await;
             }
 
-            // Restart server to generate a new TLS certificate
-            restarter.send(()).unwrap();
+            // Restart server (to generate a new TLS certificate)
+            let _ = handle_for_renew.stop(true);
         });
     } else if &server_mode == "development" {
         // Load TLS private key and certificate (created by make in local)
@@ -212,7 +237,7 @@ pub fn new_server(
         panic!("Wrong mode in Tukosmo.toml");
     }
 
-    let private_cookie_key: [u8; 32] = *private_key;
+    let private_cookie_key: [u8; 32] = private_key;
 
     if &server_mode == "development" {
         println!("Server ready. Visit at: https://{}", https_domain);
@@ -221,15 +246,17 @@ pub fn new_server(
     }
 
     // Start server as normal but don't .await after .run() yet
-    let server = HttpServer::new(move || {
+    let srv = HttpServer::new(move || {
         App::new()
-            .data(config_data())  // to load Tukosmo.toml config values
-            .data(codename.clone())  // to load cached files
-            .data(tx.clone())  // to stop server
+            .app_data(web::Data::new(config_data()))  // Tukosmo.toml values
+            .app_data(web::Data::new(codename.clone()))  // cached files code
+            .app_data(web::Data::new(handle.clone()))  // to stop server
 
-            .wrap(RedirectHTTPS::with_replacements(
-                &[(http_port.to_owned(), https_port.to_owned())]
-            ))
+            .wrap(
+                RedirectHTTPS::with_replacements(
+                    &[(http_port.to_owned(), https_port.to_owned())]
+                )
+            )
 
             .wrap(
                 IdentityService::new(
@@ -237,12 +264,11 @@ pub fn new_server(
                         .name("auth")
                         .secure(true)
                         .http_only(true)
-                        .max_age(604800)  // 1 week
+                        .max_age_secs(604800)  // 1 week
                 )
             )
 
-            // Firefox's view source code doesn't work with this (?)
-            //.wrap(middleware::Compress::default())
+            // TODO: .wrap()  // compression
 
             // Website root: /
             .service(routes::root::route())
@@ -272,5 +298,5 @@ pub fn new_server(
                           // TODO: Set value in etc/Tukosmo.toml
     .run();
 
-    server
+    srv
 }

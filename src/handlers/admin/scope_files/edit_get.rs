@@ -70,7 +70,7 @@ pub async fn edit_get(
                 req: user_req.clone(),
                 id: file_id.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

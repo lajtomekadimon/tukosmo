@@ -55,7 +55,7 @@ pub async fn page_get(
         WgiPage {
             req: user_req.clone(),
         },
-    ) {
+    ).await {
 
         Ok(row) => {
 

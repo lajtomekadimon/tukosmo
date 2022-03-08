@@ -1,4 +1,5 @@
-use postgres::{Client, NoTls, Error, row};
+use tokio_postgres::{connect, NoTls, Error, row};
+use tokio;
 use postgres_types::ToSql;
 
 use crate::config::global::Config;
@@ -10,29 +11,39 @@ pub trait QueryFunction {
 }
 
 
-pub fn query_db<RequestType: QueryFunction + ToSql + std::marker::Sync>(
+pub async fn query_db<RequestType: QueryFunction + ToSql + std::marker::Sync>(
     config: &Config,
     r: RequestType,
 ) -> Result<row::Row, Error> {
 
     let server_mode = config.server.mode.as_str();
 
-    match Client::connect(&config.dbauth, NoTls) {
+    match connect(&config.dbauth, NoTls).await {
 
-        Ok(mut client) => match client.query_one(
-            r.query(),
-            &[&r,]
-        ) {
-            Ok(row_result) => Ok(row_result),
-            Err(e) => match server_mode {
-                "development" => {
-                    // Debugging
-                    println!("{}", &e);
-                    println!("{}", t_error(&e, "en").message);
-                    Err(e)
+        Ok((client, connection)) => {
+            // The connection object performs the actual communication with
+            // the database, so spawn it off to run on its own
+            tokio::spawn(async move {
+                if let Err(e) = connection.await {
+                    eprintln!("Connection error: {}", e);
+                }
+            });
+
+            match client.query_one(
+                r.query(),
+                &[&r,]
+            ).await {
+                Ok(row_result) => Ok(row_result),
+                Err(e) => match server_mode {
+                    "development" => {
+                        // Debugging
+                        println!("{}", &e);
+                        println!("{}", t_error(&e, "en").message);
+                        Err(e)
+                    },
+                    _ => Err(e),
                 },
-                _ => Err(e),
-            },
+            }
         },
 
         Err(e) => match server_mode {

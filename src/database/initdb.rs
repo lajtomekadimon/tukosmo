@@ -1,5 +1,6 @@
 use std::fs;
-use postgres::{Client, NoTls, Error};
+use tokio_postgres::{connect, NoTls, Error};
+use tokio;
 
 use crate::config::{
     global::Config,
@@ -34,7 +35,7 @@ pub fn append_sql(
 }
 
 
-pub fn initdb(
+pub async fn initdb(
     config: &Config,
 ) -> Result<(), Error> {
 
@@ -63,31 +64,38 @@ pub fn initdb(
         &config.database.host,
     );
 
-    match Client::connect(pre_db_string_auth, NoTls) {
+    match connect(pre_db_string_auth, NoTls).await {
 
-        Ok(mut pre_client) => {
+        Ok((pre_client, connection)) => {
+            // The connection object performs the actual communication with
+            // the database, so spawn it off to run on its own
+            tokio::spawn(async move {
+                if let Err(e) = connection.await {
+                    eprintln!("Connection error: {}", e);
+                }
+            });
 
             // Create auxiliary database with user's name and password
             pre_client.batch_execute(&format!(
                 "CREATE DATABASE {}_aux",
                 &config.database.name,
-            )).unwrap();
+            )).await.unwrap();
             pre_client.batch_execute(&format!(
                 "CREATE USER {} PASSWORD '{}'",
                 &config.database.user,
                 &config.database.password,
-            )).unwrap();
+            )).await.unwrap();
             pre_client.batch_execute(&format!(
                 "ALTER USER {} WITH SUPERUSER",
                 &config.database.user,
-            )).unwrap();
+            )).await.unwrap();
             pre_client.batch_execute(&format!(
                 "ALTER DATABASE {}_aux OWNER TO {}",
                 &config.database.name,
                 &config.database.user,
-            )).unwrap();
+            )).await.unwrap();
 
-            pre_client.close().unwrap();
+            //pre_client.close().unwrap();
 
         },
 
@@ -107,29 +115,49 @@ pub fn initdb(
         &config.database.password,
     );
 
-    let mut aux_client = Client::connect(aux_db_string_auth, NoTls)?;
+    let (aux_client, connection1) = connect(aux_db_string_auth, NoTls).await?;
+
+    // The connection object performs the actual communication with
+    // the database, so spawn it off to run on its own
+    tokio::spawn(async move {
+        if let Err(e) = connection1.await {
+            eprintln!("Connection error: {}", e);
+        }
+    });
 
     // Delete arbitrary database and user
-    aux_client.batch_execute("DROP DATABASE IF EXISTS pretukosmo").unwrap();
-    aux_client.batch_execute("DROP USER IF EXISTS pretukosmouser").unwrap();
+    aux_client.batch_execute(
+        "DROP DATABASE IF EXISTS pretukosmo"
+    ).await.unwrap();
+    aux_client.batch_execute(
+        "DROP USER IF EXISTS pretukosmouser"
+    ).await.unwrap();
 
     // Reset Tukosmo's database
     aux_client.batch_execute(&format!(
         "DROP DATABASE IF EXISTS {}",
         &config.database.name,
-    )).unwrap();
+    )).await.unwrap();
     aux_client.batch_execute(&format!(
         "CREATE DATABASE {}",
         &config.database.name,
-    )).unwrap();
+    )).await.unwrap();
 
-    aux_client.close().unwrap();
+    //aux_client.close().unwrap();
 
 
     /* TUKOSMO DATABASE
      *======================================================================*/
 
-    let mut client = Client::connect(&config.dbauth, NoTls)?;
+    let (client, connection2) = connect(&config.dbauth, NoTls).await?;
+
+    // The connection object performs the actual communication with
+    // the database, so spawn it off to run on its own
+    tokio::spawn(async move {
+        if let Err(e) = connection2.await {
+            eprintln!("Connection error: {}", e);
+        }
+    });
 
     let mut sql_files = Vec::new();
 
@@ -206,7 +234,7 @@ pub fn initdb(
         let sql_code = fs::read_to_string(&sql_file)
             .expect(&format!("Something went wrong reading {}", &sql_file));
 
-        match client.batch_execute(&sql_code) {
+        match client.batch_execute(&sql_code).await {
             Ok(_) => {},
             Err(e) => {
                 println!("{}", &e);
@@ -216,7 +244,7 @@ pub fn initdb(
         };
     }
 
-    client.close().unwrap();
+    //client.close().unwrap();
 
     // Change reset value to false
     //-------------------------------------------------------

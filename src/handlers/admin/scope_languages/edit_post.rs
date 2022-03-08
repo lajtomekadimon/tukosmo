@@ -4,12 +4,12 @@ use serde::de::{Deserialize, Deserializer, Visitor, MapAccess};
 use std::fmt;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
-use std::sync::mpsc;
 
 use crate::config::{
     global::Config,
     change_lang::change_lang,
 };
+use crate::server::new_server::Handle;
 use crate::handlers::admin::{
     user_request::user_request,
     scope_languages::edit_get::{
@@ -138,7 +138,7 @@ pub async fn edit_post(
     req: HttpRequest,
     form: web::Form<FormData>,
     id: Identity,
-    restarter: web::Data<mpsc::Sender<()>>,
+    handle: web::Data<Handle>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -162,7 +162,7 @@ pub async fn edit_post(
                         lang_ids: lang_ids,
                         lang_names: lang_names,
                     },
-                ) {
+                ).await {
 
                     Ok(row) => {
 
@@ -178,14 +178,14 @@ pub async fn edit_post(
                             // TODO: Handle errors
 
                             // Restart server
-                            restarter.send(()).unwrap();
+                            let _ = handle.stop(true);
                         }
 
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 ra_languages_success(&lang_code),
-                            )
+                            ))
                             .finish()
 
                     },
@@ -196,7 +196,7 @@ pub async fn edit_post(
                             req: user_req.clone(),
                             lang: language_id,
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -233,13 +233,13 @@ pub async fn edit_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

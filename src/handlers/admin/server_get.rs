@@ -53,7 +53,7 @@ pub async fn server_get(
             AgiServer {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

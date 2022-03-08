@@ -4,7 +4,7 @@ domain = "localhost"
 new_domain = "false"
 user_email = "test@test.com"
 reset = "false"
-default_lang = "en"
+default_lang = "es"
 theme = "simple"
 
 [server.development]

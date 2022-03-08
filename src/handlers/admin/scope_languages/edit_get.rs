@@ -69,7 +69,7 @@ pub async fn edit_get(
                 req: user_req.clone(),
                 lang: param.id,
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

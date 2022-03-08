@@ -53,7 +53,7 @@ pub async fn tukosmo_get(
             AgiTukosmo {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

@@ -93,7 +93,7 @@ pub async fn login_post(
                                        */
             user_agent: user_agent_value,
         },
-    ) {
+    ).await {
 
         Ok(row) => {
 
@@ -109,10 +109,10 @@ pub async fn login_post(
             id.remember(session_id_up.to_owned());
 
             HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_dashboard(&q.data.lang.code),
-                )
+                ))
                 .finish()
         },
 
@@ -121,7 +121,7 @@ pub async fn login_post(
             AgiLogin {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 
@@ -131,10 +131,10 @@ pub async fn login_post(
                 if let Some(_user) = q.data.userd {
 
                     HttpResponse::Found()
-                        .header(
+                        .append_header((
                             "Location",
                             ra_dashboard(&q.data.lang.code),
-                        )
+                        ))
                         .finish()
 
                 } else {

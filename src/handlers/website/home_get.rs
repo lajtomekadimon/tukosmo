@@ -51,7 +51,7 @@ pub async fn home_get(
             results_per_page: results_per_page,
             page: current_page,
         },
-    ) {
+    ).await {
 
         Ok(row) => {
 

@@ -56,7 +56,7 @@ pub async fn account_get(
             AgiAccount {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

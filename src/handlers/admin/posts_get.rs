@@ -104,7 +104,7 @@ pub async fn posts_get(
                 page: current_page,
                 filter: (param.f).clone().unwrap_or("all".to_string()),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

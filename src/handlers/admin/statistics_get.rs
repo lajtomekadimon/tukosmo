@@ -53,7 +53,7 @@ pub async fn statistics_get(
             AgiStatistics {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

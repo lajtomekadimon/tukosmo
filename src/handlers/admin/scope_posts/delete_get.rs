@@ -70,7 +70,7 @@ pub async fn delete_get(
                 req: user_req.clone(),
                 id: post_id.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

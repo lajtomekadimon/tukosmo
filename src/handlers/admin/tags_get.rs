@@ -69,7 +69,7 @@ pub async fn tags_get(
             AgiTags {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

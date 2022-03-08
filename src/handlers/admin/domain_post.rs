@@ -3,12 +3,12 @@ use actix_identity::Identity;
 use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 use uuid::Uuid;
-use std::sync::mpsc;
 
 use crate::config::{
     global::Config,
     change_domain::change_domain,
 };
+use crate::server::new_server::Handle;
 use crate::handlers::admin::{
     user_request::user_request,
     domain_get::{
@@ -60,7 +60,7 @@ pub async fn domain_post(
     req: HttpRequest,
     id: Identity,
     form: web::Form<FormData>,
-    restarter: web::Data<mpsc::Sender<()>>,
+    handle: web::Data<Handle>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -80,17 +80,17 @@ pub async fn domain_post(
                         domain: domain_value.clone(),
                         email: email_value.clone(),
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => {
 
                         if &config.server.mode != "production" {
 
                             HttpResponse::Found()
-                                .header(
+                                .append_header((
                                     "Location",
                                     ra_domain(&user_req.lang_code),
-                                )
+                                ))
                                 .finish()
 
                         } else if &config.server.domain != &domain_value {
@@ -105,7 +105,7 @@ pub async fn domain_post(
                             // TODO: Handle errors
 
                             // Restart server
-                            restarter.send(()).unwrap();
+                            let _ = handle.stop(true);
 
                             HttpResponse::Ok().body(
                                 t.please_visit_new_domain_w_domain
@@ -115,10 +115,10 @@ pub async fn domain_post(
                         } else {
 
                             HttpResponse::Found()
-                                .header(
+                                .append_header((
                                     "Location",
                                     ra_domain_nochange(&user_req.lang_code),
-                                )
+                                ))
                                 .finish()
 
                         }
@@ -130,7 +130,7 @@ pub async fn domain_post(
                         AgiDomain {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -172,13 +172,13 @@ pub async fn domain_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

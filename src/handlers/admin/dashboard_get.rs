@@ -53,7 +53,7 @@ pub async fn dashboard_get(
             AgiDashboard {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

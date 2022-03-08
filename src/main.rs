@@ -1,9 +1,5 @@
-use std::{
-    sync::{mpsc, Arc, Mutex},
-    thread,
-};
+use tokio;
 use rand::Rng;
-use futures::executor;
 
 mod config;
 mod database;
@@ -16,10 +12,10 @@ mod routes;
 mod server;
 mod templates;
 
-use crate::server::new_server::new_server;
+use crate::server::new_server::{Handle, new_server};
 
 
-#[actix_web::main]
+#[tokio::main]
 async fn main() -> std::io::Result<()> {
 
     // AUTH COOKIE
@@ -30,49 +26,32 @@ async fn main() -> std::io::Result<()> {
     let private_key: [u8; 32] = rand::thread_rng().gen::<[u8; 32]>();
 
     let mut start_n: i64 = 0;
-    let man_restart = Arc::new(Mutex::new(false));
 
     loop {
         start_n += 1;
 
-        // Create a channel
-        let (tx, rx) = mpsc::channel::<()>();
+        let handle = Handle::new();
 
         // Start server as normal but don't .await after .run() yet
-        let server = new_server(
-            tx,
-            &private_key,
-            &start_n,
-        );
+        let srv = new_server(
+            handle.clone(),
+            //tx.clone(),
+            private_key.clone(),
+            start_n.clone(),
+        ).await;
 
-        // Clone the Server handle
-        let srv = server.clone();
-        let manual_restart_child = Arc::clone(&man_restart);
-        thread::spawn(move || {
-            // Wait for shutdown signal
-            rx.recv().unwrap();
+        // Obtain handle to server
+        handle.replace(srv.handle()).await;
 
-            // Indicate that the server has to restart
-            let mut is_manual_restart_child =
-                manual_restart_child.lock().unwrap();
-            *is_manual_restart_child = true;
+        // Spawn server as Tokio task to start processing connections
+        let hnd = tokio::spawn(srv);
 
-            // Stop server gracefully
-            executor::block_on(srv.stop(true))
-        });
-
-        // Run server
-        match server.await {
-            Ok(_) => {
-                let manual_restart_end = Arc::clone(&man_restart);
-                let mut has_to_restart = manual_restart_end.lock().unwrap();
-                if *has_to_restart {
-                    // Reset restart value
-                    *has_to_restart = false;
-                    continue;
-                } else {
-                    break;
-                }
+        // Wait until server stops, and then...
+        match hnd.await {
+            Ok(_) => if let Some(_) = handle.0.lock().unwrap().take() {
+                continue;
+            } else {
+                break;
             },
             Err(e) => {
                 panic!("ACTIX SERVER ERROR: {}", e);

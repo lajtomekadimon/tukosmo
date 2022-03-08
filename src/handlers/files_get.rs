@@ -25,13 +25,13 @@ pub async fn files_get(
     path.push(pathreq.as_path());
 
     let named_file = match NamedFile::open(path.clone()) {
-        Ok(nf) => nf.with_header(
+        Ok(nf) => nf.customize().insert_header((
             CACHE_CONTROL,
             CacheControl(vec![
                 CacheDirective::MaxAge(31622400),  // 1 year
                 CacheDirective::Extension("immutable".into(), None),
             ])
-        ),
+        )),
         // TODO: Handle this properly
         Err(e) => {
             panic!(

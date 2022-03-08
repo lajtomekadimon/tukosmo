@@ -87,7 +87,7 @@ pub async fn files_selector_get(
                 results_per_page: results_per_page,
                 page: current_page,
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

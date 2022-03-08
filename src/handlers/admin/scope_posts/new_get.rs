@@ -63,7 +63,7 @@ pub async fn new_get(
                 featured_image: None,
                 tags_added: empty_tags_added,
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

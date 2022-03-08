@@ -74,7 +74,7 @@ pub async fn new_get(
             AgiLanguagesNew {
                 req: user_req.clone(),
             },
-        ) {
+        ).await {
 
             Ok(row) => {
 

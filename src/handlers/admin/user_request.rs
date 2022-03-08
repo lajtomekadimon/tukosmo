@@ -38,7 +38,7 @@ pub fn user_request(
             // Redirect to login page
             Err(
                 HttpResponse::Found()
-                    .header("Location", ra_login(&lang_code))
+                    .append_header(("Location", ra_login(&lang_code)))
                     .finish()
             )
 
@@ -51,7 +51,7 @@ pub fn user_request(
         // Redirect to login page
         Err(
             HttpResponse::Found()
-                .header("Location", ra_login(&lang_code))
+                .append_header(("Location", ra_login(&lang_code)))
                 .finish()
         )
 

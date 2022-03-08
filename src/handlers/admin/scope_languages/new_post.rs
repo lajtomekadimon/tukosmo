@@ -188,15 +188,15 @@ pub async fn new_post(
                         website_subtitle: website_subtitle,
                         copyright_owner: copyright_owner,
                     },
-                ) {
+                ).await {
 
                     Ok(_row) => {
 
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 ra_languages_success(&user_req.lang_code),
-                            )
+                            ))
                             .finish()
                     },
 
@@ -205,7 +205,7 @@ pub async fn new_post(
                         AgiLanguagesNew {
                             req: user_req.clone(),
                         },
-                    ) {
+                    ).await {
 
                         Ok(row) => {
 
@@ -242,13 +242,13 @@ pub async fn new_post(
             },
 
             Err(_) => HttpResponse::Found()
-                .header(
+                .append_header((
                     "Location",
                     ra_error_w_code(
                         &user_req.lang_code,
                         CSRF_TOKEN_IS_NOT_A_VALID_UUID,
                     ),
-                )
+                ))
                 .finish(),
 
         },

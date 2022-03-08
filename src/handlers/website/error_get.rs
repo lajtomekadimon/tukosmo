@@ -70,7 +70,7 @@ pub async fn error_get(
             req: user_req,
             code: error_code.clone(),
         },
-    ) {
+    ).await {
 
         Ok(row) => {
 
@@ -118,13 +118,13 @@ pub async fn error_get(
 
                         // Redirect to same URL using default language
                         HttpResponse::Found()
-                            .header(
+                            .append_header((
                                 "Location",
                                 rw_error_w_code(
                                     &config.server.default_lang,
                                     error_code,
                                 ),
-                            )
+                            ))
                             .finish()
 
                     } else {
