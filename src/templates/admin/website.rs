@@ -213,6 +213,7 @@ markup::define! {
                 div[class = "control"] {
                     button[
                         id = "form-website-button",
+                        type = "button",
                         class = "button is-link",
                         "data-nexturl" = ra_website_success(
                             &q.data.lang.code

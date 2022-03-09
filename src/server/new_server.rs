@@ -56,18 +56,29 @@ impl Handle {
         Self(Arc::new(Mutex::new(None)))
     }
 
-    pub async fn replace(
+    pub fn replace(
         &self,
         handle: dev::ServerHandle,
     ) -> Option<dev::ServerHandle> {
         self.0.lock().unwrap().replace(handle)
     }
 
-    pub async fn stop(
+    pub fn stop(
         &self,
         graceful: bool,
     ) -> impl Future<Output = ()> {
-        self.0.lock().unwrap().take().unwrap().stop(graceful)
+        // Original:
+        //self.0.lock().unwrap().take().unwrap().stop(graceful)
+
+        let o = self.0.lock().unwrap().take();
+        match o {
+            Some(s) => {
+                s.stop(graceful)
+            },
+            None => {
+                panic!("None in Handle::stop()");
+            },
+        }
     }
 }
 
@@ -245,12 +256,14 @@ pub async fn new_server(
         println!("Server ready. Visit at: https://{}", domain);
     }
 
+    let handle_data = web::Data::new(handle.clone());
+
     // Start server as normal but don't .await after .run() yet
     let srv = HttpServer::new(move || {
         App::new()
             .app_data(web::Data::new(config_data()))  // Tukosmo.toml values
             .app_data(web::Data::new(codename.clone()))  // cached files code
-            .app_data(web::Data::new(handle.clone()))  // to stop server
+            .app_data(web::Data::clone(&handle_data))  // to stop server
 
             .wrap(
                 RedirectHTTPS::with_replacements(

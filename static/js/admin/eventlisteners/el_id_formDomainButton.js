@@ -14,6 +14,24 @@ function el_id_formDomainButton() {
                 const form = getId("form-domain");
                 const form_url = form.action;
 
+                function check_website_is_online() {
+                    sleep(1000);
+
+                    fetch("/").then(
+                        response => {
+                            window.location.href = nexturl;
+                        }
+                    ).then(
+                        response => {
+                            window.location.href = nexturl;
+                        }
+                    ).catch(
+                        error => {
+                            check_website_is_online();
+                        }
+                    );
+                }
+
                 fetch(
                     form_url,
                     {
@@ -24,32 +42,10 @@ function el_id_formDomainButton() {
                     }
                 ).then(
                     response => {
-                        form.submit();
-                    }
-                ).then(
-                    response => {
-                        form.submit();
+                        check_website_is_online();
                     }
                 ).catch(
                     error => {
-                        function check_website_is_online() {
-                            sleep(5000);
-
-                            fetch(newurl).then(
-                                response => {
-                                    window.location.href = newurl;
-                                }
-                            ).then(
-                                response => {
-                                    window.location.href = newurl;
-                                }
-                            ).catch(
-                                error => {
-                                    check_website_is_online();
-                                }
-                            );
-                        }
-
                         check_website_is_online();
                     }
                 );

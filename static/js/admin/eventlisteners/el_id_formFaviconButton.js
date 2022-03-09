@@ -13,6 +13,24 @@ function el_id_formFaviconButton() {
                 const form = getId("form-favicon");
                 const form_url = form.action;
 
+                function check_website_is_online() {
+                    sleep(1000);
+
+                    fetch("/").then(
+                        response => {
+                            window.location.href = nexturl;
+                        }
+                    ).then(
+                        response => {
+                            window.location.href = nexturl;
+                        }
+                    ).catch(
+                        error => {
+                            check_website_is_online();
+                        }
+                    );
+                }
+
                 fetch(
                     form_url,
                     {
@@ -21,32 +39,10 @@ function el_id_formFaviconButton() {
                     }
                 ).then(
                     response => {
-                        form.submit();
-                    }
-                ).then(
-                    response => {
-                        form.submit();
+                        check_website_is_online();
                     }
                 ).catch(
                     error => {
-                        function check_website_is_online() {
-                            sleep(1000);
-
-                            fetch("/").then(
-                                response => {
-                                    window.location.href = nexturl;
-                                }
-                            ).then(
-                                response => {
-                                    window.location.href = nexturl;
-                                }
-                            ).catch(
-                                error => {
-                                    check_website_is_online();
-                                }
-                            );
-                        }
-
                         check_website_is_online();
                     }
                 );

@@ -33,15 +33,15 @@ async fn main() -> std::io::Result<()> {
         let handle = Handle::new();
 
         // Start server as normal but don't .await after .run() yet
+        let handle1 = handle.clone();
         let srv = new_server(
-            handle.clone(),
-            //tx.clone(),
+            handle1.clone(),
             private_key.clone(),
             start_n.clone(),
         ).await;
 
         // Obtain handle to server
-        handle.replace(srv.handle()).await;
+        handle.replace(srv.handle());
 
         // Spawn server as Tokio task to start processing connections
         let hnd = tokio::spawn(srv);
