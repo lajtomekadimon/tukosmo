@@ -105,7 +105,7 @@ pub async fn domain_post(
                             // TODO: Handle errors
 
                             // Restart server
-                            let _ = handle.stop(true);
+                            let _ = handle.stop(true).await;
 
                             HttpResponse::Ok().body(
                                 t.please_visit_new_domain_w_domain

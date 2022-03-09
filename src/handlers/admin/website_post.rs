@@ -100,7 +100,7 @@ pub async fn website_post(
                             // TODO: Handle errors
 
                             // Restart server
-                            let _ = handle.stop(true);
+                            let _ = handle.stop(true).await;
                         }
 
                         HttpResponse::Found()

@@ -62,7 +62,7 @@ pub async fn favicon_post(
             Ok(_row) => {if generate_favicon(payload).await {
 
                 // Restart server
-                let _ = handle.stop(true);
+                let _ = handle.stop(true).await;
 
                 HttpResponse::Found()
                     .append_header((

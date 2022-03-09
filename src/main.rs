@@ -48,7 +48,7 @@ async fn main() -> std::io::Result<()> {
 
         // Wait until server stops, and then...
         match hnd.await {
-            Ok(_) => if let Some(_) = handle.0.lock().unwrap().take() {
+            Ok(_) => if let None = handle.0.lock().unwrap().take() {
                 continue;
             } else {
                 break;
