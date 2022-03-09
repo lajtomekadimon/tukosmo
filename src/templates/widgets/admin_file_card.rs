@@ -20,7 +20,7 @@ markup::define! {
     ) {
 
         div[class = "card"] {
-            div[class = "card-content"] {
+            div[class = "card-content has-text-centered"] {
                 @if IMG_EXTS.contains(
                     &file_data.ext.as_str(),
                 ) {
