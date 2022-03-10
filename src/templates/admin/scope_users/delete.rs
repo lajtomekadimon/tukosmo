@@ -71,6 +71,12 @@ markup::define! {
                 p {
                     @t.are_you_sure_that_you_want_to_delete_this_user
                 }
+                p {
+                    strong {
+                        {t.all_data_created_by_user_will_be_deleted_w_user
+                            .replace("{user}", &q.user_data.name)}
+                    }
+                }
             }
 
             form[

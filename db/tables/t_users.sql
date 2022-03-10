@@ -14,6 +14,8 @@ CREATE TABLE t_users (
     tu_name TEXT NOT NULL
                  CHECK (e_is_user_name(tu_name)),
 
+    tu_suspended BOOL NOT NULL,
+
     tu_date TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
 );

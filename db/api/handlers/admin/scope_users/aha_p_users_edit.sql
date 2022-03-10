@@ -6,7 +6,8 @@ CREATE TYPE "ApiUsersEdit" AS (
     email TEXT,
     name TEXT,
     i18n_name_langs BIGINT[],
-    i18n_names TEXT[]
+    i18n_names TEXT[],
+    suspended BOOL
 );
 
 
@@ -75,8 +76,14 @@ BEGIN
     PERFORM u_user_by_admin(
         r.id,
         r.email,
-        r.name
+        r.name,
+        r.suspended
     );
+
+    -- Delete all user's sessions if the account is suspended
+    IF r.suspended THEN
+        PERFORM d_sessions_of_user(r.id);
+    END IF;
 
     FOR i IN 1..ARRAY_LENGTH(r.i18n_name_langs, 1) LOOP
         lang_id := r.i18n_name_langs[i];

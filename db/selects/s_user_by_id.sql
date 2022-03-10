@@ -19,6 +19,8 @@ SELECT (
     tu_email,
     -- name
     tu_name,
+    -- suspended
+    tu_suspended,
     -- date
     tu_date
 )::"UserDB"

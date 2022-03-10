@@ -22,6 +22,7 @@ pub struct UserDB {
     pub id: i64,
     pub email: String,
     pub name: String,
+    pub suspended: bool,
     pub date: String,
 }
 
@@ -140,6 +141,7 @@ pub fn websitedata_to_admindata(
             email: "".to_string(),
             name: "".to_string(),
             date: "".to_string(),
+            suspended: false,
         },
         lang: data.lang.clone(),
         languages: data.languages.clone(),

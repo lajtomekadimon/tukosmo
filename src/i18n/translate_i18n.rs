@@ -1,8 +1,11 @@
 
 pub struct TranslateI18N {
     pub account: &'static str,
+    pub account_status: &'static str,
+    pub active_k_account: &'static str,
     pub add_k_verb: &'static str,
     pub add_language: &'static str,
+    pub all_data_created_by_user_will_be_deleted_w_user: &'static str,
     pub appearance: &'static str,
     pub are_you_sure_that_you_want_to_delete_this_file: &'static str,
     pub are_you_sure_that_you_want_to_delete_this_language: &'static str,
@@ -71,6 +74,7 @@ pub struct TranslateI18N {
     pub err_some_wrong_name_for_lang: &'static str,
     pub err_some_wrong_tag_name: &'static str,
     pub err_some_wrong_tag_permalink: &'static str,
+    pub err_suspended_account: &'static str,
     pub err_unknown_error: &'static str,
     pub err_user_cant_delete_itself: &'static str,
     pub err_user_not_logged_in: &'static str,
@@ -181,6 +185,8 @@ pub struct TranslateI18N {
     pub statistics: &'static str,
     pub status: &'static str,
     pub submit: &'static str,
+    pub suspended_account: &'static str,
+    pub suspended_k_account: &'static str,
     pub system_k_os: &'static str,
     pub tags: &'static str,
     pub the_post_will_be_permanently_deleted: &'static str,

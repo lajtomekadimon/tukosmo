@@ -43,6 +43,10 @@ BEGIN
     -- The user exists
     IF real_user_password IS NOT NULL THEN
 
+        IF c_suspended_user_by_email(r.email) THEN
+            PERFORM err_suspended_account();
+        END IF;
+
         -- Password is correct
         /* TODO: Currently, password check is done here, in the
          * database. It may be more secure to do this

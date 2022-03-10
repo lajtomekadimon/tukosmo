@@ -4,10 +4,16 @@ use crate::i18n::translate_i18n::TranslateI18N;
 pub const MSG_EN: TranslateI18N = TranslateI18N {
     account:
         "Account",
+    account_status:
+        "Account status",
+    active_k_account:
+        "Active",
     add_k_verb:
         "Add",
     add_language:
         "Add language",
+    all_data_created_by_user_will_be_deleted_w_user:
+        "All data created by {user} will be PERMANENTLY deleted.",
     appearance:
         "Appearance",
     are_you_sure_that_you_want_to_delete_this_file:
@@ -145,6 +151,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Some of the tag names are not valid.",
     err_some_wrong_tag_permalink:
         "Some of the tag permalinks are not valid.",
+    err_suspended_account:
+        "That user account is suspended.",
     err_unknown_error:
         "Unknown error.",
     err_user_cant_delete_itself:
@@ -370,6 +378,10 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Status",
     submit:
         "Submit",
+    suspended_account:
+        "Suspended account",
+    suspended_k_account:
+        "Suspended",
     system_k_os:
         "System",
     tags:

@@ -42,6 +42,13 @@ BEGIN
         language_of_user
     );
 
+    IF userd IS NOT NULL THEN
+        -- Check user's account is not suspended
+        IF userd.suspended THEN
+            PERFORM err_suspended_account();
+        END IF;
+    END IF;
+
     languages := s_languages(language_of_user);
 
     website_title_value := s_website_title_by_lang(language_of_user);

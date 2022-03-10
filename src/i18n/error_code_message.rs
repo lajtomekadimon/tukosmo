@@ -27,6 +27,7 @@ pub fn error_code_message(
         ec::SOME_WRONG_NAME_FOR_LANG => t.err_some_wrong_name_for_lang,
         ec::SOME_WRONG_TAG_NAME => t.err_some_wrong_tag_name,
         ec::SOME_WRONG_TAG_PERMALINK => t.err_some_wrong_tag_permalink,
+        ec::SUSPENDED_ACCOUNT => t.err_suspended_account,
         ec::UNKNOWN_ERROR => t.err_unknown_error,
         ec::USER_CANT_DELETE_ITSELF => t.err_user_cant_delete_itself,
         ec::USER_NOT_LOGGED_IN => t.err_user_not_logged_in,

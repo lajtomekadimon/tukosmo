@@ -47,6 +47,11 @@ BEGIN
         PERFORM err_user_not_logged_in();
     END IF;
 
+    -- Check user's account is not suspended
+    IF userd.suspended THEN
+        PERFORM err_suspended_account();
+    END IF;
+
     languages := s_languages(language_of_user);
 
     website_title_value := s_website_title_by_lang(language_of_user);

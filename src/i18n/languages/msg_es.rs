@@ -4,10 +4,16 @@ use crate::i18n::translate_i18n::TranslateI18N;
 pub const MSG_ES: TranslateI18N = TranslateI18N {
     account:
         "Cuenta",
+    account_status:
+        "Estado de la cuenta",
+    active_k_account:
+        "Activa",
     add_k_verb:
         "Añadir",
     add_language:
         "Añadir idioma",
+    all_data_created_by_user_will_be_deleted_w_user:
+        "Todos los datos creados por {user} serán eliminados PERMANENTEMENTE.",
     appearance:
         "Apariencia",
     are_you_sure_that_you_want_to_delete_this_file:
@@ -141,6 +147,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Algunos de los nombres del idioma no son válidos.",
     err_some_wrong_name_for_lang:
         "Algunos de los nombres (en el nuevo idioma) no son válidos.",
+    err_suspended_account:
+        "Esa cuenta de usuario está suspendida.",
     err_unknown_error:
         "Error desconocido.",
     err_some_wrong_tag_name:
@@ -371,6 +379,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Estado",
     submit:
         "Enviar",
+    suspended_account:
+        "Cuenta suspendida",
+    suspended_k_account:
+        "Suspendida",
     system_k_os:
         "Sistema",
     tags:

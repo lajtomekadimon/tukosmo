@@ -103,6 +103,9 @@ markup::define! {
                             @t.email
                         }
                         th {
+                            @t.account_status
+                        }
+                        th {
                             @t.date
                         }
                     }
@@ -110,6 +113,7 @@ markup::define! {
                 tbody {
                     @if q.users.len() == 0 {
                         tr {
+                            td { "-" }
                             td { "-" }
                             td { "-" }
                             td { "-" }
@@ -129,6 +133,13 @@ markup::define! {
                                 }
                                 td {
                                     @user.email
+                                }
+                                td {
+                                    @if user.suspended {
+                                        @t.suspended_k_account
+                                    } else {
+                                        @t.active_k_account
+                                    }
                                 }
                                 td {
                                     {t_date(&user.date, &q.data.lang.code)}

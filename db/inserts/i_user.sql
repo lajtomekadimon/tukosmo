@@ -24,13 +24,15 @@ BEGIN
         --tu_id,
         tu_email,
         tu_password,
-        tu_name
+        tu_name,
+        tu_suspended
         --tu_date
     ) VALUES (
         -- BIGSERIAL (autoincrement)
         email_value,
         epassword_value,  -- previously: CRYPT('password', GEN_SALT('bf'))
-        name_value
+        name_value,
+        FALSE
         --NOW()
     ) RETURNING tu_id INTO user_id;
 

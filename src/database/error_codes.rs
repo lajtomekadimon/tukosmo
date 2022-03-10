@@ -29,6 +29,8 @@ pub const SOME_WRONG_TAG_NAME: &'static str = "0E9BF09A2086";
 
 pub const SOME_WRONG_TAG_PERMALINK: &'static str = "C59CD417ABDC";
 
+pub const SUSPENDED_ACCOUNT: &'static str = "76417C47169A";
+
 pub const UNKNOWN_ERROR: &'static str = "BCDD2EA230A5";
 
 pub const USER_CANT_DELETE_ITSELF: &'static str = "BFD51452BC4A";

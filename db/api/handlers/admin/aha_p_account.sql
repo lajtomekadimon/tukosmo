@@ -100,7 +100,8 @@ BEGIN
             PERFORM u_user_by_admin(
                 (d.userd).id,
                 r.email,
-                r.name
+                r.name,
+                FALSE
             );
 
         END IF;

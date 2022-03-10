@@ -15,6 +15,7 @@ CREATE TYPE "UserDB" AS (
     id BIGINT,
     email TEXT,
     name TEXT,
+    suspended BOOL,
     date TEXT
 );
 

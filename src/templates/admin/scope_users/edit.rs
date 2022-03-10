@@ -235,6 +235,23 @@ markup::define! {
                 }
                 */
 
+                div[class = "field"] {
+                    div[class = "control"] {
+                        label[class = "checkbox"] {
+                            input[
+                                type = "checkbox",
+                                name = "suspended",
+                                value = "yes",
+                                checked = if let Some(f) = form {
+                                    f.suspended
+                                } else { q.user_data.suspended },
+                            ];
+                            " "
+                            @t.suspended_account
+                        }
+                    }
+                }
+
                 div[class = "field is-grouped"] {
                     div[class = "control"] {
                         button[class = "button is-link"] {
