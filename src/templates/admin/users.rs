@@ -138,7 +138,11 @@ markup::define! {
                                     @if user.suspended {
                                         @t.suspended_k_account
                                     } else {
-                                        @t.active_k_account
+                                        @if user.admin {
+                                            @t.admin
+                                        } else {
+                                            @t.active_k_account
+                                        }
                                     }
                                 }
                                 td {

@@ -212,28 +212,22 @@ markup::define! {
                     }
                 }
 
-                // TODO
-                /*
                 div[class = "field"] {
                     div[class = "control"] {
                         label[class = "checkbox"] {
                             input[
                                 type = "checkbox",
-                                name = "is_admin",
+                                name = "admin",
                                 value = "yes",
                                 checked = if let Some(f) = form {
-                                    match &f.is_admin {
-                                        Some(_) => true,
-                                        None => false,
-                                    }
-                                } else { false },
+                                    f.admin
+                                } else { q.user_data.admin },
                             ];
                             " "
                             @t.admin
                         }
                     }
                 }
-                */
 
                 div[class = "field"] {
                     div[class = "control"] {

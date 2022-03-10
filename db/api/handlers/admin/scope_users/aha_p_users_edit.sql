@@ -7,6 +7,7 @@ CREATE TYPE "ApiUsersEdit" AS (
     name TEXT,
     i18n_name_langs BIGINT[],
     i18n_names TEXT[],
+    admin BOOL,
     suspended BOOL
 );
 
@@ -77,6 +78,7 @@ BEGIN
         r.id,
         r.email,
         r.name,
+        r.admin,
         r.suspended
     );
 

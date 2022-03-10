@@ -7,15 +7,25 @@ $$
 
 DECLARE
 
+    user_id BIGINT;
+
     lang_en BIGINT;
     lang_es BIGINT;
 
 BEGIN
 
-    PERFORM i_user(
+    user_id := i_user(
         'test@test.com',
         CRYPT('12345', GEN_SALT('bf')),
         'Admin'
+    );
+
+    PERFORM u_user_by_admin(
+        user_id,
+        'test@test.com',
+        'Admin',
+        TRUE,  -- admin
+        FALSE  -- suspended
     );
 
     lang_en := i_language(

@@ -30,6 +30,7 @@ pub fn error_code_message(
         ec::SUSPENDED_ACCOUNT => t.err_suspended_account,
         ec::UNKNOWN_ERROR => t.err_unknown_error,
         ec::USER_CANT_DELETE_ITSELF => t.err_user_cant_delete_itself,
+        ec::USER_IS_NOT_ADMIN => t.err_user_is_not_admin,
         ec::USER_NOT_LOGGED_IN => t.err_user_not_logged_in,
         ec::UUID_IS_NOT_VALID => t.err_uuid_is_not_valid,
         ec::WRONG_BODY_TEXT => t.err_wrong_body_text,

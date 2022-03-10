@@ -26,6 +26,8 @@ SELECT (
         ),
         tu_name
     ),
+    -- admin
+    tu_admin,
     -- suspended
     tu_suspended,
     -- date

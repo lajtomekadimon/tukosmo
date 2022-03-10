@@ -25,6 +25,7 @@ BEGIN
         tu_email,
         tu_password,
         tu_name,
+        tu_admin,
         tu_suspended
         --tu_date
     ) VALUES (
@@ -32,6 +33,7 @@ BEGIN
         email_value,
         epassword_value,  -- previously: CRYPT('password', GEN_SALT('bf'))
         name_value,
+        FALSE,
         FALSE
         --NOW()
     ) RETURNING tu_id INTO user_id;

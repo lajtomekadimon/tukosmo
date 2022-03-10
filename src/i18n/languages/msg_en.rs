@@ -12,6 +12,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Add",
     add_language:
         "Add language",
+    admin:
+        "Admin",
     all_data_created_by_user_will_be_deleted_w_user:
         "All data created by {user} will be PERMANENTLY deleted.",
     appearance:
@@ -157,6 +159,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Unknown error.",
     err_user_cant_delete_itself:
         "A user can't delete itself.",
+    err_user_is_not_admin:
+        "This user doesn't have admin permissions.",
     err_user_not_logged_in:
         "You must be logged in.",
     err_uuid_is_not_valid:

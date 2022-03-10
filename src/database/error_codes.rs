@@ -35,6 +35,8 @@ pub const UNKNOWN_ERROR: &'static str = "BCDD2EA230A5";
 
 pub const USER_CANT_DELETE_ITSELF: &'static str = "BFD51452BC4A";
 
+pub const USER_IS_NOT_ADMIN: &'static str = "A63801E4322A";
+
 pub const USER_NOT_LOGGED_IN: &'static str = "D994FEF2356A";
 
 pub const UUID_IS_NOT_VALID: &'static str = "E4EFE765966E";

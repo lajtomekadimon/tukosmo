@@ -5,11 +5,13 @@ use postgres_types::{ToSql, FromSql};
 use crate::config::global::Config;
 use crate::handlers::{
     website::user_request::user_request,
+    website::error_get::rw_error_w_code,
     admin::dashboard_get::ra_dashboard,
 };
 use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
+    error_codes::USER_IS_NOT_ADMIN,
 };
 use crate::i18n::{
     t::t,
@@ -63,14 +65,26 @@ pub async fn forgotten_password_get(
             let q: AgoForgottenPassword = row.get(0);
             let t = &t(&q.data.lang.code);
 
-            if let Some(_user) = q.data.userd {
+            if let Some(user) = q.data.userd {
 
-                HttpResponse::Found()
-                    .append_header((
-                        "Location",
-                        ra_dashboard(&q.data.lang.code),
-                    ))
-                    .finish()
+                if user.admin {
+                    HttpResponse::Found()
+                        .append_header((
+                            "Location",
+                            ra_dashboard(&q.data.lang.code),
+                        ))
+                        .finish()
+                } else {
+                    HttpResponse::Found()
+                        .append_header((
+                            "Location",
+                            rw_error_w_code(
+                                &q.data.lang.code,
+                                USER_IS_NOT_ADMIN,
+                            ),
+                        ))
+                        .finish()
+                }
 
             } else {
 

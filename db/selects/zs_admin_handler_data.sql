@@ -52,6 +52,11 @@ BEGIN
         PERFORM err_suspended_account();
     END IF;
 
+    -- Check user is admin
+    IF NOT userd.admin THEN
+        PERFORM err_user_is_not_admin();
+    END IF;
+
     languages := s_languages(language_of_user);
 
     website_title_value := s_website_title_by_lang(language_of_user);

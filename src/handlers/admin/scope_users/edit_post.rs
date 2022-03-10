@@ -59,6 +59,7 @@ impl<'de> Deserialize<'de> for FormData {
                 let mut i18n_name_langs: Vec<i64> = Vec::default();
                 let mut i18n_names: Vec<String> = Vec::default();
                 let mut is_suspended: bool = false;
+                let mut is_admin: bool = false;
 
                 while let Some(key) = map.next_key()? {
                     match key {
@@ -81,6 +82,9 @@ impl<'de> Deserialize<'de> for FormData {
                         "i18n_name" => {
                             i18n_names.push(map.next_value::<String>()?);
                         }
+                        "admin" => {
+                            is_admin = true;
+                        }
                         "suspended" => {
                             is_suspended = true;
                         }
@@ -97,6 +101,7 @@ impl<'de> Deserialize<'de> for FormData {
                     name: name_value,
                     i18n_name_langs: i18n_name_langs,
                     i18n_names: i18n_names,
+                    admin: is_admin,
                     suspended: is_suspended,
                 })
             }
@@ -113,6 +118,7 @@ pub struct FormData {
     pub name: String,
     pub i18n_name_langs: Vec<i64>,
     pub i18n_names: Vec<String>,
+    pub admin: bool,
     pub suspended: bool,
 }
 
@@ -126,6 +132,7 @@ pub struct ApiUsersEdit {
     pub name: String,
     pub i18n_name_langs: Vec<i64>,
     pub i18n_names: Vec<String>,
+    pub admin: bool,
     pub suspended: bool,
 }
 
@@ -155,6 +162,7 @@ pub async fn edit_post(
                 let name_value = (form.name).clone();
                 let i18n_name_langs = (form.i18n_name_langs).clone();
                 let i18n_names = (form.i18n_names).clone();
+                let is_admin = (form.admin).clone();
                 let is_suspended = (form.suspended).clone();
 
                 match query_db(
@@ -167,6 +175,7 @@ pub async fn edit_post(
                         name: name_value,
                         i18n_name_langs: i18n_name_langs,
                         i18n_names: i18n_names,
+                        admin: is_admin,
                         suspended: is_suspended,
                     },
                 ).await {

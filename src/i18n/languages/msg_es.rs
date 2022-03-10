@@ -12,6 +12,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Añadir",
     add_language:
         "Añadir idioma",
+    admin:
+        "Administrador",
     all_data_created_by_user_will_be_deleted_w_user:
         "Todos los datos creados por {user} serán eliminados PERMANENTEMENTE.",
     appearance:
@@ -157,6 +159,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Algunos de los permalinks de la etiqueta no son válidos.",
     err_user_cant_delete_itself:
         "Un usuario no puede eliminarse a sí mismo.",
+    err_user_is_not_admin:
+        "Este usuario no tiene permisos de administración.",
     err_user_not_logged_in:
         "Debes estar conectado con tu usuario.",
     err_uuid_is_not_valid:
