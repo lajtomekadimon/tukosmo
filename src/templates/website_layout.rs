@@ -5,7 +5,9 @@ use crate::files::static_files::{
     CSS_WEBSITE,
     JS_WEBSITE,
 };
+use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::{WebsiteDataDB, RouteDB};
+use crate::handlers::website::scope_rss::blog_get::rw_rss_blog;
 use crate::templates::widgets::{
     favicon_meta::FaviconMeta,
     open_graph_meta::{OpenGraphMeta, ArticleOG},
@@ -18,6 +20,7 @@ markup::define! {
         codename: &'a str,
         title: &'a str,
         data: &'a WebsiteDataDB,
+        t: &'a TranslateI18N,
         routes: &'a Vec<RouteDB>,
         og_title: &'a str,
         og_description: &'a str,
@@ -53,6 +56,20 @@ markup::define! {
                 @FaviconMeta {
                     codename: codename,
                 }
+
+                // RSS
+                link[
+                    rel = "alternate",
+                    type = "application/rss+xml",
+                    title = "{web} - {blog}"
+                        .replace("{web}", &data.website_title)
+                        .replace("{blog}", &t.blog),
+                    href = "https://{domain}{route}"
+                        .replace("{domain}", domain)
+                        .replace("{route}", &rw_rss_blog(
+                            &data.lang.code
+                        )),
+                ];
 
                 // Open Graph
                 @OpenGraphMeta {

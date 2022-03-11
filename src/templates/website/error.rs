@@ -25,6 +25,7 @@ markup::define! {
             codename: codename,
             title: title,
             data: &q.data,
+            t: t,
             routes: &q.routes,
             og_title: &"ERROR {code}".replace("{code}", &e.code),
             og_description: "",

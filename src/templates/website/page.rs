@@ -21,6 +21,7 @@ markup::define! {
             codename: codename,
             title: title,
             data: &q.data,
+            t: t,
             routes: &q.routes,
             og_title: "Page (WIP!)",
             og_description: "",

@@ -30,6 +30,9 @@ pub fn subroutes() -> Scope {
         .service(scope_lang::blog::route())
         .service(scope_lang::blog::subroutes())
 
+        // RSS: /{lang}/rss
+        .service(scope_lang::rss::subroutes())
+
         // Page: /{lang}/page/{permalink}
         .service(scope_lang::page::route())
 

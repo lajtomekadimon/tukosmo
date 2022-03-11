@@ -30,6 +30,7 @@ markup::define! {
             codename: codename,
             title: title,
             data: &q.data,
+            t: t,
             routes: &q.routes,
             og_title: &q.post.title,
             og_description: &q.post.description,
