@@ -28,6 +28,9 @@ SELECT ARRAY(
             ''
         ),
 
+        -- bytes
+        tf_bytes,
+
         -- title
         tf_title,
 

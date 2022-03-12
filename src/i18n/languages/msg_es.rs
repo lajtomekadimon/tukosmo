@@ -377,6 +377,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Registrarse",
     since:
         "Desde",
+    size_k_file:
+        "Tamaño",
     statistics:
         "Estadísticas",
     status:

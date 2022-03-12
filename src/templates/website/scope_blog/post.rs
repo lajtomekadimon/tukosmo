@@ -42,7 +42,6 @@ markup::define! {
                             "{dir}",
                             &r_file(&fimage.name),
                         )
-
                 } else { "".to_string() }
             ),
             og_article: &Some(

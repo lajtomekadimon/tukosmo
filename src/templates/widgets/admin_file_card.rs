@@ -30,7 +30,15 @@ markup::define! {
                     ];
                 }
 
-                // TODO: File size
+                div {
+                    strong {
+                        @t.size_k_file
+                        ": "
+                    }
+                    {&file_data.bytes.to_string()}
+                    " bytes"
+                    // TODO: Use KB, MB, GB... (or KiB, MiB, GiB...)
+                }
 
                 div {
                     strong {

@@ -1,7 +1,8 @@
 
 CREATE TYPE "SpiUploadFile" AS (
     author_id BIGINT,
-    filename TEXT
+    filename TEXT,
+    file_bytes BIGINT
 );
 
 CREATE OR REPLACE FUNCTION as_upload_file(
@@ -35,6 +36,7 @@ BEGIN
 
     file_id := i_file(
         r.filename,
+        r.file_bytes,
         r.author_id
     );
 

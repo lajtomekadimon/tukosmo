@@ -26,6 +26,7 @@ BEGIN
 
     file_id := i_file(
         'featured-image-default-post.jpg',
+        1943885,
         user_id
     );
 

@@ -57,6 +57,15 @@ markup::define! {
                     codename: codename,
                 }
 
+                // Canonical link (not needed by now)
+                /************************************
+                 * prevent duplicate content issues in search engine
+                 * optimization by specifying the "canonical" or "preferred"
+                 * version of a web page (for example, different GET parameters
+                 * send duplicate pages and one of them is preferred)
+                 ******************************************************/
+                // <link rel="canonical" href="https://{domain}{route}" />
+
                 // RSS
                 link[
                     rel = "alternate",

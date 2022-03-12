@@ -3,6 +3,7 @@ use actix_identity::Identity;
 use actix_multipart::Multipart;
 use serde_json::json;
 use postgres_types::{ToSql, FromSql};
+use std::fs;
 
 use crate::config::global::Config;
 use crate::handlers::{
@@ -40,6 +41,7 @@ pub struct ApoJsonUploadFile {
 pub struct SpiUploadFile {
     pub author_id: i64,
     pub filename: String,
+    pub file_bytes: i64,
 }
 
 impl QueryFunction for SpiUploadFile {
@@ -79,63 +81,70 @@ pub async fn upload_file_post(
 
                 match save_file(payload).await {
 
-                    Ok(filename) => match query_db(
-                        &config,
-                        SpiUploadFile {
-                            author_id: q.data.userd.id,
-                            filename: filename.clone(),
-                        },
-                    ).await {
+                    Ok(filename) => {
 
-                        Ok(row2) => {
+                        let filepath = format!("./files/{}", filename.clone());
+                        let filebytes = fs::metadata(filepath).unwrap().len();
 
-                            let file_id: i64 = row2.get(0);
+                        match query_db(
+                            &config,
+                            SpiUploadFile {
+                                author_id: q.data.userd.id,
+                                filename: filename.clone(),
+                                file_bytes: filebytes.clone() as i64,
+                            },
+                        ).await {
 
-                            let body = json!({
-                                "success": true,
-                                "id": file_id,
-                                "filename": filename.clone(),
-                                "url": r_file(&filename.clone()),
-                                "location":
-                                    r_file(&filename.clone()),  // TinyMCE
-                            });
-                            HttpResponse::Ok()
-                                .content_type("application/json")
-                                .body(body.to_string())
+                            Ok(row2) => {
 
-                        },
+                                let file_id: i64 = row2.get(0);
 
-                        Err(e) => {
-                            let error_v = &t_error(&e, &user_req.lang_code);
+                                let body = json!({
+                                    "success": true,
+                                    "id": file_id,
+                                    "filename": filename.clone(),
+                                    "url": r_file(&filename.clone()),
+                                    "location":
+                                        r_file(&filename.clone()),  // TinyMCE
+                                });
+                                HttpResponse::Ok()
+                                    .content_type("application/json")
+                                    .body(body.to_string())
 
-                            let filepath = format!("./files/{}", filename);
+                            },
 
-                            // Delete file when database operation fails
-                            match std::fs::remove_file(filepath) {
-                                Ok(_) => {
-                                    let body = json!({
-                                        "success": false,
-                                        "error_code": error_v.code,
-                                        "error_message": error_v.message,
-                                    });
-                                    HttpResponse::Ok()
-                                        .content_type("application/json")
-                                        .body(body.to_string())
-                                },
-                                // TODO: (?)
-                                Err(_) => {
-                                    let body = json!({
-                                        "success": false,
-                                        "error_code": error_v.code,
-                                        "error_message": error_v.message,
-                                    });
-                                    HttpResponse::Ok()
-                                        .content_type("application/json")
-                                        .body(body.to_string())
-                                },
-                            }
-                        },
+                            Err(e) => {
+                                let error_v = &t_error(&e, &user_req.lang_code);
 
+                                let filepath = format!("./files/{}", filename);
+
+                                // Delete file when database operation fails
+                                match std::fs::remove_file(filepath) {
+                                    Ok(_) => {
+                                        let body = json!({
+                                            "success": false,
+                                            "error_code": error_v.code,
+                                            "error_message": error_v.message,
+                                        });
+                                        HttpResponse::Ok()
+                                            .content_type("application/json")
+                                            .body(body.to_string())
+                                    },
+                                    // TODO: (?)
+                                    Err(_) => {
+                                        let body = json!({
+                                            "success": false,
+                                            "error_code": error_v.code,
+                                            "error_message": error_v.message,
+                                        });
+                                        HttpResponse::Ok()
+                                            .content_type("application/json")
+                                            .body(body.to_string())
+                                    },
+                                }
+                            },
+
+                        }
                     },
 
                     Err(_e) => {

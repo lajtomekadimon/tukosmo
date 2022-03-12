@@ -184,6 +184,7 @@ pub struct TranslateI18N {
     pub settings: &'static str,
     pub sign_up_k_verb: &'static str,
     pub since: &'static str,
+    pub size_k_file: &'static str,
     pub statistics: &'static str,
     pub status: &'static str,
     pub submit: &'static str,

@@ -1,6 +1,7 @@
 
 CREATE OR REPLACE FUNCTION i_file(
     filename TEXT,
+    file_bytes BIGINT,
     author_id BIGINT
 )
 
@@ -31,6 +32,7 @@ BEGIN
         --tf_id,
         tf_name,
         tf_ext,
+        tf_bytes,
         tf_title,
         tf_author
         --tf_date
@@ -39,6 +41,7 @@ BEGIN
         -- BIGSERIAL (autoincrement)
         filename,
         file_ext_value,
+        file_bytes,
         filename,
         author_id
         --NOW()

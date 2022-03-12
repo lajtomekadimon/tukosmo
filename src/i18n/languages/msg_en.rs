@@ -376,6 +376,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Sign up",
     since:
         "Since",
+    size_k_file:
+        "Size",
     statistics:
         "Statistics",
     status:

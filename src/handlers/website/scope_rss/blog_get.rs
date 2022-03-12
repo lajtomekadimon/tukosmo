@@ -14,6 +14,7 @@ use crate::handlers::{
     website::user_request::user_request,
     website::blog_get::rw_blog,
     website::scope_blog::post_get::rw_blog_post,
+    files_get::r_file,
 };
 use crate::database::{
     types,
@@ -96,13 +97,6 @@ pub async fn blog_get(
                     ))
                 );
 
-                /* TODO: Post image
-                let mut enclosure = rss::Enclosure::default();
-                enclosure.set_url();  // Required. Defines the URL to the media file
-                enclosure.set_length();  // Required. Defines the length (in bytes) of the media file
-                enclosure.set_type();  // Required. Defines the type of media file (example: image/jpeg)
-                */
-
                 let mut item = rss::Item::default();
                 item.set_title(post.title.clone());
                 item.set_link("https://{domain}{route}"
@@ -114,7 +108,20 @@ pub async fn blog_get(
                 );
                 item.set_description(post.description.clone());
                 //item.set_categories();  // TODO: tags
-                //item.set_enclosure();  // TODO: image
+                if let Some(file_image) = &post.featured_image {
+                    let mut enclosure = rss::Enclosure::default();
+                    enclosure.set_url("https://{domain}{dir}"
+                        .replace("{domain}", &config.server.domain)
+                        .replace(
+                            "{dir}",
+                            &r_file(&file_image.name),
+                        )
+                    );
+                    enclosure.set_length(file_image.bytes.to_string());
+                    enclosure.set_mime_type("image/*");
+
+                    item.set_enclosure(enclosure);
+                }
                 item.set_guid(guid_value);
                 item.set_pub_date(datetime_utc.to_rfc2822());
                 item.set_content(post.body.clone());
