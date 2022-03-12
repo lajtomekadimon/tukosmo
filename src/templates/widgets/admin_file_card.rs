@@ -1,6 +1,9 @@
 use markup;
 
-use crate::files::extensions::IMG_EXTS;
+use crate::files::{
+    extensions::IMG_EXTS,
+    file_size_in_units::file_size_in_units,
+};
 use crate::handlers::{
     admin::scope_users::edit_get::ra_users_edit_w_id,
     files_get::r_file,
@@ -35,9 +38,7 @@ markup::define! {
                         @t.size_k_file
                         ": "
                     }
-                    {&file_data.bytes.to_string()}
-                    " bytes"
-                    // TODO: Use KB, MB, GB... (or KiB, MiB, GiB...)
+                    {&file_size_in_units(file_data.bytes)}
                 }
 
                 div {
