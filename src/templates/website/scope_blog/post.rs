@@ -147,26 +147,28 @@ markup::define! {
                             */
                         }
                         
-                        @if let Some(_user) = &q.data.userd {
-                            span[
-                                class = "post-meta-edit",
-                            ] {
-                                a[
-                                    href = ra_posts_edit_w_id(
-                                        &q.data.lang.code,
-                                        &q.post.id,
-                                    ),
+                        @if let Some(user) = &q.data.userd {
+                            @if user.admin {
+                                span[
+                                    class = "post-meta-edit",
                                 ] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no",
+                                    a[
+                                        href = ra_posts_edit_w_id(
+                                            &q.data.lang.code,
+                                            &q.post.id,
+                                        ),
                                     ] {
-                                        "mode_edit"
+                                        i[
+                                            class = "eos-icons notranslate",
+                                            translate = "no",
+                                        ] {
+                                            "mode_edit"
+                                        }
+
+                                        " "
+
+                                        @t.edit
                                     }
-
-                                    " "
-
-                                    @t.edit
                                 }
                             }
                         }

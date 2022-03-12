@@ -29,7 +29,7 @@ markup::define! {
             id = "smenu",
             class = "menu is-hidden-mobile",
         ] {
-            /* Dashboard
+            /* General
              * * * * * * */
             ul[class = "menu-list"] {
                 li {
@@ -47,15 +47,6 @@ markup::define! {
                         @t.dashboard
                     }
                 }
-            }
-
-            /* General
-             * * * * * */
-            p[class = "menu-label"] {
-                @t.general
-            }
-            ul[class = "menu-list"] {
-
                 li {
                     a[
                         href = &ra_statistics(&data.lang.code),
@@ -69,21 +60,6 @@ markup::define! {
                         ] { "bar_chart" }
                         " "
                         @t.statistics
-                    }
-                }
-                li {
-                    a[
-                        href = &ra_server(&data.lang.code),
-                        class = if current_page == &"server" {
-                            "is-active"
-                        } else { "" },
-                    ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "database" }
-                        " "
-                        @t.server
                     }
                 }
             }
@@ -254,6 +230,38 @@ markup::define! {
                         }
                     }
                 }
+                /*
+                li {
+                    a[
+                        href = &ra_gallery(&data.lang.code),
+                        class = if current_page == &"gallery" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] { "photo_library" }
+                        " "
+                        @t.gallery
+                    }
+                }
+                li {
+                    a[
+                        href = &ra_faq(&data.lang.code),
+                        class = if current_page == &"faq" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] { "question_mark" }
+                        " "
+                        @t.faq
+                    }
+                }
+                */
             }
 
             /* Appearance
@@ -378,6 +386,21 @@ markup::define! {
                         ] { "settings_suggest" }
                         " "
                         @t.tukosmo
+                    }
+                }
+                li {
+                    a[
+                        href = &ra_server(&data.lang.code),
+                        class = if current_page == &"server" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] { "database" }
+                        " "
+                        @t.server
                     }
                 }
             }
