@@ -1,5 +1,6 @@
 use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
@@ -13,6 +14,13 @@ use crate::i18n::{
     error_admin_route::error_admin_route,
 };
 use crate::templates::admin::pages::Pages;
+
+
+#[derive(Deserialize)]
+pub struct GetParamData {
+    rpp: Option<i64>,
+    p: Option<i64>,
+}
 
 
 pub fn ra_pages(
@@ -33,6 +41,8 @@ pub fn ra_pages_success(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct AgiPages {
     pub req: types::AdminRequest,
+    pub results_per_page: i64,
+    pub page: i64,
 }
 
 impl QueryFunction for AgiPages {
@@ -45,6 +55,8 @@ impl QueryFunction for AgiPages {
 pub struct AgoPages {
     pub data: types::AdminDataDB,
     pub routes: Vec<types::RouteDB>,
+    pub results_per_page: i64,
+    pub page: i64,
 }
 
 
@@ -53,7 +65,11 @@ pub async fn pages_get(
     codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
+    web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
+
+    let results_per_page = (param.rpp).clone().unwrap_or(10);
+    let current_page = (param.p).clone().unwrap_or(1);
 
     match user_request(req, id) {
 
@@ -61,6 +77,8 @@ pub async fn pages_get(
             &config,
             AgiPages {
                 req: user_req.clone(),
+                results_per_page: results_per_page,
+                page: current_page,
             },
         ).await {
 

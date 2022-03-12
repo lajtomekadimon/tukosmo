@@ -126,6 +126,21 @@ markup::define! {
                 }
                 li {
                     a[
+                        href = &ra_pages(&data.lang.code),
+                        class = if current_page == &"pages" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] { "description" }
+                        " "
+                        @t.pages
+                    }
+                }
+                li {
+                    a[
                         href = &ra_tags(&data.lang.code),
                         class = if current_page == &"tags" {
                             "is-active"
@@ -137,6 +152,21 @@ markup::define! {
                         ] { "label" }
                         " "
                         @t.tags
+                    }
+                }
+                li {
+                    a[
+                        href = &ra_files(&data.lang.code),
+                        class = if current_page == &"files" {
+                            "is-active"
+                        } else { "" },
+                    ] {
+                        i[
+                            class = "eos-icons notranslate",
+                            translate = "no",
+                        ] { "file_present" }
+                        " "
+                        @t.files
                     }
                 }
                 li {
@@ -222,36 +252,6 @@ markup::define! {
                                 }
                             }
                         }
-                    }
-                }
-                li {
-                    a[
-                        href = &ra_pages(&data.lang.code),
-                        class = if current_page == &"pages" {
-                            "is-active"
-                        } else { "" },
-                    ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "description" }
-                        " "
-                        @t.pages
-                    }
-                }
-                li {
-                    a[
-                        href = &ra_files(&data.lang.code),
-                        class = if current_page == &"files" {
-                            "is-active"
-                        } else { "" },
-                    ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "file_present" }
-                        " "
-                        @t.files
                     }
                 }
             }

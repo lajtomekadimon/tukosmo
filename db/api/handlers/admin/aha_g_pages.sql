@@ -1,11 +1,15 @@
 
 CREATE TYPE "AgiPages" AS (
-    req "AdminRequest"
+    req "AdminRequest",
+    results_per_page BIGINT,
+    page BIGINT
 );
 
 CREATE TYPE "AgoPages" AS (
     data "AdminDataDB",
-    routes "RouteDB"[]
+    routes "RouteDB"[],
+    results_per_page BIGINT,
+    page BIGINT
 );
 
 
@@ -48,7 +52,13 @@ BEGIN
         d,
 
         -- routes
-        routes
+        routes,
+
+        -- results_per_page
+        r.results_per_page,
+
+        -- page
+        r.page
     );
 
 END;
