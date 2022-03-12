@@ -45,6 +45,7 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] WYSIWYG post editor using [TinyMCE](
 https://github.com/tinymce/tinymce).
 - [x] Automatic Open Graph cards.
+- [x] Automatic RSS feed.
 - [ ] Self-update server OS and software (optional).
 - [ ] Self-update Tukosmo version (optional).
 
