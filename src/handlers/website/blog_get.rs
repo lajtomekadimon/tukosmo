@@ -4,7 +4,10 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
-use crate::handlers::website::user_request::user_request;
+use crate::handlers::website::{
+    user_request::user_request,
+    http_data_request::http_data_request,
+};
 use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
@@ -39,6 +42,7 @@ pub fn rw_blog_wu_rpp_p(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WgiBlog {
     pub req: types::WebsiteRequest,
+    pub http_data: types::HTTPDataDB,
     pub results_per_page: i64,
     pub page: i64,
 }
@@ -69,7 +73,7 @@ pub async fn blog_get(
     web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
 
-    let user_req = user_request(req, id);
+    let user_req = user_request(req.clone(), id);
 
     let results_per_page = (param.rpp).clone().unwrap_or(10);
     let current_page = (param.p).clone().unwrap_or(1);
@@ -78,6 +82,7 @@ pub async fn blog_get(
         &config,
         WgiBlog {
             req: user_req.clone(),
+            http_data: http_data_request(req.clone()),
             results_per_page: results_per_page,
             page: current_page,
         },

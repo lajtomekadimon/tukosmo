@@ -1,6 +1,7 @@
 
 CREATE TYPE "WgiPage" AS (
-    req "WebsiteRequest"
+    req "WebsiteRequest",
+    http_data "HTTPDataDB"
 );
 
 CREATE TYPE "WgoPage" AS (
@@ -41,6 +42,17 @@ BEGIN
     routes := s_common_routes_by_route_lang(
         '/page/blabla',
         language_of_user
+    );
+
+    /* VISITS STATS
+     ***************/
+    PERFORM i_stats_visit(
+        (d.lang).code,
+        '/page/blabla',
+        (r.http_data).ip,
+        (r.http_data).referrer,
+        (r.http_data).browser,
+        (r.http_data).platform
     );
 
     ---

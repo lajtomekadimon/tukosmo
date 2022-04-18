@@ -99,6 +99,13 @@ CREATE TYPE "RouteDB" AS (
     route TEXT
 );
 
+CREATE TYPE "HTTPDataDB" AS (
+    ip TEXT,
+    referrer TEXT,
+    browser TEXT,
+    platform TEXT
+);
+
 CREATE TYPE "AdminDataDB" AS (
     userd "UserDB",
     lang "LanguageDB",
@@ -117,3 +124,36 @@ CREATE TYPE "WebsiteDataDB" AS (
     copyright_owner TEXT
 );
 
+/*-----------*/
+
+CREATE TYPE "StatsVisitsDB" AS (
+    date TEXT,
+    visitors TEXT,
+    visits TEXT
+);
+
+CREATE TYPE "StatsVisitsReferralsDB" AS (
+    referrers TEXT,
+    visitors TEXT,
+    visits TEXT
+);
+
+CREATE TYPE "StatsVisitsBrowsersDB" AS (
+    browsers TEXT,
+    visitors TEXT
+);
+
+CREATE TYPE "StatsVisitsPlatformsDB" AS (
+    platforms TEXT,
+    visitors TEXT
+);
+
+CREATE TYPE "StatsServerDB" AS (
+    date TEXT,
+    uploaded TEXT,
+    downloaded TEXT,
+    disk_used TEXT,
+    disk_free TEXT,
+    cpu TEXT,
+    memory TEXT
+);

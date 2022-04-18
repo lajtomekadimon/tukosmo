@@ -1,6 +1,7 @@
 
 CREATE TYPE "WgiBlog" AS (
     req "WebsiteRequest",
+    http_data "HTTPDataDB",
     results_per_page BIGINT,
     page BIGINT
 );
@@ -80,6 +81,17 @@ BEGIN
     IF (r.page < 1) OR (r.page > total_pages) THEN
         PERFORM err_wrong_page_number();
     END IF;
+
+    /* VISITS STATS
+     ***************/
+    PERFORM i_stats_visit(
+        (d.lang).code,
+        '/blog?p=' || (r.page)::TEXT || '&rpp=' || (r.results_per_page)::TEXT,
+        (r.http_data).ip,
+        (r.http_data).referrer,
+        (r.http_data).browser,
+        (r.http_data).platform
+    );
 
     RETURN ROW(
         -- data

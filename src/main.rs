@@ -34,7 +34,7 @@ async fn main() -> std::io::Result<()> {
 
         // Start server as normal but don't .await after .run() yet
         let handle1 = handle.clone();
-        let srv = new_server(
+        let (srv, srv_handles) = new_server(
             handle1.clone(),
             private_key.clone(),
             start_n.clone(),
@@ -48,10 +48,16 @@ async fn main() -> std::io::Result<()> {
 
         // Wait until server stops, and then...
         match hnd.await {
-            Ok(_) => if let None = handle.0.lock().unwrap().take() {
-                continue;
-            } else {
-                break;
+            Ok(_) => {
+                for srv_handle in &srv_handles {
+                    srv_handle.abort();
+                }
+
+                if let None = handle.0.lock().unwrap().take() {
+                    continue;
+                } else {
+                    break;
+                }
             },
             Err(e) => {
                 panic!("ACTIX SERVER ERROR: {}", e);

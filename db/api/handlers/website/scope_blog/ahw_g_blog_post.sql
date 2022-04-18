@@ -1,6 +1,7 @@
 
 CREATE TYPE "WgiBlogPost" AS (
     req "WebsiteRequest",
+    http_data "HTTPDataDB",
     permalink TEXT
 );
 
@@ -55,6 +56,17 @@ BEGIN
     routes := s_post_routes_by_id_lang(
         post.id,
         language_of_user
+    );
+
+    /* VISITS STATS
+     ***************/
+    PERFORM i_stats_visit(
+        (d.lang).code,
+        '/blog/' || r.permalink,
+        (r.http_data).ip,
+        (r.http_data).referrer,
+        (r.http_data).browser,
+        (r.http_data).platform
     );
 
     -- User is logged in

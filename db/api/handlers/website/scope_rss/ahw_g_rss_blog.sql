@@ -1,6 +1,7 @@
 
 CREATE TYPE "WgiRssBlog" AS (
     req "WebsiteRequest",
+    http_data "HTTPDataDB",
     results BIGINT
 );
 
@@ -56,6 +57,17 @@ BEGIN
         language_of_user,
         r.results,
         1  -- page
+    );
+
+    /* VISITS STATS
+     ***************/
+    PERFORM i_stats_visit(
+        (d.lang).code,
+        '/rss/blog',
+        (r.http_data).ip,
+        (r.http_data).referrer,
+        (r.http_data).browser,
+        (r.http_data).platform
     );
 
     RETURN ROW(

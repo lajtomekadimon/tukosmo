@@ -76,6 +76,20 @@ pub fn minify_js() {
         }
     }
 
+    let file_paths = fs::read_dir("static/js/admin/charts/").unwrap();
+    for path in file_paths {
+        let file_path = path.unwrap().path();
+
+        if let Some(extension) = file_path.extension() {
+            if extension == "js" {
+                let file_code = fs::read_to_string(file_path)
+                    .expect("Something went wrong reading the JS file!");
+
+                admin_js.push_str(&file_code);
+            }
+        }
+    }
+
     minify_js_file(
         admin_js,
         "static/bundles/bundle.admin.js".to_string(),

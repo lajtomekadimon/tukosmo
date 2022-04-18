@@ -1,6 +1,7 @@
 
 CREATE TYPE "WgiError" AS (
     req "WebsiteRequest",
+    http_data "HTTPDataDB",
     code TEXT
 );
 
@@ -42,6 +43,17 @@ BEGIN
     routes := s_common_routes_by_route_lang(
         '/error?code=' || r.code,
         language_of_user
+    );
+
+    /* VISITS STATS
+     ***************/
+    PERFORM i_stats_visit(
+        (d.lang).code,
+        '/error?code=' || r.code,
+        (r.http_data).ip,
+        (r.http_data).referrer,
+        (r.http_data).browser,
+        (r.http_data).platform
     );
 
     ---

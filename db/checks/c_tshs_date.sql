@@ -1,0 +1,22 @@
+
+CREATE OR REPLACE FUNCTION c_tshs_date(
+    date_value TIMESTAMPTZ
+)
+
+RETURNS BOOL
+
+LANGUAGE SQL
+VOLATILE
+RETURNS NULL ON NULL INPUT
+PARALLEL UNSAFE
+
+AS $$
+
+SELECT EXISTS(
+    SELECT 1
+    FROM tsh_server
+    WHERE tshs_date = date_value
+    LIMIT 1
+)
+
+$$;

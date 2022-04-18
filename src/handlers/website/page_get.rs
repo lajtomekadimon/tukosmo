@@ -3,7 +3,10 @@ use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
-use crate::handlers::website::user_request::user_request;
+use crate::handlers::website::{
+    user_request::user_request,
+    http_data_request::http_data_request,
+};
 use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
@@ -26,6 +29,7 @@ pub fn rw_page(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WgiPage {
     pub req: types::WebsiteRequest,
+    pub http_data: types::HTTPDataDB,
 }
 
 impl QueryFunction for WgiPage {
@@ -48,12 +52,13 @@ pub async fn page_get(
     id: Identity,
 ) -> impl Responder {
 
-    let user_req = user_request(req, id);
+    let user_req = user_request(req.clone(), id);
 
     match query_db(
         &config,
         WgiPage {
             req: user_req.clone(),
+            http_data: http_data_request(req.clone()),
         },
     ).await {
 

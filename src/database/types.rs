@@ -115,6 +115,14 @@ pub struct RouteDB {
 }
 
 #[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct HTTPDataDB {
+    pub ip: String,
+    pub referrer: String,
+    pub browser: String,
+    pub platform: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct AdminDataDB {
     pub userd: UserDB,
     pub lang: LanguageDB,
@@ -132,6 +140,45 @@ pub struct WebsiteDataDB {
     pub website_title: String,
     pub website_subtitle: String,
     pub copyright_owner: String,
+}
+
+/*---*/
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct StatsVisitsDB {
+    pub date: String,
+    pub visitors: String,
+    pub visits: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct StatsVisitsReferralsDB {
+    pub referrers: String,
+    pub visitors: String,
+    pub visits: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct StatsVisitsBrowsersDB {
+    pub browsers: String,
+    pub visitors: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct StatsVisitsPlatformsDB {
+    pub platforms: String,
+    pub visitors: String,
+}
+
+#[derive(Clone, Debug, ToSql, FromSql, Serialize)]
+pub struct StatsServerDB {
+    pub date: String,
+    pub uploaded: String,
+    pub downloaded: String,
+    pub disk_used: String,
+    pub disk_free: String,
+    pub cpu: String,
+    pub memory: String,
 }
 
 pub fn websitedata_to_admindata(

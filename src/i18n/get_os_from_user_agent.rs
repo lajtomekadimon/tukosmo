@@ -12,7 +12,7 @@ pub fn get_os_from_user_agent(
         || user_agent_value.contains("iphone")
         || user_agent_value.contains("iPad")
         || user_agent_value.contains("ipad")     { "iOS" }
-    else if user_agent_value.contains("Mac OS")  { "Mac OS" }
+    else if user_agent_value.contains("Mac OS")  { "Mac" }
     else if user_agent_value.contains("CrOS")    { "ChromeOS" }
     else if user_agent_value.contains("Windows") { "Windows" }
     else { "unknown" };

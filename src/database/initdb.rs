@@ -194,6 +194,15 @@ pub async fn initdb(
         "db/tables/t_post_translations.sql".to_string(),
         "db/tables/t_tags_of_posts.sql".to_string(),
         "db/tables/t_reset_password_codes.sql".to_string(),
+        /*---*/
+        "db/tables/stats/by_min/tsm_server.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_visits.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_visits_visitors.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_visits_referrals.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_visits_referrals_visitors.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_visits_browsers.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_visits_platforms.sql".to_string(),
+        "db/tables/stats/by_hour/tsh_server.sql".to_string(),
     ]);
 
     // QUERY AND MUTATION FUNCTIONS
@@ -204,6 +213,9 @@ pub async fn initdb(
     append_sql(&mut sql_files, "db/errors/");
     // Selects
     sql_files.append(&mut vec![
+        "db/selects/count/sc_stats_visitors_total_by_referrer.sql".to_string(),
+        "db/selects/count/sc_stats_visitors_total_by_browser.sql".to_string(),
+        "db/selects/count/sc_stats_visitors_total_by_platform.sql".to_string(),
         "db/selects/s_user_name_by_user_lang.sql".to_string(),
         "db/selects/s_file_by_id.sql".to_string(),
         "db/selects/s_language_code_by_id.sql".to_string(),
@@ -220,6 +232,8 @@ pub async fn initdb(
     append_sql(&mut sql_files, "db/deletes/");
     // Updates
     append_sql(&mut sql_files, "db/updates/");
+    // Triggers
+    append_sql(&mut sql_files, "db/triggers/");
     // API
     append_sql(&mut sql_files, "db/api/");
 

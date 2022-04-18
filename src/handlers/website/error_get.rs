@@ -4,7 +4,10 @@ use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
-use crate::handlers::website::user_request::user_request;
+use crate::handlers::website::{
+    user_request::user_request,
+    http_data_request::http_data_request,
+};
 use crate::database::{
     types,
     error_codes as ec,
@@ -36,6 +39,7 @@ pub fn rw_error_w_code(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WgiError {
     pub req: types::WebsiteRequest,
+    pub http_data: types::HTTPDataDB,
     pub code: String,
 }
 
@@ -62,12 +66,13 @@ pub async fn error_get(
 
     let error_code = param.code;
 
-    let user_req = user_request(req, id);
+    let user_req = user_request(req.clone(), id);
 
     match query_db(
         &config,
         WgiError {
             req: user_req,
+            http_data: http_data_request(req.clone()),
             code: error_code.clone(),
         },
     ).await {

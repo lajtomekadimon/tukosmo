@@ -3,7 +3,10 @@ use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
-use crate::handlers::website::user_request::user_request;
+use crate::handlers::website::{
+    user_request::user_request,
+    http_data_request::http_data_request,
+};
 use crate::database::{
     types,
     query_db::{QueryFunction, query_db},
@@ -27,6 +30,7 @@ pub fn rw_blog_post(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WgiBlogPost {
     pub req: types::WebsiteRequest,
+    pub http_data: types::HTTPDataDB,
     pub permalink: String,
 }
 
@@ -60,6 +64,7 @@ pub async fn post_get(
         &config,
         WgiBlogPost {
             req: user_req.clone(),
+            http_data: http_data_request(req.clone()),
             permalink: permalink_value,
         },
     ).await {

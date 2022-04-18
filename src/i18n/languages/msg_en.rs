@@ -36,6 +36,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Blog",
     browser:
         "Browser",
+    browsers_k_web:
+        "Browsers",
     cancel:
         "Cancel",
     categories:
@@ -56,6 +58,12 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Copyright owner (in the new language)",
     copyright_w_year_name:
         "© {year} {name}",
+    core_k_cpu:
+        "core",
+    countries:
+        "Countries",
+    cpu_usage_percent:
+        "CPU usage (%)",
     current_favicon:
         "Current favicon",
     current_password:
@@ -92,6 +100,12 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Description",
     device:
         "Device",
+    disk_size_w_used_free_total_u1_u2_u3:
+        "{used} {u1} of {total} {u3} ({free} {u2} free)",
+    disk_usage:
+        "Disk usage",
+    disk_usage_w_unit:
+        "Disk usage ({unit})",
     documentation:
         "Documentation",
     domain_cant_be_changed_in_development_mode:
@@ -99,6 +113,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
     domain_k_web:
         "Domain",
     download:
+        "Download",
+    download_k_noun:
         "Download",
     draft:
         "Draft",
@@ -225,6 +241,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Examples: en, en-us...",
     examples_of_lang_names:
         "Examples: English, Español...",
+    external_referrals:
+        "External referrals",
     favicon:
         "Favicon",
     favicon_note:
@@ -245,6 +263,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
     forgotten_password_message_info:
         "Enter your email address and you will receive an email message
          with a link to reset your password.",
+    free_k_disk:
+        "Free",
     general:
         "General",
     go_back_to_w_website:
@@ -271,6 +291,14 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Language names",
     languages:
         "Languages",
+    last_30_days_month:
+        "Last 30 days (month)",
+    last_365_days_year:
+        "Last 365 days (year)",
+    last_7_days_week:
+        "Last 7 days (week)",
+    last_start_w_date:
+        "Last start: {date}",
     last_update:
         "Last update",
     login_k_noun:
@@ -279,14 +307,30 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Login",
     logout_k_verb:
         "Logout",
+    memory_k_ram:
+        "Memory",
+    memory_usage_percent:
+        "Memory usage (%)",
     menu:
         "Menu",
     menus:
         "Menus",
+    n_days_w_time:
+        "{time} days",
+    n_hours_w_time:
+        "{time} hours",
+    n_minutes_w_time:
+        "{time} minutes",
+    n_months_w_time:
+        "{time} months",
     n_posts:
         "{n} posts",
     n_results_of_m:
         "{n} results of {m}",
+    n_seconds_w_time:
+        "{time} seconds",
+    n_years_w_time:
+        "{time} years",
     name:
         "Name",
     name_in_the_new_language:
@@ -295,6 +339,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Names for each language",
     names_in_the_new_language_for_each_language:
         "Names (in the new language) for each language",
+    network_w_unit:
+        "Network ({unit})",
     new_category:
         "New category",
     new_domain_k_web:
@@ -311,8 +357,22 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Next",
     no_file_uploaded:
         "No file uploaded",
+    number_of_visits:
+        "Number of visits",
+    one_day:
+        "1 day",
+    one_hour:
+        "1 hour",
+    one_minute:
+        "1 minute",
+    one_month:
+        "1 month",
     one_result_of_m:
         "1 result of {m}",
+    one_second:
+        "1 second",
+    one_year:
+        "1 year",
     open_in_new_tab:
         "Open in new tab",
     optional:
@@ -327,6 +387,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Password",
     permalink:
         "Permalink",
+    platforms_k_os:
+        "Platforms",
     please_visit_new_domain_w_domain:
         "Please visit https://{domain}",
     png_image:
@@ -372,6 +434,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Sessions",
     settings:
         "Settings",
+    show_more:
+        "Show more",
     sign_up_k_verb:
         "Sign up",
     since:
@@ -388,6 +452,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Suspended account",
     suspended_k_account:
         "Suspended",
+    swap_k_memory:
+        "Swap",
     system_k_os:
         "System",
     tags:
@@ -402,6 +468,10 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "There are languages without names.",
     title:
         "Title",
+    today:
+        "Today",
+    total:
+        "Total",
     translated_by_user:
         "translated by {name}",
     trash:
@@ -410,6 +480,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Tukosmo",
     tukosmo_admin_panel:
         "Tukosmo Admin Panel",
+    tukosmo_has_been_running_for_w_duration:
+        "Tukosmo has been running for {duration} straight.",
     untranslated:
         "Untranslated",
     untranslated_k_lower:
@@ -422,6 +494,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Update",
     upload_file:
         "Upload file",
+    upload_k_noun:
+        "Upload",
     upload_new_favicon:
         "Upload new favicon",
     uploaded_by:
@@ -430,10 +504,16 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Uploaded by {name} ({date})",
     uploaded_on:
         "Uploaded on",
+    used_k_disk:
+        "Used",
     users:
         "Users",
     visit_website:
         "Visit website",
+    visitors:
+        "Visitors",
+    visits:
+        "Visits",
     warning_domain_paragraph:
         "WARNING: Before doing anything, you must add a record of type A \
         pointing to your server's IP and a record of type CAA \
@@ -455,6 +535,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Website title (in the new language)",
     widgets:
         "Widgets",
+    yesterday:
+        "Yesterday",
     youll_receive_any_expiry_notices_of_tls_certificates:
         "You'll receive any expiry notices of TLS certificates \
         (only if Tukosmo wasn't able to renew them automatically).",

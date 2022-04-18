@@ -12,6 +12,7 @@ use crate::files::static_files::{
 };
 use crate::handlers::{
     website::user_request::user_request,
+    website::http_data_request::http_data_request,
     website::blog_get::rw_blog,
     website::scope_blog::post_get::rw_blog_post,
     files_get::r_file,
@@ -35,6 +36,7 @@ pub fn rw_rss_blog(
 #[derive(Clone, Debug, ToSql, FromSql)]
 pub struct WgiRssBlog {
     pub req: types::WebsiteRequest,
+    pub http_data: types::HTTPDataDB,
     pub results: i64,
 }
 
@@ -59,12 +61,13 @@ pub async fn blog_get(
     id: Identity,
 ) -> impl Responder {
 
-    let user_req = user_request(req, id);
+    let user_req = user_request(req.clone(), id);
 
     match query_db(
         &config,
         WgiRssBlog {
             req: user_req.clone(),
+            http_data: http_data_request(req.clone()),
             results: 10,  // TODO: Add to Tukosmo.toml a custom number
         },
     ).await {

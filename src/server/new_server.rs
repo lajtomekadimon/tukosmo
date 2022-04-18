@@ -16,6 +16,7 @@ use chrono::Utc;
 use tokio;
 use std::sync::{Arc, Mutex};
 use core::future::Future;
+use systemstat::{System as SystemStat, Platform};
 
 use crate::config::{
     global::config as config_data,
@@ -31,6 +32,7 @@ use crate::database::{
 };
 use crate::server::{
     gen_tls_cert::gen_tls_cert,
+    measure_stats_server::measure_stats_server,
     redirect_https::RedirectHTTPS,
 };
 use crate::routes;
@@ -87,9 +89,15 @@ pub async fn new_server(
     handle: Handle,
     private_key: [u8; 32],
     start_n: i64,
-) -> dev::Server {
+) -> (dev::Server, Vec<tokio::task::JoinHandle<()>>) {
+    let mut srv_handles = Vec::new();
+
     // Configuration
     let config = config_data();
+    let config_for_stats = config.clone();
+
+    // Current datetime
+    let current_datetime = chrono::offset::Utc::now();
 
     // Ports and domain
     let server_mode = config.server.mode;
@@ -219,7 +227,7 @@ pub async fn new_server(
             Err(expiry) => expiry.duration().as_secs(),
         };
         let handle_for_renew = handle.clone();
-        tokio::spawn(async move {
+        srv_handles.push(tokio::spawn(async move {
             if secs_until_expiry > (30 * 24 * 60 * 60) {
                 // Wait two months
                 tokio::time::sleep(
@@ -237,7 +245,7 @@ pub async fn new_server(
 
             // Restart server (to generate a new TLS certificate)
             let _ = handle_for_renew.stop(true);
-        });
+        }));
     } else if &server_mode == "development" {
         // Load TLS private key and certificate (created by make in local)
         ssl_builder
@@ -247,6 +255,46 @@ pub async fn new_server(
     } else {
         panic!("Wrong mode in Tukosmo.toml");
     }
+
+    // Measure server stats every minute
+    //-----------------------------------
+    let sys = SystemStat::new();
+    let netifs = sys.networks().unwrap();
+    let mut netif_name = "".to_string();
+    for netif in netifs.values() {
+        if netif.name != "lo" {
+            netif_name = netif.name.clone();
+            break;
+        }
+    }
+    let netstats = sys.network_stats(&netif_name).unwrap();
+    let bytes_received = netstats.rx_bytes.as_u64() as i64;
+    let bytes_sent = netstats.tx_bytes.as_u64() as i64;
+    srv_handles.push(tokio::spawn(async move {
+        let config_for_stats = config_for_stats;
+
+        let netif_name = netif_name.clone();
+
+        let mut last_bytes_received = bytes_received.clone();
+        let mut last_bytes_sent = bytes_sent.clone();
+
+        loop {
+            // Wait one minute
+            tokio::time::sleep(
+                Duration::from_secs(60)
+            ).await;
+
+            let last_bytes = measure_stats_server(
+                &config_for_stats,
+                &netif_name,
+                &last_bytes_received,
+                &last_bytes_sent,
+            ).await;
+
+            last_bytes_received = last_bytes.0;
+            last_bytes_sent = last_bytes.1;
+        }
+    }));
 
     let private_cookie_key: [u8; 32] = private_key;
 
@@ -263,6 +311,7 @@ pub async fn new_server(
         App::new()
             .app_data(web::Data::new(config_data()))  // Tukosmo.toml values
             .app_data(web::Data::new(codename.clone()))  // cached files code
+            .app_data(web::Data::new(current_datetime.clone()))  // cached files code
             .app_data(web::Data::clone(&handle_data))  // to stop server
 
             .wrap(
@@ -311,5 +360,5 @@ pub async fn new_server(
                           // TODO: Set value in etc/Tukosmo.toml
     .run();
 
-    srv
+    (srv, srv_handles)
 }

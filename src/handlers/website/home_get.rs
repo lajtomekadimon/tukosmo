@@ -9,6 +9,7 @@ use crate::handlers::website::{
         WgoBlog,
     },
     user_request::user_request,
+    http_data_request::http_data_request,
 };
 use crate::database::query_db::query_db;
 use crate::i18n::{
@@ -39,7 +40,7 @@ pub async fn home_get(
     web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
 
-    let user_req = user_request(req, id);
+    let user_req = user_request(req.clone(), id);
 
     let results_per_page = (param.rpp).clone().unwrap_or(10);
     let current_page = (param.p).clone().unwrap_or(1);
@@ -48,6 +49,7 @@ pub async fn home_get(
         &config,
         WgiBlog {
             req: user_req.clone(),
+            http_data: http_data_request(req.clone()),
             results_per_page: results_per_page,
             page: current_page,
         },

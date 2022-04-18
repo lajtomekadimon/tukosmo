@@ -36,6 +36,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Blog",
     browser:
         "Navegador",
+    browsers_k_web:
+        "Navegadores",
     cancel:
         "Cancelar",
     categories:
@@ -56,6 +58,12 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Dueño del copyright (en el nuevo idioma)",
     copyright_w_year_name:
         "© {year} {name}",
+    core_k_cpu:
+        "núcleo",
+    countries:
+        "Países",
+    cpu_usage_percent:
+        "Uso de la CPU (%)",
     current_favicon:
         "Favicon actual",
     current_password:
@@ -92,6 +100,12 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Descripción",
     device:
         "Dispositivo",
+    disk_size_w_used_free_total_u1_u2_u3:
+        "{used} {u1} de {total} {u3} ({free} {u2} libres)",
+    disk_usage:
+        "Uso del disco",
+    disk_usage_w_unit:
+        "Uso del disco ({unit})",
     documentation:
         "Documentación",
     domain_cant_be_changed_in_development_mode:
@@ -100,6 +114,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Dominio",
     download:
         "Descargar",
+    download_k_noun:
+        "Descarga",
     draft:
         "Borrador",
     draft_posts:
@@ -226,6 +242,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ejemplos: es, es-es...",
     examples_of_lang_names:
         "Ejemplos: English, Español...",
+    external_referrals:
+        "Remisiones externas",
     favicon:
         "Favicon",
     favicon_note:
@@ -246,6 +264,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
     forgotten_password_message_info:
         "Introduce tu dirección de correo electrónico y recibirás un correo
         con un enlace para resetear tu contraseña.",
+    free_k_disk:
+        "Libres",
     general:
         "General",
     go_back_to_w_website:
@@ -272,6 +292,14 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Nombres del idioma",
     languages:
         "Idiomas",
+    last_30_days_month:
+        "Últimos 30 días (mes)",
+    last_365_days_year:
+        "Últimos 365 días (año)",
+    last_7_days_week:
+        "Últimos 7 días (semana)",
+    last_start_w_date:
+        "Último arranque: {date}",
     last_update:
         "Última actualización",
     login_k_noun:
@@ -280,14 +308,30 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Iniciar sesión",
     logout_k_verb:
         "Cerrar sesión",
+    memory_k_ram:
+        "Memoria",
+    memory_usage_percent:
+        "Uso de la memoria (%)",
     menu:
         "Menú",
     menus:
         "Menús",
+    n_days_w_time:
+        "{time} días",
+    n_hours_w_time:
+        "{time} horas",
+    n_minutes_w_time:
+        "{time} minutos",
+    n_months_w_time:
+        "{time} meses",
     n_posts:
         "{n} entradas",
     n_results_of_m:
         "{n} resultados de {m}",
+    n_seconds_w_time:
+        "{time} segundos",
+    n_years_w_time:
+        "{time} años",
     name:
         "Nombre",
     name_in_the_new_language:
@@ -296,6 +340,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Nombres para cada idioma",
     names_in_the_new_language_for_each_language:
         "Nombres (en el nuevo idioma) para cada idioma",
+    network_w_unit:
+        "Red ({unit})",
     new_category:
         "Nueva categoría",
     new_domain_k_web:
@@ -312,8 +358,22 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Siguiente",
     no_file_uploaded:
         "No se ha subido ningún archivo",
+    number_of_visits:
+        "Número de visitas",
+    one_day:
+        "1 día",
+    one_hour:
+        "1 hora",
+    one_minute:
+        "1 minuto",
+    one_month:
+        "1 mes",
     one_result_of_m:
         "1 resultado de {m}",
+    one_second:
+        "1 segundo",
+    one_year:
+        "1 año",
     open_in_new_tab:
         "Abrir en nueva pestaña",
     optional:
@@ -328,6 +388,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Contraseña",
     permalink:
         "Permalink",
+    platforms_k_os:
+        "Plataformas",
     please_visit_new_domain_w_domain:
         "Por favor, visite https://{domain}",
     png_image:
@@ -373,6 +435,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Sesiones",
     settings:
         "Ajustes",
+    show_more:
+        "Ver más",
     sign_up_k_verb:
         "Registrarse",
     since:
@@ -389,6 +453,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Cuenta suspendida",
     suspended_k_account:
         "Suspendida",
+    swap_k_memory:
+        "Swap",
     system_k_os:
         "Sistema",
     tags:
@@ -403,6 +469,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Hay idiomas sin nombres.",
     title:
         "Título",
+    today:
+        "Hoy",
+    total:
+        "Total",
     translated_by_user:
         "traducido por {name}",
     trash:
@@ -411,6 +481,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Tukosmo",
     tukosmo_admin_panel:
         "Panel de Administración de Tukosmo",
+    tukosmo_has_been_running_for_w_duration:
+        "Tukosmo lleva funcionando {duration} sin parar.",
     untranslated:
         "Sin traducir",
     untranslated_k_lower:
@@ -423,6 +495,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Actualizar",
     upload_file:
         "Subir archivo",
+    upload_k_noun:
+        "Subida",
     upload_new_favicon:
         "Subir nuevo favicon",
     uploaded_by:
@@ -431,10 +505,16 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Subido por {name} ({date})",
     uploaded_on:
         "Subido en",
+    used_k_disk:
+        "Usados",
     users:
         "Usuarios",
     visit_website:
         "Visitar página web",
+    visitors:
+        "Visitantes",
+    visits:
+        "Visitas",
     warning_domain_paragraph:
         "ADVERTENCIA: Antes de hacer nada, debes añadir un registro de tipo A \
         apuntando a la IP de tu servidor y un registro de tipo CAA \
@@ -456,6 +536,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Título de la página web (en el nuevo idioma)",
     widgets:
         "Widgets",
+    yesterday:
+        "Ayer",
     youll_receive_any_expiry_notices_of_tls_certificates:
         "Recibirás cualquier aviso de caducidad de los certificados TLS \
         (solo si Tukosmo no fuera capaz de renovarlos automáticamente).",

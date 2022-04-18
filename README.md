@@ -41,6 +41,8 @@ https://github.com/utkarshkukreti/markup.rs).
 - [x] Custom languages.
 - [x] Cookie-based auth.
 - [x] Icons by [EOS icons](https://eos-icons.com/).
+- [x] Charts by [Chart.js](https://github.com/chartjs/Chart.js).
+- [x] System data by [systemstat](https://github.com/unrelentingtech/systemstat).
 - [x] Admin Panel; styles using [Bulma](https://bulma.io/).
 - [x] WYSIWYG post editor using [TinyMCE](
 https://github.com/tinymce/tinymce).
