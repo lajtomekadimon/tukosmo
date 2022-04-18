@@ -84,6 +84,13 @@ markup::define! {
                     button[class = "delete"] {}
                     @t.domain_cant_be_changed_in_development_mode
                 }
+            } else {
+                div[
+                    class = "notification is-info",
+                ] {
+                    button[class = "delete"] {}
+                    @t.tukosmo_will_automatically_restart_itself_apply_changes
+                }
             }
 
             @if **nochange {

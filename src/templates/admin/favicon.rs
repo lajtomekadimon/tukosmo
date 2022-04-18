@@ -87,6 +87,13 @@ markup::define! {
                 }
             }
 
+            div[
+                class = "notification is-info",
+            ] {
+                button[class = "delete"] {}
+                @t.tukosmo_will_automatically_restart_itself_apply_changes
+            }
+
             form[
                 id = "form-favicon",
                 method = "post",

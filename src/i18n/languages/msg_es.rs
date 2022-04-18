@@ -483,6 +483,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Panel de Administración de Tukosmo",
     tukosmo_has_been_running_for_w_duration:
         "Tukosmo lleva funcionando {duration} sin parar.",
+    tukosmo_will_automatically_restart_itself_apply_changes:
+        "Tukosmo se reiniciará automáticamente para aplicar los cambios.",
     untranslated:
         "Sin traducir",
     untranslated_k_lower:

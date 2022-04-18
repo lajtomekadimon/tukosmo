@@ -237,6 +237,7 @@ pub struct TranslateI18N {
     pub tukosmo: &'static str,
     pub tukosmo_admin_panel: &'static str,
     pub tukosmo_has_been_running_for_w_duration: &'static str,
+    pub tukosmo_will_automatically_restart_itself_apply_changes: &'static str,
     pub untranslated: &'static str,
     pub untranslated_k_lower: &'static str,
     pub untranslated_k_posts: &'static str,
