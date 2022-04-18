@@ -71,19 +71,21 @@ markup::define! {
                 }
             }
 
-            h2[class = "subtitle"] {
-                {t.page_n
-                    .replace("{n}", &q.page.to_string())}
+            @if &q.total_pages > &1 {
+                h2[class = "subtitle"] {
+                    {t.page_n
+                        .replace("{n}", &q.page.to_string())}
 
-                " ("
-                {(match q.files.iter().len() {
-                    1 => t.one_result_of_m,
-                    _ => t.n_results_of_m,
-                })
-                    .replace("{n}", &(q.files.iter().len()).to_string())
-                    .replace("{m}", &q.total_results.to_string())
+                    " ("
+                    {(match q.files.iter().len() {
+                        1 => t.one_result_of_m,
+                        _ => t.n_results_of_m,
+                    })
+                        .replace("{n}", &(q.files.iter().len()).to_string())
+                        .replace("{m}", &q.total_results.to_string())
+                    }
+                    ")"
                 }
-                ")"
             }
 
             @if **success {
