@@ -392,8 +392,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Plataformas",
     please_visit_new_domain_w_domain:
         "Por favor, visite https://{domain}",
-    png_image:
-        "Imagen PNG",
+    png_image_of_at_least_192x192:
+        "imagen PNG de al menos 192x192 píxeles",
     posts:
         "Entradas",
     post_s_body:

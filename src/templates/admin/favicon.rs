@@ -114,7 +114,7 @@ markup::define! {
                         @t.upload_new_favicon
 
                         " ("
-                        @t.png_image
+                        @t.png_image_of_at_least_192x192
                         ")"
                     }
                     div[

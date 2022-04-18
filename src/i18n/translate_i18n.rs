@@ -192,7 +192,7 @@ pub struct TranslateI18N {
     pub permalink: &'static str,
     pub platforms_k_os: &'static str,
     pub please_visit_new_domain_w_domain: &'static str,
-    pub png_image: &'static str,
+    pub png_image_of_at_least_192x192: &'static str,
     pub posts: &'static str,
     pub post_s_body: &'static str,
     pub previous: &'static str,
