@@ -1,4 +1,7 @@
-use actix_web::{web, App, HttpServer, dev};
+use actix_web::{
+    web, http, App, HttpServer, dev,
+    dev::Service as _,
+};
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use openssl::{
     ssl::{SslAcceptor, SslFiletype, SslMethod},
@@ -16,6 +19,7 @@ use chrono::Utc;
 use tokio;
 use std::sync::{Arc, Mutex};
 use core::future::Future;
+use futures_util::future::FutureExt;
 use systemstat::{System as SystemStat, Platform};
 
 use crate::config::{
@@ -314,11 +318,31 @@ pub async fn new_server(
             .app_data(web::Data::new(current_datetime.clone()))  // cached files code
             .app_data(web::Data::clone(&handle_data))  // to stop server
 
+            /* Warning: if wrap() or wrap_fn() are used multiple times,
+             * the last occurrence will be executed first. */
+
             .wrap(
                 RedirectHTTPS::with_replacements(
                     &[(http_port.to_owned(), https_port.to_owned())]
                 )
             )
+
+            .wrap_fn(|req, srv| {
+                srv.call(req).map(|res_result| {
+                    let mut res = res_result.unwrap();
+                    res.headers_mut().insert(
+                        http::header::STRICT_TRANSPORT_SECURITY,
+                        http::header::HeaderValue::from_static(
+                            "max-age=63072000"  // 2 years
+                            /* Why not use preload?
+                             * It requires manual intervention and may
+                             * produce issues in bad configured domains.
+                             */
+                        ),
+                    );
+                    Ok(res)
+                })
+            })
 
             .wrap(
                 IdentityService::new(
