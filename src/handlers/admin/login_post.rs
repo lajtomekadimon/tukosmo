@@ -21,6 +21,8 @@ use crate::i18n::{
     t::t,
     t_error::t_error,
     error_website_route::error_website_route,
+    get_browser_from_user_agent::get_browser_from_user_agent,
+    get_os_from_user_agent::get_os_from_user_agent,
 };
 use crate::templates::admin::login::Login;
 
@@ -37,7 +39,9 @@ pub struct ApiLogin {
     pub req: types::WebsiteRequest,
     pub email: String,
     pub password: String,
-    pub user_agent: String,
+    pub ip: String,
+    pub browser: String,
+    pub platform: String,
 }
 
 impl QueryFunction for ApiLogin {
@@ -66,6 +70,11 @@ pub async fn login_post(
     let email_value = (form.email).clone();
     let password_value = (form.password).clone();
 
+    let ip_value = match req.peer_addr() {
+        Some(socket_addr_val) => socket_addr_val.ip().to_string(),
+        None => "unknown".to_string(),
+    };
+
     let user_agent_value = match req.headers().get("User-Agent") {
         Some(the_user_agent) => {
             match the_user_agent.to_str() {
@@ -75,6 +84,9 @@ pub async fn login_post(
         },
         None => "unknown".to_string(),
     };
+
+    let browser_value = get_browser_from_user_agent(&user_agent_value);
+    let platform_value = get_os_from_user_agent(&user_agent_value);
 
     match query_db(
         &config,
@@ -91,7 +103,9 @@ pub async fn login_post(
                                        * the password check, and another
                                        * one for the new session.
                                        */
-            user_agent: user_agent_value,
+            ip: ip_value,
+            browser: browser_value,
+            platform: platform_value,
         },
     ).await {
 

@@ -1,7 +1,7 @@
 
-CREATE OR REPLACE FUNCTION d_session_by_user_agent_date(
+CREATE OR REPLACE FUNCTION d_session_by_ip_date(
     user_id BIGINT,
-    user_agent_value TEXT,
+    ip_value TEXT,
     date_value TEXT
 )
 
@@ -18,7 +18,7 @@ BEGIN
 
     DELETE FROM t_sessions
     WHERE ts_user = user_id
-        AND ts_user_agent = user_agent_value
+        AND ts_ip = ip_value
         AND ts_date::TEXT = date_value;
 
 END;

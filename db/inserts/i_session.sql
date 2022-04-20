@@ -1,7 +1,9 @@
 
 CREATE OR REPLACE FUNCTION i_session(
     user_id BIGINT,
-    user_agent_value TEXT
+    ip_value TEXT,
+    browser_value TEXT,
+    platform_value TEXT
 )
 
 RETURNS UUID
@@ -24,12 +26,16 @@ BEGIN
     INSERT INTO t_sessions (
         ts_id,
         ts_user,
-        ts_user_agent
+        ts_ip,
+        ts_browser,
+        ts_platform
         --ts_date
     ) VALUES (
         session_id,
         user_id,
-        user_agent_value
+        ip_value,
+        browser_value,
+        platform_value
         --NOW()
     );
 

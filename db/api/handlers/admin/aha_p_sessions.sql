@@ -2,7 +2,7 @@
 CREATE TYPE "ApiSessions" AS (
     req "AdminRequest",
     csrf_token UUID,
-    user_agent TEXT,
+    ip TEXT,
     date TEXT
 );
 
@@ -37,9 +37,9 @@ BEGIN
         PERFORM err_wrong_csrf_token();
     END IF;
 
-    PERFORM d_session_by_user_agent_date(
+    PERFORM d_session_by_ip_date(
         (d.userd).id,
-        r.user_agent,
+        r.ip,
         r.date
     );
 

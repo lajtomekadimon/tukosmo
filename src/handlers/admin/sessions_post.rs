@@ -29,7 +29,7 @@ use crate::templates::admin::sessions::Sessions;
 #[derive(Deserialize)]
 pub struct FormData {
     pub csrf_token: String,
-    pub user_agent: String,
+    pub ip: String,
     pub date: String,
 }
 
@@ -38,7 +38,7 @@ pub struct FormData {
 pub struct ApiSessions {
     pub req: types::AdminRequest,
     pub csrf_token: Uuid,
-    pub user_agent: String,
+    pub ip: String,
     pub date: String,
 }
 
@@ -63,7 +63,7 @@ pub async fn sessions_post(
 
             Ok(csrf_token_value) => {
 
-                let user_agent_value = (form.user_agent).clone();
+                let ip_value = (form.ip).clone();
                 let date_value = (form.date).clone();
 
                 match query_db(
@@ -71,7 +71,7 @@ pub async fn sessions_post(
                     ApiSessions {
                         req: user_req.clone(),
                         csrf_token: csrf_token_value,
-                        user_agent: user_agent_value,
+                        ip: ip_value,
                         date: date_value,
                     },
                 ).await {

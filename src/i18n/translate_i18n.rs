@@ -190,6 +190,7 @@ pub struct TranslateI18N {
     pub pages: &'static str,
     pub password: &'static str,
     pub permalink: &'static str,
+    pub platform_k_os: &'static str,
     pub platforms_k_os: &'static str,
     pub please_visit_new_domain_w_domain: &'static str,
     pub png_image_of_at_least_192x192: &'static str,

@@ -3,7 +3,9 @@ CREATE TYPE "ApiLogin" AS (
     req "WebsiteRequest",
     email TEXT,
     password TEXT,
-    user_agent TEXT
+    ip TEXT,
+    browser TEXT,
+    platform TEXT
 );
 
 CREATE TYPE "ApoLogin" AS (
@@ -59,7 +61,9 @@ BEGIN
 
             session_id := i_session_by_email(
                 r.email,
-                r.user_agent
+                r.ip,
+                r.browser,
+                r.platform
             );
 
         ELSE

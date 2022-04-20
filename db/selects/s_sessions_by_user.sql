@@ -14,8 +14,14 @@ AS $$
 
 SELECT ARRAY(
     SELECT (
-        -- user_agent
-        ts_user_agent,
+        -- ip
+        ts_ip,
+
+        -- browser
+        ts_browser,
+
+        -- platform
+        ts_platform,
 
         -- date
         ts_date::TEXT

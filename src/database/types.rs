@@ -29,7 +29,9 @@ pub struct UserDB {
 
 #[derive(Clone, Debug, ToSql, FromSql, Serialize)]
 pub struct SessionDB {
-    pub user_agent: String,
+    pub ip: String,
+    pub browser: String,
+    pub platform: String,
     pub date: String,
 }
 

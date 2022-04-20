@@ -387,6 +387,8 @@ pub const MSG_EN: TranslateI18N = TranslateI18N {
         "Password",
     permalink:
         "Permalink",
+    platform_k_os:
+        "Platform",
     platforms_k_os:
         "Platforms",
     please_visit_new_domain_w_domain:

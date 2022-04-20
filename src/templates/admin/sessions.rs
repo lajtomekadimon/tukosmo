@@ -8,8 +8,6 @@ use crate::i18n::{
     translate_i18n::TranslateI18N,
     t_date::t_date,
     t_error::ErrorDB,
-    get_browser_from_user_agent::get_browser_from_user_agent,
-    get_os_from_user_agent::get_os_from_user_agent,
 };
 use crate::templates::{
     admin_layout::AdminLayout,
@@ -84,10 +82,13 @@ markup::define! {
                 thead {
                     tr {
                         th {
+                            "IP"
+                        }
+                        th {
                             @t.browser
                         }
                         th {
-                            @t.system_k_os
+                            @t.platform_k_os
                         }
                         th {
                             @t.since
@@ -101,14 +102,13 @@ markup::define! {
                     @for sessiond in q.sessions.iter() {
                         tr {
                             td {
-                                {&get_browser_from_user_agent(
-                                    &sessiond.user_agent
-                                )}
+                                @sessiond.ip
                             }
                             td {
-                                {&get_os_from_user_agent(
-                                    &sessiond.user_agent
-                                )}
+                                @sessiond.browser
+                            }
+                            td {
+                                @sessiond.platform
                             }
                             td {
                                 {t_date(&sessiond.date, &q.data.lang.code)}
@@ -126,8 +126,8 @@ markup::define! {
 
                                     input[
                                         type = "hidden",
-                                        name = "user_agent",
-                                        value = &sessiond.user_agent,
+                                        name = "ip",
+                                        value = &sessiond.ip,
                                     ];
 
                                     input[

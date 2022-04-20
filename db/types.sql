@@ -21,7 +21,9 @@ CREATE TYPE "UserDB" AS (
 );
 
 CREATE TYPE "SessionDB" AS (
-    user_agent TEXT,
+    ip TEXT,
+    browser TEXT,
+    platform TEXT,
     date TEXT
 );
 

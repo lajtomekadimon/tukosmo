@@ -388,6 +388,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Contraseña",
     permalink:
         "Permalink",
+    platform_k_os:
+        "Plataforma",
     platforms_k_os:
         "Plataformas",
     please_visit_new_domain_w_domain:
