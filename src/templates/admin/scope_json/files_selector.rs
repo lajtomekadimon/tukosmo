@@ -17,7 +17,10 @@ use crate::i18n::{
     translate_i18n::TranslateI18N,
     t_date::t_date,
 };
-use crate::templates::widgets::admin_pagination::AdminPagination;
+use crate::templates::widgets::{
+    admin_pagination::AdminPagination,
+    icons,
+};
 
 
 markup::define! {
@@ -80,10 +83,7 @@ markup::define! {
                             ];
                             span[class = "file-cta"] {
                                 span[class = "file-icon"] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no"
-                                    ] { "cloud_upload" }
+                                    @icons::CloudUpload {}
                                 }
                                 span[class = "file-label"] {
                                     @t.choose_a_file

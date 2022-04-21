@@ -19,8 +19,11 @@ use crate::i18n::{
 };
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_panel::AdminPanel,
-    widgets::admin_pagination::AdminPagination,
+    widgets::{
+        admin_panel::AdminPanel,
+        admin_pagination::AdminPagination,
+        icons,
+    },
 };
 
 
@@ -185,12 +188,7 @@ markup::define! {
                                             target = "_blank",
                                             title = &t.open_in_new_tab,
                                         ] {
-                                            i[
-                                                class = "eos-icons notranslate",
-                                                translate = "no",
-                                            ] {
-                                                "open_in_new"
-                                            }
+                                            @icons::OpenInNew {}
                                         }
                                     }
                                 }

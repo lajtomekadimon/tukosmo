@@ -3,6 +3,7 @@ use markup;
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::WebsiteDataDB;
 use crate::handlers::website::blog_get::rw_blog;
+use crate::templates::widgets::icons;
 
 
 markup::define! {
@@ -21,9 +22,7 @@ markup::define! {
                     }
 
                     span[class = "navigation-burger-icon"] {
-                        i[class = "eos-icons notranslate"] {
-                            "menu"
-                        }
+                        @icons::Menu {}
                     }
                 }
 
@@ -40,13 +39,7 @@ markup::define! {
                     @if data.languages.iter().len() > 1 {
                         li[class = "navigation-li"] {
                             button[id = "button-select-language"] {
-                                i[
-                                    class = "eos-icons eos-icons-l \
-                                             notranslate",
-                                    translate = "no",
-                                ] {
-                                    "language"
-                                }
+                                @icons::Language {}
                                 {data.lang.code.to_uppercase()}
                             }
                         }

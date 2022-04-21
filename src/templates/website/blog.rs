@@ -16,8 +16,11 @@ use crate::i18n::{
 };
 use crate::templates::{
     website_layout::WebsiteLayout,
-    widgets::site::Site,
-    widgets::pagination::Pagination,
+    widgets::{
+        site::Site,
+        pagination::Pagination,
+        icons,
+    },
 };
 
 
@@ -106,12 +109,7 @@ markup::define! {
                                     ),
                                 ] {
                                 */
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] {
-                                    "calendar_today"
-                                }
+                                @icons::CalendarToday {}
 
                                 " "
 

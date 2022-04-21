@@ -21,7 +21,10 @@ use crate::i18n::{
 };
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_panel::AdminPanel,
+    widgets::{
+        admin_panel::AdminPanel,
+        icons,
+    },
 };
 
 
@@ -133,10 +136,7 @@ markup::define! {
                             ];
                             span[class = "file-cta"] {
                                 span[class = "file-icon"] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no",
-                                    ] { "cloud_upload" }
+                                    @icons::CloudUpload {}
                                 }
                                 span[class = "file-label"] {
                                     @t.choose_a_file

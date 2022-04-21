@@ -18,6 +18,8 @@ pub mod site;
 pub mod pagination;
 pub mod languages;
 
+pub mod icons;
+
 pub mod favicon_meta;
 pub mod faviconadmin_meta;
 pub mod open_graph_meta;

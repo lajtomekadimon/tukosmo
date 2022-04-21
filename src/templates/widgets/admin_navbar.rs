@@ -13,6 +13,7 @@ use crate::handlers::{
 };
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
+use crate::templates::widgets::icons;
 
 
 markup::define! {
@@ -52,10 +53,9 @@ markup::define! {
                         target = "_blank",
                         title = t.visit_website,
                     ] {
-                        i[
-                            class = "eos-icons notranslate mr-1 is-size-6",
-                            translate = "no",
-                        ] { "home" }
+                        span[class = "mr-1"] {
+                            @icons::HomeSIZE6 {}
+                        }
                         @data.website_title
                     }
                     /*
@@ -76,11 +76,8 @@ markup::define! {
                             class = "navbar-item",
                             title = t.select_a_language,
                         ] {
-                            i[
-                                class = "eos-icons notranslate mr-1 is-size-6",
-                                translate = "no",
-                            ] {
-                                "language"
+                            span[class = "mr-1"] {
+                                @icons::LanguageSIZE6 {}
                             }
                             {data.lang.code.to_uppercase()}
                         }

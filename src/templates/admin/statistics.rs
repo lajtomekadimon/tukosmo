@@ -14,7 +14,10 @@ use crate::i18n::{
 };
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_panel::AdminPanel,
+    widgets::{
+        admin_panel::AdminPanel,
+        icons,
+    },
 };
 
 
@@ -77,10 +80,7 @@ markup::define! {
                     li[class = "is-active"] {
                         a {
                             span[class = "icon is-small"] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "open_in_browser" }
+                                @icons::OpenInBrowser {}
                             }
                             span {
                                 @t.website
@@ -315,10 +315,7 @@ markup::define! {
                     li[class = "is-active"] {
                         a {
                             span[class = "icon is-small"] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "memory" }
+                                @icons::Memory {}
                             }
                             span {
                                 @t.server

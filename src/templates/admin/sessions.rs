@@ -12,7 +12,10 @@ use crate::i18n::{
 };
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_panel::AdminPanel,
+    widgets::{
+        admin_panel::AdminPanel,
+        icons,
+    },
 };
 
 
@@ -144,13 +147,7 @@ markup::define! {
                                         type = "submit",
                                         title = t.logout_k_verb,
                                     ] {
-                                        i[
-                                            class = "eos-icons notranslate \
-                                                     is-size-5",
-                                            translate = "no",
-                                        ] {
-                                            "logout"
-                                        }
+                                        @icons::LogoutSIZE5 {}
                                     }
                                 }
                             }

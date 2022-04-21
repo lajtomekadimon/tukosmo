@@ -20,7 +20,10 @@ use crate::database::{
 };
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_login::AdminLogin,
+    widgets::{
+        admin_login::AdminLogin,
+        icons,
+    },
 };
 
 
@@ -147,10 +150,9 @@ markup::define! {
             ] {
                 @t.login_k_verb
                 " "
-                i[
-                    class = "eos-icons notranslate ml-2",
-                    translate = "no",
-                ] { "login" }
+                span[class = "ml-2"] {
+                    @icons::Login {}
+                }
             }
         }
     }

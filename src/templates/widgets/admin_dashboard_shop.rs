@@ -2,6 +2,7 @@ use markup;
 
 //use crate::handlers::admin::dashboard_get::AgoDashboard;
 use crate::i18n::translate_i18n::TranslateI18N;
+use crate::templates::widgets::icons;
 
 
 markup::define! {
@@ -22,10 +23,7 @@ markup::define! {
                             class = "card-header-icon",
                         ] {
                             span[class = "icon"] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "keyboard_arrow_down" }
+                                @icons::KeyboardArrowDown {}
                             }
                         }
                     }
@@ -38,15 +36,13 @@ markup::define! {
                                     @for _n in 1..9 {
                                         tr {
                                             td[width = "5%"] {
-                                                i[
-                                                    class = "eos-icons notranslate",
-                                                    translate = "no",
-                                                ] { "sell" }
+                                                @icons::Sell {}
                                             }
                                             td { "Lorum ipsum dolem aire" }
                                             td[class = "level-right"] {
                                                 a[
-                                                    class = "button is-small is-info",
+                                                    class = "button is-small \
+                                                             is-info",
                                                     href = "",
                                                 ] { "Action" }
                                             }
@@ -78,10 +74,7 @@ markup::define! {
                             class = "card-header-icon",
                         ] {
                             span[class = "icon"] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "keyboard_arrow_down" }
+                                @icons::KeyboardArrowDown {}
                             }
                         }
                     }
@@ -94,16 +87,10 @@ markup::define! {
                                     placeholder = "",
                                 ];
                                 span[class = "icon is-medium is-left"] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no",
-                                    ] { "search" }
+                                    @icons::Search {}
                                 }
                                 span[class = "icon is-medium is-right"] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no",
-                                    ] { "check" }
+                                    @icons::Check {}
                                 }
                             }
                         }
@@ -119,10 +106,7 @@ markup::define! {
                             class = "card-header-icon",
                         ] {
                             span[class = "icon"] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "keyboard_arrow_down" }
+                                @icons::KeyboardArrowDown {}
                             }
                         }
                     }
@@ -135,16 +119,10 @@ markup::define! {
                                     placeholder = "",
                                 ];
                                 span[class = "icon is-medium is-left"] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no",
-                                    ] { "search" }
+                                    @icons::Search {}
                                 }
                                 span[class = "icon is-medium is-right"] {
-                                    i[
-                                        class = "eos-icons notranslate",
-                                        translate = "no",
-                                    ] { "check" }
+                                    @icons::Check {}
                                 }
                             }
                         }

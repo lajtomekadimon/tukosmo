@@ -17,7 +17,10 @@ use crate::i18n::{
 use crate::database::error_codes as ec;
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_panel::AdminPanel,
+    widgets::{
+        admin_panel::AdminPanel,
+        icons,
+    },
 };
 
 
@@ -125,10 +128,7 @@ markup::define! {
                                         } else { "" },
                                     ];
                                     span[class = "icon is-small is-left"] {
-                                        i[
-                                            class = "eos-icons notranslate",
-                                            translate = "no",
-                                        ] { "label" }
+                                        @icons::Label {}
                                     }
                                 }
                             }
@@ -158,10 +158,7 @@ markup::define! {
                                         } else { "" },
                                     ];
                                     span[class = "icon is-small is-left"] {
-                                        i[
-                                            class = "eos-icons notranslate",
-                                            translate = "no",
-                                        ] { "link" }
+                                        @icons::Link {}
                                     }
                                 }
                             }

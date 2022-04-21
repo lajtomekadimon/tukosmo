@@ -12,8 +12,11 @@ use crate::i18n::{
 };
 use crate::templates::{
     website_layout::WebsiteLayout,
-    widgets::site::Site,
-    widgets::open_graph_meta::ArticleOG,
+    widgets::{
+        site::Site,
+        open_graph_meta::ArticleOG,
+        icons,
+    },
 };
 
 
@@ -109,12 +112,7 @@ markup::define! {
                                 href = rw_blog(&q.data.lang.code),
                             ] {
                             */
-                            i[
-                                class = "eos-icons notranslate",
-                                translate = "no",
-                            ] {
-                                "person"
-                            }
+                            @icons::Person {}
 
                             " "
 
@@ -132,12 +130,7 @@ markup::define! {
                                 href = rw_blog(&q.data.lang.code),
                             ] {
                             */
-                            i[
-                                class = "eos-icons notranslate",
-                                translate = "no",
-                            ] {
-                                "calendar_today"
-                            }
+                            @icons::CalendarToday {}
 
                             " "
 
@@ -158,12 +151,7 @@ markup::define! {
                                             &q.post.id,
                                         ),
                                     ] {
-                                        i[
-                                            class = "eos-icons notranslate",
-                                            translate = "no",
-                                        ] {
-                                            "mode_edit"
-                                        }
+                                        @icons::ModeEdit {}
 
                                         " "
 

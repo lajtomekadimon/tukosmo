@@ -20,7 +20,10 @@ use crate::database::{
 };
 use crate::templates::{
     admin_layout::AdminLayout,
-    widgets::admin_login::AdminLogin,
+    widgets::{
+        admin_login::AdminLogin,
+        icons,
+    },
 };
 
 
@@ -148,10 +151,9 @@ markup::define! {
             ] {
                 @t.reset_password
                 " "
-                i[
-                    class = "eos-icons notranslate ml-2",
-                    translate = "no",
-                ] { "vpn_key" }
+                span[class = "ml-2"] {
+                    @icons::VPNKey {}
+                }
             }
         }
     }

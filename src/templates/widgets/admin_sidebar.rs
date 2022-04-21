@@ -17,6 +17,7 @@ use crate::handlers::admin::{
 };
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::database::types::AdminDataDB;
+use crate::templates::widgets::icons;
 
 
 markup::define! {
@@ -45,10 +46,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "dashboard" }
+                        @icons::Dashboard {}
                         " "
                         @t.dashboard
                     }
@@ -60,10 +58,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "bar_chart" }
+                        @icons::BarChart {}
                         " "
                         @t.statistics
                     }
@@ -83,10 +78,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "supervisor_account" }
+                        @icons::SupervisorAccount {}
                         " "
                         @t.users
                     }
@@ -98,10 +90,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "translate" }
+                        @icons::Translate {}
                         " "
                         @t.languages
                     }
@@ -113,10 +102,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "description" }
+                        @icons::Description {}
                         " "
                         @t.pages
                     }
@@ -128,10 +114,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "label" }
+                        @icons::Label {}
                         " "
                         @t.tags
                     }
@@ -143,10 +126,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "file_present" }
+                        @icons::FilePresent {}
                         " "
                         @t.files
                     }
@@ -171,10 +151,7 @@ markup::define! {
                                     "is-active"
                                 } else { "" },
                             ] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "article" }
+                                @icons::Article {}
                                 " "
                                 @t.posts
                             }
@@ -259,10 +236,7 @@ markup::define! {
                                     "is-active"
                                 } else { "" },
                             ] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "photo_library" }
+                                @icons::PhotoLibrary {}
                                 " "
                                 @t.gallery
                             }
@@ -277,10 +251,7 @@ markup::define! {
                                     "is-active"
                                 } else { "" },
                             ] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "quiz" }
+                                @icons::Quiz {}
                                 " "
                                 @t.faq
                             }
@@ -295,10 +266,7 @@ markup::define! {
                                     "is-active"
                                 } else { "" },
                             ] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "payments" }
+                                @icons::Payments {}
                                 " "
                                 @t.payments
                             }
@@ -313,10 +281,7 @@ markup::define! {
                                     "is-active"
                                 } else { "" },
                             ] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "product_subscriptions" }
+                                @icons::ProductSubscriptions {}
                                 " "
                                 @t.subscriptions
                             }
@@ -331,10 +296,7 @@ markup::define! {
                                     "is-active"
                                 } else { "" },
                             ] {
-                                i[
-                                    class = "eos-icons notranslate",
-                                    translate = "no",
-                                ] { "store" }
+                                @icons::Store {}
                                 " "
                                 @t.shop
                             }
@@ -356,10 +318,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "photo" }
+                        @icons::Photo {}
                         " "
                         @t.favicon
                     }
@@ -372,10 +331,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "devices" }
+                        @icons::Devices {}
                         " "
                         @t.theme
                     }
@@ -388,10 +344,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "list" }
+                        @icons::List {}
                         " "
                         @t.menus
                     }
@@ -404,10 +357,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "view_sidebar" }
+                        @icons::ViewSidebar {}
                         " "
                         @t.widgets
                     }
@@ -427,10 +377,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "web" }
+                        @icons::Web {}
                         " "
                         @t.website
                     }
@@ -442,10 +389,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "dns" }
+                        @icons::DNS {}
                         " "
                         @t.domain_k_web
                     }
@@ -457,10 +401,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "settings_suggest" }
+                        @icons::SettingsSuggest {}
                         " "
                         @t.tukosmo
                     }
@@ -472,10 +413,7 @@ markup::define! {
                             "is-active"
                         } else { "" },
                     ] {
-                        i[
-                            class = "eos-icons notranslate",
-                            translate = "no",
-                        ] { "database" }
+                        @icons::Database {}
                         " "
                         @t.server
                     }

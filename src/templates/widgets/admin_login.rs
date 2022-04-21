@@ -17,7 +17,10 @@ use crate::database::types::{
     RouteDB,
     websitedata_to_admindata,
 };
-use crate::templates::widgets::admin_languages::AdminLanguages;
+use crate::templates::widgets::{
+    admin_languages::AdminLanguages,
+    icons,
+};
 
 
 markup::define! {
@@ -91,12 +94,8 @@ markup::define! {
                                 id = "button-select-language",
                                 title = t.select_a_language,
                             ] {
-                                i[
-                                    class = "eos-icons notranslate mr-1 \
-                                             is-size-6",
-                                    translate = "no",
-                                ] {
-                                    "language"
+                                span[class = "mr-1"] {
+                                    @icons::LanguageSIZE6 {}
                                 }
                                 {data.lang.code.to_uppercase()}
                             }
