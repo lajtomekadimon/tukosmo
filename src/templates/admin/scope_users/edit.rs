@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     scope_users::edit_get::{
         AgoUsersEdit,
@@ -26,6 +27,7 @@ markup::define! {
     Edit<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoUsersEdit,
         t: &'a TranslateI18N,
@@ -47,6 +49,7 @@ markup::define! {
                 },
                 current_page: "edit_user",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

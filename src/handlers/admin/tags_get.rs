@@ -79,6 +79,7 @@ pub async fn tags_get(
                 let html = Tags {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.tags,

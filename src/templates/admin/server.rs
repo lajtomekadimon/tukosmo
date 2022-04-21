@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::server_get::AgoServer;
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::{
@@ -12,6 +13,7 @@ markup::define! {
     Server<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoServer,
         t: &'a TranslateI18N,
@@ -26,6 +28,7 @@ markup::define! {
                 content: Content {},
                 current_page: "server",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

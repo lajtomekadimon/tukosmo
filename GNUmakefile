@@ -106,8 +106,19 @@ clean:
 	rm -Rf static/bundles
 	mkdir -p static/bundles
 
+ifeq ($(OS_NAME), debian)
+install-osname:
+	sed -i 's/server_os = \"fedora\"/server_os = \"debian\"/g' etc/Tukosmo.toml
+else ifeq ($(OS_NAME), fedora)
+install-osname:
+	sed -i 's/server_os = \"fedora\"/server_os = \"fedora\"/g' etc/Tukosmo.toml
+else ifeq ($(OS_NAME), arch)
+install-osname:
+	sed -i 's/server_os = \"fedora\"/server_os = \"arch\"/g' etc/Tukosmo.toml
+endif
+
 ifeq ($(MODE), development)
-install: clean
+install: clean install-osname
 	sed -i 's/mode = \"production\"/mode = \"development\"/g' etc/Tukosmo.toml
 	sed -i 's/domain = \"localhost\"/domain = \"$(DOMAIN)\"/g' etc/Tukosmo.toml
 	sed -i \

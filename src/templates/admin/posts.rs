@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::{
     admin::{
         posts_get::{
@@ -27,6 +28,7 @@ markup::define! {
     Posts<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoPosts,
         t: &'a TranslateI18N,
@@ -56,6 +58,7 @@ markup::define! {
                     "posts"
                 },
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

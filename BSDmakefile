@@ -75,8 +75,26 @@ clean:
 	rm -Rf static/bundles
 	mkdir -p static/bundles
 
+.if ${OS_NAME} == freebsd
+install-osname:
+	sed -r -i 's/server_os = \"fedora\"/server_os = \"freebsd\"/g' \
+.endif
+.if ${MODE} == openbsd
+install-osname:
+	sed -r -i 's/server_os = \"fedora\"/server_os = \"openbsd\"/g' \
+.endif
+.if ${MODE} == dragonflybsd
+install-osname:
+	sed -r -i 's/server_os = \"fedora\"/server_os = \"dragonflybsd\"/g' \
+.endif
+.if ${MODE} == netbsd
+install-osname:
+	sed -r -i 's/server_os = \"fedora\"/server_os = \"netbsd\"/g' \
+.endif
+
+
 .if ${MODE} == development
-install: clean
+install: clean install-osname
 	sed -r -i 's/mode = \"production\"/mode = \"development\"/g' \
 	etc/Tukosmo.toml
 	sed -r -i 's/domain = \"localhost\"/domain = \"$(DOMAIN)\"/g' \

@@ -79,6 +79,7 @@ pub async fn edit_get(
                 let html = Edit {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.edit_tag_w_name

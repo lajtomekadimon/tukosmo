@@ -73,6 +73,7 @@ pub async fn sessions_get(
                 let html = Sessions {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.sessions,

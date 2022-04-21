@@ -8,6 +8,8 @@ pub mod admin_file_selector;
 pub mod admin_post_editor;
 pub mod admin_login;
 
+pub mod admin_dashboard_shop;
+
 pub mod footer;
 pub mod header;
 pub mod navigation;

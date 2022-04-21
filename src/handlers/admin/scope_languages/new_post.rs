@@ -215,6 +215,7 @@ pub async fn new_post(
                             let html = New {
                                 domain: &config.server.domain,
                                 codename: &codename,
+                                config: &config,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.add_language,

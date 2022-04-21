@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::config::global::SUPPORTED_LANGUAGES;
 use crate::handlers::admin::{
     scope_languages::new_get::{
@@ -27,6 +28,7 @@ markup::define! {
     New<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoLanguagesNew,
         t: &'a TranslateI18N,
@@ -50,6 +52,7 @@ markup::define! {
                 },
                 current_page: "new_language",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

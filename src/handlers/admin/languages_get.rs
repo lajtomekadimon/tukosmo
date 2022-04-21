@@ -79,6 +79,7 @@ pub async fn languages_get(
                 let html = Languages {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.languages,

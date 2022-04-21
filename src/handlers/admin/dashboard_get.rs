@@ -1,6 +1,7 @@
 use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
 use postgres_types::{ToSql, FromSql};
+use systemstat::{System, Platform};
 
 use crate::config::global::Config;
 use crate::handlers::admin::user_request::user_request;
@@ -36,6 +37,7 @@ impl QueryFunction for AgiDashboard {
 pub struct AgoDashboard {
     pub data: types::AdminDataDB,
     pub routes: Vec<types::RouteDB>,
+    pub visitors_last_month: i64,
 }
 
 
@@ -60,12 +62,44 @@ pub async fn dashboard_get(
                 let q: AgoDashboard = row.get(0);
                 let t = &t(&q.data.lang.code);
 
+                let sys = System::new();
+                let mount = sys.mount_at("/").unwrap();
+                let disk_free: i64 = mount.avail.as_u64() as i64;
+                let disk_total: i64  = mount.total.as_u64() as i64;
+                let disk_used = disk_total - disk_free;
+                let disk_used_percentage = (
+                    (disk_used as f64) / (disk_total as f64)
+                ) * 100.0;
+                let disk_used_percent = (f64::trunc(
+                    disk_used_percentage * 10.0
+                ) / 10.0).to_string();
+
+                let blog_enabled = config.modules.blog.enabled == "yes";
+                let gallery_enabled = config.modules.gallery.enabled == "yes";
+                let faq_enabled = config.modules.faq.enabled == "yes";
+                let payments_enabled =
+                    config.modules.payments.enabled == "yes";
+                let subscriptions_enabled =
+                    config.modules.subscriptions.enabled == "yes";
+                let shop_enabled = config.modules.shop.enabled == "yes";
+
                 let html = Dashboard {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: t.tukosmo_admin_panel,
                     q: &q,
                     t: t,
+                    server_os: &config.server.server_os,
+                    disk_used: &disk_used,
+                    disk_total: &disk_total,
+                    disk_used_percent: &disk_used_percent,
+                    blog_enabled: &blog_enabled,
+                    gallery_enabled: &gallery_enabled,
+                    faq_enabled: &faq_enabled,
+                    payments_enabled: &payments_enabled,
+                    subscriptions_enabled: &subscriptions_enabled,
+                    shop_enabled: &shop_enabled,
                 };
 
                 HttpResponse::Ok()

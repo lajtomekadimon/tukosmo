@@ -63,6 +63,7 @@ pub async fn server_get(
                 let html = Server {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.server,

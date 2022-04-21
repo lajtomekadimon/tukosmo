@@ -79,6 +79,7 @@ pub async fn domain_get(
                 let html = Domain {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.domain_k_web,

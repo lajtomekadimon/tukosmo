@@ -91,6 +91,7 @@ pub async fn error_get(
                 let html = Error {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = "ERROR {code}".replace("{code}", &e.code),

@@ -15,6 +15,7 @@ pub fn change_new_domain(
     let new_toml_file = toml::to_string(
         &PreConfig {
             server: ConfigServer {
+                server_os: (&config.server.server_os).clone(),
                 mode: (&config.server.mode).clone(),
                 domain: (&config.server.domain).clone(),
                 new_domain: new_domain_value.to_string(),
@@ -26,6 +27,7 @@ pub fn change_new_domain(
                 production: (&config.server.production).clone(),
             },
             database: (&config.database).clone(),
+            modules: (&config.modules).clone(),
         }
     ).unwrap();
     fs::write("etc/Tukosmo.toml", new_toml_file).unwrap();

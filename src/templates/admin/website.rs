@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     website_get::{ra_website, ra_website_success, AgoWebsite},
     website_post::FormData,
@@ -20,6 +21,7 @@ markup::define! {
     Website<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoWebsite,
         t: &'a TranslateI18N,
@@ -45,6 +47,7 @@ markup::define! {
                 },
                 current_page: "website",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

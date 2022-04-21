@@ -63,6 +63,7 @@ pub async fn tukosmo_get(
                 let html = Tukosmo {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.tukosmo,

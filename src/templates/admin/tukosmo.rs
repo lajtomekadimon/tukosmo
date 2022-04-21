@@ -1,5 +1,7 @@
 use markup;
 
+use crate::config::global::Config;
+use crate::config::global::TUKOSMO_VERSION;
 use crate::handlers::admin::tukosmo_get::AgoTukosmo;
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::{
@@ -12,6 +14,7 @@ markup::define! {
     Tukosmo<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoTukosmo,
         t: &'a TranslateI18N,
@@ -28,6 +31,7 @@ markup::define! {
                 },
                 current_page: "tukosmo",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,
@@ -44,7 +48,8 @@ markup::define! {
             }
 
             p {
-                "Version: 0.0.1"
+                "Version: "
+                @TUKOSMO_VERSION
             }
 
             /*

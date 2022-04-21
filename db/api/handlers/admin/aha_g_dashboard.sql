@@ -5,7 +5,8 @@ CREATE TYPE "AgiDashboard" AS (
 
 CREATE TYPE "AgoDashboard" AS (
     data "AdminDataDB",
-    routes "RouteDB"[]
+    routes "RouteDB"[],
+    visitors_last_month BIGINT
 );
 
 
@@ -30,6 +31,8 @@ DECLARE
 
     language_of_user BIGINT;
 
+    visitors_last_month BIGINT;
+
 BEGIN
 
     -- Check request and select common data
@@ -43,12 +46,17 @@ BEGIN
         language_of_user
     );
 
+    visitors_last_month := sc_stats_visitors_last_month();
+
     RETURN ROW(
         -- data
         d,
 
         -- routes
-        routes
+        routes,
+
+        -- visitors_last_month
+        visitors_last_month
     );
 
 END;

@@ -114,6 +114,7 @@ pub async fn posts_get(
                 let html = Posts {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = if q.filter == "drafts" {

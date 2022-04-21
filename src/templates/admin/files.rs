@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::files::extensions::IMG_EXTS;
 use crate::handlers::{
     admin::files_get::{
@@ -27,6 +28,7 @@ markup::define! {
     Files<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoFiles,
         t: &'a TranslateI18N,
@@ -46,6 +48,7 @@ markup::define! {
                 },
                 current_page: "files",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

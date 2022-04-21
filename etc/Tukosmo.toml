@@ -1,4 +1,5 @@
 [server]
+server_os = "fedora"
 mode = "development"
 domain = "localhost"
 new_domain = "false"
@@ -20,3 +21,27 @@ host = "localhost"
 name = "tukosmo"
 user = "tukosmouser"
 password = "1234"
+
+[modules.blog]
+enabled = "yes"
+web_enabled = "yes"
+
+[modules.gallery]
+enabled = "yes"
+web_enabled = "yes"
+
+[modules.faq]
+enabled = "yes"
+web_enabled = "yes"
+
+[modules.payments]
+enabled = "yes"
+web_enabled = "yes"
+
+[modules.subscriptions]
+enabled = "yes"
+web_enabled = "yes"
+
+[modules.shop]
+enabled = "yes"
+web_enabled = "yes"

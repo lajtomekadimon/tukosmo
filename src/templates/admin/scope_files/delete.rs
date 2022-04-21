@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     scope_files::delete_get::{
         AgoFilesDelete,
@@ -22,6 +23,7 @@ markup::define! {
     Delete<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoFilesDelete,
         t: &'a TranslateI18N,
@@ -41,6 +43,7 @@ markup::define! {
                 },
                 current_page: "delete_file",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

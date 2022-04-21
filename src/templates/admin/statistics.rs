@@ -4,6 +4,7 @@ use chrono::{
     offset::Utc,
 };
 
+use crate::config::global::Config;
 use crate::handlers::admin::statistics_get::AgoStatistics;
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -21,6 +22,7 @@ markup::define! {
     Statistics<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoStatistics,
         t: &'a TranslateI18N,
@@ -48,6 +50,7 @@ markup::define! {
                 },
                 current_page: "statistics",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,
@@ -110,9 +113,24 @@ markup::define! {
                             }
                             " "
                             {&t.disk_size_w_used_free_total_u1_u2_u3
-                                .replace("{used}", &(f64::trunc(t_bytesize(disk_used).0 * 100.0) / 100.0).to_string())
-                                .replace("{free}", &(f64::trunc(t_bytesize(disk_free).0 * 100.0) / 100.0).to_string())
-                                .replace("{total}", &(f64::trunc(t_bytesize(disk_total).0 * 100.0) / 100.0).to_string())
+                                .replace(
+                                    "{used}",
+                                    &(f64::trunc(
+                                        t_bytesize(disk_used).0 * 100.0
+                                    ) / 100.0).to_string(),
+                                )
+                                .replace(
+                                    "{free}",
+                                    &(f64::trunc(
+                                        t_bytesize(disk_free).0 * 100.0
+                                    ) / 100.0).to_string(),
+                                )
+                                .replace(
+                                    "{total}",
+                                    &(f64::trunc(
+                                        t_bytesize(disk_total).0 * 100.0
+                                    ) / 100.0).to_string(),
+                                )
                                 .replace("{u1}", &t_bytesize(disk_used).1)
                                 .replace("{u2}", &t_bytesize(disk_free).1)
                                 .replace("{u3}", &t_bytesize(disk_total).1)}

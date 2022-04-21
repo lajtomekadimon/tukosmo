@@ -66,6 +66,7 @@ pub async fn account_get(
                 let html = Account {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.account,

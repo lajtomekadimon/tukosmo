@@ -206,6 +206,7 @@ pub async fn edit_post(
                             let html = Edit {
                                 domain: &config.server.domain,
                                 codename: &codename,
+                                config: &config,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.edit_language_w_name

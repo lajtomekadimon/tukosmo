@@ -100,6 +100,7 @@ pub async fn delete_post(
                             let html = Delete {
                                 domain: &config.server.domain,
                                 codename: &codename,
+                                config: &config,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.delete_post_w_title

@@ -195,6 +195,7 @@ pub async fn account_post(
                             let html = Account {
                                 domain: &config.server.domain,
                                 codename: &codename,
+                                config: &config,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.account,
@@ -235,6 +236,7 @@ pub async fn account_post(
                             let html = Account {
                                 domain: &config.server.domain,
                                 codename: &codename,
+                                config: &config,
                                 title: &format!(
                                     "{a} - {b}",
                                     a = t.account,

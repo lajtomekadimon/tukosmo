@@ -82,6 +82,7 @@ pub async fn website_get(
                 let html = Website {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.website,

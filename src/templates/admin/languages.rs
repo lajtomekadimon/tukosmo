@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     languages_get::AgoLanguages,
     scope_languages::new_get::ra_languages_new,
@@ -19,6 +20,7 @@ markup::define! {
     Languages<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoLanguages,
         t: &'a TranslateI18N,
@@ -38,6 +40,7 @@ markup::define! {
                 },
                 current_page: "languages",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

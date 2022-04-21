@@ -100,6 +100,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Descripción",
     device:
         "Dispositivo",
+    disk_at_w_used:
+        "Disco al {used}%",
+    disk_size_w_used_total_u1_u2:
+        "{used} {u1} de {total} {u2}",
     disk_size_w_used_free_total_u1_u2_u3:
         "{used} {u1} de {total} {u3} ({free} {u2} libres)",
     disk_usage:
@@ -244,6 +248,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ejemplos: English, Español...",
     external_referrals:
         "Remisiones externas",
+    faq:
+        "Preguntas frecuentes",
     favicon:
         "Favicon",
     favicon_note:
@@ -266,6 +272,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         con un enlace para resetear tu contraseña.",
     free_k_disk:
         "Libres",
+    gallery:
+        "Galería",
     general:
         "General",
     go_back_to_w_website:
@@ -276,6 +284,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Ayuda",
     i_hope_you_are_having_a_great_day:
         "¡Espero que tengas un buen día!",
+    in_the_last_month:
+        "en el último mes",
     lang_code:
         "es",
     lang_en:
@@ -316,6 +326,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Menú",
     menus:
         "Menús",
+    modules:
+        "Módulos",
     n_days_w_time:
         "{time} días",
     n_hours_w_time:
@@ -330,6 +342,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "{n} resultados de {m}",
     n_seconds_w_time:
         "{time} segundos",
+    n_visitors_w_n:
+        "{n} visitantes",
     n_years_w_time:
         "{time} años",
     name:
@@ -386,6 +400,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Páginas",
     password:
         "Contraseña",
+    payments:
+        "Pagos",
     permalink:
         "Permalink",
     platform_k_os:
@@ -433,10 +449,14 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Selecciona una etiqueta",
     server:
         "Servidor",
+    server_w_os:
+        "Servidor {os}",
     sessions:
         "Sesiones",
     settings:
         "Ajustes",
+    shop:
+        "Tienda",
     show_more:
         "Ver más",
     sign_up_k_verb:
@@ -451,6 +471,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Estado",
     submit:
         "Enviar",
+    subscriptions:
+        "Suscripciones",
     suspended_account:
         "Cuenta suspendida",
     suspended_k_account:
@@ -485,6 +507,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Panel de Administración de Tukosmo",
     tukosmo_has_been_running_for_w_duration:
         "Tukosmo lleva funcionando {duration} sin parar.",
+    tukosmo_w_version:
+        "Tukosmo {version}",
     tukosmo_will_automatically_restart_itself_apply_changes:
         "Tukosmo se reiniciará automáticamente para aplicar los cambios.",
     untranslated:
@@ -497,6 +521,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Entradas sin traducir",
     update:
         "Actualizar",
+    updated_k_server:
+        "Actualizado",
+    updated_k_tukosmo:
+        "Actualizado",
     upload_file:
         "Subir archivo",
     upload_k_noun:
@@ -513,6 +541,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Usados",
     users:
         "Usuarios",
+    view_all:
+        "Ver todo",
     visit_website:
         "Visitar página web",
     visitors:

@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::error_get::AgoError;
 use crate::i18n::{
     translate_i18n::TranslateI18N,
@@ -15,6 +16,7 @@ markup::define! {
     Error<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoError,
         t: &'a TranslateI18N,
@@ -32,6 +34,7 @@ markup::define! {
                 },
                 current_page: "error",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

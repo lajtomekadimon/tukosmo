@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::files::static_files::{
     staticf_route,
     FAVICON_96X96,
@@ -28,6 +29,7 @@ markup::define! {
     Favicon<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoFavicon,
         t: &'a TranslateI18N,
@@ -50,6 +52,7 @@ markup::define! {
                 },
                 current_page: "favicon",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

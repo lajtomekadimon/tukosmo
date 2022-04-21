@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     scope_users::delete_get::{
         AgoUsersDelete,
@@ -21,6 +22,7 @@ markup::define! {
     Delete<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoUsersDelete,
         t: &'a TranslateI18N,
@@ -40,6 +42,7 @@ markup::define! {
                 },
                 current_page: "delete_user",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

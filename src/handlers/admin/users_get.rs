@@ -99,6 +99,7 @@ pub async fn users_get(
                 let html = Users {
                     domain: &config.server.domain,
                     codename: &codename,
+                    config: &config,
                     title: &format!(
                         "{a} - {b}",
                         a = t.users,

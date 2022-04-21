@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     account_get::{
         ra_account,
@@ -24,6 +25,7 @@ markup::define! {
     Account<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoAccount,
         t: &'a TranslateI18N,
@@ -47,6 +49,7 @@ markup::define! {
                 },
                 current_page: "account",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

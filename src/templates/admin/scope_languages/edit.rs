@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     scope_languages::edit_get::{
         AgoLanguagesEdit,
@@ -25,6 +26,7 @@ markup::define! {
     Edit<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoLanguagesEdit,
         t: &'a TranslateI18N,
@@ -46,6 +48,7 @@ markup::define! {
                 },
                 current_page: "edit_language",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

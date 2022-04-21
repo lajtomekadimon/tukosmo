@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     users_get::{
         AgoUsers,
@@ -23,6 +24,7 @@ markup::define! {
     Users<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoUsers,
         t: &'a TranslateI18N,
@@ -42,6 +44,7 @@ markup::define! {
                 },
                 current_page: "users",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     scope_files::edit_get::{
         AgoFilesEdit,
@@ -26,6 +27,7 @@ markup::define! {
     Edit<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoFilesEdit,
         t: &'a TranslateI18N,
@@ -46,6 +48,7 @@ markup::define! {
                     form: form,
                 },
                 codename: codename,
+                config: config,
                 current_page: "edit_file",
                 data: &q.data,
                 t: t,

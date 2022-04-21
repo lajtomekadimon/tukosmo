@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::sessions_get::{
     AgoSessions,
     ra_sessions,
@@ -19,6 +20,7 @@ markup::define! {
     Sessions<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoSessions,
         t: &'a TranslateI18N,
@@ -40,6 +42,7 @@ markup::define! {
                 },
                 current_page: "sessions",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

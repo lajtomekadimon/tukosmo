@@ -1,6 +1,7 @@
 use actix_web::web::Form as ActixForm;
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::{
     scope_users::new_get::{
         AgoUsersNew,
@@ -24,6 +25,7 @@ markup::define! {
     New<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoUsersNew,
         t: &'a TranslateI18N,
@@ -45,6 +47,7 @@ markup::define! {
                 },
                 current_page: "new_user",
                 codename: codename,
+                config: config,
                 data: &q.data,
                 t: t,
                 routes: &q.routes,

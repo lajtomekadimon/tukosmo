@@ -1,5 +1,6 @@
 use markup;
 
+use crate::config::global::Config;
 use crate::handlers::admin::pages_get::AgoPages;
 use crate::i18n::translate_i18n::TranslateI18N;
 use crate::templates::{
@@ -12,6 +13,7 @@ markup::define! {
     Pages<'a>(
         domain: &'a str,
         codename: &'a str,
+        config: &'a Config,
         title: &'a str,
         q: &'a AgoPages,
         t: &'a TranslateI18N,
@@ -28,6 +30,7 @@ markup::define! {
                     t: t,
                 },
                 codename: codename,
+                config: config,
                 current_page: "pages",
                 data: &q.data,
                 t: t,
