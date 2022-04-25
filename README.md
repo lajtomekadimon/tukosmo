@@ -204,3 +204,7 @@ make -s run-service
 make -s stop-service
 ```
 
+Visit `/en/admin` in order to access the admin panel.
+
+- Email: `test@test.com`
+- Password: `12345`
