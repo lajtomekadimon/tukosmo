@@ -4,8 +4,6 @@
 
 **Tukosmo**: Website generator made with Rust and PostgreSQL.
 
-**(this is a work in progress!)**
-
 [![License: MIT](
 https://img.shields.io/badge/License-MIT-blue.svg)](
 https://github.com/lajtomekadimon/tukosmo/blob/main/LICENSE)
