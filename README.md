@@ -12,8 +12,7 @@ https://github.com/lajtomekadimon/tukosmo/blob/main/LICENSE)
 
 </div>
 
-NOTE: This is my first Rust project. I'm still learning the language, so
-don't expect high quality code (yet).
+NOTE: This is my first Rust project. **Work in progress!**
 
 ## TODO
 
@@ -55,7 +54,7 @@ Roadmap:
 
 - [ ] 0.1
     - [ ] Foundations of Tukosmo
-    - [ ] Statistics
+    - [x] Statistics
     - [ ] Server
     - [x] Users
     - [x] Languages
