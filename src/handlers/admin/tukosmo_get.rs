@@ -1,5 +1,6 @@
 use actix_web::{web, HttpRequest, HttpResponse, Responder};
 use actix_identity::Identity;
+use serde::Deserialize;
 use postgres_types::{ToSql, FromSql};
 
 use crate::config::global::Config;
@@ -15,10 +16,23 @@ use crate::i18n::{
 use crate::templates::admin::tukosmo::Tukosmo;
 
 
+#[derive(Deserialize)]
+pub struct GetParamData {
+    success: Option<String>,
+}
+
+
 pub fn ra_tukosmo(
     lang_code: &str,
 ) -> String {
     "/{lang}/admin/tukosmo".replace("{lang}", lang_code)
+}
+
+pub fn ra_tukosmo_success(
+    lang_code: &str,
+) -> String {
+    "/{lang}/admin/tukosmo?success=true"
+        .replace("{lang}", lang_code)
 }
 
 #[derive(Clone, Debug, ToSql, FromSql)]
@@ -36,6 +50,7 @@ impl QueryFunction for AgiTukosmo {
 pub struct AgoTukosmo {
     pub data: types::AdminDataDB,
     pub routes: Vec<types::RouteDB>,
+    pub csrf_token: String,
 }
 
 
@@ -44,6 +59,7 @@ pub async fn tukosmo_get(
     codename: web::Data<String>,
     req: HttpRequest,
     id: Identity,
+    web::Query(param): web::Query<GetParamData>,
 ) -> impl Responder {
 
     match user_request(req, id) {
@@ -71,6 +87,10 @@ pub async fn tukosmo_get(
                     ),
                     q: &q,
                     t: t,
+                    success: &param.success.is_some(),
+                    error: &None,
+                    form: &None,
+                    new_version: &Some("0.2".to_string()),  // TODO: Update Tukosmo
                 };
 
                 HttpResponse::Ok()

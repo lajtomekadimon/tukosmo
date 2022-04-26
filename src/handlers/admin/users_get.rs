@@ -107,10 +107,7 @@ pub async fn users_get(
                     ),
                     q: &q,
                     t: t,
-                    success: match param.success {
-                        Some(_) => &true,
-                        None => &false,
-                    },
+                    success: &param.success.is_some(),
                 };
 
                 HttpResponse::Ok()

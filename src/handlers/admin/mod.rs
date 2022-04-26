@@ -40,6 +40,7 @@ pub mod favicon_get;
 pub mod favicon_post;
 
 pub mod tukosmo_get;
+pub mod tukosmo_post;
 
 pub mod website_get;
 pub mod website_post;

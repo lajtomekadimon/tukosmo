@@ -148,9 +148,10 @@ markup::define! {
             button[
                 class = "button is-block is-link is-large is-fullwidth",
             ] {
-                @t.login_k_verb
-                " "
-                span[class = "ml-2"] {
+                span {
+                    @t.login_k_verb
+                }
+                span[class = "icon is-small"] {
                     @icons::Login {}
                 }
             }

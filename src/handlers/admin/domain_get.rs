@@ -87,10 +87,7 @@ pub async fn domain_get(
                     ),
                     q: &q,
                     t: t,
-                    nochange: match param.nochange {
-                        Some(_) => &true,
-                        None => &false,
-                    },
+                    nochange: &param.nochange.is_some(),
                     error: &None,
                     form: &None,
                     user_email: &config.server.user_email,

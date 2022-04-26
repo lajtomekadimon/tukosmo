@@ -5,7 +5,8 @@ CREATE TYPE "AgiTukosmo" AS (
 
 CREATE TYPE "AgoTukosmo" AS (
     data "AdminDataDB",
-    routes "RouteDB"[]
+    routes "RouteDB"[],
+    csrf_token TEXT
 );
 
 
@@ -48,7 +49,12 @@ BEGIN
         d,
 
         -- routes
-        routes
+        routes,
+
+        -- csrf_token
+        s_csrf_token_by_session(
+            (r.req).session
+        )::TEXT
     );
 
 END;

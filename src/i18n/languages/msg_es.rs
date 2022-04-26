@@ -6,6 +6,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Cuenta",
     account_status:
         "Estado de la cuenta",
+    activated_modules:
+        "Módulos activados",
     active_k_account:
         "Activa",
     add_k_verb:
@@ -521,6 +523,10 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Entradas sin traducir",
     update:
         "Actualizar",
+    update_is_not_necessary:
+        "Actualizar no es necesario.",
+    update_tukosmo_to_w_version:
+        "Actualizar Tukosmo a la versión {version}",
     updated_k_server:
         "Actualizado",
     updated_k_tukosmo:
@@ -587,6 +593,8 @@ pub const MSG_ES: TranslateI18N = TranslateI18N {
         "Tu contraseña",
     your_sessions_have_been_successfully_updated:
         "Tus sesiones han sido actualizadas con éxito.",
+    your_tukosmo_config_has_been_successfully_updated:
+        "La configuración de Tukosmo ha sido actualizada con éxito.",
     your_website_categories_were_successfully_updated:
         "Las categorías de tu página web se actualizaron con éxito.",
     your_website_favicon_was_successfully_updated:

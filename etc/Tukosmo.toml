@@ -21,7 +21,6 @@ host = "localhost"
 name = "tukosmo"
 user = "tukosmouser"
 password = "1234"
-
 [modules.blog]
 enabled = "yes"
 web_enabled = "yes"

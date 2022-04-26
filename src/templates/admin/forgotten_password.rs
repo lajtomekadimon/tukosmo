@@ -149,9 +149,10 @@ markup::define! {
             button[
                 class = "button is-block is-link is-large is-fullwidth",
             ] {
-                @t.reset_password
-                " "
-                span[class = "ml-2"] {
+                span {
+                    @t.reset_password
+                }
+                span[class = "icon is-small"] {
                     @icons::VPNKey {}
                 }
             }

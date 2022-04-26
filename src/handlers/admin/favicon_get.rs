@@ -88,10 +88,7 @@ pub async fn favicon_get(
                     q: &q,
                     t: t,
                     error: &None,
-                    success: match param.success {
-                        Some(_) => &true,
-                        None => &false,
-                    },
+                    success: &param.success.is_some(),
                 };
 
                 HttpResponse::Ok()

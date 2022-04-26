@@ -81,10 +81,7 @@ pub async fn sessions_get(
                     ),
                     q: &q,
                     t: t,
-                    success: match param.success {
-                        Some(_) => &true,
-                        None => &false,
-                    },
+                    success: &param.success.is_some(),
                     error: &None,
                 };
 

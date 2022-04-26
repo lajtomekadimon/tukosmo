@@ -181,6 +181,14 @@ markup::define! {
         @Icon { name: "supervisor_account" }
     }
 
+    SyncDisabled {
+        @Icon { name: "sync_disabled" }
+    }
+
+    SyncI {
+        @Icon { name: "sync" }
+    }
+
     Translate {
         @Icon { name: "translate" }
     }

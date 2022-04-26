@@ -224,7 +224,7 @@ markup::define! {
                     button[
                         id = "form-website-button",
                         type = "button",
-                        class = "button is-link",
+                        class = "button is-link mt-3",
                         "data-nexturl" = ra_website_success(
                             &q.data.lang.code
                         ),

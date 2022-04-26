@@ -90,10 +90,7 @@ pub async fn website_get(
                     ),
                     q: &q,
                     t: t,
-                    success: match param.success {
-                        Some(_) => &true,
-                        None => &false,
-                    },
+                    success: &param.success.is_some(),
                     error: &None,
                     form: &None,
                     default_lang: &config.server.default_lang,
