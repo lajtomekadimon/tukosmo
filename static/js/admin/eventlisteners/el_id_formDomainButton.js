@@ -6,6 +6,7 @@ function el_id_formDomainButton() {
         elem.addEventListener(
             'click',
             function() {
+                elem.classList.add("is-loading");
                 getId("form-domain-progress").classList.remove("is-hidden");
 
                 const newurl =

@@ -6,6 +6,7 @@ function el_id_formFaviconButton() {
         elem.addEventListener(
             'click',
             function() {
+                elem.classList.add("is-loading");
                 getId("form-favicon-progress").classList.remove("is-hidden");
 
                 const nexturl = elem.dataset.nexturl;

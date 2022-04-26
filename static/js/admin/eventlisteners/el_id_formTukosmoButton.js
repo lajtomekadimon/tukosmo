@@ -6,6 +6,7 @@ function el_id_formTukosmoButton() {
         elem.addEventListener(
             'click',
             function() {
+                elem.classList.add("is-loading");
                 getId("form-tukosmo-progress").classList.remove("is-hidden");
 
                 const nexturl = elem.dataset.nexturl;

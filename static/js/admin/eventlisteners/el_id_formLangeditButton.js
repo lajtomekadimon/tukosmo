@@ -6,6 +6,7 @@ function el_id_formLangeditButton() {
         elem.addEventListener(
             'click',
             function() {
+                elem.classList.add("is-loading");
                 getId("form-langedit-progress").classList.remove("is-hidden");
 
                 const nexturl = elem.dataset.nexturl;
