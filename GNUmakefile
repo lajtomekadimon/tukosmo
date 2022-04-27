@@ -55,21 +55,21 @@ endif
 ifeq ($(OS_NAME), debian)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
-	sudo apt install -y curl
+	sudo apt install -y curl unzip
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	sudo apt install -y golang  # needed for JS minifying
 	sudo apt install -y openssl libssl-dev pkg-config  # needed for TLS
 else ifeq ($(OS_NAME), fedora)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
-	sudo dnf install -y curl
+	sudo dnf install -y curl unzip
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	sudo dnf install -y golang  # needed for JS minifying
 	sudo dnf install -y openssl openssl-devel pkg-config  # needed for TLS
 else ifeq ($(OS_NAME), arch)
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
-	sudo pacman -S --noconfirm curl
+	sudo pacman -S --noconfirm curl unzip
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	sudo pacman -S --noconfirm go  # needed for JS minifying
 	sudo pacman -S --noconfirm openssl pkgconf  # needed for TLS

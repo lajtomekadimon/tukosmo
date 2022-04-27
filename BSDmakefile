@@ -34,7 +34,7 @@ postgresql:
 
 rust:
 	# Install Rust (https://www.rust-lang.org/tools/install)
-	pkg install ftp/curl
+	pkg install ftp/curl archivers/unzip
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	pkg install lang/go  # needed for JS minifying
 	pkg install security/openssl security/openssl-devel  # needed for TLS
