@@ -42,14 +42,8 @@ pub async fn initdb(
     println!("Creating database...");
 
     // Reset files uploaded by the user
-    match fs::remove_dir_all("files/") {
-        Ok(_) => {
-            fs::create_dir("files/").unwrap();
-        },
-        Err(_) => {
-            fs::create_dir("files/").unwrap();
-        },
-    };
+    fs::remove_dir_all("files")
+        .and_then(|_| fs::create_dir("files")).unwrap();
     fs::copy(
         "static/img/featured-image-default-post.jpg",
         "files/featured-image-default-post.jpg",
@@ -222,8 +216,9 @@ pub async fn initdb(
         "db/selects/s_language_id_by_code.sql".to_string(),
         "db/selects/s_language_by_id_lang.sql".to_string(),
         "db/selects/s_name_of_language.sql".to_string(),
-        "db/selects/s_untrans_post_title_by_id.sql".to_string(),
         "db/selects/s_untrans_tag_name_by_id.sql".to_string(),
+        "db/selects/s_tags_of_post.sql".to_string(),
+        "db/selects/s_untrans_post_title_by_id.sql".to_string(),
     ]);
     append_sql(&mut sql_files, "db/selects/");
     // Inserts
